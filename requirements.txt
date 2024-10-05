@@ -1,0 +1,5 @@
+pytz
+websockets
+certifi
+sentry-sdk
+pypresence

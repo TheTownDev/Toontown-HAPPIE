@@ -1,0 +1,53 @@
+services:
+  astron:
+    build:
+      context: ../..
+      dockerfile: launch/docker/astron.dockerfile
+    platform: linux/amd64 # Force x64 on ARM platforms.
+    restart: always
+    ports:
+      - "7198:7198"
+    volumes:
+      - "../..:/app/game"
+
+  uberdog:
+    depends_on:
+      - astron
+    image: ttap-server
+    pull_policy: never # Hack to prevent building the same image twice
+    build:
+      context: ../..
+      dockerfile: launch/docker/server.dockerfile
+    platform: linux/amd64 # Force x64 on ARM platforms.
+    restart: always
+    environment:
+      SERVICE_TO_RUN: UD
+      BASE_CHANNEL: 1000000
+      MAX_CHANNELS: 999999
+      STATESERVER: 4002
+      ASTRON_IP: astron:7199
+      EVENTLOGGER_IP: astron:7197
+      WANT_ERROR_REPORTING: true  # Reports errors to the sentry service for TT:AP
+    volumes:
+      - "../..:/app"
+
+  ai:
+    depends_on:
+      - astron
+      - uberdog
+    image: ttap-server
+    pull_policy: never # Hack to prevent building the same image twice
+    platform: linux/amd64 # Force x64 on ARM platforms.
+    restart: always
+    environment:
+      SERVICE_TO_RUN: AI
+      BASE_CHANNEL: 401000000
+      MAX_CHANNELS: 999999
+      STATESERVER: 4002
+      ASTRON_IP: astron:7199
+      EVENTLOGGER_IP: astron:7197
+      DISTRICT_NAME: "Archipelago Avenue"
+      WANT_ERROR_REPORTING: true  # Reports errors to the sentry service for TT:AP
+      ARCHIPELAGO_IP: 172.17.0.1  # by default assume that archipelago is running on the same machine
+    volumes:
+      - "../..:/app"
