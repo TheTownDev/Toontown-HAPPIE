@@ -153,9 +153,9 @@ suitsPerDept = 8
 goonTypes = ['pg', 'sg']
 
 ModelDict = {
-    'a': ('/models/char/suitA-', 4),
-    'b': ('/models/char/suitB-', 4),
-    'c': ('/models/char/suitC-', 3.5)
+    'a': ('/models/char/ttr_r_ene_cga_suit', 3.5),
+    'b': ('/models/char/ttr_r_ene_cgb_suit', 3.5),
+    'c': ('/models/char/ttr_r_ene_cgc_suit', 3.5)
 }
 
 suit2headTexturePaths = {
@@ -182,7 +182,7 @@ class SuitAnimation:
         return f"{self.key}-{self.suit}"
 
     def modelPath(self) -> str:
-        return f"phase_{self.phase}/models/char/suit{self.suit}-{self.path}"
+        return f"phase_{self.phase}/models/char/ttr_a_ene_cg{self.suit.lower()}_{self.path}"
 
     def usedForSuitBody(self, bodyType: str):
         return bodyType.upper() == self.suit
@@ -451,7 +451,7 @@ class SuitVisual:
     def addHeadModel(self, suit):
 
         # Suit A body styles need to use a different joint for certain animations to work correctly.
-        attachPoint = '**/to_head' if suit.style.body == 'a' else '**/joint_head'
+        attachPoint = '**/def_M_head_01'
 
         # find if the head_type is a list or not
         if isinstance(self.head_type, list):

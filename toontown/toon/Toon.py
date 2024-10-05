@@ -2995,7 +2995,7 @@ class Toon(Avatar.Avatar, ToonHead):
         suit.setPos(self.getPos())
         suit.setHpr(self.getHpr())
 
-        suitHeadNull = suit.find('**/joint_head')
+        suitHeadNull = suit.find('**/def_M_head_01')
         toonHead = self.getPart('head', '1000')
         if isNpc:
             for part in suit.getHeadParts():

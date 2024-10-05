@@ -199,7 +199,7 @@ class ToonBase(OTPBase.OTPBase):
         self.colorBlindMode = self.settings.get('color-blind-mode')
         self.discord = DiscordRPC()
         self.discord.launching()
-        self.ap_version_text = OnscreenText(text=f"Toontown: Archipelago {version}", parent=self.a2dBottomLeft, pos=(.3, .05), mayChange=False, sort=-100, scale=.04, fg=(1, 1, 1, .3), shadow=(0, 0, 0, .3), align=TextNode.ALeft)
+        self.ap_version_text = OnscreenText(text=f"Toontown: Happie {version}", parent=self.a2dBottomLeft, pos=(.3, .05), mayChange=False, sort=-100, scale=.04, fg=(1, 1, 1, .3), shadow=(0, 0, 0, .3), align=TextNode.ALeft)
 
         self.enableHotkeys()
 

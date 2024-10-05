@@ -125,7 +125,7 @@ class Goon(Avatar.Avatar):
         if self.radar:
             self.radar.removeNode()
         self.radar = self.eye.attachNewNode('radar')
-        model = loader.loadModel('phase_9/models/cogHQ/alphaCone2')
+        model = loader.loadModel('phase_9/models/char/ttr_m_chr_ene_goonSpotlight')
         beam = self.radar.attachNewNode('beam')
         transformNode = model.find('**/transform')
         transformNode.getChildren().reparentTo(beam)

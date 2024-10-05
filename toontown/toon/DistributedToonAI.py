@@ -262,19 +262,9 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             # If we don't do this, self.slotData will be: (b'',)
             self.b_setSlotData({})
 
-            self.archipelago_session = ArchipelagoSession(self)
-            self.apRewardQueue.start()
-            self.apMessageQueue.start()
-
-            # Do they have information cached?
-            lastSlot, lastAddress = self.air.getCachedArchipelagoConnectionInformation(self.doId)
-            if lastSlot is not None and lastAddress is not None:
-                self.d_sendArchipelagoMessage(f"Trying to reconnect to {lastAddress} with slot name {lastSlot}...")
-                self.archipelago_session.handle_slot(lastSlot)
-                self.archipelago_session.handle_connect(lastAddress)
-            else:
-                self.d_sendArchipelagoMessage(f"In order to connect to Archipelago, use !slot <slotname> to match your slot and !connect <address> to start sending/receiving items!")
-
+            self.archipelago_session = None
+            
+            
         if hasattr(self, 'gameAccess') and self.gameAccess != 2:
             if self.hat[0] != 0:
                 self.replaceItemInAccessoriesList(ToonDNA.HAT, 0, 0, 0, self.hat[0], self.hat[1], self.hat[2])

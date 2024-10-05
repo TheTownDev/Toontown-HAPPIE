@@ -1,7 +1,7 @@
 # Server settings
-version v0.12.1 Alpha
+version v0.0.1 Alpha
 
-server-version tt-ap-edition
+server-version tt-happie
 
 # Developer settings
 want-dev false
@@ -20,7 +20,7 @@ default-directnotify-level info
 
 # Window settings
 load-display pandagl
-window-title Toontown: Archipelago
+window-title Toontown: Happie
 win-origin -2 -2
 depth-bits 24
 frame-rate-meter-text-pattern %0.f FPS

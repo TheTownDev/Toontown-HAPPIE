@@ -1,7 +1,7 @@
 # Server settings
 version v0.11.1 Alpha
 
-server-version tt-ap-edition
+server-version tt-happie
 
 # Developer settings
 want-dev false

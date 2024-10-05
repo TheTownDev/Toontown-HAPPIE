@@ -39,14 +39,14 @@ def __loadUnloadSuitModelsAndAnims(unload=False):
 
     for key in list(ModelDict.keys()):
         model, phase = ModelDict[key]
-        headModel, headPhase = ModelDict[key]
+        headModel = suitBody2HeadPath[key]
 
         if unload:
-            loader.unloadModel('phase_3.5' + model + 'mod')
-            loader.unloadModel('phase_' + str(headPhase) + headModel + 'heads')
+            loader.unloadModel('phase_3.5' + model)
+            loader.unloadModel(headModel)
         else:
-            loader.loadModel('phase_3.5' + model + 'mod').node()
-            loader.loadModel('phase_' + str(headPhase) + headModel + 'heads').node()
+            loader.loadModel('phase_3.5' + model).node()
+            loader.loadModel(headModel).node()
 
 
 def cogExists(filePrefix):
@@ -300,7 +300,7 @@ class Suit(Avatar.Avatar):
         animDict = self.generateAnimDict()
         filePrefix, bodyPhase = ModelDict[self.style.body]
 
-        self.loadModel('phase_3.5' + filePrefix + 'mod')
+        self.loadModel('phase_3.5' + filePrefix)
         self.loadAnims(animDict)
         self.setSuitClothes()
 
@@ -364,10 +364,10 @@ class Suit(Avatar.Avatar):
         modelRoot.find('**/torso').setTexture(torsoTex, 1)
         modelRoot.find('**/arms').setTexture(armTex, 1)
         modelRoot.find('**/legs').setTexture(legTex, 1)
-        self.leftHand = self.find('**/joint_Lhold')
-        self.rightHand = self.find('**/joint_Rhold')
-        self.shadowJoint = self.find('**/joint_shadow')
-        self.nametagJoint = self.find('**/joint_nameTag')
+        self.leftHand = self.find('**/jnt_L_attachProp_01')
+        self.rightHand = self.find('**/jnt_R_attachProp_01')
+        self.shadowJoint = self.find('**/jnt_M_shadow_01')
+        self.nametagJoint = self.find('**/jnt_M_nameTag_01')
 
     def makeWaiter(self, modelRoot = None):
         if not modelRoot:
@@ -438,7 +438,7 @@ class Suit(Avatar.Avatar):
     def generateCorporateMedallion(self):
         icons = loader.loadModel('phase_3/models/gui/cog_icons')
         dept = self.style.dept
-        chestNull = self.find('**/joint_attachMeter')
+        chestNull = self.find('**/jnt_M_attachMeter_01')
         if dept == 'c':
             self.corpMedallion = icons.find('**/CorpIcon').copyTo(chestNull)
         elif dept == 's':
@@ -458,7 +458,7 @@ class Suit(Avatar.Avatar):
         button.setScale(3.0)
         button.setH(180.0)
         button.setColor(self.healthBarColors[0])
-        chestNull = self.find('**/joint_attachMeter')
+        chestNull = self.find('**/jnt_M_attachMeter_01')
         button.reparentTo(chestNull)
         self.healthBar = button
         glow = BattleProps.globalPropPool.getProp('glow')
@@ -624,7 +624,7 @@ class Suit(Avatar.Avatar):
         self.updateHealthBar(0)
 
     def makeSkeleton(self):
-        model = 'phase_5/models/char/cog' + self.style.body.upper() + '_robot-zero'
+        model = 'phase_5/models/char/ttr_r_ene_cg' + self.style.body.lower() + '_skelecog'
         anims = self.generateAnimDict()
         anim = self.getCurrentAnim()
         dropShadow = self.dropShadow
@@ -648,10 +648,10 @@ class Suit(Avatar.Avatar):
          'dept': self.getStyleDept(),
          'level': self.getActualLevel()}
         self.setDisplayName(nameInfo)
-        self.leftHand = self.find('**/joint_Lhold')
-        self.rightHand = self.find('**/joint_Rhold')
-        self.shadowJoint = self.find('**/joint_shadow')
-        self.nametagNull = self.find('**/joint_nameTag')
+        self.leftHand = self.find('**/jnt_L_attachProp_01')
+        self.rightHand = self.find('**/jnt_R_attachProp_01')
+        self.shadowJoint = self.find('**/jnt_M_shadow_01')
+        self.nametagJoint = self.find('**/jnt_M_nameTag_01')
         if not dropShadow.isEmpty():
             dropShadow.setScale(0.75)
             if not self.shadowJoint.isEmpty():

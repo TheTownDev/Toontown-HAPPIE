@@ -32,12 +32,4 @@ class DistributedArchiTreasureAI(DistributedSZTreasureAI.DistributedSZTreasureAI
         self.sendUpdate('setGrab', [avId])
         av = self.air.doId2do[avId]
         if av:
-            treasureCount = av.slotData.get('treasures_per_location', 4)
-            for treasure in range(treasureCount):
-                if self.getLocationFromCode(archiCode, treasure) in av.getCheckedLocations():
-                    continue
-                else:
-                    av.addCheckedLocation(self.getLocationFromCode(archiCode, treasure))
-                    return
-            # We've gone through the loop, meaning we've gotten all checks. Let's heal the toon.
             av.toonUp(math.ceil(av.maxHp * self.healAmount))
