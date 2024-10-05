@@ -288,9 +288,11 @@ class DistributedClubElevatorAI(DistributedElevatorFSMAI.DistributedElevatorFSMA
 
     def checkBoard(self, av):
 
+        """
         if self.DoBlockedRoomCheck and self.bldg:
             if hasattr(self.bldg, 'blockedRooms'):
                 if self.bldg.blockedRooms:
                     return ElevatorConstants.REJECT_BLOCKED_ROOM
+        """
 
         return super().checkBoard(av)

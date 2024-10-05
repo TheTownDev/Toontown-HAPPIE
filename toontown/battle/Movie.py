@@ -262,7 +262,7 @@ class Movie(DirectObject.DirectObject):
         for toon in self.battle.toons:
             self.track.delayDeletes.append(DelayDelete.DelayDelete(toon, 'Movie.play'))
 
-        playRate = 2
+        playRate = 1
         self.setTrackPlayRate(self.track, playRate)
         self.track.start(ts, playRate=playRate)
         return None

@@ -230,15 +230,15 @@ class BattleBase:
         facing.normalize()
         suitdest = Point3(centerpos - Point3(facing * 6.0))
         dist = Vec3(suitdest - suitpos).length()
-        return dist / (BattleBase.suitSpeed * 8)
+        return dist / (BattleBase.suitSpeed)
 
     def calcSuitMoveTime(self, pos0, pos1):
         dist = Vec3(pos0 - pos1).length()
-        return dist / (BattleBase.suitSpeed * 8)
+        return dist / (BattleBase.suitSpeed)
 
     def calcToonMoveTime(self, pos0, pos1):
         dist = Vec3(pos0 - pos1).length()
-        return dist / (BattleBase.toonSpeed * 4)
+        return dist / (BattleBase.toonSpeed)
 
     def buildJoinPointList(self, avPos, destPos, toon = 0):
         minDist = 999999.0
