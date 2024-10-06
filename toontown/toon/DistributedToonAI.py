@@ -262,9 +262,8 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
             # If we don't do this, self.slotData will be: (b'',)
             self.b_setSlotData({})
 
-            self.archipelago_session = None
-            
-            
+            self.archipelago_session = ArchipelagoSession(self)
+
         if hasattr(self, 'gameAccess') and self.gameAccess != 2:
             if self.hat[0] != 0:
                 self.replaceItemInAccessoriesList(ToonDNA.HAT, 0, 0, 0, self.hat[0], self.hat[1], self.hat[2])

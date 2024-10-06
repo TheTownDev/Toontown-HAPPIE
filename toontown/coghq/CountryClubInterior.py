@@ -76,17 +76,19 @@ class CountryClubInterior(BattlePlace.BattlePlace):
         fileSystem = VirtualFileSystem.getGlobalPtr()
         self.musicJson = json.loads(fileSystem.readFile(ToontownGlobals.musicJsonFilePath, True))
 
-        if str(self.zoneId) in self.musicJson['global_music']:
-            self.music = base.loader.loadMusic(self.musicJson['global_music'][str(self.zoneId)])
-            if (str(self.zoneId) + '_battle') in self.musicJson['global_music']:
-                self.loader.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(self.zoneId) + '_battle')])
+        musicName = random.choice(['phase_12/audio/bgm/Bossbot_Factory_v1.ogg', 'phase_12/audio/bgm/Bossbot_Factory_v2.ogg', 'phase_12/audio/bgm/Bossbot_Factory_v3.ogg'])
+        self.music = base.loader.loadMusic(musicName)
+        if (str(self.zoneId) + '_battle') in self.musicJson['global_music']:
+            self.loader.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(self.zoneId) + '_battle')])
         else:
             musicName = random.choice(['phase_12/audio/bgm/Bossbot_Factory_v1.ogg', 'phase_12/audio/bgm/Bossbot_Factory_v2.ogg', 'phase_12/audio/bgm/Bossbot_Factory_v3.ogg'])
             self.music = base.loader.loadMusic(musicName)
+        self.loader.hood.setFog()
         
 
     def unload(self):
         self.parentFSM.getStateNamed('countryClubInterior').removeChild(self.fsm)
+        self.loader.hood.setNoFog()
         del self.music
         del self.fsm
         del self.parentFSM

@@ -44,6 +44,7 @@ from toontown.hood.LawbotHQDataAI import LawbotHQDataAI
 from toontown.hood.MMHoodDataAI import MMHoodDataAI
 from toontown.hood.OZHoodDataAI import OZHoodDataAI
 from toontown.hood.TTHoodDataAI import TTHoodDataAI
+from toontown.hood.CCHoodDataAI import CCHoodDataAI
 from toontown.minigame.MinigameCreatorAI import MinigameCreatorAI
 from toontown.parties.ToontownTimeManager import ToontownTimeManager
 from toontown.pets.PetManagerAI import PetManagerAI
@@ -288,7 +289,7 @@ class ToontownAIRepository(ToontownInternalRepository):
         # Generate our Magic Word manager...
         self.magicWordManager = TTOffMagicWordManagerAI(self)
         self.magicWordManager.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
-
+        
         # Generate our AP Manager...
         self.archipelagoManager = DistributedArchipelagoManagerAI(self)
         self.archipelagoManager.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
@@ -354,9 +355,16 @@ class ToontownAIRepository(ToontownInternalRepository):
         # Donald's Dreamland
         self.zoneTable[ToontownGlobals.DonaldsDreamland] = (
             (ToontownGlobals.DonaldsDreamland, 1, 0), (ToontownGlobals.LullabyLane, 1, 1),
-            (ToontownGlobals.PajamaPlace, 1, 1)
+            (ToontownGlobals.PajamaPlace, 1, 1), (ToontownGlobals.SnoozeSquare, 1, 1)
         )
         self.createHood(DLHoodDataAI, ToontownGlobals.DonaldsDreamland)
+        
+        # Clear Coasts
+        self.zoneTable[ToontownGlobals.ClearCoasts] = (
+            (ToontownGlobals.ClearCoasts, 1, 0), (ToontownGlobals.TanicalWay, 1, 1),
+            (ToontownGlobals.VacationAlly, 1, 1), (ToontownGlobals.SandAvenue, 1, 1)
+        )
+        self.createHood(CCHoodDataAI, ToontownGlobals.ClearCoasts)
 
         # Sellbot HQ
         self.zoneTable[ToontownGlobals.SellbotHQ] = (

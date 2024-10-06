@@ -1270,7 +1270,10 @@ class DistributedGolfGreenGame(BattleBlocker.BattleBlocker):
         self.load()
 
     def initCollisionGeom(self):
-        self.actSphere = CollisionSphere(0, 0, 0, 11.5)
+        if self.entId in [110302, 110502]:
+            self.actSphere = CollisionSphere(0, 0, 0, 11.5 * 2.0)
+        else:
+            self.actSphere = CollisionSphere(0, 0, 0, 11.5)
         self.actSphereNode = CollisionNode('gridgame-%s-%s' % (self.level.getLevelId(), self.entId))
         self.actSphereNode.addSolid(self.actSphere)
         self.actSphereNodePath = self.attachNewNode(self.actSphereNode)

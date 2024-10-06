@@ -259,10 +259,6 @@ class BattleCalculatorAI:
     # Returns a list of toons that are not enemies with an avId.
     def __getAllToonsNotEnemiesWithAvId(self, avId):
         ret = []
-        for toon in self.battle.activeToons:
-            if simbase.air.archipelagoManager.onEnemyTeams(avId, toon):
-                continue
-            ret.append(toon)
         return ret
 
     def __createToonTargetList(self, attackIndex):
@@ -870,7 +866,9 @@ class BattleCalculatorAI:
                         if self.notify.getDebug():
                             self.notify.debug('Applying hp bonus to track ' + str(attack[TOON_TRACK_COL]) + ' of ' + str(attack[TOON_HPBONUS_COL]))
                     elif len(attack[TOON_KBBONUS_COL]) > tgtPos:
-                        attack[TOON_KBBONUS_COL][tgtPos] = math.ceil(totalDmgs * (currTgt[currAtkType][0][2] / 100.0)) # {4: [[0, 11000, 6000]]}
+                        luredSuit = self.battle.activeSuits[tgtPos]
+                        luredLevelInfo = self.currentlyLuredSuits[luredSuit.doId][4]
+                        attack[TOON_KBBONUS_COL][tgtPos] = LURE_KB_HPS[luredLevelInfo]
                         if self.notify.getDebug():
                             self.notify.debug('Applying kb bonus to track ' + str(attack[TOON_TRACK_COL]) + ' of ' + str(attack[TOON_KBBONUS_COL][tgtPos]) + ' to target ' + str(tgtPos))
                     else:
@@ -1103,19 +1101,7 @@ class BattleCalculatorAI:
                 attackIdx = self.toonAtkOrder.index(toonId)
                 self.__handleBonus(attackIdx, hp=0)
                 self.__handleBonus(attackIdx, hp=1)
-                lastAttack = self.toonAtkOrder.index(toonId) >= len(self.toonAtkOrder) - 1
-                unlureAttack = self.__attackHasHit(attack, suit=0) and self.__unlureAtk(toonId, toon=1)
-                if unlureAttack:
-                    if lastAttack:
-                        self.__clearLuredSuitsByAttack(toonId)
-                    else:
-                        self.__addLuredSuitsDelayed(toonId)
-                if lastAttack:
-                    self.__clearLuredSuitsDelayed()
 
-        self.__processBonuses(hp=0)
-        self.__processBonuses(hp=1)
-        self.__postProcessToonAttacks()
         return
 
     def __knockBackAtk(self, attackIndex, toon=1):
@@ -1492,6 +1478,48 @@ class BattleCalculatorAI:
         except:
             pass
         self.__calculateToonAttacks()
+        self.__processBonuses(hp=0)
+        self.__processBonuses(hp=1)
+        
+        """
+        for toon in self.battle.activeToons:
+            toonAttack = self.battle.toonAttacks[toon]
+            if toonAttack[TOON_TRACK_COL] in [THROW, SQUIRT]:
+                if toonAttack[TOON_LVL_COL] == UBER_GAG_LEVEL_INDEX:
+                    for luredSuit in self.battle.luredSuits:
+                        luredRoundInfo = self.currentlyLuredSuits[luredSuit.doId][4]
+                        toonAttack[TOON_KBBONUS_COL][self.battle.activeSuits.index(luredSuit)] == LURE_KB_HPS[luredRoundInfo]
+                else:    
+                    suit = self.battle.findSuit(toonAttack[TOON_TGT_COL])
+                    if suit in self.battle.luredSuits:
+                        luredSuit = suit
+                        luredRoundInfo = self.currentlyLuredSuits[luredSuit.doId][4]
+                        
+                        toonAttack[TOON_KBBONUS_COL][self.battle.activeSuits.index(luredSuit)] += LURE_KB_HPS[luredRoundInfo]
+        """
+        
+        for toonId in self.toonAtkOrder:
+            if self.__combatantDead(toonId, toon=1):
+                if self.notify.getDebug():
+                    self.notify.debug("Toon %d is dead and can't attack" % toonId)
+                continue
+            attack = self.battle.toonAttacks[toonId]
+            atkTrack = self.__getActualTrack(attack)
+            if atkTrack != NO_ATTACK and atkTrack != SOS and atkTrack != NPCSOS:
+                currTrack = atkTrack
+                attackIdx = self.toonAtkOrder.index(toonId)
+                lastAttack = self.toonAtkOrder.index(toonId) >= len(self.toonAtkOrder) - 1
+                unlureAttack = self.__attackHasHit(attack, suit=0) and self.__unlureAtk(toonId, toon=1)
+                if unlureAttack:
+                    if lastAttack:
+                        self.__clearLuredSuitsByAttack(toonId)
+                    else:
+                        self.__addLuredSuitsDelayed(toonId)
+                if lastAttack:
+                    self.__clearLuredSuitsDelayed()
+        
+        
+        self.__postProcessToonAttacks()
         self.__updateLureTimeouts()
         try:
             for suit in self.battle.activeSuits:
@@ -1635,7 +1663,7 @@ class BattleCalculatorAI:
             # Generate new lured suit info
             lurerInfo = {lurer: [lureLvl, availLureId, credit]}
             self.currentlyLuredSuits[suitId] = [
-             currRounds, maxRounds, wakeChance, lurerInfo]
+             currRounds, maxRounds, wakeChance, lurerInfo, lureLvl]
             suit = simbase.air.doId2do.get(suitId)
             toon = simbase.air.doId2do.get(lurer)
             suit.effectHandler.addEffect('BattleEffectLureKnockbackAI')

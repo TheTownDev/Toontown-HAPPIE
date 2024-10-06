@@ -51,6 +51,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                     #Donalds Dreamland
                     [9100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (33, 34, 0, 33), (6, 7, 8, 9), [], 4],
                     [9200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 0, 100, 0),  (6, 7, 8, 9), [], 4],
+                    [9300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (60, 20, 0, 20),  (6, 7, 8, 9, 10), [], 7],
                     
                     # Sellbot Courtyard, Factory Exterior
                     [11000, 3, 15, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (0, 0, 0, 100),  (5, 6, 7), [], 4],
@@ -437,7 +438,10 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             else:
                 suitLevel = self.SuitHoodInfo[self.hoodInfoIdx][self.SUIT_HOOD_INFO_LVL][-1] + 1
         suitLevel, suitType, suitTrack = self.pickLevelTypeAndTrack(suitLevel, suitType, suitTrack)
-        newSuit.setupSuitDNA(suitLevel, suitType, suitTrack)
+        if suitName in SuitDNA.notMainTypes: #setupSuitDNACustom
+            newSuit.setupSuitDNACustom(suitLevel, suitName, suitTrack)
+        else:
+            newSuit.setupSuitDNA(suitLevel, suitType, suitTrack)
         newSuit.buildingHeight = buildingHeight
         gotDestination = self.chooseDestination(newSuit, startTime, toonBlockTakeover=toonBlockTakeover, cogdoTakeover=cogdoTakeover, minPathLen=minPathLen, maxPathLen=maxPathLen)
         if not gotDestination:

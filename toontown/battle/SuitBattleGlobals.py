@@ -788,7 +788,7 @@ __registerSuitAttributes(__MR_HOLLYWOOD)
 
 __TRAFFIC_MANAGER_ATTACKS = set()
 __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.EVIL_EYE,
+    attack=SuitAttackType.FIRED,
     damage={6: 9, 7: 11, 8: 13, 9: 14, 10: 16},
     accuracy=60,
     weight=30,

@@ -28,6 +28,7 @@ class DistributedMover(BasicEntities.DistributedNodePathEntity):
         self.pos1Wait = 1.0
         self.pos1Move = 1.0
         self.moverIval = None
+        self.bossbot_gate_sfx = loader.loadSfx('phase_12/audio/sfx/ttr_s_ara_bhq_portcullisDoor_open.ogg')
         return
 
     def generateInit(self):
@@ -54,6 +55,8 @@ class DistributedMover(BasicEntities.DistributedNodePathEntity):
         if self.moverIval:
             self.moverIval.finish()
         self.unloadModel()
+        del self.bossbot_gate_sfx
+        self.bossbot_gate_sfx = None
         if self.taskName:
             taskMgr.remove(self.taskName)
         BasicEntities.DistributedNodePathEntity.delete(self)
@@ -95,6 +98,8 @@ class DistributedMover(BasicEntities.DistributedNodePathEntity):
             self.moverIval.finish()
             if self.moverIval.isPlaying():
                 okay2Play = 0
+        if self.moveTarget == 19003:
+            self.bossbot_gate_sfx.play()
         if okay2Play and self.moveTarget:
             childList = self.getChildren()
             for child in childList:

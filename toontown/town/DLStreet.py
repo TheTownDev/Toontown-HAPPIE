@@ -1,4 +1,5 @@
 from . import Street
+from toontown.toonbase import ToontownGlobals
 
 class DLStreet(Street.Street):
 

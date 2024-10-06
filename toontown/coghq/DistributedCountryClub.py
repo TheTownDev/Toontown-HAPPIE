@@ -46,10 +46,36 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
         self.factoryViews = FactoryCameraViews.FactoryCameraViews(self)
         base.localAvatar.chatMgr.chatInputSpeedChat.addFactoryMenu()
         self.__setupHighSky()
+        self.startCollisionDetection()
+        self.startCollisionDetectionGeysers()
+        self.startCollisionDetectionOilSlicks()
         return
+    
+    def startCollisionDetection(self):
+        self.accept('enterFountain_Geom_oil_trigger', self.startFountainDamage)
+        self.accept('exitFountain_Geom_oil_trigger', self.stopFountainDamage)
+    
+    def startCollisionDetectionGeysers(self):
+        self.accept('entergeyser_trigger', self.startFountainDamage)
+        self.accept('exitgeyser_trigger', self.stopFountainDamage)
+    
+    def startCollisionDetectionOilSlicks(self):
+        self.accept('entercol_low', self.startFountainDamage)
+        self.accept('exitcol_low', self.stopFountainDamage)
+    
+    def __fountainDamageTick(self, task):
+        base.localAvatar.b_stun(ToontownGlobals.BossbotFountainOilDamage)
+        task.delayTime = 5.0
+        return task.again
+    
+    def startFountainDamage(self, collision):
+        taskMgr.add(self.__fountainDamageTick, 'oil-fountain-tick')
+    
+    def stopFountainDamage(self, collision):
+        taskMgr.remove('oil-fountain-tick')
 
     def startSky(self):
-        self.sky = loader.loadModel('phase_12/models/bossbotHQ/BossTestSkyBox')
+        self.sky = loader.loadModel('phase_12/models/bossbotHQ/ttr_m_ara_chq_cgcSkybox')
         self.sky.reparentTo(camera)
         self.sky.setZ(0.0)
         self.sky.setHpr(0.0, 0.0, 0.0)
@@ -204,12 +230,12 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
         for i, room in enumerate(self.allRooms):
             if i < minVis or i > maxVis:
                 if not room.getGeom().isEmpty():
-                    room.getGeom().stash()
+                    room.getGeom().unstash()
             elif i <= blockRoomsAboveThisNumber:
                 if not room.getGeom().isEmpty():
                     room.getGeom().unstash()
             elif not room.getGeom().isEmpty():
-                room.getGeom().stash()
+                room.getGeom().unstash()
 
         self.lastCamEnterRoom = roomNum
 

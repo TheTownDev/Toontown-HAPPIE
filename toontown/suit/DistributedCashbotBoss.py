@@ -344,16 +344,16 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
 
     def loadEnvironment(self):
         DistributedBossCog.DistributedBossCog.loadEnvironment(self)
-        self.midVault = loader.loadModel('phase_10/models/cogHQ/MidVault.bam')
-        self.endVault = loader.loadModel('phase_10/models/cogHQ/EndVault.bam')
-        self.lightning = loader.loadModel('phase_10/models/cogHQ/CBLightning.bam')
-        self.magnet = loader.loadModel('phase_10/models/cogHQ/CBMagnet.bam')
-        self.craneArm = loader.loadModel('phase_10/models/cogHQ/CBCraneArm.bam')
-        self.controls = loader.loadModel('phase_10/models/cogHQ/CBCraneControls.bam')
-        self.stick = loader.loadModel('phase_10/models/cogHQ/CBCraneStick.bam')
-        self.safe = loader.loadModel('phase_10/models/cogHQ/CBSafe.bam')
+        self.midVault = loader.loadModel('phase_10/models/cashbotHQ/ttr_m_ara_chq_bossMidVault.bam')
+        self.endVault = loader.loadModel('phase_10/models/cashbotHQ/ttr_m_ara_chq_bossEndVault.bam')
+        self.lightning = loader.loadModel('phase_10/models/cogHQ/ttr_m_ara_chq_craneLightning.bam')
+        self.magnet = loader.loadModel('phase_10/models/cogHQ/ttr_m_ara_chq_craneMagnet.bam')
+        self.craneArm = loader.loadModel('phase_10/models/cogHQ/ttr_m_ara_chq_craneArm.bam')
+        self.controls = loader.loadModel('phase_10/models/cogHQ/ttr_m_ara_chq_craneControls.bam')
+        self.stick = loader.loadModel('phase_10/models/cogHQ/ttr_m_ara_chq_craneStick.bam')
+        self.safe = loader.loadModel('phase_10/models/cogHQ/ttr_m_ara_chq_cashSafe.bam')
         self.eyes = loader.loadModel('phase_10/models/cogHQ/CashBotBossEyes.bam')
-        self.cableTex = self.craneArm.findTexture('MagnetControl')
+        self.cableTex = self.craneArm.findTexture('ttr_t_ara_chq_craneMachine')
 
         # Get the eyes ready for putting outside the helmet.
         self.eyes.setPosHprScale(4.5, 0, -2.5, 90, 90, 0, 0.4, 0.4, 0.4)
@@ -438,6 +438,10 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         planeNode.setCollideMask(ToontownGlobals.PieBitmask)
         self.geom.attachNewNode(planeNode)
         self.geom.reparentTo(render)
+        
+        self.battleThreeMusic = base.loadMusic('phase_10/audio/bgm/ttr_s_ara_chq_crane.ogg')
+        self.battleThreeMusicCutscene = base.loadMusic('phase_10/audio/bgm/ttr_s_ara_chq_crane.ogg')
+
 
     def unloadEnvironment(self):
         DistributedBossCog.DistributedBossCog.unloadEnvironment(self)
@@ -1142,6 +1146,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.evWalls.stash()
         self.midVault.unstash()
         
+        self.battleThreeMusicCutscene.play()
+        
         self.__showResistanceToon(False)
         
         taskMgr.add(self.__doPhysics, self.uniqueName('physics'), priority=25)
@@ -1165,6 +1171,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             self.movieCrane.request('Free')
 
         NametagGlobals.setMasterArrowsOn(1)
+        
+        self.battleThreeMusicCutscene.stop()
         
         # Make sure the elevator doors are closed.
         ElevatorUtils.closeDoors(self.leftDoor, self.rightDoor, ElevatorConstants.ELEVATOR_CFO)

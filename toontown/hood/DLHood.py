@@ -25,11 +25,13 @@ class DLHood(ToonHood.ToonHood):
         self.parentFSM.getStateNamed('DLHood').addChild(self.fsm)
 
         self.fog = Fog('DLFog')
+        self.sky.setScale(3)
 
     def setFog(self):
         if base.wantFog:
             self.fog.setColor(0.35, 0.35, 0.45)
             self.fog.setExpDensity(0.00125)
+            self.fog.setLinearRange(10.0, 80000.0)
             render.clearFog()
             render.setFog(self.fog)
             self.sky.clearFog()

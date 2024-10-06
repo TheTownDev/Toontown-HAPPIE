@@ -52,6 +52,7 @@ class Movie(DirectObject.DirectObject):
         self.rewardHasBeenReset = 0
         self.resetReward()
         self.battleScenes = []
+        self.suitsCheatFirst, self.suitsCheatSecond, self.dots, self.cutscenesFirst, self.cutscenesSecond = [], [], [], [], []
         return
 
     def cleanup(self):
@@ -421,11 +422,14 @@ class Movie(DirectObject.DirectObject):
         if base.config.GetBool('want-toon-attack-anims', 1):
             track = Sequence(name='toon-attacks')
             camTrack = Sequence(name='toon-attacks-cam')
-            for scene in self.battleScenes:
-                if scene[4]:
-                    ival, camIval = BattleScenes.doScene(scene, self.battle)
-                    track.append(ival)
-                    camTrack.append(camIval)
+            for scene in self.cutscenesFirst:            
+                ival, camIval = MovieCutscenesFirst.doScene(scene, self.battle)
+                track.append(ival)
+                camTrack.append(camIval)
+            for scene in self.suitsCheatFirst:            
+                ival, camIval = MovieCheatsFirst.doScene(scene, self.battle)
+                track.append(ival)
+                camTrack.append(camIval)
             ival, camIval = MovieFire.doFires(self.__findToonAttack(FIRE))
             if ival:
                 track.append(ival)
@@ -524,11 +528,15 @@ class Movie(DirectObject.DirectObject):
          id2,
          id3]
 
-    def genAttackDicts(self, activeToons, activeSuits, toonAttacks, suitAttacks, battleScenes):
+    def genAttackDicts(self, activeToons, activeSuits, toonAttacks, suitAttacks, suitsCheatFirst, suitsCheatSecond, dots, cutscenesFirst, cutscenesSecond):
         if self.track and self.track.isPlaying():
             self.notify.warning('genAttackDicts() - track is playing!')
 
-        self.battleScenes = battleScenes
+        self.suitsCheatFirst = suitsCheatFirst
+        self.suitsCheatSecond = suitsCheatSecond
+        self.dots = dots
+        self.cutscenesFirst = cutscenesFirst
+        self.cutscenesSecond = cutscenesSecond
         self.__genToonAttackDicts(activeToons, activeSuits, toonAttacks)
         self.__genSuitAttackDicts(activeToons, activeSuits, suitAttacks)
 
@@ -848,11 +856,16 @@ class Movie(DirectObject.DirectObject):
             targetField = attack.get('target')
             if targetField is None:
                 continue
-        for scene in self.battleScenes:
-            if not scene[4]:
-                ival, camIval = BattleScenes.doScene(scene, self.battle)
-                track.append(ival)
-                camTrack.append(camIval)
+        for scene in self.suitsCheatSecond:
+            ival, camIval = MovieCheatsSecond.doScene(scene, self.battle)
+            track.append(ival)
+            camTrack.append(camIval)
+        for scene in self.cutscenesSecond:
+            ival, camIval = MovieCutscenesSecond.doScene(scene, self.battle)
+            track.append(ival)
+            camTrack.append(camIval)
+        for scene in self.dots:
+            ival, camIval = MovieDots.doScene(scene, self.battle)
 
         if len(track) == 0:
             return None, None

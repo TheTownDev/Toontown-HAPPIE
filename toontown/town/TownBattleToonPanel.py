@@ -126,7 +126,7 @@ class TownBattleToonPanel(DirectFrame):
             dmg = getAvPropDamage(track, level, self.avatar.experience, self.avatar.trackBonusLevel[track] >= level, toonDamageMultiplier=self.avatar.getDamageMultiplier(), overflowMod=self.avatar.getOverflowMod())
             operator = '+' if track == HEAL_TRACK else '-'
             if track == LURE_TRACK:
-                operator = '%'
+                operator = '-'
                 color = (1, 0.5, 0, 1)
             if track == HEAL_TRACK:
                 color = (0, 1, 0, 1)

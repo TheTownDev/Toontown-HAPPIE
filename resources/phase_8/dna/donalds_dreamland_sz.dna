@@ -2,8 +2,8 @@ group "donaldsDreamland" [
  visgroup "9000:safe_zone" [
   vis [   "9000:safe_zone"   ]
   group "props" [
-   prop "donalds_dreamland" [
-    code [ "donalds_dreamland" ]
+   prop "ttr_m_ara_ddl_donaldsDreamland" [
+    code [ "ttr_m_ara_ddl_donaldsDreamland" ]
     pos [ 0 0 0 ]
     nhpr [ 0 0 0 ]
    ]
@@ -359,6 +359,139 @@ group "donaldsDreamland" [
        ]
        text [
         letters [ "S" ]
+       ]
+      ]
+     ]
+    ]
+    prop "linktunnel_dl_9301_DNARoot" [
+     code [ "prop_safe_zone_tunnel" ]
+     pos [ -209.70 60 -6.45 ]
+     nhpr [ -90 0 0 ]
+     sign [
+      code [ "tunnel_sign_red" ]
+      color [ 0.376471 0.376471 0.376471 1 ]
+      pos [ 0 0 0.14 ]
+      scale [ 1.5 1 1.5 ]
+      baseline [
+       code [ "mickey" ]
+       color [ 1 1 0.501961 1 ]
+       pos [ 0 0 -0.83 ]
+       scale [ 1.4 1 1.5 ]
+       width [ 50 ]
+       height [ 50 ]
+       text [
+        letters [ "S" ]
+       ]
+       text [
+        letters [ "N" ]
+       ]
+       text [
+        letters [ "O" ]
+       ]
+       text [
+        letters [ "O" ]
+       ]
+       text [
+        letters [ "Z" ]
+       ]
+       text [
+        letters [ "E" ]
+       ]
+       text [
+        letters [ " " ]
+       ]
+       text [
+        letters [ " " ]
+       ]
+       text [
+        letters [ "S" ]
+       ]
+       text [
+        letters [ "Q" ]
+       ]
+       text [
+        letters [ "U" ]
+       ]
+       text [
+        letters [ "A" ]
+       ]
+       text [
+        letters [ "R" ]
+       ]
+       text [
+        letters [ "E" ]
+       ]
+      ]
+      baseline [
+       code [ "mickey" ]
+       color [ 1 1 0.501961 1 ]
+       pos [ 0 0 -1.9 ]
+       scale [ 0.8 1 0.8 ]
+       width [ 55.0903 ]
+       height [ 55.0903 ]
+       text [
+        letters [ "D" ]
+       ]
+       text [
+        letters [ "O" ]
+       ]
+       text [
+        letters [ "N" ]
+       ]
+       text [
+        letters [ "A" ]
+       ]
+       text [
+        letters [ "L" ]
+       ]
+       text [
+        letters [ "D" ]
+       ]
+       text [
+        letters [ "'" ]
+       ]
+       text [
+        letters [ "S" ]
+       ]
+       text [
+        letters [ " " ]
+       ]
+       text [
+        letters [ " " ]
+       ]
+       text [
+        letters [ "D" ]
+       ]
+       text [
+        letters [ "R" ]
+       ]
+       text [
+        letters [ "E" ]
+       ]
+       text [
+        letters [ "A" ]
+       ]
+       text [
+        letters [ "M" ]
+       ]
+       text [
+        letters [ "L" ]
+       ]
+       text [
+        letters [ "A" ]
+       ]
+       text [
+        letters [ "N" ]
+       ]
+       text [
+        letters [ "D" ]
+       ]
+      ]
+      baseline [
+       pos [ 0 0 1.66 ]
+       scale [ 2.5 1 2.5 ]
+       graphic [
+        code [ "donald_DL_SZ" ]
        ]
       ]
      ]
@@ -1063,7 +1196,7 @@ group "donaldsDreamland" [
    code [ "toon_landmark_hqDL" ]
    building_type [ "hq" ]
    title [ "Toon HQ" ]
-   pos [ -40.875 -1.37841 -15 ]
+   pos [ -30.88 -1.38 -15 ]
    nhpr [ 180 0 0 ]
   ]
   landmark_building "tb8:toon_landmark_DL_pet_shop_DNARoot" [

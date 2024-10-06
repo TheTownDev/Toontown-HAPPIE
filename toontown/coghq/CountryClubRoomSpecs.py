@@ -8,6 +8,8 @@ from toontown.coghq import BossbotCountryClubMazeRoom_Battle03_Cogs
 from toontown.coghq import NullCogs
 from toontown.coghq import BossbotCountryClubKartRoom_Battle00_Cogs
 from toontown.coghq import BossbotCountryClubPresidentRoom_Battle00_Cogs
+from toontown.coghq import BossbotCountryClubCornerRoom_Battle00_Cogs
+from toontown.coghq import BossbotCountryClubFountainRoom_Battle00_Cogs
 
 from toontown.coghq import BossbotCountryClubEntrance_Action00
 from toontown.coghq import BossbotCountryClubTeeOffRoom_Action00
@@ -22,6 +24,10 @@ from toontown.coghq import BossbotCountryClubTeeOffRoom_Action01
 from toontown.coghq import BossbotCountryClubTeeOffRoom_Action02
 from toontown.coghq import BossbotCountryClubGreenRoom_Action01
 from toontown.coghq import BossbotCountryClubGreenRoom_Action02
+from toontown.coghq import BossbotCountryClubCornerRoom_Battle00
+from toontown.coghq import BossbotCountryClubCornerGreenRoom_Action00
+from toontown.coghq import BossbotCountryClubOilRoom_Action00
+from toontown.coghq import BossbotCountryClubFountainRoom_Battle00
 
 BossbotCountryClubSpecModules = {
     0: BossbotCountryClubEntrance_Action00,
@@ -37,6 +43,10 @@ BossbotCountryClubSpecModules = {
     32: BossbotCountryClubTeeOffRoom_Action02,
     29: BossbotCountryClubGreenRoom_Action01,
     39: BossbotCountryClubGreenRoom_Action02,
+    40: BossbotCountryClubCornerRoom_Battle00,
+    41: BossbotCountryClubCornerGreenRoom_Action00,
+    42: BossbotCountryClubFountainRoom_Battle00,
+    43: BossbotCountryClubOilRoom_Action00
 }
 
 
@@ -65,14 +75,16 @@ BossbotCountryClubRoomName2RoomId = invertDict(BossbotCountryClubRoomId2RoomName
 BossbotCountryClubEntranceIDs = (0,)
 BossbotCountryClubMiddleRoomIDs = (2, 5, 6)
 BossbotCountryClubFinalRoomIDs = (18,)
-BossbotCountryClubConnectorRooms = ('phase_12/models/bossbotHQ/Connector_Tunnel_A', 'phase_12/models/bossbotHQ/Connector_Tunnel_B')
+BossbotCountryClubConnectorRooms = ('phase_12/models/bossbotHQ/ttr_m_ara_bhq_cgcConnectorA', 'phase_12/models/bossbotHQ/ttr_m_ara_bhq_cgcConnectorB', 'phase_12/models/bossbotHQ/ttr_m_ara_bhq_cgcConnectorC', 'phase_12/models/bossbotHQ/ttr_m_ara_bhq_cgcConnectorB', 'phase_12/models/bossbotHQ/ttr_m_ara_bhq_cgcConnectorA')
 
 CogSpecModules = {'BossbotCountryClubFairwayRoom_Battle00': BossbotCountryClubFairwayRoom_Battle00_Cogs,
  'BossbotCountryClubMazeRoom_Battle00': BossbotCountryClubMazeRoom_Battle00_Cogs,
  'BossbotCountryClubMazeRoom_Battle01': BossbotCountryClubMazeRoom_Battle01_Cogs,
  'BossbotCountryClubMazeRoom_Battle02': BossbotCountryClubMazeRoom_Battle02_Cogs,
  'BossbotCountryClubKartRoom_Battle00': BossbotCountryClubKartRoom_Battle00_Cogs,
- 'BossbotCountryClubPresidentRoom_Battle00': BossbotCountryClubPresidentRoom_Battle00_Cogs}
+ 'BossbotCountryClubPresidentRoom_Battle00': BossbotCountryClubPresidentRoom_Battle00_Cogs,
+ 'BossbotCountryClubCornerRoom_Battle00': BossbotCountryClubCornerRoom_Battle00_Cogs,
+ 'BossbotCountryClubFountainRoom_Battle00': BossbotCountryClubFountainRoom_Battle00_Cogs}
 roomId2numBattles = {}
 for roomName, roomId in BossbotCountryClubRoomName2RoomId.items():
     if roomName not in CogSpecModules:
@@ -82,6 +94,7 @@ for roomName, roomId in BossbotCountryClubRoomName2RoomId.items():
         roomId2numBattles[roomId] = len(cogSpecModule.BattleCells)
 
 roomId2numBattles[BossbotCountryClubRoomName2RoomId['BossbotCountryClubTeeOffRoom_Action00']] = 1
+roomId2numBattles[BossbotCountryClubRoomName2RoomId['BossbotCountryClubCornerRoom_Battle00']] = 2
 middleRoomId2numBattles = {}
 for roomId in BossbotCountryClubMiddleRoomIDs:
     middleRoomId2numBattles[roomId] = roomId2numBattles[roomId]

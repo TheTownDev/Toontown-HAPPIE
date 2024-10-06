@@ -167,7 +167,6 @@ TheBrrrgh = 3000
 MinniesMelodyland = 4000
 DaisyGardens = 5000
 OutdoorZone = 6000
-FunnyFarm = 7000
 GoofySpeedway = 8000
 DonaldsDreamland = 9000
 BarnacleBoulevard = 1100
@@ -187,13 +186,19 @@ MapleStreet = 5200
 OakStreet = 5300
 LullabyLane = 9100
 PajamaPlace = 9200
+SnoozeSquare = 9300
+ClearCoasts = 7000
+SandAvenue = 7100
+VacationAlly = 7200
+TanicalWay = 7300
 ToonHall = 2513
 HoodHierarchy = {ToontownCentral: (SillyStreet, LoopyLane, PunchlinePlace),
  DonaldsDock: (BarnacleBoulevard, SeaweedStreet, LighthouseLane),
  TheBrrrgh: (WalrusWay, SleetStreet, PolarPlace),
  MinniesMelodyland: (AltoAvenue, BaritoneBoulevard, TenorTerrace),
  DaisyGardens: (ElmStreet, MapleStreet, OakStreet),
- DonaldsDreamland: (LullabyLane, PajamaPlace),
+ DonaldsDreamland: (LullabyLane, PajamaPlace, SnoozeSquare),
+ ClearCoasts: (SandAvenue, VacationAlly, TanicalWay),
  GoofySpeedway: ()}
 WelcomeValleyToken = 0
 BossbotHQ = 10000
@@ -288,8 +293,8 @@ MintNumRooms = {CashbotMintIntA: 2 * (6,) + 5 * (7,) + 5 * (8,) + 5 * (9,) + 3 *
 BossbotCountryClubCogLevel = 11
 BossbotCountryClubSkelecogLevel = 12
 BossbotCountryClubBossLevel = 12
-CountryClubNumRooms = {BossbotCountryClubIntA: (4,),
- BossbotCountryClubIntB: 3 * (8,) + 6 * (9,) + 6 * (10,) + 5 * (11,),
+CountryClubNumRooms = {BossbotCountryClubIntA: 4 * (10,) + 10 * (11,) + 6 * (12,),
+ BossbotCountryClubIntB: 4 * (10,) + 10 * (11,) + 6 * (12,),
  BossbotCountryClubIntC: 4 * (10,) + 10 * (11,) + 6 * (12,)}
 CountryClubNumBattles = {BossbotCountryClubIntA: 3,
  BossbotCountryClubIntB: 2,
@@ -328,7 +333,7 @@ Hoods = (DonaldsDock,
  MinniesMelodyland,
  DaisyGardens,
  OutdoorZone,
- FunnyFarm,
+ ClearCoasts,
  GoofySpeedway,
  DonaldsDreamland,
  BossbotHQ,
@@ -481,7 +486,7 @@ phaseMap = {Tutorial: 4,
  GoofySpeedway: 6,
  TheBrrrgh: 8,
  DaisyGardens: 8,
- FunnyFarm: 8,
+ ClearCoasts: 6,
  DonaldsDreamland: 8,
  OutdoorZone: 8,
  BossbotHQ: 12,
@@ -496,7 +501,7 @@ streetPhaseMap = {ToontownCentral: 5,
  GoofySpeedway: 6,
  TheBrrrgh: 8,
  DaisyGardens: 8,
- FunnyFarm: 8,
+ ClearCoasts: 6,
  DonaldsDreamland: 8,
  OutdoorZone: 8,
  BossbotHQ: 12,
@@ -511,7 +516,7 @@ dnaMap = {Tutorial: 'toontown_central',
  GoofySpeedway: 'goofy_speedway',
  TheBrrrgh: 'the_burrrgh',
  DaisyGardens: 'daisys_garden',
- FunnyFarm: 'not done yet',
+ ClearCoasts: 'clear_coasts',
  DonaldsDreamland: 'donalds_dreamland',
  OutdoorZone: 'outdoor_zone',
  BossbotHQ: 'cog_hq_bossbot',
@@ -525,7 +530,7 @@ dnaPGMap = {Tutorial: 'toontown_central',
  MinniesMelodyland: 'minnies_melody_land',
  TheBrrrgh: 'the_burrrgh',
  DaisyGardens: 'daisys_garden',
- FunnyFarm: 'not done yet',
+ ClearCoasts: 'clear_coasts',
  DonaldsDreamland: 'donalds_dreamland'}
 hoodNameMap = {DonaldsDock: TTLocalizer.DonaldsDock,
  ToontownCentral: TTLocalizer.ToontownCentral,
@@ -533,7 +538,7 @@ hoodNameMap = {DonaldsDock: TTLocalizer.DonaldsDock,
  MinniesMelodyland: TTLocalizer.MinniesMelodyland,
  DaisyGardens: TTLocalizer.DaisyGardens,
  OutdoorZone: TTLocalizer.OutdoorZone,
- FunnyFarm: TTLocalizer.FunnyFarm,
+ ClearCoasts: TTLocalizer.ClearCoasts,
  GoofySpeedway: TTLocalizer.GoofySpeedway,
  DonaldsDreamland: TTLocalizer.DonaldsDreamland,
  BossbotHQ: TTLocalizer.BossbotHQ,
@@ -552,7 +557,7 @@ safeZoneCountMap = {MyEstate: 8,
  GoofySpeedway: 500,
  TheBrrrgh: 8,
  DaisyGardens: 9,
- FunnyFarm: 500,
+ ClearCoasts: 500,
  DonaldsDreamland: 5,
  OutdoorZone: 500,
  GolfZone: 500,
@@ -565,7 +570,7 @@ townCountMap = {MyEstate: 8,
  GoofySpeedway: 40,
  TheBrrrgh: 40,
  DaisyGardens: 40,
- FunnyFarm: 40,
+ ClearCoasts: 40,
  DonaldsDreamland: 40,
  OutdoorZone: 40,
  PartyHood: 20}
@@ -577,7 +582,7 @@ hoodCountMap = {MyEstate: 2,
  GoofySpeedway: 2,
  TheBrrrgh: 2,
  DaisyGardens: 2,
- FunnyFarm: 2,
+ ClearCoasts: 2,
  DonaldsDreamland: 2,
  OutdoorZone: 2,
  BossbotHQ: 2,
@@ -1292,6 +1297,7 @@ LawbotBossBonusDuration = 20
 LawbotBossBonusToonup = 10
 LawbotBossBonusWeightMultiplier = 2
 LawbotBossChanceToDoAreaAttack = 0
+BossbotFountainOilDamage = 10
 LOW_POP_JP = 0
 MID_POP_JP = 100
 HIGH_POP_JP = 200
@@ -1588,6 +1594,7 @@ hood2Id = [
     ('DG', (DaisyGardens,)),
     ('TB', (TheBrrrgh,)),
     ('DDL', (DonaldsDreamland,)),
+    ('CC', (ClearCoasts,)),
     ('GZ', (GolfZone,)),
     ('GSW', (GoofySpeedway,)),
     ('GS', (GoofySpeedway,)),

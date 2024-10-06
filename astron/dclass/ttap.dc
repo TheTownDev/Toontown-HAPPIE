@@ -1505,7 +1505,39 @@ struct ToonAttack {
   int64 suitRevive;
 };
 
-struct BattleScene {
+struct SuitCheatsFirst {
+  int64 id;
+  uint64 target;
+  int64[] hp;
+  uint64[] otherTargets;
+  int64 isToon;
+};
+
+struct SuitCheatsSecond {
+  int64 id;
+  uint64 target;
+  int64[] hp;
+  uint64[] otherTargets;
+  int64 isToon;
+};
+
+struct DOTs {
+  int64 id;
+  uint64 target;
+  int64[] hp;
+  uint64[] otherTargets;
+  int64 isToon;
+};
+
+struct CutscenesFirst {
+  int64 id;
+  uint64 target;
+  int64[] hp;
+  uint64[] otherTargets;
+  int64 isToon;
+};
+
+struct CutscenesSecond {
   int64 id;
   uint64 target;
   int64[] hp;
@@ -1523,7 +1555,11 @@ struct BattleMovie {
   
   ToonAttack[] toonAttacks;
   SuitAttack[] suitAttacks;
-  BattleScene[] battleScenes;
+  SuitCheatsFirst[] suitsCheatFirst;
+  SuitCheatsSecond[] suitsCheatSecond;
+  DOTs[] dots;
+  CutscenesFirst[] cutscenesFirst;
+  CutscenesSecond[] cutscenesSecond;
 };
 
 dclass DistributedBattleBase : DistributedObject {

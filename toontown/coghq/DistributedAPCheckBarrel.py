@@ -19,14 +19,8 @@ class DistributedAPCheckBarrel(DistributedBarrelBase.DistributedBarrelBase):
 
         if self.barrel is None:
             return
-
-        # If we already have the check, make it gray otherwise full color
-        if self.getLocationCheckId() in base.localAvatar.getCheckedLocations():
-            # This is the code that runs in super().setGrab() to "disable" this barrel for collision checks
-            self.ignore(self.uniqueName('entertreasureSphere'))
-            self.barrel.setColorScale(0.5, 0.5, 0.5, 1)
-        else:
-            self.barrel.setColorScale(1, 1, 1, 1)
+    
+        self.barrel.setColorScale(1, 1, 1, 1)
 
     def setLocationCheckId(self, locationCheckId):
         self.locationCheckId = locationCheckId

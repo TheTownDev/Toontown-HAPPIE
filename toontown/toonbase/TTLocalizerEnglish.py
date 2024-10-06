@@ -106,6 +106,11 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  9000: ('to the', 'in the', 'Playground'),
  9100: ('to', 'on', 'Lullaby Lane'),
  9200: ('to', 'on', 'Pajama Place'),
+ 9300: ('to', 'on', 'Snooze Square'),
+ 7000: ('to', 'on', 'Clear Coasts'),
+ 7100: ('to', 'on', 'Sand Avenue'),
+ 7200: ('to', 'on', 'Vacation Ally'),
+ 7300: ('to', 'on', 'Tan-ical Way'),
  10000: ('to', 'in', 'Bossbot HQ Country Club'),
  10100: ('to the', 'in the', 'Bossbot HQ Lobby'),
  10200: ('to the', 'in the', 'The Clubhouse'),
@@ -136,7 +141,7 @@ TheBrrrgh = ('to', 'in', lTheBrrrgh)
 MinniesMelodyland = ('to', 'in', lMinniesMelodyland)
 DaisyGardens = ('to', 'in', lDaisyGardens)
 OutdoorZone = ('to', 'in', lOutdoorZone)
-FunnyFarm = ('to the', 'in the', 'Funny Farm')
+ClearCoasts = ('to the', 'in the', 'Clear Coasts')
 GoofySpeedway = ('to', 'in', lGoofySpeedway)
 DonaldsDreamland = ('to', 'in', lDonaldsDreamland)
 BossbotHQ = ('to', 'in', 'Bossbot HQ')
@@ -2411,9 +2416,9 @@ SuitDefendentP = 'Defendents'
 SuitSkinflint = 'Skinflint'
 SuitSkinflintS = 'a Skinflint'
 SuitSkinflintP = 'Skinflints'
-SuitTrafficManager = 'Traffic Manager'
-SuitTrafficManagerS = 'a Traffic Manager'
-SuitTrafficManagerP = 'Traffic Managers'
+SuitTrafficManager = 'Factory Foreman'
+SuitTrafficManagerS = 'a Factory Foreman'
+SuitTrafficManagerP = 'Factory Foremen'
 SuitBagHolder = 'Bag Holder'
 SuitBagHolderS = 'a Bag Holder'
 SuitBagHolderP = 'Bag Holders'

@@ -518,7 +518,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
             self.defaultZone = ToontownCentral
             return
 
-        if ZoneUtil.getCanonicalHoodId(zoneId) == FunnyFarm:
+        if ZoneUtil.getCanonicalHoodId(zoneId) == ClearCoasts:
             self.defaultZone = ToontownCentral
             return
         if not base.cr.isPaid() or launcher and not launcher.getPhaseComplete(hoodPhase):
@@ -2981,3 +2981,16 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
     # Note: This information is meaningless if self.usingColorProfile() is False.
     def getCurrentColorProfile(self) -> ColorProfile:
         return self.nametag.getColorProfile()
+    
+    def stun(self, damage):
+        if self == base.localAvatar:
+            self.stunToon()
+
+    def d_stun(self, damage):
+        self.sendUpdate('squish', [damage])
+
+    def b_stun(self, damage):
+        if not self.isStunned and self.hp > 0:
+            self.stun(damage)
+            self.d_stun(damage)
+            self.playDialogueForString('!')

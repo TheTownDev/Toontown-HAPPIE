@@ -559,10 +559,10 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         if self.__battleCleanedUp:
             return
 
-        movieHasBeenMade, activeToons, activeSuits, toonAttacks, suitAttacks, battleScenes = battleMovie
+        movieHasBeenMade, activeToons, activeSuits, toonAttacks, suitAttacks, suitsCheatFirst, suitsCheatSecond, dots, cutscenesFirst, cutscenesSecond = battleMovie
 
         if movieHasBeenMade:
-            self.movie.genAttackDicts(activeToons, activeSuits, toonAttacks, suitAttacks, battleScenes)
+            self.movie.genAttackDicts(activeToons, activeSuits, toonAttacks, suitAttacks, suitsCheatFirst, suitsCheatSecond, dots, cutscenesFirst, cutscenesSecond)
 
     def setChosenToonAttacks(self, ids, tracks, levels, targets):
         if self.__battleCleanedUp:

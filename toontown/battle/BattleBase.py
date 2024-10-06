@@ -63,6 +63,15 @@ TOON_FIRE_SUIT_DELAY = 1.0
 REWARD_TIMEOUT = 120
 FLOOR_REWARD_TIMEOUT = 4
 BUILDING_REWARD_TIMEOUT = 300
+LURE_KB_HPS = [
+    40,
+    20,
+    70,
+    50,
+    130,
+    90,
+    160
+]
 try:
     CLIENT_INPUT_TIMEOUT = base.config.GetFloat('battle-input-timeout', TTLocalizer.BBbattleInputTimeout)
 except:

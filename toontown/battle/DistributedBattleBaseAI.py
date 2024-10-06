@@ -54,6 +54,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         self.toonMerits = {}
         self.toonParts = {}
         self.battleCalc = BattleCalculatorAI.BattleCalculatorAI(self, tutorialFlag)
+        self.suitsCheatFirst, self.suitsCheatSecond, self.dots, self.cutscenesFirst, self.cutscenesSecond = [], [], [], [], []
 
         battleHoodId = ZoneUtil.getHoodId(self.zoneId)
         skillCreditMult = getHoodSkillCreditMultiplier(battleHoodId)
@@ -113,6 +114,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
     def clearAttacks(self):
         self.toonAttacks = {}
         self.battleScenes = []
+        self.suitsCheatFirst, self.suitsCheatSecond, self.dots, self.cutscenesFirst, self.cutscenesSecond = [], [], [], [], []
         self.suitAttacks = getDefaultSuitAttacks()
 
     def requestDelete(self):
@@ -360,9 +362,9 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         movie = [self.movieHasBeenMade, self.activeToons, suitIds]
         toonAttacks = self.getToonAttacks(suitIds)
         suitAttacks = self.getSuitAttacks()
-        battleScenes = self.getBattleScenes()
+        suitsCheatFirst, suitsCheatSecond, dots, cutscenesFirst, cutscenesSecond = self.getBattleScene(self.suitsCheatFirst), self.getBattleScene(self.suitsCheatSecond), self.getBattleScene(self.dots), self.getBattleScene(self.cutscenesFirst), self.getBattleScene(self.cutscenesSecond)
 
-        movie += [toonAttacks, suitAttacks, battleScenes]
+        movie += [toonAttacks, suitAttacks, suitsCheatFirst, suitsCheatSecond, dots, cutscenesFirst, cutscenesSecond]
         return movie
 
     def getToonAttacks(self, suitIds):
@@ -415,17 +417,17 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
 
         return suitAttacks
 
-    def getBattleScenes(self):
-        battleScenes = []
-        for scene in self.battleScenes:
+    def getBattleScene(self, sceneList):
+        battleScene = []
+        for scene in sceneList:
             id = scene[0]
             targetId = scene[1]
             hp = scene[2]
             otherTargets = scene[3]
             isToon = scene[4]
-            battleScenes.append([id, targetId, hp, otherTargets, isToon])
+            battleScene.append([id, targetId, hp, otherTargets, isToon])
 
-        return battleScenes
+        return battleScene
 
         return p
 

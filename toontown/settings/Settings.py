@@ -61,7 +61,7 @@ class Settings:
         "fps-limit": 0,
         # Options below this comment will not be exposed by OptionsPage
         # They can still be configurable by the end user
-        "want-legacy-models": False,
+        "want-legacy-models": True,
         "experimental-multithreading": False,
         'discord-rich-presence': False,
         "archipelago-textsize": 0.5,

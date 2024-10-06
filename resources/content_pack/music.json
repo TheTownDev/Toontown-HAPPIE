@@ -14,6 +14,10 @@
       "boss-none-sting": "phase_9/audio/bgm/encntr_head_suit_theme.ogg",
       "boss-none-jury": "phase_9/audio/bgm/encntr_head_suit_theme.ogg",
 
+      "10500_battle": "phase_12/audio/bgm/ttr_s_ara_bhq_facilityBattle.ogg",
+      "10600_battle": "phase_12/audio/bgm/ttr_s_ara_bhq_facilityBattle.ogg",
+      "10700_battle": "phase_12/audio/bgm/ttr_s_ara_bhq_facilityBattle.ogg",
+
       "BOSSES" : "s = vp, m = cfo, l = cj, c = ceo",
       "boss-c-two": "phase_12/audio/bgm/BossBot_CEO_v1.ogg",
       "boss-c-four": "phase_12/audio/bgm/BossBot_CEO_v2.ogg"

@@ -1,6 +1,7 @@
 {
     "suit_clothes": {
-      "suit_name": true
+      "suit_name": true,
+      "trf": true
     }
   }
   

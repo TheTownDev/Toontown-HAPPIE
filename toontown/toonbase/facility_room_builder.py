@@ -1,6 +1,6 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import *
-from .room import GlobalEntities
+from toontown.coghq.BossbotCountryClubOilRoom_Action00 import GlobalEntities
 from otp.level import LevelUtil
 
 if __debug__:
@@ -157,7 +157,7 @@ class MyApp(ShowBase):
                 model.setScale(self.room[entity]['scale'])
                 self.roomEntId2Model[entity] = model
             if self.room[entity]['type'] == 'battleBlocker':
-                model = loader.loadModel("phase_3/models/props/drop_shadow.bam")
+                model = loader.loadModel("phase_3/models/misc/sphere.bam")
                 model.setPos(self.room[entity]['pos'])
                 model.setHpr(self.room[entity]['hpr'])
                 model.setScale(self.room[entity]['scale'])
@@ -214,6 +214,16 @@ class MyApp(ShowBase):
                 self.roomEntId2Model[entity] = model
             if self.room[entity]['type'] == 'mintProduct':
                 model = loader.loadModel('phase_10/models/cashbotHQ/GoldBarStack.bam')
+                if self.room[entity]['parentEntId'] != 0:
+                    model.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
+                else:
+                    model.reparentTo(self.roomModel)
+                model.setPos(self.room[entity]['pos'])
+                model.setHpr(self.room[entity]['hpr'])
+                model.setScale(self.room[entity]['scale'])
+                self.roomEntId2Model[entity] = model
+            if self.room[entity]['type'] == 'golfGreenGame':
+                model = loader.loadModel('phase_12/models/bossbotHQ/ttr_m_ara_bhq_cogGolfGrass.bam')
                 if self.room[entity]['parentEntId'] != 0:
                     model.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
                 else:
@@ -402,19 +412,28 @@ class MyApp(ShowBase):
         
         for entity in self.room:
             if 'pos' in self.room[entity]:
-                self.room[entity]['pos'] = self.roomEntId2Model[entity].getPos()
+                try:
+                    self.room[entity]['pos'] = self.roomEntId2Model[entity].getPos()
+                except:
+                    pass
             if 'hpr' in self.room[entity]:
                 if self.room[entity]['type'] == 'stomper':
                     self.room[entity]['hpr'] = Vec3(0, 0, 0)
                 else:
-                    self.room[entity]['hpr'] = self.roomEntId2Model[entity].getHpr()
+                    try:
+                        self.room[entity]['hpr'] = self.roomEntId2Model[entity].getHpr()
+                    except:
+                        pass
             if 'scale' in self.room[entity]:
                 if self.room[entity]['type'] in ('gagBarrel', 'healBarrel', 'beanBarrel', 'apBarrel'):
                     self.room[entity]['scale'] = 1
                 elif self.room[entity]['type'] == 'goon':
                     self.room[entity]['scale'] = self.roomEntId2Model[entity].getSx()
                 else:
-                    self.room[entity]['scale'] = self.roomEntId2Model[entity].getScale()
+                    try:
+                        self.room[entity]['scale'] = self.roomEntId2Model[entity].getScale()
+                    except:
+                        pass
         
         self.room[1000]['type'] = 'levelMgr'
         self.room[0]['visibility'] = []
@@ -425,6 +444,9 @@ class MyApp(ShowBase):
                 self.room[entity]['parentEntId'] = 0
 
         print(self.room)
+        #write a python file with the room data
+        with open('room_data.py', 'w') as f:
+            f.write('GlobalEntities = ' + str(self.room))
     
     def assignAttributeToModel(self, entity, model, attrib):
         attrib_Name = NodePath(str(attrib))

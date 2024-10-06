@@ -52,7 +52,7 @@ suitHeadTypes = [
     'trf',
     'ski',
     'def',
-    'bgh'
+    'bgh',
 ]
 
 notMainTypes = [
@@ -75,7 +75,6 @@ suitATypes = [
     'rb',
     'nd',
     'tf',
-    'trf',
     'm',
     'mh'
 ]
@@ -92,6 +91,7 @@ suitBTypes = [
     'ls',
     'tm',
     'ms',
+    'trf'
 ]
 
 suitCTypes = [
@@ -164,7 +164,15 @@ suit2headTexturePaths = {
     'c': 'phase_3.5/maps/'
 }
 
+#ttr_r_ene_cgc_heads
+
 suitBody2HeadPath = {
+    'a': 'phase_3.5/models/char/ttr_r_ene_cga_heads',
+    'b': 'phase_3.5/models/char/ttr_r_ene_cgb_heads',
+    'c': 'phase_3.5/models/char/ttr_r_ene_cgc_heads'
+}
+
+suitBody2HeadPathOG = {
     'a': 'phase_4/models/char/suitA-heads',
     'b': 'phase_4/models/char/suitB-heads',
     'c': 'phase_3.5/models/char/suitC-heads'
@@ -459,8 +467,6 @@ class SuitVisual:
                 headPath = self.headModelPath(suit.style.body)
                 if self.key in ['ds', 'def']:
                     headPath = self.headModelPath(suit.style.body, 'phase_4/models/char/suitB-heads2')
-                elif self.key == 'trf':
-                    headPath = self.headModelPath(suit.style.body, 'phase_4/models/char/suitA-heads2')
                 headModel = loader.loadModel(headPath)
                 head = headModel.find('**/' + head)
                 head.reparentTo(suit.find(attachPoint))
@@ -523,7 +529,7 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual('m',   5.75 / aSize,  salesPolyColor,                None,                         'mingler.jpg',          'twoface',             7.61),
     SuitVisual('mh',  7.0 / aSize,   salesPolyColor,                None,                         None,                   'yesman',              8.95),
 
-    SuitVisual('trf',  5.25 / aSize,  salesPolyColor,                None,                         None,                   ['flunky', 'hat'],             6.95),
+    SuitVisual('trf',  6.05 / aSize,  VBase4(0.886, 0.737, 0.784, 1.0),                None,                         None,                   'factoryforeman',             6.95),
     SuitVisual('ski',  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        'skinflint.jpg',      'telemarketer',        7.9),
     SuitVisual('def',  4.4 / bSize,   moneyPolyColor,                None,                        'suit-heads_palette_3cmla_5.jpg',                   ['downsizer', 'downsizer_hat'],         5.95),
     SuitVisual('bgh',   4.0 / cSize,   corpPolyColor,                 None,                         'bag_holder.jpg',                   'tightwad', 4.88),

@@ -287,7 +287,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
                 damageBonusStr = TTLocalizer.InventoryDamageBonus % damageBonus
         if track == LURE_TRACK:
             numRoundsLured = AvLureRounds[level]
-            knockback = str(damage) + '%'
+            knockback = str(damage)
             damage = numRoundsLured
             damageBonusStr = ''
             self.detailCreditLabel.setPos(-0.22, 0, -0.395)

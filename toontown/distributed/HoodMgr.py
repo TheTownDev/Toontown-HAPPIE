@@ -25,6 +25,20 @@ class HoodMgr(DirectObject.DirectObject):
             [-2, -79, 5.7, 57.4, -0.0, 0.0],
             [-38, -78, 5.7, 9.1, -0.0, 0.0]
         ),
+        
+        ToontownGlobals.ClearCoasts: (
+            [-28.0, -2.5, 5.8, 120.0, 0.0, 0.0],
+            [-22, 13, 5.8, 155.6, 0.0, 0.0],
+            [67, 47, 5.7, 134.7, 0.0, 0.0],
+            [62, 19, 5.7, 97.0, 0.0, 0.0],
+            [66, -27, 5.7, 80.5, 0.0, 0.0],
+            [-114, -7, 5.7, -97.0, -0.0, 0.0],
+            [-108, 36, 5.7, -153.8, -0.0, 0.0],
+            [-116, -46, 5.7, -70.1, -0.0, 0.0],
+            [-63, -79, 5.7, -41.2, -0.0, 0.0],
+            [-2, -79, 5.7, 57.4, -0.0, 0.0],
+            [-38, -78, 5.7, 9.1, -0.0, 0.0]
+        ),
 
         ToontownGlobals.ToontownCentral: (
             [-60, -8, 1.3, -90, 0, 0],
@@ -190,7 +204,7 @@ class HoodMgr(DirectObject.DirectObject):
      'mm': ToontownGlobals.MinniesMelodyland,
      'dg': ToontownGlobals.DaisyGardens,
      'oz': ToontownGlobals.OutdoorZone,
-     'ff': ToontownGlobals.FunnyFarm,
+     'cc': ToontownGlobals.ClearCoasts,
      'gs': ToontownGlobals.GoofySpeedway,
      'dl': ToontownGlobals.DonaldsDreamland,
      'bosshq': ToontownGlobals.BossbotHQ,
@@ -205,7 +219,7 @@ class HoodMgr(DirectObject.DirectObject):
      ToontownGlobals.MinniesMelodyland: 'mm',
      ToontownGlobals.DaisyGardens: 'dg',
      ToontownGlobals.OutdoorZone: 'oz',
-     ToontownGlobals.FunnyFarm: 'ff',
+     ToontownGlobals.ClearCoasts: 'cc',
      ToontownGlobals.GoofySpeedway: 'gs',
      ToontownGlobals.DonaldsDreamland: 'dl',
      ToontownGlobals.BossbotHQ: 'bosshq',

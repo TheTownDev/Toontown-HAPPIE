@@ -17,6 +17,7 @@ from toontown.hood import DLHood
 from toontown.hood import GSHood
 from toontown.hood import OZHood
 from toontown.hood import GZHood
+from toontown.hood import CCHood
 from toontown.hood import SellbotHQ, CashbotHQ, LawbotHQ, BossbotHQ
 from toontown.hood import TutorialHood
 from direct.task import TaskManagerGlobal
@@ -31,6 +32,7 @@ class PlayGame(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('PlayGame')
     Hood2ClassDict = {ToontownGlobals.ToontownCentral: TTHood.TTHood,
      ToontownGlobals.DonaldsDock: DDHood.DDHood,
+     ToontownGlobals.ClearCoasts: CCHood.CCHood,
      ToontownGlobals.TheBrrrgh: BRHood.BRHood,
      ToontownGlobals.MinniesMelodyland: MMHood.MMHood,
      ToontownGlobals.DaisyGardens: DGHood.DGHood,
@@ -47,6 +49,7 @@ class PlayGame(StateData.StateData):
      ToontownGlobals.PartyHood: PartyHood.PartyHood}
     Hood2StateDict = {ToontownGlobals.ToontownCentral: 'TTHood',
      ToontownGlobals.DonaldsDock: 'DDHood',
+     ToontownGlobals.ClearCoasts: 'CCHood',
      ToontownGlobals.TheBrrrgh: 'BRHood',
      ToontownGlobals.MinniesMelodyland: 'MMHood',
      ToontownGlobals.DaisyGardens: 'DGHood',
@@ -72,6 +75,7 @@ class PlayGame(StateData.StateData):
           'MMHood',
           'DGHood',
           'DLHood',
+          'CCHood',
           'GSHood',
           'OZHood',
           'GZHood',
@@ -88,6 +92,7 @@ class PlayGame(StateData.StateData):
          State.State('MMHood', self.enterMMHood, self.exitMMHood, ['quietZone']),
          State.State('DGHood', self.enterDGHood, self.exitDGHood, ['quietZone']),
          State.State('DLHood', self.enterDLHood, self.exitDLHood, ['quietZone']),
+         State.State('CCHood', self.enterCCHood, self.exitCCHood, ['quietZone']),
          State.State('GSHood', self.enterGSHood, self.exitGSHood, ['quietZone']),
          State.State('OZHood', self.enterOZHood, self.exitOZHood, ['quietZone']),
          State.State('GZHood', self.enterGZHood, self.exitGZHood, ['quietZone']),
@@ -315,6 +320,13 @@ class PlayGame(StateData.StateData):
         self.hood.enter(requestStatus)
 
     def exitDDHood(self):
+        self._destroyHood()
+    
+    def enterCCHood(self, requestStatus):
+        self.accept(self.hoodDoneEvent, self.handleHoodDone)
+        self.hood.enter(requestStatus)
+
+    def exitCCHood(self):
         self._destroyHood()
 
     def enterMMHood(self, requestStatus):
