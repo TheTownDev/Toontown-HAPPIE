@@ -111,6 +111,8 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         self.disguisePage = None
         self.sosPage = None
         self.gardenPage = None
+        self.wantsToRemoteControl = 0
+        self.activeCog = 0
         self.cogTypes = [0,
          0,
          0,
@@ -1045,7 +1047,11 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
             parts = self.getCogParts()
             if CogDisguiseGlobals.isPaidSuitComplete(self, parts, index):
                 cogIndex = self.cogTypes[index] + SuitDNA.suitsPerDept * index
-                cog = SuitDNA.suitHeadTypes[cogIndex]
+                
+                if cogIndex > SuitDNA.suitsPerDept + 1:
+                    cog = SuitDNA.dept2SuitSupervisor[SuitDNA.suitDepts[index]]
+                else:
+                    cog = SuitDNA.suitHeadTypes[cogIndex]
                 self.putOnSuit(cog)
             else:
                 self.putOnSuit(index, rental=True)
@@ -1101,6 +1107,14 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
 
     def getFishingTrophies(self):
         return self.fishingTrophies
+
+    def setWantsToRemoteControl(self, wantsToRemoteControl):
+        self.wantsToRemoteControl = wantsToRemoteControl
+        self.sendUpdate('setWantsToRemoteControl', [wantsToRemoteControl])
+    
+    def setActiveCog(self, activeCog):
+        self.activeCog = activeCog
+        self.sendUpdate('setActiveCog', [activeCog])
 
     def setQuests(self, flattenedQuests):
         questList = []

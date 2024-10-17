@@ -88,6 +88,7 @@ class SuitAttackType(IntEnum):
     PARADIGM_SHIFT = auto()
     PECKING_ORDER = auto()
     PICK_POCKET = auto()
+    PENNY_PINCH = auto()
     PINK_SLIP = auto()
     PLAY_HARDBALL = auto()
     POUND_KEY = auto()
@@ -847,7 +848,7 @@ __PENNY_PINCHER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.BOUNCE_CHECK,
     damage={2: 4, 3: 5, 4: 6, 5: 8, 6: 12},
     accuracy=75,
-    weight=45,
+    weight=30,
 ))
 __PENNY_PINCHER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.FREEZE_ASSETS,
@@ -856,10 +857,10 @@ __PENNY_PINCHER_ATTACKS.add(SuitAttackAttribute(
     weight=20,
 ))
 __PENNY_PINCHER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.FINGER_WAG,
+    attack=SuitAttackType.PENNY_PINCH,
     damage={2: 1, 3: 2, 4: 3, 5: 4, 6: 6},
     accuracy=50,
-    weight=35,
+    weight=50,
 ))
 __PENNY_PINCHER: SuitAttributes = SuitAttributes(key='pp', name=TTLocalizer.SuitPennyPincher, singular=TTLocalizer.SuitPennyPincherS, plural=TTLocalizer.SuitPennyPincherP, tier=1, attacks=__PENNY_PINCHER_ATTACKS)
 __registerSuitAttributes(__PENNY_PINCHER)
@@ -1411,6 +1412,7 @@ __SuitAttacksToDefaultAnimation = {
     SuitAttackType.PARADIGM_SHIFT:      'magic2',
     SuitAttackType.PECKING_ORDER:       'throw-object',
     SuitAttackType.PICK_POCKET:         'pickpocket',
+    SuitAttackType.PENNY_PINCH:         'pickpocket',
     SuitAttackType.PINK_SLIP:           'throw-paper',
     SuitAttackType.PLAY_HARDBALL:       'throw-paper',
     SuitAttackType.POUND_KEY:           'phone',

@@ -33,6 +33,7 @@ hood_model "phase_4/models/modules/suit_landmark_corp" [
 	store_node [ "suit_landmark" "suit_landmark_c3" "" ]
 	store_node [ "suit_landmark" "suit_landmark_c4" "" ]
 	store_node [ "suit_landmark" "suit_landmark_c5" "" ]
+	store_node [ "suit_landmark" "suit_landmark_c6" "" ]
 	]
 hood_model "phase_4/models/modules/suit_landmark_legal" [
 	store_node [ "suit_landmark" "suit_landmark_l1" "" ]
@@ -40,6 +41,7 @@ hood_model "phase_4/models/modules/suit_landmark_legal" [
 	store_node [ "suit_landmark" "suit_landmark_l3" "" ]
 	store_node [ "suit_landmark" "suit_landmark_l4" "" ]
 	store_node [ "suit_landmark" "suit_landmark_l5" "" ]
+	store_node [ "suit_landmark" "suit_landmark_l6" "" ]
 	]
 hood_model "phase_4/models/modules/suit_landmark_sales" [
 	store_node [ "suit_landmark" "suit_landmark_s1" "" ]
@@ -47,6 +49,7 @@ hood_model "phase_4/models/modules/suit_landmark_sales" [
 	store_node [ "suit_landmark" "suit_landmark_s3" "" ]
 	store_node [ "suit_landmark" "suit_landmark_s4" "" ]
 	store_node [ "suit_landmark" "suit_landmark_s5" "" ]
+	store_node [ "suit_landmark" "suit_landmark_s6" "" ]
 	]
 hood_model "phase_4/models/modules/suit_landmark_money" [
 	store_node [ "suit_landmark" "suit_landmark_m1" "" ]
@@ -54,6 +57,7 @@ hood_model "phase_4/models/modules/suit_landmark_money" [
 	store_node [ "suit_landmark" "suit_landmark_m3" "" ]
 	store_node [ "suit_landmark" "suit_landmark_m4" "" ]
 	store_node [ "suit_landmark" "suit_landmark_m5" "" ]
+	store_node [ "suit_landmark" "suit_landmark_m6" "" ]
 	]
 
 hood_model "phase_4/models/modules/elevator" [

@@ -44,14 +44,19 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                     [4300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (25, 0, 50, 25), (4, 5, 6, 7), [], 4],
 
                     # The Brrrgh
-                    [3100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (100, 0, 0, 0), (5, 6, 7, 8), [], 4],
-                    [3200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 0, 50, 50), (5, 6, 7, 8), [], 4],
-                    [3300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 100, 0, 0), (5, 6, 7, 8), [], 4],
+                    [3100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (100, 0, 0, 0), (5, 6, 7, 8, 9), [], 4],
+                    [3200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 0, 50, 50), (5, 6, 7, 8, 9), [], 4],
+                    [3300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 100, 0, 0), (5, 6, 7, 8, 10), [], 4],
 
                     #Donalds Dreamland
-                    [9100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (33, 34, 0, 33), (6, 7, 8, 9), [], 4],
-                    [9200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 0, 100, 0),  (6, 7, 8, 9), [], 4],
-                    [9300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (60, 20, 0, 20),  (6, 7, 8, 9, 10), [], 7],
+                    [9100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (33, 34, 0, 33), (6, 7, 8, 9, 10), [], 5],
+                    [9200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 0, 100, 0),  (6, 7, 8, 9, 10, 11), [], 5],
+                    [9300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (60, 20, 0, 20),  (6, 7, 8, 9, 10, 11), [], 7],
+                    
+                    #Clear Coasts
+                    [7100, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (33, 34, 0, 33), (8, 9, 10, 11, 12), [], 6],
+                    [7200, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (0, 0, 100, 0),  (8, 9, 10, 11, 12), [], 6],
+                    [7300, 1, 5, 0, 99, 100, 4, (1, 5, 10, 40, 60, 80), (60, 20, 0, 20),  (11, 12, 13), [], 7],
                     
                     # Sellbot Courtyard, Factory Exterior
                     [11000, 3, 15, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (0, 0, 0, 100),  (5, 6, 7), [], 4],
@@ -98,13 +103,13 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     TOTAL_BWEIGHT_PER_TRACK = [
      0, 0, 0, 0]
     TOTAL_BWEIGHT_PER_HEIGHT = [
-     0, 0, 0, 0, 0]
+     0, 0, 0, 0, 0, 0]
     for currHoodInfo in SuitHoodInfo:
         weight = currHoodInfo[SUIT_HOOD_INFO_BWEIGHT]
         tracks = currHoodInfo[SUIT_HOOD_INFO_TRACK]
         levels = currHoodInfo[SUIT_HOOD_INFO_LVL]
         heights = [
-         0, 0, 0, 0, 0]
+         0, 0, 0, 0, 0, 0]
         for level in levels:
             floorInfo = max(0, min(level - 1, (len(SuitBuildingGlobals.SuitBuildingInfo) - 1)))
             minFloors, maxFloors = SuitBuildingGlobals.SuitBuildingInfo[floorInfo][0]
@@ -122,6 +127,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         TOTAL_BWEIGHT_PER_HEIGHT[2] += weight * heights[2]
         TOTAL_BWEIGHT_PER_HEIGHT[3] += weight * heights[3]
         TOTAL_BWEIGHT_PER_HEIGHT[4] += weight * heights[4]
+        TOTAL_BWEIGHT_PER_HEIGHT[5] += weight * heights[5]
 
     defaultSuitName = simbase.config.GetString('suit-type', 'random')
     if defaultSuitName == 'random':
@@ -818,7 +824,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             numPerTrack['m'] += sp.pendingBuildingTracks.count('m')
             numPerTrack['s'] += sp.pendingBuildingTracks.count('s')
 
-        numPerHeight = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
+        numPerHeight = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
         for sp in list(self.air.suitPlanners.values()):
             sp.countNumBuildingsPerHeight(numPerHeight)
             numPerHeight[0] += sp.pendingBuildingHeights.count(0)
@@ -826,6 +832,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             numPerHeight[2] += sp.pendingBuildingHeights.count(2)
             numPerHeight[3] += sp.pendingBuildingHeights.count(3)
             numPerHeight[4] += sp.pendingBuildingHeights.count(4)
+            numPerHeight[5] += sp.pendingBuildingHeights.count(5)
 
         while numToAssign > 0:
             smallestCount = None
@@ -1109,6 +1116,9 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         battle = self.battleMgr.getBattle(zoneId)
         if len(battle.suits) >= 4:
             return 0
+        for suit in battle.suits:
+            if suit.dna.name == 'trf':
+                return 1
         if battle:
             if simbase.config.GetBool('suits-always-join', 0):
                 return 1

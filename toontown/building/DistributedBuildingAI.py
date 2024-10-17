@@ -339,6 +339,7 @@ class DistributedBuildingAI(DistributedObjectAI.DistributedObjectAI):
                     util.ap_location_name_to_id(locations.ToontownLocationName.TWO_STORY.value),
                     util.ap_location_name_to_id(locations.ToontownLocationName.THREE_STORY.value),
                     util.ap_location_name_to_id(locations.ToontownLocationName.FOUR_STORY.value),
+                    util.ap_location_name_to_id(locations.ToontownLocationName.FIVE_STORY.value),
                     util.ap_location_name_to_id(locations.ToontownLocationName.FIVE_STORY.value)
                     ]
                 toon.addCheckedLocation(floorToCheck[self.numFloors-1])

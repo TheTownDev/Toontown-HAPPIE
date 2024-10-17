@@ -123,7 +123,7 @@ group "clearCoasts" [
      ]
     ]
    ]
-   prop "linktunnel_cc_7101_DNARoot" [
+   prop "linktunnel_cc_7110_DNARoot" [
     code [ "prop_safe_zone_tunnel" ]
     pos [ 36.5458 -166.67 -1.97479 ]
     nhpr [ 60 0 -0 ]

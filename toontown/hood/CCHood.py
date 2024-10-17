@@ -26,6 +26,7 @@ class CCHood(ToonHood.ToonHood):
         ToonHood.ToonHood.load(self)
         self.parentFSM.getStateNamed('CCHood').addChild(self.fsm)
         self.fog = Fog('CCFog')
+        self.sky.setScale(3)
 
     def unload(self):
         self.parentFSM.getStateNamed('CCHood').removeChild(self.fsm)

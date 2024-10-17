@@ -175,7 +175,10 @@ class DisguisePage(ShtikerPage.ShtikerPage):
         self.bkgd.setColor(DeptColors[index])
         self.deptLabel['text'] = (SuitDNA.suitDeptFullnames[SuitDNA.suitDepts[index]],)
         cogIndex = base.localAvatar.cogTypes[index] + SuitDNA.suitsPerDept * index
-        cog = SuitDNA.suitHeadTypes[cogIndex]
+        if cogIndex > SuitDNA.suitsPerDept + 1:
+            cog = SuitDNA.dept2SuitSupervisor[SuitDNA.suitDepts[index]]
+        else:
+            cog = SuitDNA.suitHeadTypes[cogIndex]
         self.progressTitle.hide()
         if SuitDNA.suitDepts[index] == 'm':
             self.progressTitle = self.cogbuckTitle

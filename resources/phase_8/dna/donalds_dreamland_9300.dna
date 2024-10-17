@@ -8756,7 +8756,7 @@ node "donaldsDreamland" [
    texture [ "street_sidewalk_DL_tex" ]
    texture [ "street_curb_DL_tex" ]
   ]
-  prop "linktunnel_cc_7201_DNARoot" [
+  prop "linktunnel_cc_7101_DNARoot" [
    code [ "prop_safe_zone_entrance_tunnel" ]
    pos [ -605.997 414.996 0 ]
    nhpr [ 0 0 0 ]

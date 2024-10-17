@@ -8,6 +8,7 @@ from toontown.suit.Suit import Suit
 from toontown.suit.SuitAvatarPanel import SuitAvatarPanel
 from toontown.battle.SuitBattleGlobals import *
 from toontown.toonbase.ToontownBattleGlobals import *
+from direct.gui.DirectGui import *
 
 
 class TownBattleSuitPanel(DirectFrame):
@@ -29,6 +30,10 @@ class TownBattleSuitPanel(DirectFrame):
             self.healthGlowColors = Suit.healthGlowColorsAccess
 
         self.hidden = False
+        self.panelId = id
+        self.cogSelectButton = DirectButton(parent=self, pos=(0, 0, 0), text_scale=0.0, text_pos=(0, 0, 0), text='', command=self.handleCogSelect)
+        self.cogSelectButton.setScale(1.5)
+        self.cogSelectButton.setBin("gui-popup", 50)
         self.cog = None
         self.isLoaded = 0
         self.notify.info("Loading Suit Battle Panel!")
@@ -90,6 +95,10 @@ class TownBattleSuitPanel(DirectFrame):
             self.healthText['text'] = TTLocalizer.TownBattleSuitLevel % {
                 'level': (self.cog.getActualLevel()),
             }
+    
+    def handleCogSelect(self):
+        base.localAvatar.setActiveCog(self.panelId)
+        base.localAvatar.setSystemMessage(0, "Cog Selected!")
 
     def updateHealthBar(self):
 

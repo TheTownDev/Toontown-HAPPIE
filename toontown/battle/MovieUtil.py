@@ -177,6 +177,37 @@ def insertDeathSuit(suit, deathSuit, battle = None, pos = None, hpr = None):
             deathSuit.setHpr(battle, hpr)
     return
 
+def payRaiseMovie(suit, battle):
+    payRaiseModel = loader.loadModel('phase_5/models/props/ttr_m_ara_cbg_payRaise')
+    suitPosBattle, suitHprBattle = battle.getActorPosHpr(suit, battle.activeSuits)
+    
+
+    animTrack = Sequence()
+    propTrack = Sequence()
+    suitType = suit.dna.body
+    
+    payRaiseModel.setPos(suitPosBattle)
+    payRaiseModel.reparentTo(battle)
+    payRaiseModel.setScale(0.0001)
+    
+    
+    propTrack.append(Wait(3))
+    propTrack.append(LerpScaleInterval(payRaiseModel, 0.6, 1.0))
+    propTrack.append(Sequence(Wait(4), LerpPosInterval(payRaiseModel, 0.6, Point3(payRaiseModel.getX(), payRaiseModel.getY(), payRaiseModel.getZ() - 8)), Func(payRaiseModel.removeNode)))
+    
+    animTrack.append(Wait(3))
+    animTrack.append(Func(suit.setZ, suit.getZ() + 3.0))
+    
+    if suitType == 'a':
+        animTrack.append(ActorInterval(suit, 'slip-forward', startTime=2.43))
+    elif suitType == 'b':
+        animTrack.append(ActorInterval(suit, 'slip-forward', startTime=1.94))
+    elif suitType == 'c':
+        animTrack.append(ActorInterval(suit, 'slip-forward', startTime=2.58))
+    
+    animTrack.append(Wait(2.90))
+    animTrack.append(LerpPosInterval(suit, 0.4, Point3(suit.getX(), suit.getY(), suit.getZ())))
+    return Parallel(animTrack, propTrack)
 
 def removeDeathSuit(suit, deathSuit):
     notify.debug('removeDeathSuit()')

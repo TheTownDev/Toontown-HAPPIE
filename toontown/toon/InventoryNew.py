@@ -52,6 +52,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.propAndOrganicBonusStack = base.config.GetBool('prop-and-organic-bonus-stack', 0)
         self.propBonusIval = Parallel()
         self.activateMode = 'book'
+        self.remoteCheck = 0
         self.load()
         self.hide()
         return
@@ -248,6 +249,13 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
 
     def __handleFire(self):
         messenger.send('inventory-fire')
+    
+    def __handleRemote(self):
+        if self.remoteCheck:
+            self.remoteCheck = 0
+        else:
+            self.remoteCheck = 1
+        base.localAvatar.setWantsToRemoteControl(self.remoteCheck)
 
     def __handleSOS(self):
         messenger.send('inventory-sos')
@@ -893,11 +901,13 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
             self.sosButton.hide()
             self.passButton.hide()
             self.fireButton.hide()
+            self.remoteButton.hide()
         else:
             self.runButton.show()
             self.sosButton.show()
             self.passButton.show()
             self.fireButton.show()
+            self.remoteButton.show()
             if localAvatar.getPinkSlips() > 0:
                 self.fireButton['state'] = DGG.NORMAL
                 self.fireButton['image_color'] = Vec4(0, 0.6, 1, 1)
@@ -1194,6 +1204,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         self.sosButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.96, 0, -0.398), text=TTLocalizer.InventorySOS, text_scale=0.05, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handleSOS)
         self.passButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.96, 0, -0.242), text=TTLocalizer.InventoryPass, text_scale=TTLocalizer.INpassButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=1, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handlePass)
         self.fireButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.73, 0, -0.242), text=TTLocalizer.InventoryFire, text_scale=TTLocalizer.INfireButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handleFire)
+        self.remoteButton = DirectButton(parent=self.battleFrame, relief=None, pos=(0.96, 0, -0.242), text=TTLocalizer.InventoryRemote, text_scale=TTLocalizer.INfireButton, text_pos=(0, -0.02), text_fg=Vec4(1, 1, 1, 1), textMayChange=0, image=(self.upButton, self.downButton, self.rolloverButton), image_scale=1.05, image_color=(0, 0.6, 1, 1), command=self.__handleRemote)
         self.tutText = DirectFrame(parent=self.battleFrame, relief=None, pos=(0.05, 0, -0.1133), scale=0.143, image=DGG.getDefaultDialogGeom(), image_scale=5.125, image_pos=(0, 0, -0.65), image_color=ToontownGlobals.GlobalDialogColor, text_scale=TTLocalizer.INclickToAttack, text=TTLocalizer.InventoryClickToAttack, textMayChange=0)
         self.tutText.hide()
         self.tutArrows = BlinkingArrows.BlinkingArrows(parent=self.battleFrame)

@@ -152,6 +152,13 @@ suitsPerLevel = [
 suitsPerDept = 8
 goonTypes = ['pg', 'sg']
 
+dept2SuitSupervisor = {
+    's': 'trf',
+    'm': 'ski',
+    'l': 'def',
+    'c': 'bgh'
+}
+
 ModelDict = {
     'a': ('/models/char/ttr_r_ene_cga_suit', 3.5),
     'b': ('/models/char/ttr_r_ene_cgb_suit', 3.5),
@@ -313,6 +320,10 @@ __GENERAL_SUIT_ANIMATIONS: Set[SuitAnimation] = {
     SuitAnimation(key='sit-lose', suit='A', path='sit-lose', phase='12'),
     SuitAnimation(key='sit-lose', suit='B', path='sit-lose', phase='12'),
     SuitAnimation(key='sit-lose', suit='C', path='sit-lose', phase='12'),
+    SuitAnimation(key='speak', suit='A', path='speak', phase='5'),
+    SuitAnimation(key='speak', suit='B', path='speak', phase='5'),
+    SuitAnimation(key='speak', suit='C', path='speak', phase='5'),
+    SuitAnimation(key='chop-chop', suit='B', path='chop-chop', phase='5'),
 }
 
 __SUIT_BATTLE_ANIMATIONS: Set[SuitAnimation] = {
@@ -346,10 +357,6 @@ __SUIT_BATTLE_ANIMATIONS: Set[SuitAnimation] = {
     SuitAnimation(key='phone', suit='A', path='phone', phase='5'),
     SuitAnimation(key='phone', suit='B', path='phone', phase='5'),
     SuitAnimation(key='phone', suit='C', path='phone', phase='3.5'),
-
-    SuitAnimation(key='speak', suit='A', path='speak', phase='5'),
-    SuitAnimation(key='speak', suit='B', path='speak', phase='5'),
-    SuitAnimation(key='speak', suit='C', path='speak', phase='5'),
 
     # AB Animations (C cannot use).
     SuitAnimation(key='roll-o-dex', suit='A', path='roll-o-dex', phase='5'),
@@ -529,7 +536,7 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual('m',   5.75 / aSize,  salesPolyColor,                None,                         'mingler.jpg',          'twoface',             7.61),
     SuitVisual('mh',  7.0 / aSize,   salesPolyColor,                None,                         None,                   'yesman',              8.95),
 
-    SuitVisual('trf',  6.05 / aSize,  VBase4(0.886, 0.737, 0.784, 1.0),                None,                         None,                   'factoryforeman',             6.95),
+    SuitVisual('trf',  7.6 / aSize,  VBase4(0.886, 0.737, 0.784, 1.0),                None,                         None,                   'factoryforeman',             8.80),
     SuitVisual('ski',  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        'skinflint.jpg',      'telemarketer',        7.9),
     SuitVisual('def',  4.4 / bSize,   moneyPolyColor,                None,                        'suit-heads_palette_3cmla_5.jpg',                   ['downsizer', 'downsizer_hat'],         5.95),
     SuitVisual('bgh',   4.0 / cSize,   corpPolyColor,                 None,                         'bag_holder.jpg',                   'tightwad', 4.88),

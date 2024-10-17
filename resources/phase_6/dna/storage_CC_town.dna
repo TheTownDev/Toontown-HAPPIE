@@ -12,6 +12,10 @@ place_model "phase_6/models/props/trashcan_DD" [
 	store_node [ "prop" "prop_trashcan_DD" "" ]
 	]
 
+place_model "phase_6/models/cogHQ/Cog_Tunnel" [
+	store_node [ "prop" "prop_cog_tunnel" "" ]
+	]
+
 place_model "phase_6/models/modules/neighborhood_tunnel_DD" [
 	store_node [ "prop" "prop_neighborhood_tunnel" ]
         ]
@@ -47,4 +51,8 @@ place_model "phase_6/models/modules/tt_m_ara_dod_hq" [
 
 place_model "phase_6/models/modules/DD_pond" [
 	store_node [ "street" "street_DD_pond" "" ]
+	]
+
+hood_model "phase_8/models/props/tt_m_ara_dga_fountain" [
+	store_node [ "prop" "prop_daisys_fountain" "" ]
 	]

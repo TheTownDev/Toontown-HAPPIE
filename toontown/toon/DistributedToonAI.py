@@ -122,6 +122,8 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
                          0,
                          0,
                          0]
+        self.wantsToRemoteControl = 0
+        self.activeCog = 0
         self.cogIndex = -1
         self.disguisePageFlag = 0
         self.sosPageFlag = 0
@@ -4340,6 +4342,12 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     # Set this toon's damage multiplier
     def setDamageMultiplier(self, newDamageMultiplier) -> None:
         self.damageMultiplier = newDamageMultiplier
+    
+    def setWantsToRemoteControl(self, wantsToRemoteControl):
+        self.wantsToRemoteControl = wantsToRemoteControl
+    
+    def setActiveCog(self, activeCog):
+        self.activeCog = activeCog
 
     # Set this toon's overflow modifier and tell its client counterpart what it is
     def b_setOverflowMod(self, newOverflow) -> None:

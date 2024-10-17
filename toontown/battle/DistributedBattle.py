@@ -159,6 +159,10 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
         self.__faceOff(ts, self.faceOffName, self.__handleFaceOffDone)
         if self.interactiveProp:
             self.interactiveProp.gotoFaceoff()
+        
+        if self.suits[0].dna.name == 'trf':
+            foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+            foremanMusic.play()
 
     def __handleFaceOffDone(self):
         self.notify.debug('FaceOff done')

@@ -2463,6 +2463,7 @@ SuitAttackNames = {'AUDIT': 'Audit!',
  'PARADIGM_SHIFT': 'Paradigm Shift!',
  'PECKING_ORDER': 'Pecking Order!',
  'PICK_POCKET': 'Pick Pocket!',
+ 'PENNY_PINCH': 'Penny Pinch!',
  'PINK_SLIP': 'Pink Slip!',
  'PLAY_HARDBALL': 'Play Hardball!',
  'POUND_KEY': 'Pound Key!',
@@ -4994,6 +4995,7 @@ InventoryRun = 'RUN'
 InventorySOS = 'SOS'
 InventoryPass = 'PASS'
 InventoryFire = 'FIRE'
+InventoryRemote = 'CONTROL'
 InventoryClickToAttack = 'Click a\ngag to\nattack'
 InventoryDamageBonus = '(+%d)'
 NPCForceAcknowledgeMessage = "You must ride the trolley before leaving.\n\n\n\n\n\n\n\n\nYou can find the trolley next to Goofy's Gag Shop."
@@ -5743,13 +5745,13 @@ CashbotBossName = 'C. F. O.'
 LawbotBossName = 'Chief Justice'
 BossCogDoStunned = 'Stunned!'
 BossCogNameWithDept = '%(name)s\n%(dept)s'
-BossCogPromoteDoobers = 'You are hereby promoted to full-fledged %s.  Congratulations!'
-BossCogDoobersAway = {'s': 'Go!  And make that sale!'}
-BossCogWelcomeToons = 'Welcome, new Cogs!'
-BossCogPromoteToons = 'You are hereby promoted to full-fledged %s.  Congratu--'
-CagedToonInterruptBoss = 'Hey! Hiya! Hey over there!'
-CagedToonRescueQuery = 'So, did you Toons come to rescue me?'
-BossCogDiscoverToons = 'Huh?  Toons!  In disguise!'
+BossCogPromoteDoobers = 'I see more of my %s, have came for a promotion.'
+BossCogDoobersAway = {'s': "I'm expecting your promotions to make returns for me with the sale."}
+BossCogWelcomeToons = "Please hold though, the elevator will send you to the underground entrance while I direct your fellow employees."
+BossCogPromoteToons = "The Chairman will be plea--."
+CagedToonInterruptBoss = 'Toons! Toons, Quick!'
+CagedToonRescueQuery = "Once you get to the underground ledge, fly up with your suits to the edge! I'm over here!!"
+BossCogDiscoverToons = 'Those Sellbots were TOONS?!'
 BossCogAttackToons = 'Attack!!'
 CagedToonDrop = ["Great job!  You're wearing him down!",
  "Keep after him!  He's on the run!",

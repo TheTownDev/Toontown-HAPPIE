@@ -36,11 +36,16 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
 
     def setBossBattle(self, value):
         self.bossBattle = value
-        if self.bossBattle:
+        if self.bossBattle:    
             self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/encntr_suit_winning_indoor.ogg')
+            base.playMusic(self.battleMusic, looping=1, volume=0.9)
         else:
-            self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/encntr_general_bg_indoor.ogg')
-        base.playMusic(self.battleMusic, looping=1, volume=0.9)
+            if self.suits[0].dna.dept == 'c': #tt_s_ara_sui_interiorCorp
+                self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/tt_s_ara_sui_interiorCorp.ogg')
+                base.playMusic(self.battleMusic, looping=1, volume=1.3)
+            else:
+                self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/encntr_general_bg_indoor.ogg')
+                base.playMusic(self.battleMusic, looping=1, volume=0.9)
 
     def getBossBattleTaunt(self):
         return TTLocalizer.BattleBldgBossTaunt

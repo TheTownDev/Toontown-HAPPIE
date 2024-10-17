@@ -85,7 +85,7 @@ class BattleCalculatorAI:
         debug = self.notify.getDebug()
         attack = self.battle.toonAttacks[attackIndex]
         atkTrack, atkLevel = self.__getActualTrackLevel(attack)
-        if atkTrack == HEAL:
+        if atkTrack in [LURE, HEAL, SQUIRT, SOUND]:
             return 1, 95
         if atkTrack == NPCSOS:
             return (1, 95)
@@ -273,7 +273,7 @@ class BattleCalculatorAI:
         if attackAffectsGroup(atkTrack, atkLevel, attack[TOON_TRACK_COL]):
             # Heal gags target all the toons as long as they are not enemies
             if atkTrack in (HEAL, PETSOS):
-                return self.__getAllToonsNotEnemiesWithAvId(atkOwner)
+                return self.battle.activeToons
 
             # Everything else targets all the suits
             return self.battle.activeSuits
@@ -860,6 +860,7 @@ class BattleCalculatorAI:
                     numDmgs = len(currTgt[currAtkType])
                     attackIdx = currTgt[currAtkType][numDmgs - 1][0]
                     attackerId = self.toonAtkOrder[attackIdx]
+                    toon = self.battle.getToon(attackerId)
                     attack = self.battle.toonAttacks[attackerId]
                     if hp:
                         attack[TOON_HPBONUS_COL] = math.ceil(totalDmgs * (self.DamageBonuses[numDmgs - 1] * 0.01))
@@ -868,7 +869,10 @@ class BattleCalculatorAI:
                     elif len(attack[TOON_KBBONUS_COL]) > tgtPos:
                         luredSuit = self.battle.activeSuits[tgtPos]
                         luredLevelInfo = self.currentlyLuredSuits[luredSuit.doId][4]
-                        attack[TOON_KBBONUS_COL][tgtPos] = LURE_KB_HPS[luredLevelInfo]
+                        luredLevelToon = self.currentlyLuredSuits[luredSuit.doId][5]
+                        luredLevelDamage = self.currentlyLuredSuits[luredSuit.doId][6]
+                        lurerToon = self.battle.getToon(luredLevelToon)
+                        attack[TOON_KBBONUS_COL][tgtPos] = math.ceil(luredLevelDamage * numDmgs)
                         if self.notify.getDebug():
                             self.notify.debug('Applying kb bonus to track ' + str(attack[TOON_TRACK_COL]) + ' of ' + str(attack[TOON_KBBONUS_COL][tgtPos]) + ' to target ' + str(tgtPos))
                     else:
@@ -1477,6 +1481,14 @@ class BattleCalculatorAI:
                 suit.effectHandler.tick(0)
         except:
             pass
+        
+        for suit in self.battle.activeSuits:
+            if suit.dna.name == 'trf':
+                randomSuitPool = self.battle.activeSuits[:]
+                randomSuitPool.remove(suit)
+                randomSuit = random.choice(randomSuitPool)
+                self.battle.suitsCheatFirst.append([2, suit.doId, [50,], [randomSuit.doId,], 0])
+        
         self.__calculateToonAttacks()
         self.__processBonuses(hp=0)
         self.__processBonuses(hp=1)
@@ -1527,6 +1539,11 @@ class BattleCalculatorAI:
                     suit.effectHandler.tick(1)
         except:
             pass
+        
+        for toon in self.battle.activeToons:
+            toonAttack = self.battle.toonAttacks[toon]
+            print(toonAttack)
+        
         self.__calculateSuitAttacks()
         
 
@@ -1663,7 +1680,7 @@ class BattleCalculatorAI:
             # Generate new lured suit info
             lurerInfo = {lurer: [lureLvl, availLureId, credit]}
             self.currentlyLuredSuits[suitId] = [
-             currRounds, maxRounds, wakeChance, lurerInfo, lureLvl]
+             currRounds, maxRounds, wakeChance, lurerInfo, lureLvl, lurer, 0]
             suit = simbase.air.doId2do.get(suitId)
             toon = simbase.air.doId2do.get(lurer)
             suit.effectHandler.addEffect('BattleEffectLureKnockbackAI')
@@ -1673,6 +1690,7 @@ class BattleCalculatorAI:
                 lureEff.children['value'] = getAvPropDamage(LURE, lureLvl, toon.experience, npc=True, toonDamageMultiplier=toon.getDamageMultiplier(), overflowMod=toon.getOverflowMod())
             else:
                 lureEff.children['value'] = getAvPropDamage(LURE, lureLvl, toon.experience, toonDamageMultiplier=toon.getDamageMultiplier(), overflowMod=toon.getOverflowMod())
+            self.currentlyLuredSuits[suitId][6] = lureEff.children['value']
         self.notify.debug('__addLuredSuitInfo: currLuredSuits -> %s' % repr(self.currentlyLuredSuits))
         return availLureId
 

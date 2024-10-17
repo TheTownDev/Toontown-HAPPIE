@@ -6,10 +6,10 @@ from otp.avatar import DistributedAvatarAI
 from . import DistributedSuitAI
 from toontown.battle import BattleExperienceAI
 from direct.fsm import FSM
-from toontown.toonbase import ToontownGlobals
+from toontown.toonbase import ToontownGlobals, ToontownBattleGlobals
 from toontown.toon import InventoryBase
 from toontown.toonbase import TTLocalizer
-from toontown.battle import BattleBase
+from toontown.battle import BattleBase, DistributedBattleVicePresidentAI
 from toontown.toon import NPCToons
 from toontown.suit import SellbotBossGlobals
 import random
@@ -248,6 +248,29 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
                 return self.invokeSuitPlanner(0, 0)
             else:
                 return self.invokeSuitPlanner(1, 1)
+    
+    def makeBattle(self, bossCogPosHpr, battlePosHpr, roundCallback, finishCallback, battleNumber, battleSide):
+        battle = DistributedBattleVicePresidentAI.DistributedBattleVicePresidentAI(self.air, self, roundCallback, finishCallback, battleSide)
+        self.setBattlePos(battle, bossCogPosHpr, battlePosHpr)
+        battle.suitsKilled = self.suitsKilled
+        battle.battleCalc.toonSkillPtsGained = self.toonSkillPtsGained
+        battle.toonExp = self.toonExp
+        battle.toonOrigQuests = self.toonOrigQuests
+        battle.toonItems = self.toonItems
+        battle.toonOrigMerits = self.toonOrigMerits
+        battle.toonMerits = self.toonMerits
+        battle.toonParts = self.toonParts
+        battle.helpfulToons = self.helpfulToons
+        mult = ToontownBattleGlobals.getBossBattleCreditMultiplier(battleNumber)
+        battle.battleCalc.setSkillCreditMultiplier(mult)
+        activeSuits = self.activeSuitsA
+        if battleSide:
+            activeSuits = self.activeSuitsB
+        for suit in activeSuits:
+            battle.addSuit(suit)
+
+        battle.generateWithRequired(self.zoneId)
+        return battle
 
     def removeToon(self, avId, died=False):
         toon = simbase.air.doId2do.get(avId)

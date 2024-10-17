@@ -6,6 +6,8 @@ from . import MovieCamera, MovieUtil
 from .BattleBase import *
 from .BattleProps import *
 from .BattleSounds import *
+from .MovieUtil import *
+from .MovieCamera import *
 from . import BattleParticles
 from toontown.toon.ToonDNA import *
 from toontown.suit.SuitDNA import *

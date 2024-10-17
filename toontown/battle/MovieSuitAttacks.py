@@ -7,6 +7,7 @@ from .BattleProps import *
 from toontown.suit.SuitDNA import *
 from .BattleBase import *
 from .BattleSounds import *
+from direct.actor.Actor import Actor
 from . import MovieCamera
 from direct.directnotify import DirectNotifyGlobal
 from . import MovieUtil
@@ -202,6 +203,8 @@ def doSuitAttack(attack):
         suitTrack = doParadigmShift(attack)
     elif attackType == SuitAttackType.PECKING_ORDER:
         suitTrack = doPeckingOrder(attack)
+    elif attackType == SuitAttackType.PENNY_PINCH:
+        suitTrack = doPennyPinch(attack)
     elif attackType == SuitAttackType.PICK_POCKET:
         suitTrack = doPickPocket(attack)
     elif attackType == SuitAttackType.PINK_SLIP:
@@ -2265,6 +2268,26 @@ def doPickPocket(attack):
         soundTrack = getSoundTrack('SA_pick_pocket.ogg', delay=0.2, node=suit)
         multiTrackList.append(billPropTrack)
         multiTrackList.append(soundTrack)
+    return multiTrackList
+
+def doPennyPinch(attack):
+    suit = attack['suit']
+    battle = attack['battle']
+    target = attack['target']
+    dmg = target['hp']
+    penny_pincher_actor = Actor('phase_4/models/char/ttr_r_ene_cashbotPennyPincher.egg', {'pennyPinch': 'phase_4/models/char/ttr_r_ene_cashbotPennyPincher-pennyPinch.egg'})
+    penny_pincher_actor.setBlend(frameBlend=True)
+    penny_pincher_actor.setH(180)
+    penny_pincher_actor.setScale(suit.getScale() * 0.6)
+    suitPos = suit.getPos(battle)
+    suitGeom = suit.getGeomNode()
+    suitTrack = Sequence(Func(suitGeom.hide), Func(penny_pincher_actor.reparentTo, battle), Func(penny_pincher_actor.setPos, suitPos), ActorInterval(penny_pincher_actor, 'pennyPinch'), Func(suitGeom.show), Func(penny_pincher_actor.cleanup))
+    toonTrack = getToonTrack(attack, 0.6, ['cringe'], 0.01, ['sidestep'])
+    multiTrackList = Parallel(suitTrack, Sequence(Wait(4.5), toonTrack))
+    #if dmg > 0:
+        #soundTrack = getSoundTrack('SA_pick_pocket.ogg', delay=0.2, node=suit)
+        #multiTrackList.append(billPropTrack)
+        #multiTrackList.append(soundTrack)
     return multiTrackList
 
 

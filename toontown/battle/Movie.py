@@ -16,6 +16,7 @@ from . import MovieDrop
 from . import MovieSuitAttacks
 from . import MovieToonVictory
 from . import PlayByPlayText
+from . import MovieCheatsFirst, MovieCheatsSecond, MovieCutscenesFirst, MovieCutscenesSecond, MovieDots
 from . import BattleParticles
 from toontown.distributed import DelayDelete
 from . import BattleExperience

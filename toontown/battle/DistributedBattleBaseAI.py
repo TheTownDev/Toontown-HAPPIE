@@ -469,6 +469,10 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         self.suits.append(suit)
         suit.battleTrap = NO_TRAP
         self.numSuitsEver += 1
+        
+        if self.suits[0].dna.name == 'trf':
+            if suit.dna.name != 'trf':
+                suit.setLevel(suit.getActualLevel() + int(self.suits[0].getActualLevel() / 4))
 
     def __joinSuit(self, suit):
         self.joiningSuits.append(suit)

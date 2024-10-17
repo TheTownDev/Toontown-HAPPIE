@@ -328,7 +328,7 @@ group "clearCoasts" [
      nhpr [ -180 0 -0 ]
     ]
    ]
-   prop "linktunnel_dl_9312_DNARoot" [
+   prop "unknown" [
     code [ "prop_neighborhood_tunnel" ]
     pos [ -295 -430 0 ]
     nhpr [ -90 0 -0 ]

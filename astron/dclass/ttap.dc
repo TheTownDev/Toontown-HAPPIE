@@ -286,6 +286,7 @@ from toontown.coghq import DistributedCountryClubBattle/AI
 from toontown.building import DistributedClubElevator/AI
 from toontown.coghq import DistributedMaze/AI
 from toontown.battle import DistributedBattleWaiters/AI
+from toontown.battle import DistributedBattleVicePresident/AI
 from toontown.coghq import DistributedFoodBelt/AI
 from toontown.coghq import DistributedBanquetTable/AI
 from toontown.battle import DistributedBattleDiners/AI
@@ -1186,6 +1187,8 @@ dclass DistributedToon : DistributedPlayer {
   setArchipelagoAuto(string, string) ownsend airecv;
   setDeathReason(string) airecv clsend;
   clientDied() airecv clsend;
+  setWantsToRemoteControl(int32) airecv clsend;
+  setActiveCog(int32) airecv clsend;
 };
 
 dclass DistributedCCharBase : DistributedObject {
@@ -3712,6 +3715,9 @@ dclass DistributedMaze : DistributedEntity {
   setGameOver() broadcast;
   toonFinished(uint32, uint8, uint8) broadcast;
   damageMe() airecv clsend;
+};
+
+dclass DistributedBattleVicePresident : DistributedBattleFinal {
 };
 
 dclass DistributedBattleWaiters : DistributedBattleFinal {

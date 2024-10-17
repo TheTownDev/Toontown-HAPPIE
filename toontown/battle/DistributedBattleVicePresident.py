@@ -6,8 +6,8 @@ from toontown.battle import DistributedBattleFinal
 from toontown.suit import SuitTimings
 from toontown.toonbase import ToontownGlobals
 
-class DistributedBattleWaiters(DistributedBattleFinal.DistributedBattleFinal):
-    notify = DirectNotifyGlobal.directNotify.newCategory('DistributedBattleWaiters')
+class DistributedBattleVicePresident(DistributedBattleFinal.DistributedBattleFinal):
+    notify = DirectNotifyGlobal.directNotify.newCategory('DistributedBattleVicePresident')
 
     def __init__(self, cr):
         DistributedBattleFinal.DistributedBattleFinal.__init__(self, cr)
@@ -16,8 +16,6 @@ class DistributedBattleWaiters(DistributedBattleFinal.DistributedBattleFinal):
 
     def announceGenerate(self):
         DistributedBattleFinal.DistributedBattleFinal.announceGenerate(self)
-        for suit in self.suits:
-            suit.makeWaiter()
 
         self.moveSuitsToInitialPos()
 
@@ -56,7 +54,6 @@ class DistributedBattleWaiters(DistributedBattleFinal.DistributedBattleFinal):
         suitTrack = Parallel()
         delay = 0
         for suit in suits:
-            suit.makeWaiter()
             suit.setState('Battle')
             if suit.dna.dept == 'l':
                 suit.reparentTo(self.bossCog)

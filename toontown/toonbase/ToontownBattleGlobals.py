@@ -224,11 +224,11 @@ AvPropStringsPlural = TTLocalizer.BattleGlobalAvPropStringsPlural
 AvPropAccuracy = (
     (100, 100, 100, 100, 100, 100, 100),  # Toonup
     (100, 100, 100, 100, 100, 100, 100),  # Trap
-    (70, 70, 70, 70, 70, 70, 95),   # Lure
+    (100, 100, 100, 100, 100, 100, 100),   # Lure
     (95, 95, 95, 95, 95, 95, 95),   # Sound
-    (75, 75, 75, 75, 75, 75, 75),   # Throw
-    (95, 95, 95, 95, 95, 95, 95),   # Squirt
-    (70, 70, 70, 70, 70, 70, 70)    # Drop
+    (90, 90, 90, 90, 90, 90, 90),   # Throw
+    (100, 100, 100, 100, 100, 100, 100),   # Squirt
+    (75, 75, 75, 75, 75, 75, 75)    # Drop
 )
 
 AvLureBonusAccuracy = (80, 80, 80, 80, 80, 80, 100)
@@ -270,19 +270,19 @@ AvPropDamage = (
     (   # Sound
         ((2, 4), (Levels[3][0], Levels[3][1])),
         ((5, 8), (Levels[3][1], Levels[3][2])),
-        ((9, 12), (Levels[3][2], Levels[3][3])),
-        ((16, 20), (Levels[3][3], Levels[3][4])),
-        ((25, 30), (Levels[3][4], Levels[3][5])),
+        ((9, 16), (Levels[3][2], Levels[3][3])),
+        ((21, 30), (Levels[3][3], Levels[3][4])),
+        ((32, 44), (Levels[3][4], Levels[3][5])),
         ((45, 75), (Levels[3][5], Levels[3][6])),
         ((90, 110), (Levels[3][6], regMaxSkill))
     ),
     (   # Throw
-        ((4, 6), (Levels[4][0], Levels[4][1])),
-        ((8, 10), (Levels[4][1], Levels[4][2])),
-        ((14, 17), (Levels[4][2], Levels[4][3])),
-        ((24, 27), (Levels[4][3], Levels[4][4])),
-        ((36, 40), (Levels[4][4], Levels[4][5])),
-        ((48, 110), (Levels[4][5], Levels[4][6])),
+        ((6, 8), (Levels[4][0], Levels[4][1])),
+        ((9, 12), (Levels[4][1], Levels[4][2])),
+        ((18, 21), (Levels[4][2], Levels[4][3])),
+        ((30, 44), (Levels[4][3], Levels[4][4])),
+        ((52, 60), (Levels[4][4], Levels[4][5])),
+        ((80, 110), (Levels[4][5], Levels[4][6])),
         ((130, 140), (Levels[4][6], regMaxSkill))
     ),
     (   # Squirt
