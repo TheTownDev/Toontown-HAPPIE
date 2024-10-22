@@ -2422,6 +2422,15 @@ SuitTrafficManagerP = 'Factory Foremen'
 SuitBagHolder = 'Bag Holder'
 SuitBagHolderS = 'a Bag Holder'
 SuitBagHolderP = 'Bag Holders'
+SuitBarista = 'Barista'
+SuitBaristaS = 'a Barista'
+SuitBaristaP = 'Baristas'
+SuitInvestigator = 'Investigator'
+SuitInvestigatorS = 'an Investigator'
+SuitInvestigatorP = 'Investigators'
+SuitConfiscator = 'Confiscator'
+SuitConfiscatorS = 'a Confiscator'
+SuitConfiscatorP = 'Confiscators'
 SuitFaceoffDefaultTaunts = ['Boo!']
 SuitAttackDefaultTaunts = ['Take that!', 'Take a memo on this!']
 SuitAttackNames = {'AUDIT': 'Audit!',
@@ -2432,6 +2441,7 @@ SuitAttackNames = {'AUDIT': 'Audit!',
  'CALCULATE': 'Calculate!',
  'CANNED': 'Canned!',
  'CHOMP': 'Chomp!',
+ 'CONFISCATE': 'Confiscate!',
  'CIGAR_SMOKE': 'Cigar Smoke!',
  'CLIP_ON_TIE': 'Clip On Tie!',
  'CRUNCH': 'Crunch!',
@@ -2571,6 +2581,14 @@ SuitAttackTaunts = {'AUDIT': ["I believe your books don't balance.",
            "Why don't you chomp on this?",
            "I'm going to have you for dinner.",
            'I love to feed on Toons!'],
+ 'CONFISCATE': ['Realise my authority!',
+           'This will be going to the C.I.O...',
+           "It's mine...",
+           'A swoop for posession!',
+           "I said STOP resisting!",
+           "Obay!",
+           "This is no logner yours.",
+           'We have the rights to this, now.'],
  'CLIP_ON_TIE': ['Better dress for our meeting.',
                "You can't go OUT without your tie.",
                'The best dressed ' + Cogs + ' wear them.',
@@ -9653,7 +9671,7 @@ BossbotPitcherAdvice = 'Use the left and right keys to rotate.\nHold down Ctrl i
 BossbotGolfSpotLeave = 'Leave Golf Ball'
 BossbotGolfSpotLeaving = 'Leaving Golf Ball'
 BossbotGolfSpotAdvice = 'Use the left and right keys to rotate.\nCtrl to fire.'
-BossbotRewardSpeech1 = "No! The Chairman won't like this."
+BossbotRewardSpeechs = ["No! The Chairman won't like this.", "The C.R.R.O. is gonna be furious.", "The C.I.O. is gonna have a field day..."]
 BossbotRewardSpeech2 = 'Arrrggghhh!!!!'
 BossbotRTCongratulations = "You did it!  You've demoted the C.E.O.!\x07Here, take these pink slips the C.E.O. left behind.\x07With it you'll be able to fire Cogs in a battle."
 BossbotRTLastPromotion = "\x07Wow, you've reached level %s on your Cog Suit!\x07Cogs don't get promoted higher than that.\x07You can't upgrade your Cog Suit anymore, but you can certainly keep working for the Resistance!"

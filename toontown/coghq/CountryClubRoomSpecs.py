@@ -9,6 +9,7 @@ from toontown.coghq import NullCogs
 from toontown.coghq import BossbotCountryClubKartRoom_Battle00_Cogs
 from toontown.coghq import BossbotCountryClubPresidentRoom_Battle00_Cogs
 from toontown.coghq import BossbotCountryClubCornerRoom_Battle00_Cogs
+from toontown.coghq import BossbotCountryClubCornerRoomInverse_Battle00_Cogs
 from toontown.coghq import BossbotCountryClubFountainRoom_Battle00_Cogs
 
 from toontown.coghq import BossbotCountryClubEntrance_Action00
@@ -25,6 +26,7 @@ from toontown.coghq import BossbotCountryClubTeeOffRoom_Action02
 from toontown.coghq import BossbotCountryClubGreenRoom_Action01
 from toontown.coghq import BossbotCountryClubGreenRoom_Action02
 from toontown.coghq import BossbotCountryClubCornerRoom_Battle00
+from toontown.coghq import BossbotCountryClubCornerRoomInverse_Battle00
 from toontown.coghq import BossbotCountryClubCornerGreenRoom_Action00
 from toontown.coghq import BossbotCountryClubOilRoom_Action00
 from toontown.coghq import BossbotCountryClubFountainRoom_Battle00
@@ -46,7 +48,8 @@ BossbotCountryClubSpecModules = {
     40: BossbotCountryClubCornerRoom_Battle00,
     41: BossbotCountryClubCornerGreenRoom_Action00,
     42: BossbotCountryClubFountainRoom_Battle00,
-    43: BossbotCountryClubOilRoom_Action00
+    43: BossbotCountryClubOilRoom_Action00,
+    44: BossbotCountryClubCornerRoomInverse_Battle00
 }
 
 
@@ -84,7 +87,8 @@ CogSpecModules = {'BossbotCountryClubFairwayRoom_Battle00': BossbotCountryClubFa
  'BossbotCountryClubKartRoom_Battle00': BossbotCountryClubKartRoom_Battle00_Cogs,
  'BossbotCountryClubPresidentRoom_Battle00': BossbotCountryClubPresidentRoom_Battle00_Cogs,
  'BossbotCountryClubCornerRoom_Battle00': BossbotCountryClubCornerRoom_Battle00_Cogs,
- 'BossbotCountryClubFountainRoom_Battle00': BossbotCountryClubFountainRoom_Battle00_Cogs}
+ 'BossbotCountryClubFountainRoom_Battle00': BossbotCountryClubFountainRoom_Battle00_Cogs,
+ 'BossbotCountryClubCornerRoomInverse_Battle00': BossbotCountryClubCornerRoomInverse_Battle00_Cogs}
 roomId2numBattles = {}
 for roomName, roomId in BossbotCountryClubRoomName2RoomId.items():
     if roomName not in CogSpecModules:
@@ -95,6 +99,7 @@ for roomName, roomId in BossbotCountryClubRoomName2RoomId.items():
 
 roomId2numBattles[BossbotCountryClubRoomName2RoomId['BossbotCountryClubTeeOffRoom_Action00']] = 1
 roomId2numBattles[BossbotCountryClubRoomName2RoomId['BossbotCountryClubCornerRoom_Battle00']] = 2
+roomId2numBattles[BossbotCountryClubRoomName2RoomId['BossbotCountryClubCornerRoomInverse_Battle00']] = 2
 middleRoomId2numBattles = {}
 for roomId in BossbotCountryClubMiddleRoomIDs:
     middleRoomId2numBattles[roomId] = roomId2numBattles[roomId]

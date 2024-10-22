@@ -14,6 +14,7 @@ vfs-mount resources/phase_11 /phase_11
 vfs-mount resources/phase_12 /phase_12
 vfs-mount resources/phase_13 /phase_13
 vfs-mount resources/phase_14 /phase_14
+vfs-mount resources/phase_15 /phase_15
 
 # Developer settings
 want-injector true

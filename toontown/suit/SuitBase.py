@@ -47,10 +47,16 @@ class SuitBase:
 
     def setLevel(self, level):
         self.level = level
-        nameWLevel = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-         'dept': self.getStyleDept(),
-         'level': self.getActualLevel()}
-        self.setDisplayName(nameWLevel)
+        if self.dna.name in SuitDNA.Resourcebots:
+            nameWLevel = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
+            'dept': 'Resourcebot',
+            'level': self.getActualLevel()}
+            self.setDisplayName(nameWLevel)
+        else:
+            nameWLevel = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
+            'dept': self.getStyleDept(),
+            'level': self.getActualLevel()}
+            self.setDisplayName(nameWLevel)
         attributes: SuitAttributes = SuitBattleGlobals.getSuitAttributes(self.dna.name)
 
         self.maxHP = attributes.getBaseMaxHp(self.getActualLevel())

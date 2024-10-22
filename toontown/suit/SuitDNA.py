@@ -49,17 +49,23 @@ suitHeadTypes = [
     'tf',
     'm',
     'mh',
+    'bar',
+    'inv',
+    'cfn',
     'trf',
     'ski',
     'def',
-    'bgh',
+    'bgh'
 ]
 
 notMainTypes = [
     'trf',
     'ski',
     'def',
-    'bgh'
+    'bgh',
+    'bar',
+    'inv',
+    'cfn'
 ]
 
 suitATypes = [
@@ -76,7 +82,8 @@ suitATypes = [
     'nd',
     'tf',
     'm',
-    'mh'
+    'mh',
+    'cfn'
 ]
 
 suitBTypes = [
@@ -91,7 +98,8 @@ suitBTypes = [
     'ls',
     'tm',
     'ms',
-    'trf'
+    'trf',
+    'inv'
 ]
 
 suitCTypes = [
@@ -104,7 +112,8 @@ suitCTypes = [
     'mb',
     'cc',
     'gh',
-    'bgh'
+    'bgh',
+    'bar'
 ]
 
 suitDepts = [
@@ -474,6 +483,8 @@ class SuitVisual:
                 headPath = self.headModelPath(suit.style.body)
                 if self.key in ['ds', 'def']:
                     headPath = self.headModelPath(suit.style.body, 'phase_4/models/char/suitB-heads2')
+                if self.key in ['bar', 'inv', 'cfn']:
+                    headPath = self.headModelPath(suit.style.body, 'phase_15/models/char/ttr_r_ene_cgr_heads')
                 headModel = loader.loadModel(headPath)
                 head = headModel.find('**/' + head)
                 head.reparentTo(suit.find(attachPoint))
@@ -491,6 +502,7 @@ class SuitVisual:
     def __hash__(self):
         return self.unique_key().__hash__()
 
+Resourcebots = ['bar', 'inv', 'cfn']
 
 # List of dialogues for the suits.
 SuitDialogArray = []
@@ -535,6 +547,10 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual('tf',  5.25 / aSize,  salesPolyColor,                None,                         None,                   'twoface',             6.95),
     SuitVisual('m',   5.75 / aSize,  salesPolyColor,                None,                         'mingler.jpg',          'twoface',             7.61),
     SuitVisual('mh',  7.0 / aSize,   salesPolyColor,                None,                         None,                   'yesman',              8.95),
+    
+    SuitVisual('bar',   4.0 / cSize,   corpPolyColor,                 None,                         None,                   ['barista'], 4.88),
+    SuitVisual('inv',  6.5 / bSize,   VBase4(0.5, 0.85, 0.75, 1.0),  None,                         None,                   ['investigator'],           8.58),
+    SuitVisual('cfn',  7.0 / aSize,   salesPolyColor,                None,                         None,                   ['confinscator'],              8.95),
 
     SuitVisual('trf',  7.6 / aSize,  VBase4(0.886, 0.737, 0.784, 1.0),                None,                         None,                   'factoryforeman',             8.80),
     SuitVisual('ski',  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        'skinflint.jpg',      'telemarketer',        7.9),
@@ -601,7 +617,10 @@ customSuit2Dept = {
     'trf': 's',
     'ski': 'm',
     'def': 'l',
-    'bgh': 'c'
+    'bgh': 'c',
+    'bar': 'c',
+    'inv': 'c',
+    'cfn': 'c'
 }
 
 def getSuitDept(name):

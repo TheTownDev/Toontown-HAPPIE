@@ -645,9 +645,14 @@ class Suit(Avatar.Avatar):
             bb.setTwoSided(1)
 
         self.setName(TTLocalizer.Skeleton)
-        nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-         'dept': self.getStyleDept(),
-         'level': self.getActualLevel()}
+        if self.dna.name in Resourcebots:
+            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
+            'dept': "Resourcebot",
+            'level': self.getActualLevel()}
+        else:
+            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
+            'dept': self.getStyleDept(),
+            'level': self.getActualLevel()}
         self.setDisplayName(nameInfo)
         self.leftHand = self.find('**/jnt_L_attachProp_01')
         self.rightHand = self.find('**/jnt_R_attachProp_01')

@@ -77,10 +77,16 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
              'level': '%s%s' % (self.getActualLevel(), TTLocalizer.SkeleRevivePostFix)}
             self.setDisplayName(nameInfo)
         else:
-            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-             'dept': self.getStyleDept(),
-             'level': self.getActualLevel()}
-            self.setDisplayName(nameInfo)
+            if self.dna.name in SuitDNA.Resourcebots:
+                nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
+                'dept': 'Resourcebot',
+                'level': self.getActualLevel()}
+                self.setDisplayName(nameInfo)
+            else:
+                nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
+                'dept': self.getStyleDept(),
+                'level': self.getActualLevel()}
+                self.setDisplayName(nameInfo)
         return
 
     def setImmuneStatus(self, num):
@@ -94,28 +100,6 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         if self.isImmune == 1:
             SuitBase.SuitBase.setImmuneStatus(self, self.isImmune)
             Suit.Suit.makeIntoImmune(self)
-        if self.getImmuneStatus() == 1:
-            if self.getImmuneStatus() == 1 and self.getSkeleRevives() > 0:
-                nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-                 'dept': self.getStyleDept(),
-                 'level': '%s%s%s' % (self.getActualLevel(), TTLocalizer.SkeleRevivePostFix, TTLocalizer.ImmunePostFix)}
-                self.setDisplayName(nameInfo)
-            elif self.getImmuneStatus() == 1:
-                nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-                 'dept': self.getStyleDept(),
-                 'level': '%s%s' % (self.getActualLevel(), TTLocalizer.ImmunePostFix)}
-                self.setDisplayName(nameInfo)
-        else:
-            if self.getSkeleRevives() > 0:
-                nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-                 'dept': self.getStyleDept(),
-                 'level': '%s%s' % (self.getActualLevel(), TTLocalizer.SkeleRevivePostFix)}
-                self.setDisplayName(nameInfo)
-            else:
-                nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-                 'dept': self.getStyleDept(),
-                 'level': self.getActualLevel()}
-                self.setDisplayName(nameInfo)
         return
 
     def getImmuneStatus(self):

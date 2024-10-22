@@ -71,7 +71,7 @@ group "clearCoasts" [
   ]
   street "str.sidewalk_40x40_DNARoot" [
    code [ "street_sidewalk_40x40" ]
-   pos [ -40 -80 0 ]
+   pos [ -40 -80.0001 3.8147e-06 ]
    nhpr [ -0 0 -0 ]
    texture [ "street_street_DD_tex" ]
    texture [ "street_sidewalk_DD_tex" ]
@@ -732,8 +732,8 @@ group "clearCoasts" [
   ]
   prop "prop_DD_lighthouse_DNARoot" [
    code [ "prop_DD_lighthouse" ]
-   pos [ 314.993 -79.9904 -89.9993 ]
-   nhpr [ 45 0 0 ]
+   pos [ 309.992 -74.9914 -88.9988 ]
+   nhpr [ 45 0 -0 ]
    scale [ 5 5 5 ]
   ]
  ]
@@ -1128,6 +1128,146 @@ group "clearCoasts" [
     ]
    ]
   ]
+  landmark_building "tb9:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ 40.0006 -109.997 0 ]
+   nhpr [ -90 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb10:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ 39.9999 -89.9993 0 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb11:toon_landmark_DD_D1_DNARoot" [
+   code [ "toon_landmark_DD_D1" ]
+   title [ "" ]
+   pos [ 39.9998 -149.997 3.99995 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb12:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ 0.000255585 -105 0 ]
+   nhpr [ 90 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb13:toon_landmark_DD_D1_DNARoot" [
+   code [ "toon_landmark_DD_D1" ]
+   title [ "" ]
+   pos [ 0.000339508 -139.999 0 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb14:toon_landmark_DD_A1_DNARoot" [
+   code [ "toon_landmark_DD_A1" ]
+   title [ "" ]
+   pos [ 0.000908852 -169.996 4.99998 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb15:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ 0.00135803 -194.991 6.99987 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb16:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ -4.9986 -219.991 9.99987 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb17:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ -4.9986 -254.99 9.99987 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb18:toon_landmark_DD_A1_DNARoot" [
+   code [ "toon_landmark_DD_A1" ]
+   title [ "" ]
+   pos [ 0.00146294 -318.988 12.9998 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb19:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ 41.0008 -183.996 7.99996 ]
+   nhpr [ -90 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb20:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ 45.0007 -201.996 9.99995 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb21:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ 45.0008 -241.996 9.99995 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb22:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ 45.0008 -259.996 9.99995 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
  ]
  visgroup "7103" [
   vis [   "7102"   "7103"   "7101"   "7104"   "7105"   "7106"   "7107"   "7108"   "7109"   "7110"   "7111"   "7112"   "7113"   "7114"   ]
@@ -1161,7 +1301,7 @@ group "clearCoasts" [
    texture [ "street_curb_DD_tex" ]
   ]
   flat_building "tb0:flat_DNARoot" [
-   pos [ -4.99983 -279.996 0 ]
+   pos [ -4.99983 -279.996 4.76837e-06 ]
    nhpr [ 90 0 -0 ]
    width [ 25 ]
    wall [
@@ -1713,6 +1853,56 @@ group "clearCoasts" [
     ]
    ]
   ]
+  landmark_building "tb35:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ 0.00146294 -290.988 8.99977 ]
+   nhpr [ 105 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb36:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ -4.99983 -273.996 9.99992 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb37:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ 45.0007 -224.996 9.99995 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb38:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ 41.0009 -280.996 9.99995 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb39:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ 40.0009 -299.997 13.9999 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
  ]
  visgroup "7104" [
   vis [   "7101"   "7102"   "7103"   "7104"   "7105"   "7106"   "7107"   "7108"   "7109"   "7110"   "7111"   "7112"   "7113"   "7114"   ]
@@ -1972,8 +2162,8 @@ group "clearCoasts" [
    ]
   ]
   flat_building "tb0:flat_DNARoot" [
-   pos [ -29.9998 -320 3.8147e-06 ]
-   nhpr [ 0 0 0 ]
+   pos [ -29.9998 -320 9.53674e-06 ]
+   nhpr [ -0 0 -0 ]
    width [ 15 ]
    wall [
     height [ 20 ]
@@ -2040,7 +2230,7 @@ group "clearCoasts" [
   ]
   flat_building "tb0:flat_DNARoot" [
    pos [ -115.001 -360 7.99997 ]
-   nhpr [ 180 0 0 ]
+   nhpr [ -180 0 -0 ]
    width [ 25 ]
    wall [
     height [ 20 ]
@@ -2101,6 +2291,126 @@ group "clearCoasts" [
     ]
    ]
   ]
+  landmark_building "tb23:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -9.99855 -359.988 14.9998 ]
+   nhpr [ 180 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb24:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -44.9986 -359.988 14.9998 ]
+   nhpr [ -180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb25:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ -74.9986 -319.988 14.9998 ]
+   nhpr [ 0 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb26:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -39.9985 -319.988 14.9998 ]
+   nhpr [ -0 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb27:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -57.9981 -319.988 14.9998 ]
+   nhpr [ -0 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb28:toon_landmark_DD_D1_DNARoot" [
+   code [ "toon_landmark_DD_D1" ]
+   title [ "" ]
+   pos [ -106.997 -319.988 14.9998 ]
+   nhpr [ -0 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb29:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ -27.9989 -359.988 14.9998 ]
+   nhpr [ 180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb30:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ -68.9991 -359.988 14.9998 ]
+   nhpr [ -180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb31:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ 8.00115 -359.988 14.9998 ]
+   nhpr [ -180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb32:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ 38.0007 -359.988 14.9998 ]
+   nhpr [ 180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb33:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ 43.0001 -334.988 14.9998 ]
+   nhpr [ -90 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb34:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -21.9988 -320 14.9997 ]
+   nhpr [ -0 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
  ]
  visgroup "7105" [
   vis [   "7101"   "7102"   "7103"   "7104"   "7105"   "7106"   "7107"   "7108"   "7109"   "7110"   "7111"   "7112"   "7113"   "7114"   ]
@@ -2149,7 +2459,7 @@ group "clearCoasts" [
   ]
   flat_building "tb0:flat_DNARoot" [
    pos [ -160.001 -345 7.99998 ]
-   nhpr [ 90 0 0 ]
+   nhpr [ 90 0 -0 ]
    width [ 15 ]
    wall [
     height [ 10 ]
@@ -2603,6 +2913,86 @@ group "clearCoasts" [
      code [ "cornice_shingles_ur" ]
      color [ 0.9 0.56 0.34 1 ]
     ]
+   ]
+  ]
+  landmark_building "tb40:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -100.001 -360 14.9999 ]
+   nhpr [ 180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb41:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -124.001 -360 14.9999 ]
+   nhpr [ -180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb42:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -142.001 -360 14.9999 ]
+   nhpr [ 180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb43:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -160 -352 14.9999 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb44:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ -160.001 -329 14.9999 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb45:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ -160 -301 17.9998 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb46:toon_landmark_DD_D1_DNARoot" [
+   code [ "toon_landmark_DD_D1" ]
+   title [ "" ]
+   pos [ -119.997 -290.002 15.9998 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb47:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -121.996 -318.988 14.9998 ]
+   nhpr [ -15 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
    ]
   ]
  ]
@@ -3237,8 +3627,8 @@ group "clearCoasts" [
    ]
   ]
   flat_building "tb0:flat_DNARoot" [
-   pos [ -172.002 -69.9991 25.0001 ]
-   nhpr [ 90 0 0 ]
+   pos [ -172.002 -69.9992 25.0001 ]
+   nhpr [ 90 0 -0 ]
    width [ 15 ]
    wall [
     height [ 20 ]
@@ -3587,7 +3977,7 @@ group "clearCoasts" [
   ]
   street "str.divided_transition_15_DNARoot" [
    code [ "street_divided_transition_15" ]
-   pos [ -172.621 -41.0122 30 ]
+   pos [ -172.621 -41.0124 30 ]
    nhpr [ -90 0 -0 ]
    texture [ "street_street_DD_tex" ]
    texture [ "street_sidewalk_DD_tex" ]
@@ -3600,6 +3990,116 @@ group "clearCoasts" [
    texture [ "street_street_DD_tex" ]
    texture [ "street_sidewalk_DD_tex" ]
    texture [ "street_curb_DD_tex" ]
+  ]
+  landmark_building "tb48:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ -172.001 -52.0004 29.9999 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb49:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ -172.002 -117.998 30 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb50:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ -172.002 -89.9981 30 ]
+   nhpr [ 90 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb51:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ -172.002 -70.998 30 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb52:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -172.002 -24.9981 30 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb53:toon_landmark_DD_D1_DNARoot" [
+   code [ "toon_landmark_DD_D1" ]
+   title [ "" ]
+   pos [ -172.002 10.0019 30 ]
+   nhpr [ 90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb54:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ -96.9977 -45.007 29.9998 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb55:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -96.9975 -21.0073 29.9998 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb56:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -96.9975 -3.00782 29.9998 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb57:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -106.997 38.9912 29.9998 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb58:toon_landmark_DD_A1_DNARoot" [
+   code [ "toon_landmark_DD_A1" ]
+   title [ "" ]
+   pos [ -101.997 -90.0043 29.9997 ]
+   nhpr [ -90 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
   ]
  ]
  visgroup "7109" [
@@ -3980,6 +4480,16 @@ group "clearCoasts" [
     ]
    ]
   ]
+  landmark_building "tb60:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -103.802 66.1147 30.0001 ]
+   nhpr [ -120 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
  ]
  visgroup "7110" [
   vis [   "7110"   "7101"   "7102"   "7103"   "7104"   "7105"   "7106"   "7107"   "7108"   "7109"   "7110"   "7111"   "7112"   "7113"   "7114"   ]
@@ -4002,7 +4512,7 @@ group "clearCoasts" [
   street "str.40x40_DNARoot" [
    code [ "street_40x40" ]
    pos [ -122.293 109.449 30 ]
-   nhpr [ 90 0 0 ]
+   nhpr [ 90 0 -0 ]
    texture [ "street_street_DD_tex" ]
    texture [ "street_sidewalk_DD_tex" ]
    texture [ "street_curb_DD_tex" ]
@@ -4502,7 +5012,7 @@ group "clearCoasts" [
   ]
   flat_building "tb0:flat_DNARoot" [
    pos [ -122.082 111.462 25.0001 ]
-   nhpr [ 30 0 0 ]
+   nhpr [ 30 0 -0 ]
    width [ 10 ]
    wall [
     height [ 10 ]
@@ -4531,7 +5041,7 @@ group "clearCoasts" [
   ]
   flat_building "tb0:flat_DNARoot" [
    pos [ -113.422 116.462 25.0001 ]
-   nhpr [ 30 0 0 ]
+   nhpr [ 30 0 -0 ]
    width [ 15 ]
    wall [
     height [ 20 ]
@@ -4546,7 +5056,7 @@ group "clearCoasts" [
   ]
   flat_building "tb0:flat_DNARoot" [
    pos [ -100.432 123.962 25.0001 ]
-   nhpr [ 30 0 0 ]
+   nhpr [ 30 0 -0 ]
    width [ 15 ]
    wall [
     height [ 10 ]
@@ -4589,8 +5099,8 @@ group "clearCoasts" [
    ]
   ]
   flat_building "tb0:flat_DNARoot" [
-   pos [ -83.1111 133.962 25.0001 ]
-   nhpr [ 30 0 0 ]
+   pos [ -83.111 133.962 25.0001 ]
+   nhpr [ 30 0 -0 ]
    width [ 20 ]
    wall [
     height [ 10 ]
@@ -4638,7 +5148,7 @@ group "clearCoasts" [
   ]
   flat_building "tb0:flat_DNARoot" [
    pos [ -61.4605 146.462 25.0001 ]
-   nhpr [ 30 0 0 ]
+   nhpr [ 30 0 -0 ]
    width [ 15 ]
    wall [
     height [ 10 ]
@@ -4869,8 +5379,8 @@ group "clearCoasts" [
    ]
   ]
   flat_building "tb0:flat_DNARoot" [
-   pos [ -94.2601 83.6893 25.0001 ]
-   nhpr [ -118 0 0 ]
+   pos [ -94.2601 83.6892 25.0001 ]
+   nhpr [ -118 0 -0 ]
    width [ 15 ]
    wall [
     height [ 10 ]
@@ -4901,6 +5411,86 @@ group "clearCoasts" [
    code [ "prop_safe_zone_entrance_tunnel" ]
    pos [ -17.8706 171.978 35.0001 ]
    nhpr [ -60 0 0 ]
+  ]
+  landmark_building "tb61:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ -59.619 103.689 30.0001 ]
+   nhpr [ -150 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb62:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -82.1356 90.6889 30.0001 ]
+   nhpr [ -150 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb63:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -97.7243 81.6889 30.0001 ]
+   nhpr [ -120 0 0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb64:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -37.9686 116.189 30.0001 ]
+   nhpr [ -150 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb65:toon_landmark_DD_D1_DNARoot" [
+   code [ "toon_landmark_DD_D1" ]
+   title [ "" ]
+   pos [ -7.65795 133.689 31.0001 ]
+   nhpr [ -150 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb66:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ -65.7905 143.962 30.0001 ]
+   nhpr [ 30 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb67:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -91.7716 128.962 30.0001 ]
+   nhpr [ 30 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb68:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -109.092 118.962 30.0001 ]
+   nhpr [ 30 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
   ]
  ]
  visgroup "7111" [
@@ -4964,8 +5554,8 @@ group "clearCoasts" [
    ]
   ]
   flat_building "tb0:flat_DNARoot" [
-   pos [ -47.0835 231.462 25.0001 ]
-   nhpr [ -180 0 -0 ]
+   pos [ -47.0836 231.462 25.0001 ]
+   nhpr [ 180 0 -0 ]
    width [ 20 ]
    wall [
     height [ 20 ]
@@ -5156,7 +5746,7 @@ group "clearCoasts" [
   ]
   flat_building "tb0:flat_DNARoot" [
    pos [ -85.4092 269.379 25.0001 ]
-   nhpr [ 0 0 0 ]
+   nhpr [ -0 0 -0 ]
    width [ 20 ]
    wall [
     height [ 10 ]
@@ -5258,7 +5848,7 @@ group "clearCoasts" [
   ]
   flat_building "tb0:flat_DNARoot" [
    pos [ -30.4092 269.379 25.0001 ]
-   nhpr [ 0 0 0 ]
+   nhpr [ -0 0 -0 ]
    width [ 25 ]
    wall [
     height [ 20 ]
@@ -5378,6 +5968,66 @@ group "clearCoasts" [
     ]
    ]
   ]
+  landmark_building "tb69:toon_landmark_DD_B1_DNARoot" [
+   code [ "toon_landmark_DD_B1" ]
+   title [ "" ]
+   pos [ -65.4078 269.379 35.0001 ]
+   nhpr [ -0 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb70:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -5.40839 269.379 35.0001 ]
+   nhpr [ -0 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb71:toon_landmark_DD_C1_DNARoot" [
+   code [ "toon_landmark_DD_C1" ]
+   title [ "" ]
+   pos [ -35.4081 269.379 35.0001 ]
+   nhpr [ -0 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb72:toon_landmark_DD_A2_DNARoot" [
+   code [ "toon_landmark_DD_A2" ]
+   title [ "" ]
+   pos [ -50.0841 231.461 36.0001 ]
+   nhpr [ -180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb73:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ -78.0838 231.461 36.0001 ]
+   nhpr [ 180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
+  landmark_building "tb74:toon_landmark_DD_B2_DNARoot" [
+   code [ "toon_landmark_DD_B2" ]
+   title [ "" ]
+   pos [ -32.0846 231.462 35.0001 ]
+   nhpr [ -180 0 -0 ]
+   door [
+    code [ "door_double_curved_ur" ]
+    color [ 1 1 1 1 ]
+   ]
+  ]
  ]
  visgroup "7113" [
   vis [   "7113"   "7101"   "7102"   "7103"   "7104"   "7105"   "7106"   "7107"   "7108"   "7109"   "7110"   "7111"   "7112"   "7114"   ]
@@ -5391,8 +6041,8 @@ group "clearCoasts" [
   ]
   prop "prop_cog_tunnel_DNARoot" [
    code [ "prop_cog_tunnel" ]
-   pos [ 10.5899 233.379 35 ]
-   nhpr [ 0 0 0 ]
+   pos [ 10.5889 233.379 35 ]
+   nhpr [ -0 0 -0 ]
   ]
   flat_building "tb0:flat_DNARoot" [
    pos [ 35.5909 239.379 25.0001 ]

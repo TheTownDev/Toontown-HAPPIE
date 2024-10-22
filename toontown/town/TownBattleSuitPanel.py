@@ -32,7 +32,7 @@ class TownBattleSuitPanel(DirectFrame):
         self.hidden = False
         self.panelId = id
         self.cogSelectButton = DirectButton(parent=self, pos=(0, 0, 0), text_scale=0.0, text_pos=(0, 0, 0), text='', command=self.handleCogSelect)
-        self.cogSelectButton.setScale(1.5)
+        self.cogSelectButton.setScale(0.5)
         self.cogSelectButton.setBin("gui-popup", 50)
         self.cog = None
         self.isLoaded = 0

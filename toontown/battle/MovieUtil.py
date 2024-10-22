@@ -193,9 +193,9 @@ def payRaiseMovie(suit, battle):
     
     propTrack.append(Wait(3))
     propTrack.append(LerpScaleInterval(payRaiseModel, 0.6, 1.0))
-    propTrack.append(Sequence(Wait(4), LerpPosInterval(payRaiseModel, 0.6, Point3(payRaiseModel.getX(), payRaiseModel.getY(), payRaiseModel.getZ() - 8)), Func(payRaiseModel.removeNode)))
+    propTrack.append(Sequence(Wait(2.7), LerpPosInterval(payRaiseModel, 0.6, Point3(payRaiseModel.getX(), payRaiseModel.getY(), payRaiseModel.getZ() - 8)), Func(payRaiseModel.removeNode)))
     
-    animTrack.append(Wait(3))
+    animTrack.append(Wait(3.6))
     animTrack.append(Func(suit.setZ, suit.getZ() + 3.0))
     
     if suitType == 'a':
@@ -203,10 +203,10 @@ def payRaiseMovie(suit, battle):
     elif suitType == 'b':
         animTrack.append(ActorInterval(suit, 'slip-forward', startTime=1.94))
     elif suitType == 'c':
-        animTrack.append(ActorInterval(suit, 'slip-forward', startTime=2.58))
+        animTrack.append(ActorInterval(suit, 'slip-forward', startTime=2.58, endTime=2.90))
     
-    animTrack.append(Wait(2.90))
-    animTrack.append(LerpPosInterval(suit, 0.4, Point3(suit.getX(), suit.getY(), suit.getZ())))
+    animTrack.append(Wait(1.90))
+    animTrack.append(Parallel(ActorInterval(suit, 'slip-forward', playRate=1.25), LerpPosInterval(suit, 0.8, Point3(suit.getX(), suit.getY(), suit.getZ()))))
     return Parallel(animTrack, propTrack)
 
 def removeDeathSuit(suit, deathSuit):

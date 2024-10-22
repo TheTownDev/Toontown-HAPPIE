@@ -14,6 +14,7 @@ vfs-mount resources/phase_11.mf /
 vfs-mount resources/phase_12.mf /
 vfs-mount resources/phase_13.mf /
 vfs-mount resources/phase_14.mf /
+vfs-mount resources/phase_15.mf /
 model-cache-models false
 model-cache-textures false
 

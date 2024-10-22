@@ -1,6 +1,6 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import *
-from toontown.coghq.BossbotCountryClubOilRoom_Action00 import GlobalEntities
+from toontown.coghq.BossbotCountryClubCornerRoomInverse_Battle00 import GlobalEntities
 from otp.level import LevelUtil
 
 if __debug__:

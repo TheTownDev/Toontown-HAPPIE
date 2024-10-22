@@ -772,7 +772,7 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             Func(camera.reparentTo, self),
             Func(camera.setPos, Point3(0, -35, 25)),
             Func(camera.setHpr, Point3(0, -20, 0)),
-            Func(self.setChatAbsolute, TTL.BossbotRewardSpeech1, CFSpeech),
+            Func(self.setChatAbsolute, random.choice(TTL.BossbotRewardSpeechs), CFSpeech),
             Wait(3.0),
             Func(self.setChatAbsolute, TTL.BossbotRewardSpeech2, CFSpeech),
             Wait(2.0),

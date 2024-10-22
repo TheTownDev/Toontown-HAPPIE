@@ -57,6 +57,7 @@ class SuitAttackType(IntEnum):
     CALCULATE = auto()
     CANNED = auto()
     CHOMP = auto()
+    CONFISCATE = auto()
     CIGAR_SMOKE = auto()
     CLIPON_TIE = auto()
     CRUNCH = auto()
@@ -857,7 +858,7 @@ __PENNY_PINCHER_ATTACKS.add(SuitAttackAttribute(
     weight=20,
 ))
 __PENNY_PINCHER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.PENNY_PINCH,
+    attack=SuitAttackType.PICK_POCKET,
     damage={2: 1, 3: 2, 4: 3, 5: 4, 6: 6},
     accuracy=50,
     weight=50,
@@ -1259,6 +1260,84 @@ __BIG_WIG_ATTACKS.add(SuitAttackAttribute(
     weight=50,
 ))
 
+__BARISTA_ATTACKS = set()
+__BARISTA_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.SCHMOOZE,
+    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    accuracy=75,
+    weight=50,
+))
+__BARISTA_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.WATERCOOLER,
+    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    accuracy=50,
+    weight=30,
+))
+__BARISTA_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.CLIPON_TIE,
+    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    accuracy=75,
+    weight=20,
+))
+__BARISTA: SuitAttributes = T1SuitAttributes(key='bar', name=TTLocalizer.SuitBarista, singular=TTLocalizer.SuitBaristaS, plural=TTLocalizer.SuitBaristaP, tier=0, attacks=__BARISTA_ATTACKS)
+__registerSuitAttributes(__BARISTA)
+
+__INVESTIGATOR_ATTACKS = set()
+__INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.GUILT_TRIP,
+    damage={7: 10, 8: 11, 9: 13, 10: 15, 11: 17},
+    accuracy=60,
+    weight=30,
+))
+__INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.EVICTION_NOTICE,
+    damage={7: 13, 8: 15, 9: 17, 10: 19, 11: 21},
+    accuracy=60,
+    weight=35,
+))
+__INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.PLAY_HARDBALL,
+    damage={7: 11, 8: 13, 9: 15, 10: 18, 11: 22},
+    accuracy=55,
+    weight=20,
+))
+__INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.WRITE_OFF,
+    damage={7: 6, 8: 8, 9: 10, 10: 12, 11: 14},
+    accuracy=70,
+    weight=15,
+))
+__INVESTIGATOR: SuitAttributes = SuitAttributes(key='inv', name=TTLocalizer.SuitInvestigator, singular=TTLocalizer.SuitInvestigatorS, plural=TTLocalizer.SuitInvestigatorP, tier=6, attacks=__INVESTIGATOR_ATTACKS)
+__registerSuitAttributes(__INVESTIGATOR)
+
+__CONFISCATOR_ATTACKS = set()
+__CONFISCATOR_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.CONFISCATE,
+    damage={8: 12, 9: 15, 10: 18, 11: 21, 12: 25},
+    accuracy=50,
+    weight=50,
+))
+__CONFISCATOR_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.MUMBO_JUMBO,
+    damage={8: 14, 9: 15, 10: 17, 11: 19, 12: 21},
+    accuracy=75,
+    weight=10,
+))
+__CONFISCATOR_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.PLAY_HARDBALL,
+    damage={8: 14, 9: 16, 10: 18, 11: 21, 12: 24},
+    accuracy=75,
+    weight=10,
+))
+__CONFISCATOR_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.GUILT_TRIP,
+    damage={8: 14, 9: 16, 10: 18, 11: 20, 12: 22},
+    accuracy=75,
+    weight=30,
+))
+__CONFISCATOR: SuitAttributes = SuitAttributes(key='cfn', name=TTLocalizer.SuitConfiscator, singular=TTLocalizer.SuitConfiscatorS, plural=TTLocalizer.SuitConfiscatorP, tier=7, attacks=__CONFISCATOR_ATTACKS)
+__registerSuitAttributes(__CONFISCATOR)
+
 # todo code animation for this
 # __BIG_WIG_ATTACKS.add(SuitAttackAttribute(
 #     attack=SuitAttackType.THROW_BOOK,
@@ -1381,6 +1460,7 @@ __SuitAttacksToDefaultAnimation = {
     SuitAttackType.CALCULATE:           'phone',
     SuitAttackType.CANNED:              'throw-paper',
     SuitAttackType.CHOMP:               'throw-paper',
+    SuitAttackType.CONFISCATE:          'pickpocket',
     SuitAttackType.CIGAR_SMOKE:         'cigar-smoke',
     SuitAttackType.CLIPON_TIE:          'throw-paper',
     SuitAttackType.CRUNCH:              'throw-object',

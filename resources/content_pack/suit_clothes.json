@@ -1,7 +1,10 @@
 {
     "suit_clothes": {
       "suit_name": true,
-      "trf": true
+      "trf": true,
+      "bar": true,
+      "inv": true,
+      "cfn": true
     }
   }
   
