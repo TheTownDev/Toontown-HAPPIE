@@ -23,6 +23,7 @@ class DistributedCountryClubBattle(DistributedLevelBattle.DistributedLevelBattle
         offState.addTransition('CountryClubReward')
         playMovieState = self.fsm.getStateNamed('PlayMovie')
         playMovieState.addTransition('CountryClubReward')
+        self.supervisorMusicIn = 0
 
     def enterCountryClubReward(self, ts):
         self.notify.debug('enterCountryClubReward()')

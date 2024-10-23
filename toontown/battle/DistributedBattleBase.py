@@ -39,6 +39,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         self.bossBattle = 0
         self.townBattle = townBattle
         self.__battleCleanedUp = 0
+        self.supervisorMusicIn = 0
         self.activeIntervals = {}
         self.localToonJustJoined = 0
         self.choseAttackAlready = 0
@@ -343,6 +344,38 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         self.fsm.request(state, [globalClockDelta.localElapsedTime(timestamp)])
 
     def setMembers(self, suits, suitsJoining, suitsPending, suitsActive, suitsLured, suitTraps, toons, toonsJoining, toonsPending, toonsActive, toonsRunning, suitsImmune, timestamp):
+        if not self.supervisorMusicIn:
+            for suit in self.suits:
+                if suit.dna.name == 'trf':
+                    foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+                    foremanMusic.play()
+            
+            for suit in self.pendingSuits:
+                if suit.dna.name == 'trf':
+                    foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+                    foremanMusic.play()
+            
+            for suit in self.joiningSuits:
+                if suit.dna.name == 'trf':
+                    foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+                    foremanMusic.play()
+            
+            for suit in self.suits:
+                if suit.dna.name == 'bgh':
+                    foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+                    foremanMusic.play()
+            
+            for suit in self.pendingSuits:
+                if suit.dna.name == 'bgh':
+                    foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+                    foremanMusic.play()
+            
+            for suit in self.joiningSuits:
+                if suit.dna.name == 'bgh':
+                    foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+                    foremanMusic.play()
+                    
+            self.supervisorMusicIn = 1
         if self.__battleCleanedUp:
             return
         self.notify.debug('setMembers() - suits: %s suitsJoining: %s suitsPending: %s suitsActive: %s suitsLured: %s suitTraps: %s toons: %s toonsJoining: %s toonsPending: %s toonsActive: %s toonsRunning: %s suitsImmune: %s' % (suits,

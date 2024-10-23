@@ -83,10 +83,16 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
                 'level': self.getActualLevel()}
                 self.setDisplayName(nameInfo)
             else:
-                nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-                'dept': self.getStyleDept(),
-                'level': self.getActualLevel()}
-                self.setDisplayName(nameInfo)
+                if self.dna.name in SuitDNA.supervisors:
+                    nameInfo = TTLocalizer.SupervisorBaseNameWithLevel % {'name': self._name,
+                    'dept': self.getStyleDept(),
+                    'level': "Supervisor"}
+                    self.setDisplayName(nameInfo)
+                else:
+                    nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
+                    'dept': self.getStyleDept(),
+                    'level': self.getActualLevel()}
+                    self.setDisplayName(nameInfo)
         return
 
     def setImmuneStatus(self, num):
@@ -356,6 +362,12 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         self.disableBattleDetect()
         self.corpMedallion.hide()
         self.healthBar.show()
+        if self.dna.name == 'bgh':
+            foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+            foremanMusic.play()
+        if self.dna.name == 'trf':
+            foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+            foremanMusic.play()
         if self.currHP < self.maxHP:
             self.updateHealthBar(0, 1)
 

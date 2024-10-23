@@ -548,27 +548,27 @@ __THE_BIG_CHEESE: SuitAttributes = SuitAttributes(key='tbc', name=TTLocalizer.Su
 __registerSuitAttributes(__THE_BIG_CHEESE)
 
 # Begin defining suit attributes for every cog in the game.
-__BAG_HOLDER_ATTACKS = set()
-__BAG_HOLDER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.CLIPON_TIE,
-    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 8},
+__CLUB_PRESIDENT_ATTACKS = set()
+__CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.EVIL_EYE,
+    damage={8: 8,},
     accuracy=75,
     weight=50,
 ))
-__BAG_HOLDER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.SACKED,
-    damage={1: 3, 2: 5, 3: 7, 4: 9, 5: 11},
+__CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.TEE_OFF,
+    damage={8: 10,},
     accuracy=50,
     weight=30,
 ))
-__BAG_HOLDER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.SCHMOOZE,
-    damage={1: 2, 2: 3, 3: 4, 4: 5, 5: 6},
+__CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.QUAKE,
+    damage={8: 7,},
     accuracy=75,
     weight=20,
 ))
-__BAG_HOLDER: SuitAttributes = T1SuitAttributes(key='bgh', name=TTLocalizer.SuitBagHolder, singular=TTLocalizer.SuitBagHolderS, plural=TTLocalizer.SuitBagHolderP, tier=0, attacks=__BAG_HOLDER_ATTACKS)
-__registerSuitAttributes(__BAG_HOLDER)
+__CLUB_PRESIDENT: SuitAttributes = T1SuitAttributes(key='bgh', name=TTLocalizer.SuitBagHolder, singular=TTLocalizer.SuitBagHolderS, plural=TTLocalizer.SuitBagHolderP, tier=7, attacks=__CLUB_PRESIDENT_ATTACKS)
+__registerSuitAttributes(__CLUB_PRESIDENT)
 
 __COLD_CALLER_ATTACKS = set()
 __COLD_CALLER_ATTACKS.add(SuitAttackAttribute(

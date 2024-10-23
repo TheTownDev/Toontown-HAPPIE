@@ -79,7 +79,7 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
         # Make sure they didn't do anything bad
         self.ruleset.validate()
         # Update the client
-        self.d_setRawRuleset()
+        self.d_setRawRuleset()    
 
     # Any time you change the ruleset, you should call this to sync the clients
     def d_setRawRuleset(self):

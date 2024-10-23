@@ -58,6 +58,12 @@ suitHeadTypes = [
     'bgh'
 ]
 
+supervisors = [
+    'trf',
+    'ski',
+    'def',
+    'bgh']
+
 notMainTypes = [
     'trf',
     'ski',
@@ -72,6 +78,7 @@ suitATypes = [
     'ym',
     'hh',
     'tbc',
+    'bgh',
     'dt',
     'bs',
     'le',
@@ -112,7 +119,6 @@ suitCTypes = [
     'mb',
     'cc',
     'gh',
-    'bgh',
     'bar'
 ]
 
@@ -400,6 +406,7 @@ __SUIT_BATTLE_ANIMATIONS: Set[SuitAnimation] = {
     SuitAnimation(key='pencil-sharpener', suit='B', path='pencil-sharpener', phase='5'),
     SuitAnimation(key='hold-eraser', suit='B', path='hold-eraser', phase='5'),
     SuitAnimation(key='quick-jump', suit='B', path='jump', phase='6'),
+    SuitAnimation(key='quick-jump', suit='A', path='jump', phase='5'),
     SuitAnimation(key='stomp', suit='B', path='stomp', phase='5'),
 
     # Animations exclusive to Suit C (Fat).
@@ -555,7 +562,7 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual('trf',  7.6 / aSize,  VBase4(0.886, 0.737, 0.784, 1.0),                None,                         None,                   'factoryforeman',             8.80),
     SuitVisual('ski',  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        'skinflint.jpg',      'telemarketer',        7.9),
     SuitVisual('def',  4.4 / bSize,   moneyPolyColor,                None,                        'suit-heads_palette_3cmla_5.jpg',                   ['downsizer', 'downsizer_hat'],         5.95),
-    SuitVisual('bgh',   4.0 / cSize,   corpPolyColor,                 None,                         'bag_holder.jpg',                   'tightwad', 4.88),
+    SuitVisual('bgh',   4.65 / aSize,   corpPolyColor,                 None,                         None,                   'clubpresident', 6.3),
 }
 
 SuitClotheParts = ['blazer', 'leg', 'sleeve']
