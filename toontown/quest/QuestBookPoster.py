@@ -20,8 +20,8 @@ class QuestBookPoster(QuestPoster):
     confirmDeleteButtonEvent = 'confirmDeleteButtonEvent'
 
     def __init__(self, parent = aspect2d, **kw):
-        bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
-        questCard = bookModel.find('**/questCard')
+        bookModel = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_qst_toontask_scroll')
+        questCard = bookModel.find('**/ttr_t_gui_qst_toontask_scroll')
         self.extraTaskSlots = base.localAvatar.getQuestCarryLimit() > 4
         if self.extraTaskSlots:
             optiondefs = (('relief', None, None),

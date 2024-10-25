@@ -17,6 +17,7 @@ class RegenTreasurePlannerAI(TreasurePlannerAI.TreasurePlannerAI):
             self.healAmount = TreasureGlobals.healAmounts[zoneId]
         else:
             self.healAmount = 0
+        self.zoneId = zoneId
 
     def start(self):
         self.preSpawnTreasures()

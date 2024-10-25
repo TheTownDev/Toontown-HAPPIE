@@ -42,7 +42,7 @@ class DistributedNPCToonAI(DistributedNPCToonBaseAI):
         # We need the following attributes of the quest to assign it
         # questId, rewardId, toNpcId
         questToNpc = Quests.getQuestToNpcId(questId)
-        rewardId = Quests.getQuestReward(questId)
+        rewardId = Quests.getQuestReward(questId, avId)
 
         self.air.questManager.avatarChoseQuest(avId, self, questId, rewardId, questToNpc)
 

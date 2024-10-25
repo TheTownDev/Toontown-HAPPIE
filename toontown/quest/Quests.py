@@ -1,8 +1,4 @@
-from typing import Dict, NamedTuple, List
-
 from otp.otpbase import OTPGlobals
-from apworld.toontown import locations
-from toontown.archipelago.definitions import util
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.toonbase import ToontownGlobals
 from toontown.battle import SuitBattleGlobals
@@ -71,7 +67,6 @@ DL_TIER = 14
 LAWBOT_HQ_TIER = 18
 BOSSBOT_HQ_TIER = 32
 ELDER_TIER = 49
-AP_TIER = 100
 LOOPING_FINAL_TIER = ELDER_TIER
 VISIT_QUEST_ID = 1000
 TROLLEY_QUEST_ID = 110
@@ -456,6 +451,81 @@ class NewbieQuest:
 
         return num
 
+class TreasureQuest(LocationBasedQuest):
+    def __init__(self, id, quest):
+        LocationBasedQuest.__init__(self, id, quest)
+        if self.__class__ == TreasureQuest:
+            self.checkNumTreasures(self.quest[1])
+        
+    def checkNumTreasures(self, num):
+        self.check(1, 'invalid number of treasures: %s' % num)
+    
+    def getNumQuestItems(self):
+        return self.getNumTreasures()
+    
+    def getNumTreasures(self):
+        return self.quest[1]
+
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= self.getNumTreasures()
+        return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
+    
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        elif self.getNumTreasures() == 1:
+            return ''
+        else:
+            return TTLocalizer.QuestsTreasureQuestProgress % {'progress': questDesc[4],
+             'numTreasures': self.getNumTreasures()}
+    
+    def getObjectiveStrings(self):
+        loc = self.getLocation()
+        
+        text = TTLocalizer.QuestsTreasureCollectDesc
+        
+        name = TTLocalizer.QuestsTreasureQuestCollectNames[loc]
+        count = self.getNumTreasures()
+        return (text % {'numTreasures': count,
+          'nameTreasure': name},)
+    
+    def isLocationMatch(self, zoneId):
+        loc = self.getLocation()
+        if loc is Anywhere:
+            return 1
+        if ZoneUtil.isPlayground(loc):
+            if loc == ZoneUtil.getCanonicalHoodId(zoneId):
+                return 1
+            else:
+                return 0
+        elif loc == ZoneUtil.getCanonicalBranchZone(zoneId):
+            return 1
+        elif loc == zoneId:
+            return 1
+        else:
+            return 0
+    
+    def getString(self):
+        return TTLocalizer.QuestsTreasureQuestCollect % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumTreasures():
+            return getFinishToonTaskSCStrings(toNpcId)
+        loc = self.getLocation()
+        
+        treasureName = TTLocalizer.QuestsTreasureQuestCollectNames[loc]
+        numTreasures = self.getNumTreasures()
+        if numTreasures == 1:
+            text = TTLocalizer.QuestsTreasureQuestSCStringS
+        else:
+            text = TTLocalizer.QuestsTreasureQuestSCStringP
+        treasureLoc = self.getLocationName()
+        return text % {'treasureName': treasureName,
+         'treasureLoc': treasureLoc}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsTreasureQuestHeadline
 
 class CogQuest(LocationBasedQuest):
     def __init__(self, id, quest):
@@ -2042,7 +2112,6 @@ class MinigameNewbieQuest(Quest, NewbieQuest):
 
         return points
 
-
 DefaultDialog = {GREETING: DefaultGreeting,
  QUEST: DefaultQuest,
  INCOMPLETE: DefaultIncomplete,
@@ -2050,6 +2119,9 @@ DefaultDialog = {GREETING: DefaultGreeting,
  INCOMPLETE_WRONG_NPC: DefaultIncompleteWrongNPC,
  COMPLETE: DefaultComplete,
  LEAVING: DefaultLeaving}
+
+from toontown.quest.LegacyQuestDict import QuestDict
+
 
 def getQuestFromNpcId(id):
     return QuestDict.get(id)[QuestDictFromNpcIndex]
@@ -2063,492 +2135,42 @@ def getQuestDialog(id):
     return QuestDict.get(id)[QuestDictDialogIndex]
 
 
-def getQuestReward(questId):
-    baseRewardId = QuestDict.get(questId)[QuestDictRewardIndex]
-    return transformReward(baseRewardId)
+def getQuestReward(id, av):
+    baseRewardId = QuestDict.get(id)[QuestDictRewardIndex]
+    return transformReward(baseRewardId, av)
+
 
 def isQuestJustForFun(questId, rewardId):
-    return True
-
-
-
-class APQuestDefinition(NamedTuple):
-    questDescription: tuple
-    rewardID: int
-
-
-# Quests are defined like so:
-# tier, start, questDesc, fromNpc, toNpc, reward, nextQuest, dialog = quest
-# {
-#      quest_id: (tier, Start/Cont, (QuestClass, arg1, arg2...), ToonHQ, ToonHQ, rewardID/NA, nextQuestID/NA, dialog/DefaultDialog)
-# }
-
-# A quest dict that contains all possible Archipelago quests that NPCs can give
-# This dict assumes that no IDs are going to clash with the vanilla QuestDict and would be safe to be merged
-# This dict's quest ID scheme is going to follow the same principle as the base one where quest IDs are based on
-# Their residing hood, but an offset will be applied to prevent collision
-# TTC AP Quests: 15000-15999
-# DD AP Quests: 16000-16999
-# ...
-# DDL AP Quests: 20000-20999
-
-# For our AP Quests definitions, we are only going to provide bare minimum information as all AP quests are literally
-# Just simple do one thing types of tasks. If you ever want to use a quest in this dict you should ALWAYS call
-# getAPQuest(questId) defined right below this dict, also make sure to check if the return value is not None
-# This method will fill in the blanks so that quests have the necessary information consistent with all other quests
-
-# AP Quest Definition = tuple( (QuestClass, arg1, arg2...), rewardID)
-__AP_QUEST_DICT: Dict[int, APQuestDefinition] = {
-
-    ### TOONTOWN CENTRAL AP QUESTS
-
-    # Location Check #1 (TTC) defeat some tier 1 cog
-    15000: APQuestDefinition((CogQuest, Anywhere, 1, 'f'), 5000),
-    15001: APQuestDefinition((CogQuest, Anywhere, 1, 'bf'), 5000),
-    15002: APQuestDefinition((CogQuest, Anywhere, 1, 'sc'), 5000),
-    15003: APQuestDefinition((CogQuest, Anywhere, 1, 'cc'), 5000),
-
-    # Location Check #2 (TTC) defeat 2 of some dept
-    15010: APQuestDefinition((CogTrackQuest, Anywhere, 2, 'c'), 5001),
-    15011: APQuestDefinition((CogTrackQuest, Anywhere, 2, 'l'), 5001),
-    15012: APQuestDefinition((CogTrackQuest, Anywhere, 2, 'm'), 5001),
-    15013: APQuestDefinition((CogTrackQuest, Anywhere, 2, 's'), 5001),
-
-    # Location Check #3 (TTC) Recover 2 Cog Gears from lvl 3 cogs in TTC
-    15020: APQuestDefinition((RecoverItemQuest, ToontownGlobals.ToontownCentral, 2, 2007, Easy, 3, "level"), 5002),
-
-    # Location Check #4 (TTC) Defeat 5 cogs on a random TTC street
-    15030: APQuestDefinition((CogQuest, ToontownGlobals.PunchlinePlace, 4, Any), 5003),
-    15031: APQuestDefinition((CogQuest, ToontownGlobals.LoopyLane, 5, Any), 5003),
-    15032: APQuestDefinition((CogQuest, ToontownGlobals.SillyStreet, 6, Any), 5003),
-
-    # Location Check #5 (TTC) Defeat either 3-5 level 2s or 5 cogs in TTC
-    15040: APQuestDefinition((CogLevelQuest, ToontownGlobals.ToontownCentral, 3, 2), 5004),
-    15041: APQuestDefinition((CogLevelQuest, ToontownGlobals.ToontownCentral, 4, 2), 5004),
-    15042: APQuestDefinition((CogLevelQuest, ToontownGlobals.ToontownCentral, 5, 2), 5004),
-    15043: APQuestDefinition((CogQuest, ToontownGlobals.ToontownCentral, 5, Any), 5004),
-
-    # Location Check #6 (TTC) Some random tasks
-    15050: APQuestDefinition((CogTrackQuest, Anywhere, 3, 'c'), 5005),
-    15051: APQuestDefinition((CogQuest, Anywhere, 6, Any), 5005),
-    15052: APQuestDefinition((CogLevelQuest, Anywhere, 6, 2), 5005),
-    15053: APQuestDefinition((CogQuest, Anywhere, 1, 'b'), 5005),
-    15054: APQuestDefinition((CogQuest, Anywhere, 1, 'tm'), 5005),
-    15055: APQuestDefinition((RecoverItemQuest, ToontownGlobals.ToontownCentral, 1, 20, Easy, Any, "type",), 5005),
-    15056: APQuestDefinition((RecoverItemQuest, ToontownGlobals.ToontownCentral, 2, 20, Easy, Any, "type",), 5005),
-    15057: APQuestDefinition((RecoverItemQuest, ToontownGlobals.ToontownCentral, 3, 20, Easy, Any, "type",), 5005),
-
-    # Location Check #7 (TTC) Defeat 2 tier 2 cogs
-    15060: APQuestDefinition((CogQuest, Anywhere, 2, 'p'), 5006),
-    15061: APQuestDefinition((CogQuest, Anywhere, 2, 'b'), 5006),
-    15062: APQuestDefinition((CogQuest, Anywhere, 2, 'pp'), 5006),
-    15063: APQuestDefinition((CogQuest, Anywhere, 2, 'tm'), 5006),
-
-    # Location Check #8 (TTC) Some amount of level 2 cogs or recover 3-5 clown car tires from cogs
-    15070: APQuestDefinition((CogLevelQuest, Anywhere, 5, 2), 5007),
-    15071: APQuestDefinition((CogLevelQuest, Anywhere, 6, 2), 5007),
-    15072: APQuestDefinition((CogLevelQuest, Anywhere, 7, 2), 5007),
-    15073: APQuestDefinition((RecoverItemQuest, Anywhere, 3, 2007, Easy, 2, "level"), 5007),
-    15074: APQuestDefinition((RecoverItemQuest, Anywhere, 4, 2007, Easy, 2, "level"), 5007),
-    15075: APQuestDefinition((RecoverItemQuest, Anywhere, 5, 2007, Easy, 2, "level"), 5007),
-
-    # Location Check #9 (TTC) Random Tasks
-    15080: APQuestDefinition((CogTrackQuest, Anywhere, 6, 's'), 5008),
-    15081: APQuestDefinition((CogTrackQuest, Anywhere, 7, 'l'), 5008),
-    15082: APQuestDefinition((CogQuest, Anywhere, 10, Any), 5008),
-    15083: APQuestDefinition((CogLevelQuest, Anywhere, 4, 3), 5008),
-    15084: APQuestDefinition((CogQuest, Anywhere, 1, 'ym'), 5008),
-    15085: APQuestDefinition((CogQuest, Anywhere, 1, 'dt'), 5008),
-    15086: APQuestDefinition((RecoverItemQuest, ToontownGlobals.ToontownCentral, 1, 17, Easy, Any, "type",), 5008),
-    15087: APQuestDefinition((RecoverItemQuest, ToontownGlobals.ToontownCentral, 2, 17, Easy, Any, "type",), 5008),
-    15088: APQuestDefinition((RecoverItemQuest, ToontownGlobals.ToontownCentral, 3, 17, Easy, Any, "type",), 5008),
-
-    # Location Check #10 (TTC) defeat 3 of some dept
-    15090: APQuestDefinition((CogTrackQuest, Anywhere, 3, 'c'), 5009),
-    15091: APQuestDefinition((CogTrackQuest, Anywhere, 3, 'l'), 5009),
-    15092: APQuestDefinition((CogTrackQuest, Anywhere, 3, 'm'), 5009),
-    15093: APQuestDefinition((CogTrackQuest, Anywhere, 3, 's'), 5009),
-
-    # Location Check #11 (TTC) defeat some amount of level 3 cogs
-    15100: APQuestDefinition((CogLevelQuest, Anywhere, 2, 3), 5010),
-    15101: APQuestDefinition((CogLevelQuest, Anywhere, 3, 3), 5010),
-    15102: APQuestDefinition((CogLevelQuest, Anywhere, 4, 3), 5010),
-
-    # Location Check #12 (TTC) Defeat some tier 3 cog
-    15110: APQuestDefinition((CogQuest, Anywhere, 1, 'ym'), 5011),
-    15111: APQuestDefinition((CogQuest, Anywhere, 1, 'dt'), 5011),
-    15112: APQuestDefinition((CogQuest, Anywhere, 1, 'tw'), 5011),
-    15113: APQuestDefinition((CogQuest, Anywhere, 1, 'nd'), 5011),
-
-    # DONALDS DOCK AP QUESTS
-
-    # Location Check #1 (DD) Defeat 7-10 cogs
-    16000: APQuestDefinition((CogQuest, Anywhere, 7, Any), 5012),
-    16001: APQuestDefinition((CogQuest, Anywhere, 8, Any), 5012),
-    16002: APQuestDefinition((CogQuest, Anywhere, 9, Any), 5012),
-    16003: APQuestDefinition((CogQuest, Anywhere, 10, Any), 5012),
-
-    # Location Check #2 (DD) Some variation of defeat x level y cogs in Donald's Dock
-    16010: APQuestDefinition((CogLevelQuest, ToontownGlobals.DonaldsDock, 5, 2), 5013),
-    16011: APQuestDefinition((CogLevelQuest, ToontownGlobals.DonaldsDock, 6, 2), 5013),
-    16012: APQuestDefinition((CogLevelQuest, ToontownGlobals.DonaldsDock, 5, 3), 5013),
-    16013: APQuestDefinition((CogLevelQuest, ToontownGlobals.DonaldsDock, 4, 3), 5013),
-    16014: APQuestDefinition((CogLevelQuest, ToontownGlobals.DonaldsDock, 3, 4), 5013),
-
-    # Location Check #3 (DD) Defeat a cog building (num, dept, floors) or big white wig from back stabbers
-    16020: APQuestDefinition((BuildingQuest, Anywhere, 1, Any, 1), 5014),
-    16021: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 2005, Easy, "bs"), 5014),
-
-    # Location Check #4 (DD) Defeat some tier 4 cog
-    16030: APQuestDefinition((CogQuest, Anywhere, 1, 'mm'), 5015),
-    16031: APQuestDefinition((CogQuest, Anywhere, 1, 'ac'), 5015),
-    16032: APQuestDefinition((CogQuest, Anywhere, 1, 'bc'), 5015),
-    16033: APQuestDefinition((CogQuest, Anywhere, 1, 'gh'), 5015),
-
-    # Location Check #5 (DD) Defeat x cogs in dept y
-    16040: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'c'), 5016),
-    16041: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'l'), 5016),
-    16042: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'm'), 5016),
-    16043: APQuestDefinition((CogTrackQuest, Anywhere, 6, 's'), 5016),
-
-    # Location Check #6 (DD) Defeat x level 6 cogs
-    16050: APQuestDefinition((CogLevelQuest, Anywhere, 4, 6), 5017),
-    16051: APQuestDefinition((CogLevelQuest, Anywhere, 5, 6), 5017),
-    16052: APQuestDefinition((CogLevelQuest, Anywhere, 6, 6), 5017),
-
-    # Location Check #7 (DD) Defeat 7-10 cogs or recover 2-4 sea charts
-    16060: APQuestDefinition((CogQuest, Anywhere, 7, Any), 5018),
-    16061: APQuestDefinition((CogQuest, Anywhere, 8, Any), 5018),
-    16062: APQuestDefinition((CogQuest, Anywhere, 9, Any), 5018),
-    16063: APQuestDefinition((CogQuest, Anywhere, 10, Any), 5018),
-    16064: APQuestDefinition((RecoverItemQuest, ToontownGlobals.DonaldsDock, 2, 2008, Hard, Any), 5018),
-    16065: APQuestDefinition((RecoverItemQuest, ToontownGlobals.DonaldsDock, 3, 2008, Medium, Any), 5018),
-    16066: APQuestDefinition((RecoverItemQuest, ToontownGlobals.DonaldsDock, 4, 2008, Medium, Any), 5018),
-
-    # Location Check #8 (DD) Defeat 10 level 3/4 cogs
-    16070: APQuestDefinition((CogLevelQuest, Anywhere, 10, 3), 5019),
-    16071: APQuestDefinition((CogLevelQuest, Anywhere, 10, 4), 5019),
-
-    # Location Check #9 (DD) Defeat a two story building
-    16080: APQuestDefinition((BuildingQuest, Anywhere, 1, Any, 2), 5020),
-
-    # Location Check #10 (DD) Defeat 2 type 3 cogs
-    16090: APQuestDefinition((CogQuest, Anywhere, 2, 'ym'), 5021),
-    16091: APQuestDefinition((CogQuest, Anywhere, 2, 'dt'), 5021),
-    16092: APQuestDefinition((CogQuest, Anywhere, 2, 'tw'), 5021),
-    16093: APQuestDefinition((CogQuest, Anywhere, 2, 'nd'), 5021),
-
-    # Location Check #11 (DD) Either 6 of some dept or 10 level 3+ cogs or 15 cogs
-    16100: APQuestDefinition((CogLevelQuest, Anywhere, 10, 3), 5022),
-    16101: APQuestDefinition((CogQuest, Anywhere, 15, Any), 5022),
-    16102: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'c'), 5022),
-    16103: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'l'), 5022),
-    16104: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'm'), 5022),
-    16105: APQuestDefinition((CogTrackQuest, Anywhere, 6, 's'), 5022),
-
-    # Location Check #12 (DD) Defeat x level 5s
-    16110: APQuestDefinition((CogLevelQuest, Anywhere, 6, 5), 5023),
-    16111: APQuestDefinition((CogLevelQuest, Anywhere, 7, 5), 5023),
-    16112: APQuestDefinition((CogLevelQuest, Anywhere, 8, 5), 5023),
-
-    # DAISYS GARDENS TASKS
-
-    # Location Check #1 (DG) Defeat x amount of cogs
-    17000: APQuestDefinition((CogQuest, Anywhere, 10, Any), 5024),
-    17001: APQuestDefinition((CogQuest, Anywhere, 11, Any), 5024),
-    17002: APQuestDefinition((CogQuest, Anywhere, 12, Any), 5024),
-
-    # Location Check #2 (DG) Defeat 5 of some dept
-    17010: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'c'), 5025),
-    17011: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'l'), 5025),
-    17012: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'm'), 5025),
-    17013: APQuestDefinition((CogTrackQuest, Anywhere, 5, 's'), 5025),
-
-    # Location Check #3 (DG) Defeat 20 sellbots
-    17020: APQuestDefinition((CogTrackQuest, Anywhere, 20, 's'), 5026),
-
-    # Location Check #4 (DG) Defeat x level 6 cogs
-    17030: APQuestDefinition((CogLevelQuest, Anywhere, 4, 5), 5027),
-    17031: APQuestDefinition((CogLevelQuest, Anywhere, 5, 5), 5027),
-    17032: APQuestDefinition((CogLevelQuest, Anywhere, 6, 5), 5027),
-
-    # Location Check #5 (DG) Defeat sellbots cogs on oak street
-    17040: APQuestDefinition((CogTrackQuest, ToontownGlobals.OakStreet, 5, 's'), 5028),
-    17041: APQuestDefinition((CogTrackQuest, ToontownGlobals.OakStreet, 6, 's'), 5028),
-    17042: APQuestDefinition((CogTrackQuest, ToontownGlobals.OakStreet, 7, 's'), 5028),
-
-    # Location Check #6 (DG) Defeat a tier 5 cog
-    17050: APQuestDefinition((CogQuest, Anywhere, 1, 'ds'), 5029),
-    17051: APQuestDefinition((CogQuest, Anywhere, 1, 'bs'), 5029),
-    17052: APQuestDefinition((CogQuest, Anywhere, 1, 'nc'), 5029),
-    17053: APQuestDefinition((CogQuest, Anywhere, 1, 'ms'), 5029),
-
-    # Location Check #7 (DD) Defeat x amount of cogs
-    17060: APQuestDefinition((CogQuest, Anywhere, 10, Any), 5030),
-    17061: APQuestDefinition((CogQuest, Anywhere, 11, Any), 5030),
-    17062: APQuestDefinition((CogQuest, Anywhere, 12, Any), 5030),
-
-    # Location Check #8 (DD) Defeat some specific types of cogs or low drop chance memos on oak street
-    17070: APQuestDefinition((CogQuest, Anywhere, 1, 'tf'), 5031),
-    17071: APQuestDefinition((CogQuest, Anywhere, 2, 'ms'), 5031),
-    17072: APQuestDefinition((CogQuest, Anywhere, 3, 'gh'), 5031),
-    17073: APQuestDefinition((RecoverItemQuest, ToontownGlobals.OakStreet, 2, 5013, Medium, "s", "track"), 5031),
-    17074: APQuestDefinition((RecoverItemQuest, ToontownGlobals.OakStreet, 3, 5013, Medium, "s", "track"), 5031),
-    17075: APQuestDefinition((RecoverItemQuest, ToontownGlobals.OakStreet, 4, 5013, Easy, "s", "track"), 5031),
-
-    # Location Check #9 (DG) Infamous recover key from mingler/legal eagles
-    17080: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 5012, Medium, "m"), 5032),
-    17081: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 5012, Easy, "le"), 5032),
-
-    # Location Check #10 (DG) Defeat x lvl 5s
-    17090: APQuestDefinition((CogLevelQuest, Anywhere, 4, 5), 5033),
-    17091: APQuestDefinition((CogLevelQuest, Anywhere, 5, 5), 5033),
-    17092: APQuestDefinition((CogLevelQuest, Anywhere, 6, 5), 5033),
-
-    # Location Check #11 (DG) Defeat 4 of some suit that isnt sellbot
-    17100: APQuestDefinition((CogTrackQuest, Anywhere, 4, 'c'), 5034),
-    17101: APQuestDefinition((CogTrackQuest, Anywhere, 4, 'l'), 5034),
-    17102: APQuestDefinition((CogTrackQuest, Anywhere, 4, 'm'), 5034),
-
-    # Location Check #12 (DG) Defeat 10 level 6s
-    17110: APQuestDefinition((CogLevelQuest, Anywhere, 10, 6), 5035),
-
-    # MINNIE"S MELODYLAND TASKS
-
-    # Location Check #1 (MML) Defeat x amount of cogs
-    18000: APQuestDefinition((CogQuest, Anywhere, 8, Any), 5036),
-    18001: APQuestDefinition((CogQuest, Anywhere, 10, Any), 5036),
-    18002: APQuestDefinition((CogQuest, Anywhere, 12, Any), 5036),
-
-    # Location Check #2 (MML) Random Quests
-    18010: APQuestDefinition((CogLevelQuest, Anywhere, 10, 6), 5037),
-    18011: APQuestDefinition((CogQuest, Anywhere, 12, Any), 5037),
-    18012: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'c'), 5037),
-    18013: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'l'), 5037),
-    18014: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'm'), 5037),
-    18015: APQuestDefinition((CogTrackQuest, Anywhere, 5, 's'), 5037),
-
-    # Location Check #3 (MML) Recover silk ties from tier 7
-    18020: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 5001, VeryEasy, "cr"), 5038),
-    18021: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 5001, VeryEasy, "m"), 5038),
-    18022: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 5001, VeryEasy, "ls"), 5038),
-    18023: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 5001, VeryEasy, "le"), 5038),
-
-    # Location Check #4 (MML) Random quests
-    18030: APQuestDefinition((CogLevelQuest, Anywhere, 8, 7), 5039),
-    18031: APQuestDefinition((CogQuest, Anywhere, 12, Any), 5039),
-    18032: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'c'), 5039),
-    18033: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'l'), 5039),
-    18034: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'm'), 5039),
-    18035: APQuestDefinition((CogTrackQuest, Anywhere, 5, 's'), 5039),
-
-    # Location Check #5 (MML) Defeat x amount of cogs in MML
-    18040: APQuestDefinition((CogQuest, ToontownGlobals.MinniesMelodyland, 7, Any), 5040),
-    18041: APQuestDefinition((CogQuest, ToontownGlobals.MinniesMelodyland, 8, Any), 5040),
-    18042: APQuestDefinition((CogQuest, ToontownGlobals.MinniesMelodyland, 9, Any), 5040),
-    18043: APQuestDefinition((CogQuest, ToontownGlobals.MinniesMelodyland, 10, Any), 5040),
-
-    # Location Check #6 (MML) Defeat 2 tier 6 cog
-    18050: APQuestDefinition((CogQuest, Anywhere, 2, 'hh'), 5041),
-    18051: APQuestDefinition((CogQuest, Anywhere, 2, 'sd'), 5041),
-    18052: APQuestDefinition((CogQuest, Anywhere, 2, 'mb'), 5041),
-    18053: APQuestDefinition((CogQuest, Anywhere, 2, 'tf'), 5041),
-
-    # Location Check #7 (MML) Defeat x amount of lvl 6s
-    18060: APQuestDefinition((CogLevelQuest, Anywhere, 4, 6), 5042),
-    18061: APQuestDefinition((CogLevelQuest, Anywhere, 5, 6), 5042),
-    18062: APQuestDefinition((CogLevelQuest, Anywhere, 6, 6), 5042),
-
-    # Location Check #8 (MML) Defeat 5 cogs of dept x
-    18070: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'c'), 5043),
-    18071: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'l'), 5043),
-    18072: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'm'), 5043),
-    18073: APQuestDefinition((CogTrackQuest, Anywhere, 5, 's'), 5043),
-
-    # Location Check #9 (MML) Defeat a level 9 cog
-    18080: APQuestDefinition((CogLevelQuest, Anywhere, 1, 9), 5044),
-
-    # Location Check #10 (MML) Defeat x amount of level y cogs anywhere
-    18090: APQuestDefinition((CogLevelQuest, Anywhere, 5, 6), 5045),
-    18091: APQuestDefinition((CogLevelQuest, Anywhere, 5, 5), 5045),
-    18092: APQuestDefinition((CogLevelQuest, Anywhere, 6, 6), 5045),
-    18093: APQuestDefinition((CogLevelQuest, Anywhere, 6, 5), 5045),
-
-    # Location Check #11 (MML) Random Quests
-    18100: APQuestDefinition((CogLevelQuest, Anywhere, 10, 3), 5046),
-    18101: APQuestDefinition((CogQuest, Anywhere, 15, Any), 5046),
-    18102: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'c'), 5046),
-    18103: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'l'), 5046),
-    18104: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'm'), 5046),
-    18105: APQuestDefinition((CogTrackQuest, Anywhere, 6, 's'), 5046),
-
-    # Location Check #12 (MML) Defeat 25 cogs
-    18110: APQuestDefinition((CogQuest, Anywhere, 25, Any), 5047),
-
-    ### THE BRRRGH AP TASKS
-
-    # Location Check #1 (TB) Defeat x amount of cogs
-    19000: APQuestDefinition((CogQuest, Anywhere, 8, Any), 5048),
-    19001: APQuestDefinition((CogQuest, Anywhere, 10, Any), 5048),
-    19002: APQuestDefinition((CogQuest, Anywhere, 12, Any), 5048),
-
-    # Location Check #2 (TB) Random Quests
-    19010: APQuestDefinition((CogLevelQuest, Anywhere, 7, 7), 5049),
-    19011: APQuestDefinition((CogQuest, Anywhere, 12, Any), 5049),
-    19012: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'c'), 5049),
-    19013: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'l'), 5049),
-    19014: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'm'), 5049),
-    19015: APQuestDefinition((CogTrackQuest, Anywhere, 5, 's'), 5049),
-
-    # Location Check #3 (TB) Defeat 20 lawbots anywhere
-    19020: APQuestDefinition((CogTrackQuest, Anywhere, 20, 'l'), 5050),
-
-    # Location Check #4 (TB) Recover 2 fuzzy dice from lvl 8 cogs
-    19030: APQuestDefinition((RecoverItemQuest, Anywhere, 2, 3018, Medium, 8, "level"), 5051),
-
-    # Location Check #5 (TB) Defeat 7 Lawbots in the brrrgh
-    19040: APQuestDefinition((CogTrackQuest, ToontownGlobals.TheBrrrgh, 7, 'l'), 5052),
-
-    # Location Check #6 (TB) Recover Platform shoes from random tier 8 cog
-    19050: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 3021, VeryEasy, "tbc"), 5053),
-    19051: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 3021, VeryEasy, "bw"), 5053),
-    19052: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 3021, VeryEasy, "rb"), 5053),
-    19053: APQuestDefinition((RecoverItemQuest, Anywhere, 1, 3021, VeryEasy, "mh"), 5053),
-
-    # Location Check #7 (TB) Random Quests
-    19060: APQuestDefinition((CogLevelQuest, Anywhere, 6, 8), 5054),
-    19061: APQuestDefinition((CogQuest, Anywhere, 10, Any), 5054),
-    19062: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'c'), 5054),
-    19063: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'l'), 5054),
-    19064: APQuestDefinition((CogTrackQuest, Anywhere, 5, 'm'), 5054),
-    19065: APQuestDefinition((CogTrackQuest, Anywhere, 5, 's'), 5054),
-
-    # Location Check #8 (TB) Defeat x cogs of type y on polar place
-    19070: APQuestDefinition((CogQuest, ToontownGlobals.PolarPlace, 1, 'sd'), 5055),
-    19071: APQuestDefinition((CogQuest, ToontownGlobals.PolarPlace, 2, 'bs'), 5055),
-
-    # Location Check #9 (TB) Recover external temp sensors
-    19080: APQuestDefinition((RecoverItemQuest, Anywhere, 7, 3027, Medium, Any), 5056),
-    19081: APQuestDefinition((RecoverItemQuest, Anywhere, 12, 3027, Easy, Any), 5056),
-    19082: APQuestDefinition((RecoverItemQuest, Anywhere, 20, 3027, VeryEasy, Any), 5056),
-
-    # Location Check #10 (TB) Defeat x amount of level 7 cogs
-    19090: APQuestDefinition((CogLevelQuest, Anywhere, 6, 7), 5057),
-    19091: APQuestDefinition((CogLevelQuest, Anywhere, 7, 7), 5057),
-    19092: APQuestDefinition((CogLevelQuest, Anywhere, 8, 7), 5057),
-
-    # Location Check #11 (TB) Random Quests
-    19100: APQuestDefinition((CogLevelQuest, Anywhere, 5, 8), 5058),
-    19101: APQuestDefinition((CogQuest, Anywhere, 15, Any), 5058),
-    19102: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'c'), 5058),
-    19103: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'l'), 5058),
-    19104: APQuestDefinition((CogTrackQuest, Anywhere, 6, 'm'), 5058),
-    19105: APQuestDefinition((CogTrackQuest, Anywhere, 6, 's'), 5058),
-
-    # Location Check #12 (TB) Defeat a 5 story building
-    19110: APQuestDefinition((BuildingQuest, Anywhere, 1, Any, 5), 5059),
-
-    ### DDL AP TASKS
-
-    # Location Check #1 (DDL) Defeat x amount of cogs
-    20000: APQuestDefinition((CogQuest, Anywhere, 15, Any), 5060),
-    20001: APQuestDefinition((CogQuest, Anywhere, 16, Any), 5060),
-    20002: APQuestDefinition((CogQuest, Anywhere, 17, Any), 5060),
-    20003: APQuestDefinition((CogQuest, Anywhere, 18, Any), 5060),
-
-    # Location Check #2 (DDL) Defeat x amount of cogs at level y
-    20010: APQuestDefinition((CogLevelQuest, Anywhere, 8, 7), 5061),
-    20011: APQuestDefinition((CogLevelQuest, Anywhere, 7, 8), 5061),
-    20012: APQuestDefinition((CogLevelQuest, Anywhere, 6, 9), 5061),
-    20013: APQuestDefinition((CogLevelQuest, Anywhere, 5, 10), 5061),
-
-    # Location Check #3 (DDL) Defeat 20 cashbots
-    20020: APQuestDefinition((CogTrackQuest, Anywhere, 20, 'm'), 5062),
-
-    # Location Check #4 (DDL) Defeat x amount of cogs at level y
-    20030: APQuestDefinition((CogLevelQuest, Anywhere, 7, 6), 5063),
-    20031: APQuestDefinition((CogLevelQuest, Anywhere, 6, 7), 5063),
-    20032: APQuestDefinition((CogLevelQuest, Anywhere, 5, 8), 5063),
-    20033: APQuestDefinition((CogLevelQuest, Anywhere, 4, 9), 5063),
-
-    # Location Check #5 (DDL) Defeat x amount of cogs at level y
-    20040: APQuestDefinition((CogLevelQuest, Anywhere, 2, 10), 5064),
-    20041: APQuestDefinition((CogLevelQuest, Anywhere, 3, 9), 5064),
-    20042: APQuestDefinition((CogLevelQuest, Anywhere, 5, 8), 5064),
-    20043: APQuestDefinition((CogLevelQuest, Anywhere, 7, 7), 5064),
-
-    # Location Check #6 (DDL) Defeat a random tier 8 cog
-    20050: APQuestDefinition((CogQuest, Anywhere, 1, 'tbc'), 5065),
-    20051: APQuestDefinition((CogQuest, Anywhere, 1, 'bw'), 5065),
-    20052: APQuestDefinition((CogQuest, Anywhere, 1, 'rb'), 5065),
-    20053: APQuestDefinition((CogQuest, Anywhere, 1, 'mh'), 5065),
-
-    # Location Check #7 (DDL) Defeat 10 cashbots on pajama place or cashbot plans
-    20060: APQuestDefinition((CogTrackQuest, ToontownGlobals.PajamaPlace, 10, 'm'), 5066),
-    20061: APQuestDefinition((RecoverItemQuest, ToontownGlobals.PajamaPlace, 5, 6001, Medium, "m", "track"), 5066),
-
-    # Location Check #8 (DDL) Defeat x amount of cogs
-    20070: APQuestDefinition((CogQuest, Anywhere, 13, Any), 5067),
-    20071: APQuestDefinition((CogQuest, Anywhere, 15, Any), 5067),
-    20072: APQuestDefinition((CogQuest, Anywhere, 17, Any), 5067),
-    20073: APQuestDefinition((CogQuest, Anywhere, 19, Any), 5067),
-
-    # Location Check #9 (DDL) Defeat 4 level 11+ cogs or 7 level 10+
-    20080: APQuestDefinition((CogLevelQuest, Anywhere, 4, 11), 5068),
-    20081: APQuestDefinition((CogLevelQuest, Anywhere, 7, 10), 5068),
-
-    # Location Check #10 (DDL) Defeat x amount of cogs or recover pajamas
-    20090: APQuestDefinition((CogQuest, Anywhere, 10, Any), 5069),
-    20091: APQuestDefinition((CogQuest, Anywhere, 14, Any), 5069),
-    20092: APQuestDefinition((CogQuest, Anywhere, 18, Any), 5069),
-    20093: APQuestDefinition((RecoverItemQuest, Anywhere, 5, 7007, Medium, Any), 5069),
-    20094: APQuestDefinition((RecoverItemQuest, Anywhere, 7, 7007, Medium, Any), 5069),
-    20095: APQuestDefinition((RecoverItemQuest, Anywhere, 9, 7007, Medium, Any), 5069),
-
-    # Location Check #11 (DDL) Defeat x cogs of type y in DDL
-    20100: APQuestDefinition((CogQuest, ToontownGlobals.DonaldsDreamland, 1, 'mb'), 5070),
-    20101: APQuestDefinition((CogQuest, ToontownGlobals.DonaldsDreamland, 2, 'nc'), 5070),
-    20102: APQuestDefinition((CogQuest, ToontownGlobals.DonaldsDreamland, 3, 'bc'), 5070),
-
-    # Location Check #12 (DDL) Recover Hard Pillows from level 9s in DDL (very low drop chance)
-    20110: APQuestDefinition((RecoverItemQuest, ToontownGlobals.DonaldsDreamland, 2, 7006, VeryHard, 9, "level"), 5071),
-    20111: APQuestDefinition((RecoverItemQuest, ToontownGlobals.DonaldsDreamland, 4, 7006, Medium, 9, "level"), 5071),
-
-}
-
-
-# Gets an entry from the AP Quest Dict and transforms it into a normal toontown quest as if it was defined in QuestDict
-def getAPQuest(questId: int):
-
-    apQuest: APQuestDefinition = __AP_QUEST_DICT.get(questId)
-    if apQuest is None:
-        return None
-
-    # Now format it as if it was a normal quest
-    # AP tier, start of a quest, from and to NPC is HQ officer, No next quest, and default dialog
-
-    quest = (AP_TIER, Start, apQuest.questDescription, ToonHQ, ToonHQ, apQuest.rewardID, NA, DefaultDialog)
-    return quest
-
-# All the registered quests in the game. If you want the legacy TTO quests, see LegacyQuestDict
-
-QuestDict = {
-
-}
-
-# For Archipelago purposes, we only need archipelago quests to be registered in the game
-for questID, questDefinition in __AP_QUEST_DICT.items():
-    quest = getAPQuest(questID)
-    QuestDict[questID] = quest
-
-WANT_LEGACY_QUESTS = False
-# If we want the original quests, simply just extend the quest dict above
-if WANT_LEGACY_QUESTS:
-    from toontown.quest import LegacyQuestDict
-    for key, value in LegacyQuestDict.QuestDict.items():
-        QuestDict[key] = value
-
-
+    questEntry = QuestDict.get(questId)
+    if questEntry:
+        tier = questEntry[QuestDictTierIndex]
+        return isRewardOptional(tier, rewardId)
+    else:
+        return False
+
+
+NoRewardTierZeroQuests = (101,
+ 110,
+ 121,
+ 131,
+ 141,
+ 145,
+ 150,
+ 160,
+ 161,
+ 162,
+ 163)
+RewardTierZeroQuests = ()
+PreClarabelleQuestIds = NoRewardTierZeroQuests + RewardTierZeroQuests
+
+Tier2QuestsDict = {}
+for questId, questDesc in list(QuestDict.items()):
+    if questDesc[QuestDictStartIndex] == Start:
+        tier = questDesc[QuestDictTierIndex]
+        if tier in Tier2QuestsDict:
+            Tier2QuestsDict[tier].append(questId)
+        else:
+            Tier2QuestsDict[tier] = [questId]
 
 Quest2RewardDict = {}
 Tier2Reward2QuestsDict = {}
@@ -2564,22 +2186,60 @@ def getAllRewardIdsForReward(rewardId):
     return (rewardId,)
 
 
-def findFinalRewardId(questID, depth=0):
+def findFinalRewardId(questId):
+    finalRewardId = Quest2RewardDict.get(questId)
+    if finalRewardId:
+        remainingSteps = Quest2RemainingStepsDict.get(questId)
+    else:
+        try:
+            questDesc = QuestDict[questId]
+        except KeyError:
+            print('findFinalRewardId: Quest ID: %d not found' % questId)
+            return -1
 
-    questDesc = QuestDict.get(questID)
-    if questDesc is None:
-        return -1, -1
+        nextQuestId = questDesc[QuestDictNextQuestIndex]
+        if nextQuestId == NA:
+            finalRewardId = questDesc[QuestDictRewardIndex]
+            remainingSteps = 1
+        else:
+            if type(nextQuestId) == type(()):
+                finalRewardId, remainingSteps = findFinalRewardId(nextQuestId[0])
+                for id in nextQuestId[1:]:
+                    findFinalRewardId(id)
 
-    nextQuest = questDesc[QuestDictNextQuestIndex]
+            else:
+                finalRewardId, remainingSteps = findFinalRewardId(nextQuestId)
+            remainingSteps += 1
+        if finalRewardId != OBSOLETE:
+            if questDesc[QuestDictStartIndex] == Start:
+                tier = questDesc[QuestDictTierIndex]
+                tier2RewardDict = Tier2Reward2QuestsDict.setdefault(tier, {})
+                rewardIds = getAllRewardIdsForReward(finalRewardId)
+                for rewardId in rewardIds:
+                    questList = tier2RewardDict.setdefault(rewardId, [])
+                    questList.append(questId)
 
-    if nextQuest == NA:
-        return questDesc[QuestDictRewardIndex], depth
-
-    return findFinalRewardId(nextQuest, depth+1)
+        else:
+            finalRewardId = None
+        Quest2RewardDict[questId] = finalRewardId
+        Quest2RemainingStepsDict[questId] = remainingSteps
+    return (finalRewardId, remainingSteps)
 
 
 for questId in list(QuestDict.keys()):
     findFinalRewardId(questId)
+
+def getStartingQuests(tier = None):
+    startingQuests = []
+    for questId in list(QuestDict.keys()):
+        if isStartingQuest(questId):
+            if tier is None:
+                startingQuests.append(questId)
+            elif questId in Tier2QuestsDict[tier]:
+                startingQuests.append(questId)
+
+    startingQuests.sort()
+    return startingQuests
 
 
 def getFinalRewardId(questId, fAll = 0):
@@ -2587,7 +2247,6 @@ def getFinalRewardId(questId, fAll = 0):
         return Quest2RewardDict.get(questId)
     else:
         return None
-
     return None
 
 
@@ -2622,10 +2281,15 @@ def getNextQuest(id, currentNpc, av):
     nextQuest = QuestDict[id][QuestDictNextQuestIndex]
     if nextQuest == NA:
         return (NA, NA)
-
+    elif type(nextQuest) == type(()):
+        nextReward = QuestDict[nextQuest[0]][QuestDictRewardIndex]
+        nextNextQuest, nextNextToNpcId = getNextQuest(nextQuest[0], currentNpc, av)
+        if nextReward == 400 and nextNextQuest == NA:
+            nextQuest = chooseTrackChoiceQuest(av.getRewardTier(), av)
+        else:
+            nextQuest = random.choice(nextQuest)
     if not getQuestClass(nextQuest).filterFunc(av):
         return getNextQuest(nextQuest, currentNpc, av)
-
     nextToNpcId = getQuestToNpcId(nextQuest)
     if nextToNpcId == Any:
         nextToNpcId = 2004
@@ -2636,93 +2300,246 @@ def getNextQuest(id, currentNpc, av):
             nextToNpcId = currentNpc.getNpcId()
     elif nextToNpcId == ToonHQ:
         nextToNpcId = ToonHQ
-    return nextQuest, nextToNpcId
+    return (nextQuest, nextToNpcId)
 
 
-def transformReward(baseRewardId):
-    return baseRewardId
+def filterQuests(entireQuestPool, currentNpc, av):
+    if notify.getDebug():
+        notify.debug('filterQuests: entireQuestPool: %s' % entireQuestPool)
+    validQuestPool = dict([ (questId, 1) for questId in entireQuestPool ])
+    if isLoopingFinalTier(av.getRewardTier()):
+        history = [questDesc[0] for questDesc in av.quests]
+    else:
+        history = av.getQuestHistory()
+    if notify.getDebug():
+        notify.debug('filterQuests: av quest history: %s' % history)
+    currentQuests = av.quests
+    for questId in entireQuestPool:
+        if questId in history:
+            if notify.getDebug():
+                notify.debug('filterQuests: Removed %s because in history' % questId)
+            validQuestPool[questId] = 0
+            continue
+        potentialFromNpc = getQuestFromNpcId(questId)
+        if not npcMatches(potentialFromNpc, currentNpc):
+            if notify.getDebug():
+                notify.debug('filterQuests: Removed %s: potentialFromNpc does not match currentNpc' % questId)
+            validQuestPool[questId] = 0
+            continue
+        potentialToNpc = getQuestToNpcId(questId)
+        if currentNpc.getNpcId() == potentialToNpc:
+            if notify.getDebug():
+                notify.debug('filterQuests: Removed %s because potentialToNpc is currentNpc' % questId)
+            validQuestPool[questId] = 0
+            continue
+        if not getQuestClass(questId).filterFunc(av):
+            if notify.getDebug():
+                notify.debug('filterQuests: Removed %s because of filterFunc' % questId)
+            validQuestPool[questId] = 0
+            continue
+        for quest in currentQuests:
+            fromNpcId = quest[1]
+            toNpcId = quest[2]
+            if potentialToNpc == toNpcId and toNpcId != ToonHQ:
+                validQuestPool[questId] = 0
+                if notify.getDebug():
+                    notify.debug('filterQuests: Removed %s because npc involved' % questId)
+                break
+
+    finalQuestPool = [key for key in list(validQuestPool.keys()) if validQuestPool[key]]
+    if notify.getDebug():
+        notify.debug('filterQuests: finalQuestPool: %s' % finalQuestPool)
+    return finalQuestPool
 
 
-# Called when we talk to an HQ Officer, which quests should we offer the player?
-# Pass in the NPC, the toon to give quests for, and a list of reward IDs to ignore
-def chooseBestQuests(currentNpc, av, excludeRewards: List[int], seed=None):
+def chooseTrackChoiceQuest(tier, av, fixed = 0):
 
-    # If this is not an HQ npc, ignore them
-    if not currentNpc.getHq():
+    def fixAndCallAgain():
+        if not fixed:
+            notify.info('av %s trackAccess fixed: %s' % (av.getDoId(), trackAccess))
+            return chooseTrackChoiceQuest(tier, av, fixed=1)
+        else:
+            return None
+        return None
+
+    bestQuest = None
+    trackAccess = av.getTrackAccess()
+    if tier == MM_TIER:
+        if trackAccess[ToontownBattleGlobals.HEAL_TRACK] == 1:
+            bestQuest = 4002
+        elif trackAccess[ToontownBattleGlobals.SOUND_TRACK] == 1:
+            bestQuest = 4001
+        else:
+            notify.warning('av %s has bogus trackAccess: %s' % (av.getDoId(), trackAccess))
+            return fixAndCallAgain()
+    elif tier == BR_TIER:
+        if trackAccess[ToontownBattleGlobals.TRAP_TRACK] == 1:
+            if trackAccess[ToontownBattleGlobals.SOUND_TRACK] == 1:
+                if trackAccess[ToontownBattleGlobals.DROP_TRACK] == 1:
+                    bestQuest = 5004
+                elif trackAccess[ToontownBattleGlobals.LURE_TRACK] == 1:
+                    bestQuest = 5003
+                else:
+                    notify.warning('av %s has bogus trackAccess: %s' % (av.getDoId(), trackAccess))
+                    return fixAndCallAgain()
+            elif trackAccess[ToontownBattleGlobals.HEAL_TRACK] == 1:
+                if trackAccess[ToontownBattleGlobals.DROP_TRACK] == 1:
+                    bestQuest = 5002
+                elif trackAccess[ToontownBattleGlobals.LURE_TRACK] == 1:
+                    bestQuest = 5001
+                else:
+                    notify.warning('av %s has bogus trackAccess: %s' % (av.getDoId(), trackAccess))
+                    return fixAndCallAgain()
+        elif trackAccess[ToontownBattleGlobals.SOUND_TRACK] == 0:
+            bestQuest = 5005
+        elif trackAccess[ToontownBattleGlobals.HEAL_TRACK] == 0:
+            bestQuest = 5006
+        elif trackAccess[ToontownBattleGlobals.DROP_TRACK] == 0:
+            bestQuest = 5007
+        elif trackAccess[ToontownBattleGlobals.LURE_TRACK] == 0:
+            bestQuest = 5008
+        else:
+            notify.warning('av %s has bogus trackAccess: %s' % (av.getDoId(), trackAccess))
+            return fixAndCallAgain()
+    else:
+        if notify.getDebug():
+            notify.debug('questPool for reward 400 had no dynamic choice, tier: %s' % tier)
+        bestQuest = seededRandomChoice(Tier2Reward2QuestsDict[tier][400])
+    if notify.getDebug():
+        notify.debug('chooseTrackChoiceQuest: avId: %s trackAccess: %s tier: %s bestQuest: %s' % (av.getDoId(),
+         trackAccess,
+         tier,
+         bestQuest))
+    return bestQuest
+
+
+def chooseMatchingQuest(tier, validQuestPool, rewardId, npc, av):
+    questsMatchingReward = Tier2Reward2QuestsDict[tier].get(rewardId, [])
+    if notify.getDebug():
+        notify.debug('questsMatchingReward: %s tier: %s = %s' % (rewardId, tier, questsMatchingReward))
+    if rewardId == 400 and QuestDict[questsMatchingReward[0]][QuestDictNextQuestIndex] == NA:
+        bestQuest = chooseTrackChoiceQuest(tier, av)
+        if notify.getDebug():
+            notify.debug('single part track choice quest: %s tier: %s avId: %s trackAccess: %s bestQuest: %s' % (rewardId,
+             tier,
+             av.getDoId(),
+             av.getTrackAccess(),
+             bestQuest))
+    else:
+        validQuestsMatchingReward = PythonUtil.intersection(questsMatchingReward, validQuestPool)
+        if notify.getDebug():
+            notify.debug('validQuestsMatchingReward: %s tier: %s = %s' % (rewardId, tier, validQuestsMatchingReward))
+        if validQuestsMatchingReward:
+            bestQuest = seededRandomChoice(validQuestsMatchingReward)
+        else:
+            questsMatchingReward = Tier2Reward2QuestsDict[tier].get(AnyCashbotSuitPart, [])
+            if notify.getDebug():
+                notify.debug('questsMatchingReward: AnyCashbotSuitPart tier: %s = %s' % (tier, questsMatchingReward))
+            validQuestsMatchingReward = PythonUtil.intersection(questsMatchingReward, validQuestPool)
+            if validQuestsMatchingReward:
+                if notify.getDebug():
+                    notify.debug('validQuestsMatchingReward: AnyCashbotSuitPart tier: %s = %s' % (tier, validQuestsMatchingReward))
+                bestQuest = seededRandomChoice(validQuestsMatchingReward)
+            else:
+                questsMatchingReward = Tier2Reward2QuestsDict[tier].get(AnyLawbotSuitPart, [])
+                if notify.getDebug():
+                    notify.debug('questsMatchingReward: AnyLawbotSuitPart tier: %s = %s' % (tier, questsMatchingReward))
+                validQuestsMatchingReward = PythonUtil.intersection(questsMatchingReward, validQuestPool)
+                if validQuestsMatchingReward:
+                    if notify.getDebug():
+                        notify.debug('validQuestsMatchingReward: AnyLawbotSuitPart tier: %s = %s' % (tier, validQuestsMatchingReward))
+                    bestQuest = seededRandomChoice(validQuestsMatchingReward)
+                else:
+                    questsMatchingReward = Tier2Reward2QuestsDict[tier].get(Any, [])
+                    if notify.getDebug():
+                        notify.debug('questsMatchingReward: Any tier: %s = %s' % (tier, questsMatchingReward))
+                    if not questsMatchingReward:
+                        notify.warning('chooseMatchingQuests, no questsMatchingReward')
+                        return None
+                    validQuestsMatchingReward = PythonUtil.intersection(questsMatchingReward, validQuestPool)
+                    if not validQuestsMatchingReward:
+                        notify.warning('chooseMatchingQuests, no validQuestsMatchingReward')
+                        return None
+                    if notify.getDebug():
+                        notify.debug('validQuestsMatchingReward: Any tier: %s = %s' % (tier, validQuestsMatchingReward))
+                    bestQuest = seededRandomChoice(validQuestsMatchingReward)
+    return bestQuest
+
+
+def transformReward(baseRewardId, av):
+    if baseRewardId == 900:
+        trackId, progress = av.getTrackProgress()
+        if trackId == -1:
+            notify.warning('transformReward: asked to transform 900 but av is not training')
+            actualRewardId = baseRewardId
+        else:
+            actualRewardId = 900 + 1 + trackId
+        return actualRewardId
+    elif baseRewardId > 800 and baseRewardId < 900:
+        trackId, progress = av.getTrackProgress()
+        if trackId < 0:
+            notify.warning('transformReward: av: %s is training a track with none chosen!' % av.getDoId())
+            return 601
+        else:
+            actualRewardId = baseRewardId + 200 + trackId * 100
+            return actualRewardId
+    else:
+        return baseRewardId
+
+
+def chooseBestQuests(tier, currentNpc, av):
+    if isLoopingFinalTier(tier):
+        rewardHistory = [questDesc[3] for questDesc in av.quests]
+    else:
+        rewardHistory = av.getRewardHistory()[1]
+    seedRandomGen(currentNpc.getNpcId(), av.getDoId(), tier, rewardHistory)
+    numChoices = getNumChoices(tier)
+    rewards = getNextRewards(numChoices, tier, av)
+    if not rewards:
         return []
+    possibleQuests = []
+    possibleRewards = list(rewards)
+    if Any not in possibleRewards:
+        possibleRewards.append(Any)
+    for rewardId in possibleRewards:
+        possibleQuests.extend(Tier2Reward2QuestsDict[tier].get(rewardId, []))
 
-    # Get the hood ID this HQ officer is residing in and use it to find the locations this playground offers
-    hoodId = ZoneUtil.getHoodId(currentNpc.zoneId)
-
-    # What AP locations can this hood offer for us?
-    allHoodTaskLocationNames = util.hood_to_task_locations(hoodId)
-
-    # Use the index of this NPC to choose ideal quests
-    npcHQIndex = currentNpc.getPositionIndex()
-
-    # Quests in each playground are 12 quests each, meaning we should have gotten a list of 12 location names
-    # This NPC will offer 3 of those. Find some offset and offer that subsection of all the tasks
-    taskLocationOffset = npcHQIndex * 3
-    taskLocationEnd = taskLocationOffset + 3
-    # Splice the list to choose 3 tasks we want, this should splice like so: 0-2, 3-5, 6-8, 9-11
-    locationsWeOffer = allHoodTaskLocationNames[taskLocationOffset:taskLocationEnd]
-
-    # Now convert these AP locations into base Toontown quest reward items
-    rewardsFromLocation = []
-    for location in locationsWeOffer:
-
-        # If the player has already checked the location via AP, they do not need to do this quest
-        locationID = util.ap_location_name_to_id(location)
-        if av.hasCheckedLocation(locationID):
-            continue
-
-        convertedRewardID = getRewardIdFromAPLocationName(location)
-
-        # If we want to exclude this reward ID for whatever reason, do not include it
-        if convertedRewardID in excludeRewards:
-            continue
-
-        # This quest will be valid for our player to grab
-        rewardsFromLocation.append(convertedRewardID)
-
-    # Now that we have the rewards these quests choices should give, let's generate some options
-    # These need to be formatted like so for the QuestMgr to process them correctly:
-    # Return a list of Quests like so:
-    # We only need a questID and a rewardID essentially
-    # [
-    #   [bestQuestId, rewardId, ToonHQ],
-    #   [bestQuestId, rewardId, ToonHQ],
-    #   [bestQuestId, rewardId, ToonHQ],
-    # ]
-
-    # RNG seeding
-    rng = random.Random()
-    if seed is not None:
-        rng.seed(seed)
-
-    # Define our pool of quests per reward ID
-    questPool: Dict[int, List[int]] = {}  # Reward ID -> List of Quest IDs with reward
-    for rewardID in rewardsFromLocation:
-        questPool[rewardID] = []
-
-    # Loop through every quest in the game and find quests that have a reward we are interested in
-    for questId, questInformation in QuestDict.items():
-        thisQuestReward = questInformation[QuestDictRewardIndex]
-        # Does the reward match one of the ones we have?
-        if thisQuestReward in questPool:
-            questPool[thisQuestReward].append(questId)
-
+    validQuestPool = filterQuests(possibleQuests, currentNpc, av)
+    if not validQuestPool:
+        return []
+    if numChoices == 0:
+        numChoices = 1
     bestQuests = []
+    for i in range(numChoices):
+        if len(validQuestPool) == 0:
+            break
+        if len(rewards) == 0:
+            break
+        rewardId = rewards.pop(0)
+        bestQuestId = chooseMatchingQuest(tier, validQuestPool, rewardId, currentNpc, av)
+        if bestQuestId is None:
+            continue
+        validQuestPool.remove(bestQuestId)
+        bestQuestToNpcId = getQuestToNpcId(bestQuestId)
+        if bestQuestToNpcId == Any:
+            bestQuestToNpcId = 2003
+        elif bestQuestToNpcId == Same:
+            if currentNpc.getHq():
+                bestQuestToNpcId = ToonHQ
+            else:
+                bestQuestToNpcId = currentNpc.getNpcId()
+        elif bestQuestToNpcId == ToonHQ:
+            bestQuestToNpcId = ToonHQ
+        bestQuests.append([bestQuestId, rewardId, bestQuestToNpcId])
 
-    # Now randomly choose a quest per reward ID that we want to show
-    for rewardID, questIdChoices in questPool.items():
-        randomQuest = rng.choice(questIdChoices)
-        bestQuests.append([randomQuest, rewardID, ToonHQ])
-
-    # Reverse the list bc it looks better for the client lol
-    bestQuests.reverse()
+    for quest in bestQuests:
+        quest[1] = transformReward(quest[1], av)
 
     return bestQuests
+
+
+def questExists(id):
+    return id in QuestDict
 
 
 def getQuest(id):
@@ -2903,11 +2720,10 @@ class MaxHpReward(Reward):
         return self.reward[0]
 
     def sendRewardAI(self, av):
-        # maxHp = av.getMaxHp()
-        # maxHp = min(ToontownGlobals.MaxHpLimit, maxHp + self.getAmount())
-        # av.b_setMaxHp(maxHp)
-        # av.toonUp(maxHp)
-        pass
+        maxHp = av.getMaxHp()
+        maxHp = min(ToontownGlobals.MaxHpLimit, maxHp + self.getAmount())
+        av.b_setMaxHp(maxHp)
+        av.toonUp(maxHp)
 
     def countReward(self, qrc):
         qrc.maxHp += self.getAmount()
@@ -3261,479 +3077,638 @@ class CogSuitPartReward(Reward):
          'part': self.getCogPartName()}
 
 
-class APLocationReward(Reward):
-
-    # Location string given is the Donald's Dock Task #4 etc
-    def getCheckName(self) -> str:
-        return self.reward[0]
-
-    def getCheckId(self) -> int:
-        return util.ap_location_name_to_id(self.getCheckName())
-
-    def sendRewardAI(self, av):
-        checkID = self.getCheckId()
-
-        if checkID < 0:
-            raise Exception(f"Invalid location name for AP Location reward!: {self.getCheckName()}")
-
-        av.addCheckedLocation(self.getCheckId())
-
-    def getRewardName(self):
-
-
-        # First try to find out if we are running this locally or on the ai
-        av = None
-        try:
-            av = base.localAvatar
-        # This is the AI, just use the check name
-        except AttributeError:
-            return self.getCheckName()
-
-        # Do we have it cached?
-        if not av.hasCachedLocationReward(self.getCheckId()):
-            return self.getCheckName()
-
-        # Send
-        return av.getCachedLocationReward(self.getCheckId())
-
-    def getString(self):
-        return f"You have completed {self.getCheckName()}"
-
-    def getPosterString(self):
-        return self.getRewardName()
-
-
-REWARD_INDEX_CLASS = 0
-
-def getRewardClass(rewardID):
-    reward = RewardDict.get(rewardID)
-    if reward is not None:
-        return reward[REWARD_INDEX_CLASS]
-
+def getRewardClass(id):
+    reward = RewardDict.get(id)
+    if reward:
+        return reward[0]
+    else:
+        return None
     return None
 
 
-def getReward(rewardID):
-    reward = RewardDict.get(rewardID)
-    if reward is not None:
-        rewardClass = reward[REWARD_INDEX_CLASS]
-        return rewardClass(rewardID, reward[1:])
-
-    notify.warning('getReward(): id %s not found.' % rewardID)
+def getReward(id):
+    reward = RewardDict.get(id)
+    if reward:
+        rewardClass = reward[0]
+        return rewardClass(id, reward[1:])
+    else:
+        notify.warning('getReward(): id %s not found.' % id)
+        return None
     return None
 
 
-RewardDict = {
-    100: (MaxHpReward, 1),
-    101: (MaxHpReward, 2),
-    102: (MaxHpReward, 3),
-    103: (MaxHpReward, 4),
-    104: (MaxHpReward, 5),
-    105: (MaxHpReward, 6),
-    106: (MaxHpReward, 7),
-    107: (MaxHpReward, 8),
-    108: (MaxHpReward, 9),
-    109: (MaxHpReward, 10),
-    200: (MaxGagCarryReward, 25, TTLocalizer.QuestsMediumPouch),
-    201: (MaxGagCarryReward, 30, TTLocalizer.QuestsLargePouch),
-    202: (MaxGagCarryReward, 35, TTLocalizer.QuestsSmallBag),
-    203: (MaxGagCarryReward, 40, TTLocalizer.QuestsMediumBag),
-    204: (MaxGagCarryReward, 50, TTLocalizer.QuestsLargeBag),
-    205: (MaxGagCarryReward, 60, TTLocalizer.QuestsSmallBackpack),
-    206: (MaxGagCarryReward, 70, TTLocalizer.QuestsMediumBackpack),
-    207: (MaxGagCarryReward, 80, TTLocalizer.QuestsLargeBackpack),
-    300: (TeleportReward, ToontownGlobals.ToontownCentral),
-    301: (TeleportReward, ToontownGlobals.DonaldsDock),
-    302: (TeleportReward, ToontownGlobals.DaisyGardens),
-    303: (TeleportReward, ToontownGlobals.MinniesMelodyland),
-    304: (TeleportReward, ToontownGlobals.TheBrrrgh),
-    305: (TeleportReward, ToontownGlobals.DonaldsDreamland),
-    400: (TrackTrainingReward, None),
-    401: (TrackTrainingReward, ToontownBattleGlobals.HEAL_TRACK),
-    402: (TrackTrainingReward, ToontownBattleGlobals.TRAP_TRACK),
-    403: (TrackTrainingReward, ToontownBattleGlobals.LURE_TRACK),
-    404: (TrackTrainingReward, ToontownBattleGlobals.SOUND_TRACK),
-    405: (TrackTrainingReward, ToontownBattleGlobals.THROW_TRACK),
-    406: (TrackTrainingReward, ToontownBattleGlobals.SQUIRT_TRACK),
-    407: (TrackTrainingReward, ToontownBattleGlobals.DROP_TRACK),
-    500: (MaxQuestCarryReward, 2),
-    501: (MaxQuestCarryReward, 3),
-    502: (MaxQuestCarryReward, 4),
-    600: (MoneyReward, 10),
-    601: (MoneyReward, 20),
-    602: (MoneyReward, 40),
-    603: (MoneyReward, 60),
-    604: (MoneyReward, 100),
-    605: (MoneyReward, 150),
-    606: (MoneyReward, 200),
-    607: (MoneyReward, 250),
-    608: (MoneyReward, 300),
-    609: (MoneyReward, 400),
-    610: (MoneyReward, 500),
-    611: (MoneyReward, 600),
-    612: (MoneyReward, 700),
-    613: (MoneyReward, 800),
-    614: (MoneyReward, 900),
-    615: (MoneyReward, 1000),
-    616: (MoneyReward, 1100),
-    617: (MoneyReward, 1200),
-    618: (MoneyReward, 1300),
-    619: (MoneyReward, 1400),
-    620: (MoneyReward, 1500),
-    621: (MoneyReward, 1750),
-    622: (MoneyReward, 2000),
-    623: (MoneyReward, 2500),
-    700: (MaxMoneyReward, 50),
-    701: (MaxMoneyReward, 60),
-    702: (MaxMoneyReward, 80),
-    703: (MaxMoneyReward, 100),
-    704: (MaxMoneyReward, 120),
-    705: (MaxMoneyReward, 150),
-    706: (MaxMoneyReward, 200),
-    707: (MaxMoneyReward, 250),
-    801: (TrackProgressReward, None, 1),
-    802: (TrackProgressReward, None, 2),
-    803: (TrackProgressReward, None, 3),
-    804: (TrackProgressReward, None, 4),
-    805: (TrackProgressReward, None, 5),
-    806: (TrackProgressReward, None, 6),
-    807: (TrackProgressReward, None, 7),
-    808: (TrackProgressReward, None, 8),
-    809: (TrackProgressReward, None, 9),
-    810: (TrackProgressReward, None, 10),
-    811: (TrackProgressReward, None, 11),
-    812: (TrackProgressReward, None, 12),
-    813: (TrackProgressReward, None, 13),
-    814: (TrackProgressReward, None, 14),
-    815: (TrackProgressReward, None, 15),
-    110: (TIPClothingTicketReward,),
-    1000: (ClothingTicketReward,),
-    1001: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 1),
-    1002: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 2),
-    1003: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 3),
-    1004: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 4),
-    1005: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 5),
-    1006: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 6),
-    1007: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 7),
-    1008: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 8),
-    1009: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 9),
-    1010: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 10),
-    1011: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 11),
-    1012: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 12),
-    1013: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 13),
-    1014: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 14),
-    1015: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 15),
-    1101: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 1),
-    1102: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 2),
-    1103: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 3),
-    1104: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 4),
-    1105: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 5),
-    1106: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 6),
-    1107: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 7),
-    1108: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 8),
-    1109: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 9),
-    1110: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 10),
-    1111: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 11),
-    1112: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 12),
-    1113: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 13),
-    1114: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 14),
-    1115: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 15),
-    1201: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 1),
-    1202: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 2),
-    1203: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 3),
-    1204: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 4),
-    1205: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 5),
-    1206: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 6),
-    1207: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 7),
-    1208: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 8),
-    1209: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 9),
-    1210: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 10),
-    1211: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 11),
-    1212: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 12),
-    1213: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 13),
-    1214: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 14),
-    1215: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 15),
-    1301: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 1),
-    1302: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 2),
-    1303: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 3),
-    1304: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 4),
-    1305: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 5),
-    1306: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 6),
-    1307: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 7),
-    1308: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 8),
-    1309: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 9),
-    1310: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 10),
-    1311: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 11),
-    1312: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 12),
-    1313: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 13),
-    1314: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 14),
-    1315: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 15),
-    1601: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 1),
-    1602: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 2),
-    1603: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 3),
-    1604: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 4),
-    1605: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 5),
-    1606: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 6),
-    1607: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 7),
-    1608: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 8),
-    1609: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 9),
-    1610: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 10),
-    1611: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 11),
-    1612: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 12),
-    1613: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 13),
-    1614: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 14),
-    1615: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 15),
-    900: (TrackCompleteReward, None),
-    901: (TrackCompleteReward, ToontownBattleGlobals.HEAL_TRACK),
-    902: (TrackCompleteReward, ToontownBattleGlobals.TRAP_TRACK),
-    903: (TrackCompleteReward, ToontownBattleGlobals.LURE_TRACK),
-    904: (TrackCompleteReward, ToontownBattleGlobals.SOUND_TRACK),
-    905: (TrackCompleteReward, ToontownBattleGlobals.THROW_TRACK),
-    906: (TrackCompleteReward, ToontownBattleGlobals.SQUIRT_TRACK),
-    907: (TrackCompleteReward, ToontownBattleGlobals.DROP_TRACK),
-    2205: (CheesyEffectReward, ToontownGlobals.CEBigToon, 2000, 10),
-    2206: (CheesyEffectReward, ToontownGlobals.CESmallToon, 2000, 10),
-    2101: (CheesyEffectReward, ToontownGlobals.CEBigHead, 1000, 10),
-    2102: (CheesyEffectReward, ToontownGlobals.CESmallHead, 1000, 10),
-    2105: (CheesyEffectReward, ToontownGlobals.CEBigToon, 0, 20),
-    2106: (CheesyEffectReward, ToontownGlobals.CESmallToon, 0, 20),
-    2501: (CheesyEffectReward, ToontownGlobals.CEBigHead, 5000, 60),
-    2502: (CheesyEffectReward, ToontownGlobals.CESmallHead, 5000, 60),
-    2503: (CheesyEffectReward, ToontownGlobals.CEBigLegs, 5000, 20),
-    2504: (CheesyEffectReward, ToontownGlobals.CESmallLegs, 5000, 20),
-    2505: (CheesyEffectReward, ToontownGlobals.CEBigToon, 0, 60),
-    2506: (CheesyEffectReward, ToontownGlobals.CESmallToon, 0, 60),
-    2401: (CheesyEffectReward, ToontownGlobals.CEBigHead, 1, 120),
-    2402: (CheesyEffectReward, ToontownGlobals.CESmallHead, 1, 120),
-    2403: (CheesyEffectReward, ToontownGlobals.CEBigLegs, 4000, 60),
-    2404: (CheesyEffectReward, ToontownGlobals.CESmallLegs, 4000, 60),
-    2405: (CheesyEffectReward, ToontownGlobals.CEBigToon, 0, 120),
-    2406: (CheesyEffectReward, ToontownGlobals.CESmallToon, 0, 120),
-    2407: (CheesyEffectReward, ToontownGlobals.CEFlatPortrait, 4000, 30),
-    2408: (CheesyEffectReward, ToontownGlobals.CEFlatProfile, 4000, 30),
-    2409: (CheesyEffectReward, ToontownGlobals.CETransparent, 4000, 30),
-    2410: (CheesyEffectReward, ToontownGlobals.CENoColor, 4000, 30),
-    2301: (CheesyEffectReward, ToontownGlobals.CEBigHead, 1, 360),
-    2302: (CheesyEffectReward, ToontownGlobals.CESmallHead, 1, 360),
-    2303: (CheesyEffectReward, ToontownGlobals.CEBigLegs, 1, 360),
-    2304: (CheesyEffectReward, ToontownGlobals.CESmallLegs, 1, 360),
-    2305: (CheesyEffectReward, ToontownGlobals.CEBigToon, 0, 1440),
-    2306: (CheesyEffectReward, ToontownGlobals.CESmallToon, 0, 1440),
-    2307: (CheesyEffectReward, ToontownGlobals.CEFlatPortrait, 3000, 240),
-    2308: (CheesyEffectReward, ToontownGlobals.CEFlatProfile, 3000, 240),
-    2309: (CheesyEffectReward, ToontownGlobals.CETransparent, 1, 120),
-    2310: (CheesyEffectReward, ToontownGlobals.CENoColor, 1, 120),
-    2311: (CheesyEffectReward, ToontownGlobals.CEInvisible, 3000, 120),
-    2900: (CheesyEffectReward, ToontownGlobals.CENormal, 0, 0),
-    2901: (CheesyEffectReward, ToontownGlobals.CEBigHead, 1, 1440),
-    2902: (CheesyEffectReward, ToontownGlobals.CESmallHead, 1, 1440),
-    2903: (CheesyEffectReward, ToontownGlobals.CEBigLegs, 1, 1440),
-    2904: (CheesyEffectReward, ToontownGlobals.CESmallLegs, 1, 1440),
-    2905: (CheesyEffectReward, ToontownGlobals.CEBigToon, 0, 1440),
-    2906: (CheesyEffectReward, ToontownGlobals.CESmallToon, 0, 1440),
-    2907: (CheesyEffectReward, ToontownGlobals.CEFlatPortrait, 1, 1440),
-    2908: (CheesyEffectReward, ToontownGlobals.CEFlatProfile, 1, 1440),
-    2909: (CheesyEffectReward, ToontownGlobals.CETransparent, 1, 1440),
-    2910: (CheesyEffectReward, ToontownGlobals.CENoColor, 1, 1440),
-    2911: (CheesyEffectReward, ToontownGlobals.CEInvisible, 1, 1440),
-    2920: (CheesyEffectReward, ToontownGlobals.CENormal, 0, 0),
-    2921: (CheesyEffectReward, ToontownGlobals.CEBigHead, 1, 2880),
-    2922: (CheesyEffectReward, ToontownGlobals.CESmallHead, 1, 2880),
-    2923: (CheesyEffectReward, ToontownGlobals.CEBigLegs, 1, 2880),
-    2924: (CheesyEffectReward,ToontownGlobals.CESmallLegs,1,2880),
-    2925: (CheesyEffectReward,ToontownGlobals.CEBigToon,0,2880),
-    2926: (CheesyEffectReward,ToontownGlobals.CESmallToon,0,2880),
-    2927: (CheesyEffectReward,ToontownGlobals.CEFlatPortrait,1,2880),
-    2928: (CheesyEffectReward,ToontownGlobals.CEFlatProfile,1,2880),
-    2929: (CheesyEffectReward,ToontownGlobals.CETransparent,1,2880),
-    2930: (CheesyEffectReward,ToontownGlobals.CENoColor,1,2880),
-    2931: (CheesyEffectReward,ToontownGlobals.CEInvisible,1,2880),
-    2940: (CheesyEffectReward,ToontownGlobals.CENormal,0,0),
-    2941: (CheesyEffectReward,ToontownGlobals.CEBigHead,1,10080),
-    2942: (CheesyEffectReward, ToontownGlobals.CESmallHead, 1, 10080),
-    2943: (CheesyEffectReward, ToontownGlobals.CEBigLegs, 1, 10080),
-    2944: (CheesyEffectReward, ToontownGlobals.CESmallLegs, 1, 10080),
-    2945: (CheesyEffectReward, ToontownGlobals.CEBigToon, 0, 10080),
-    2946: (CheesyEffectReward, ToontownGlobals.CESmallToon, 0, 10080),
-    2947: (CheesyEffectReward, ToontownGlobals.CEFlatPortrait, 1, 10080),
-    2948: (CheesyEffectReward, ToontownGlobals.CEFlatProfile, 1, 10080),
-    2949: (CheesyEffectReward, ToontownGlobals.CETransparent, 1, 10080),
-    2950: (CheesyEffectReward, ToontownGlobals.CENoColor, 1, 10080),
-    2951: (CheesyEffectReward, ToontownGlobals.CEInvisible, 1, 10080),
-    2960: (CheesyEffectReward, ToontownGlobals.CENormal, 0, 0),
-    2961: (CheesyEffectReward, ToontownGlobals.CEBigHead, 1, 43200),
-    2962: (CheesyEffectReward, ToontownGlobals.CESmallHead, 1, 43200),
-    2963: (CheesyEffectReward, ToontownGlobals.CEBigLegs, 1, 43200),
-    2964: (CheesyEffectReward, ToontownGlobals.CESmallLegs, 1, 43200),
-    2965: (CheesyEffectReward, ToontownGlobals.CEBigToon, 0, 43200),
-    2966: (CheesyEffectReward, ToontownGlobals.CESmallToon, 0, 43200),
-    2967: (CheesyEffectReward, ToontownGlobals.CEFlatPortrait, 1,43200),
-    2968: (CheesyEffectReward, ToontownGlobals.CEFlatProfile, 1, 43200),
-    2969: (CheesyEffectReward, ToontownGlobals.CETransparent, 1, 43200),
-    2970: (CheesyEffectReward, ToontownGlobals.CENoColor, 1, 43200),
-    2971: (CheesyEffectReward, ToontownGlobals.CEInvisible, 1, 43200),
-    4000: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftLegUpper),
-    4001: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftLegLower),
-    4002: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftLegFoot),
-    4003: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightLegUpper),
-    4004: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightLegLower),
-    4005: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightLegFoot),
-    4006: (CogSuitPartReward, 'm', CogDisguiseGlobals.upperTorso),
-    4007: (CogSuitPartReward, 'm', CogDisguiseGlobals.torsoPelvis),
-    4008: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftArmUpper),
-    4009: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftArmLower),
-    4010: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightArmUpper),
-    4011: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightArmLower),
-    4100: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftLegUpper),
-    4101: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftLegLower),
-    4102: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftLegFoot),
-    4103: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightLegUpper),
-    4104: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightLegLower),
-    4105: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightLegFoot),
-    4106: (CogSuitPartReward, 'l', CogDisguiseGlobals.upperTorso),
-    4107: (CogSuitPartReward, 'l', CogDisguiseGlobals.torsoPelvis),
-    4108: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftArmUpper),
-    4109: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftArmLower),
-    4110: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftArmHand),
-    4111: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightArmUpper),
-    4112: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightArmLower),
-    4113: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightArmHand),
-    4200: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftLegUpper),
-    4201: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftLegLower),
-    4202: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftLegFoot),
-    4203: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightLegUpper),
-    4204: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightLegLower),
-    4205: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightLegFoot),
-    4206: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoLeftShoulder),
-    4207: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoRightShoulder),
-    4208: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoChest),
-    4209: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoHealthMeter),
-    4210: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoPelvis),
-    4211: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftArmUpper),
-    4212: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftArmLower),
-    4213: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftArmHand),
-    4214: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmUpper),
-    4215: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmLower),
-    4216: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmHand),
+def getNextRewards(numChoices, tier, av):
+    rewardTier = list(getRewardsInTier(tier))
+    optRewards = list(getOptionalRewardsInTier(tier))
+    if av.getGameAccess() == OTPGlobals.AccessFull and tier == TT_TIER + 3:
+        optRewards = []
+    if isLoopingFinalTier(tier):
+        rewardHistory = [questDesc[3] for questDesc in av.quests]
+        if notify.getDebug():
+            notify.debug('getNextRewards: current rewards (history): %s' % rewardHistory)
+    else:
+        rewardHistory = av.getRewardHistory()[1]
+        if notify.getDebug():
+            notify.debug('getNextRewards: rewardHistory: %s' % rewardHistory)
+    if notify.getDebug():
+        notify.debug('getNextRewards: rewardTier: %s' % rewardTier)
+        notify.debug('getNextRewards: numChoices: %s' % numChoices)
+    for rewardId in getRewardsInTier(tier):
+        if getRewardClass(rewardId) == CogSuitPartReward:
+            deptStr = RewardDict.get(rewardId)[1]
+            cogPart = RewardDict.get(rewardId)[2]
+            dept = ToontownGlobals.cogDept2index[deptStr]
+            if av.hasCogPart(cogPart, dept):
+                notify.debug('getNextRewards: already has cog part: %s dept: %s' % (cogPart, dept))
+                rewardTier.remove(rewardId)
+            else:
+                notify.debug('getNextRewards: keeping quest for cog part: %s dept: %s' % (cogPart, dept))
 
-    # Start AP Rewards, these essentially are just maps to the location checks for AP
-    5000: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_1.value),
-    5001: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_2.value),
-    5002: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_3.value),
-    5003: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_4.value),
-    5004: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_5.value),
-    5005: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_6.value),
-    5006: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_7.value),
-    5007: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_8.value),
-    5008: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_9.value),
-    5009: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_10.value),
-    5010: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_11.value),
-    5011: (APLocationReward, locations.ToontownLocationName.TOONTOWN_CENTRAL_TASK_12.value),
-    5012: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_1.value),
-    5013: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_2.value),
-    5014: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_3.value),
-    5015: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_4.value),
-    5016: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_5.value),
-    5017: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_6.value),
-    5018: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_7.value),
-    5019: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_8.value),
-    5020: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_9.value),
-    5021: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_10.value),
-    5022: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_11.value),
-    5023: (APLocationReward, locations.ToontownLocationName.DONALDS_DOCK_TASK_12.value),
-    5024: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_1.value),
-    5025: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_2.value),
-    5026: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_3.value),
-    5027: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_4.value),
-    5028: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_5.value),
-    5029: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_6.value),
-    5030: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_7.value),
-    5031: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_8.value),
-    5032: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_9.value),
-    5033: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_10.value),
-    5034: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_11.value),
-    5035: (APLocationReward, locations.ToontownLocationName.DAISYS_GARDENS_TASK_12.value),
-    5036: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_1.value),
-    5037: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_2.value),
-    5038: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_3.value),
-    5039: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_4.value),
-    5040: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_5.value),
-    5041: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_6.value),
-    5042: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_7.value),
-    5043: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_8.value),
-    5044: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_9.value),
-    5045: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_10.value),
-    5046: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_11.value),
-    5047: (APLocationReward, locations.ToontownLocationName.MINNIES_MELODYLAND_TASK_12.value),
-    5048: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_1.value),
-    5049: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_2.value),
-    5050: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_3.value),
-    5051: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_4.value),
-    5052: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_5.value),
-    5053: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_6.value),
-    5054: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_7.value),
-    5055: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_8.value),
-    5056: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_9.value),
-    5057: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_10.value),
-    5058: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_11.value),
-    5059: (APLocationReward, locations.ToontownLocationName.THE_BRRRGH_TASK_12.value),
-    5060: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_1.value),
-    5061: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_2.value),
-    5062: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_3.value),
-    5063: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_4.value),
-    5064: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_5.value),
-    5065: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_6.value),
-    5066: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_7.value),
-    5067: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_8.value),
-    5068: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_9.value),
-    5069: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_10.value),
-    5070: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_11.value),
-    5071: (APLocationReward, locations.ToontownLocationName.DONALDS_DREAMLAND_TASK_12.value),
+    for rewardId in rewardHistory:
+        if rewardId in rewardTier:
+            rewardTier.remove(rewardId)
+        elif rewardId in optRewards:
+            optRewards.remove(rewardId)
+        elif rewardId in (901, 902, 903, 904, 905, 906, 907):
+            genericRewardId = 900
+            if genericRewardId in rewardTier:
+                rewardTier.remove(genericRewardId)
+        elif rewardId > 1000 and rewardId < 1699:
+            index = rewardId % 100
+            genericRewardId = 800 + index
+            if genericRewardId in rewardTier:
+                rewardTier.remove(genericRewardId)
+
+    if numChoices == 0:
+        if len(rewardTier) == 0:
+            return []
+        else:
+            return [rewardTier[0]]
+    rewardPool = rewardTier[:numChoices]
+    for i in range(len(rewardPool), numChoices * 2):
+        if optRewards:
+            optionalReward = seededRandomChoice(optRewards)
+            optRewards.remove(optionalReward)
+            rewardPool.append(optionalReward)
+        else:
+            break
+
+    if notify.getDebug():
+        notify.debug('getNextRewards: starting reward pool: %s' % rewardPool)
+    if len(rewardPool) == 0:
+        if notify.getDebug():
+            notify.debug('getNextRewards: no rewards left at all')
+        return []
+    finalRewardPool = [rewardPool.pop(0)]
+    for i in range(numChoices - 1):
+        if len(rewardPool) == 0:
+            break
+        selectedReward = seededRandomChoice(rewardPool)
+        rewardPool.remove(selectedReward)
+        finalRewardPool.append(selectedReward)
+
+    if notify.getDebug():
+        notify.debug('getNextRewards: final reward pool: %s' % finalRewardPool)
+    return finalRewardPool
 
 
-}
+RewardDict = {100: (MaxHpReward, 1),
+ 101: (MaxHpReward, 2),
+ 102: (MaxHpReward, 3),
+ 103: (MaxHpReward, 4),
+ 104: (MaxHpReward, 5),
+ 105: (MaxHpReward, 6),
+ 106: (MaxHpReward, 7),
+ 107: (MaxHpReward, 8),
+ 108: (MaxHpReward, 9),
+ 109: (MaxHpReward, 10),
+ 200: (MaxGagCarryReward, 25, TTLocalizer.QuestsMediumPouch),
+ 201: (MaxGagCarryReward, 30, TTLocalizer.QuestsLargePouch),
+ 202: (MaxGagCarryReward, 35, TTLocalizer.QuestsSmallBag),
+ 203: (MaxGagCarryReward, 40, TTLocalizer.QuestsMediumBag),
+ 204: (MaxGagCarryReward, 50, TTLocalizer.QuestsLargeBag),
+ 205: (MaxGagCarryReward, 60, TTLocalizer.QuestsSmallBackpack),
+ 206: (MaxGagCarryReward, 70, TTLocalizer.QuestsMediumBackpack),
+ 207: (MaxGagCarryReward, 80, TTLocalizer.QuestsLargeBackpack),
+ 300: (TeleportReward, ToontownGlobals.ToontownCentral),
+ 301: (TeleportReward, ToontownGlobals.DonaldsDock),
+ 302: (TeleportReward, ToontownGlobals.DaisyGardens),
+ 303: (TeleportReward, ToontownGlobals.MinniesMelodyland),
+ 304: (TeleportReward, ToontownGlobals.TheBrrrgh),
+ 305: (TeleportReward, ToontownGlobals.DonaldsDreamland),
+ 400: (TrackTrainingReward, None),
+ 401: (TrackTrainingReward, ToontownBattleGlobals.HEAL_TRACK),
+ 402: (TrackTrainingReward, ToontownBattleGlobals.TRAP_TRACK),
+ 403: (TrackTrainingReward, ToontownBattleGlobals.LURE_TRACK),
+ 404: (TrackTrainingReward, ToontownBattleGlobals.SOUND_TRACK),
+ 405: (TrackTrainingReward, ToontownBattleGlobals.THROW_TRACK),
+ 406: (TrackTrainingReward, ToontownBattleGlobals.SQUIRT_TRACK),
+ 407: (TrackTrainingReward, ToontownBattleGlobals.DROP_TRACK),
+ 500: (MaxQuestCarryReward, 2),
+ 501: (MaxQuestCarryReward, 3),
+ 502: (MaxQuestCarryReward, 4),
+ 600: (MoneyReward, 10),
+ 601: (MoneyReward, 20),
+ 602: (MoneyReward, 40),
+ 603: (MoneyReward, 60),
+ 604: (MoneyReward, 100),
+ 605: (MoneyReward, 150),
+ 606: (MoneyReward, 200),
+ 607: (MoneyReward, 250),
+ 608: (MoneyReward, 300),
+ 609: (MoneyReward, 400),
+ 610: (MoneyReward, 500),
+ 611: (MoneyReward, 600),
+ 612: (MoneyReward, 700),
+ 613: (MoneyReward, 800),
+ 614: (MoneyReward, 900),
+ 615: (MoneyReward, 1000),
+ 616: (MoneyReward, 1100),
+ 617: (MoneyReward, 1200),
+ 618: (MoneyReward, 1300),
+ 619: (MoneyReward, 1400),
+ 620: (MoneyReward, 1500),
+ 621: (MoneyReward, 1750),
+ 622: (MoneyReward, 2000),
+ 623: (MoneyReward, 2500),
+ 700: (MaxMoneyReward, 50),
+ 701: (MaxMoneyReward, 60),
+ 702: (MaxMoneyReward, 80),
+ 703: (MaxMoneyReward, 100),
+ 704: (MaxMoneyReward, 120),
+ 705: (MaxMoneyReward, 150),
+ 706: (MaxMoneyReward, 200),
+ 707: (MaxMoneyReward, 250),
+ 801: (TrackProgressReward, None, 1),
+ 802: (TrackProgressReward, None, 2),
+ 803: (TrackProgressReward, None, 3),
+ 804: (TrackProgressReward, None, 4),
+ 805: (TrackProgressReward, None, 5),
+ 806: (TrackProgressReward, None, 6),
+ 807: (TrackProgressReward, None, 7),
+ 808: (TrackProgressReward, None, 8),
+ 809: (TrackProgressReward, None, 9),
+ 810: (TrackProgressReward, None, 10),
+ 811: (TrackProgressReward, None, 11),
+ 812: (TrackProgressReward, None, 12),
+ 813: (TrackProgressReward, None, 13),
+ 814: (TrackProgressReward, None, 14),
+ 815: (TrackProgressReward, None, 15),
+ 110: (TIPClothingTicketReward,),
+ 1000: (ClothingTicketReward,),
+ 1001: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 1),
+ 1002: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 2),
+ 1003: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 3),
+ 1004: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 4),
+ 1005: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 5),
+ 1006: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 6),
+ 1007: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 7),
+ 1008: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 8),
+ 1009: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 9),
+ 1010: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 10),
+ 1011: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 11),
+ 1012: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 12),
+ 1013: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 13),
+ 1014: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 14),
+ 1015: (TrackProgressReward, ToontownBattleGlobals.HEAL_TRACK, 15),
+ 1101: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 1),
+ 1102: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 2),
+ 1103: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 3),
+ 1104: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 4),
+ 1105: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 5),
+ 1106: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 6),
+ 1107: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 7),
+ 1108: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 8),
+ 1109: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 9),
+ 1110: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 10),
+ 1111: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 11),
+ 1112: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 12),
+ 1113: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 13),
+ 1114: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 14),
+ 1115: (TrackProgressReward, ToontownBattleGlobals.TRAP_TRACK, 15),
+ 1201: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 1),
+ 1202: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 2),
+ 1203: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 3),
+ 1204: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 4),
+ 1205: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 5),
+ 1206: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 6),
+ 1207: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 7),
+ 1208: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 8),
+ 1209: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 9),
+ 1210: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 10),
+ 1211: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 11),
+ 1212: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 12),
+ 1213: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 13),
+ 1214: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 14),
+ 1215: (TrackProgressReward, ToontownBattleGlobals.LURE_TRACK, 15),
+ 1301: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 1),
+ 1302: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 2),
+ 1303: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 3),
+ 1304: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 4),
+ 1305: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 5),
+ 1306: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 6),
+ 1307: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 7),
+ 1308: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 8),
+ 1309: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 9),
+ 1310: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 10),
+ 1311: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 11),
+ 1312: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 12),
+ 1313: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 13),
+ 1314: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 14),
+ 1315: (TrackProgressReward, ToontownBattleGlobals.SOUND_TRACK, 15),
+ 1601: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 1),
+ 1602: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 2),
+ 1603: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 3),
+ 1604: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 4),
+ 1605: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 5),
+ 1606: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 6),
+ 1607: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 7),
+ 1608: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 8),
+ 1609: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 9),
+ 1610: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 10),
+ 1611: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 11),
+ 1612: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 12),
+ 1613: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 13),
+ 1614: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 14),
+ 1615: (TrackProgressReward, ToontownBattleGlobals.DROP_TRACK, 15),
+ 900: (TrackCompleteReward, None),
+ 901: (TrackCompleteReward, ToontownBattleGlobals.HEAL_TRACK),
+ 902: (TrackCompleteReward, ToontownBattleGlobals.TRAP_TRACK),
+ 903: (TrackCompleteReward, ToontownBattleGlobals.LURE_TRACK),
+ 904: (TrackCompleteReward, ToontownBattleGlobals.SOUND_TRACK),
+ 905: (TrackCompleteReward, ToontownBattleGlobals.THROW_TRACK),
+ 906: (TrackCompleteReward, ToontownBattleGlobals.SQUIRT_TRACK),
+ 907: (TrackCompleteReward, ToontownBattleGlobals.DROP_TRACK),
+ 2205: (CheesyEffectReward,
+        ToontownGlobals.CEBigToon,
+        2000,
+        10),
+ 2206: (CheesyEffectReward,
+        ToontownGlobals.CESmallToon,
+        2000,
+        10),
+ 2101: (CheesyEffectReward,
+        ToontownGlobals.CEBigHead,
+        1000,
+        10),
+ 2102: (CheesyEffectReward,
+        ToontownGlobals.CESmallHead,
+        1000,
+        10),
+ 2105: (CheesyEffectReward,
+        ToontownGlobals.CEBigToon,
+        0,
+        20),
+ 2106: (CheesyEffectReward,
+        ToontownGlobals.CESmallToon,
+        0,
+        20),
+ 2501: (CheesyEffectReward,
+        ToontownGlobals.CEBigHead,
+        5000,
+        60),
+ 2502: (CheesyEffectReward,
+        ToontownGlobals.CESmallHead,
+        5000,
+        60),
+ 2503: (CheesyEffectReward,
+        ToontownGlobals.CEBigLegs,
+        5000,
+        20),
+ 2504: (CheesyEffectReward,
+        ToontownGlobals.CESmallLegs,
+        5000,
+        20),
+ 2505: (CheesyEffectReward,
+        ToontownGlobals.CEBigToon,
+        0,
+        60),
+ 2506: (CheesyEffectReward,
+        ToontownGlobals.CESmallToon,
+        0,
+        60),
+ 2401: (CheesyEffectReward,
+        ToontownGlobals.CEBigHead,
+        1,
+        120),
+ 2402: (CheesyEffectReward,
+        ToontownGlobals.CESmallHead,
+        1,
+        120),
+ 2403: (CheesyEffectReward,
+        ToontownGlobals.CEBigLegs,
+        4000,
+        60),
+ 2404: (CheesyEffectReward,
+        ToontownGlobals.CESmallLegs,
+        4000,
+        60),
+ 2405: (CheesyEffectReward,
+        ToontownGlobals.CEBigToon,
+        0,
+        120),
+ 2406: (CheesyEffectReward,
+        ToontownGlobals.CESmallToon,
+        0,
+        120),
+ 2407: (CheesyEffectReward,
+        ToontownGlobals.CEFlatPortrait,
+        4000,
+        30),
+ 2408: (CheesyEffectReward,
+        ToontownGlobals.CEFlatProfile,
+        4000,
+        30),
+ 2409: (CheesyEffectReward,
+        ToontownGlobals.CETransparent,
+        4000,
+        30),
+ 2410: (CheesyEffectReward,
+        ToontownGlobals.CENoColor,
+        4000,
+        30),
+ 2301: (CheesyEffectReward,
+        ToontownGlobals.CEBigHead,
+        1,
+        360),
+ 2302: (CheesyEffectReward,
+        ToontownGlobals.CESmallHead,
+        1,
+        360),
+ 2303: (CheesyEffectReward,
+        ToontownGlobals.CEBigLegs,
+        1,
+        360),
+ 2304: (CheesyEffectReward,
+        ToontownGlobals.CESmallLegs,
+        1,
+        360),
+ 2305: (CheesyEffectReward,
+        ToontownGlobals.CEBigToon,
+        0,
+        1440),
+ 2306: (CheesyEffectReward,
+        ToontownGlobals.CESmallToon,
+        0,
+        1440),
+ 2307: (CheesyEffectReward,
+        ToontownGlobals.CEFlatPortrait,
+        3000,
+        240),
+ 2308: (CheesyEffectReward,
+        ToontownGlobals.CEFlatProfile,
+        3000,
+        240),
+ 2309: (CheesyEffectReward,
+        ToontownGlobals.CETransparent,
+        1,
+        120),
+ 2310: (CheesyEffectReward,
+        ToontownGlobals.CENoColor,
+        1,
+        120),
+ 2311: (CheesyEffectReward,
+        ToontownGlobals.CEInvisible,
+        3000,
+        120),
+ 2900: (CheesyEffectReward,
+        ToontownGlobals.CENormal,
+        0,
+        0),
+ 2901: (CheesyEffectReward,
+        ToontownGlobals.CEBigHead,
+        1,
+        1440),
+ 2902: (CheesyEffectReward,
+        ToontownGlobals.CESmallHead,
+        1,
+        1440),
+ 2903: (CheesyEffectReward,
+        ToontownGlobals.CEBigLegs,
+        1,
+        1440),
+ 2904: (CheesyEffectReward,
+        ToontownGlobals.CESmallLegs,
+        1,
+        1440),
+ 2905: (CheesyEffectReward,
+        ToontownGlobals.CEBigToon,
+        0,
+        1440),
+ 2906: (CheesyEffectReward,
+        ToontownGlobals.CESmallToon,
+        0,
+        1440),
+ 2907: (CheesyEffectReward,
+        ToontownGlobals.CEFlatPortrait,
+        1,
+        1440),
+ 2908: (CheesyEffectReward,
+        ToontownGlobals.CEFlatProfile,
+        1,
+        1440),
+ 2909: (CheesyEffectReward,
+        ToontownGlobals.CETransparent,
+        1,
+        1440),
+ 2910: (CheesyEffectReward,
+        ToontownGlobals.CENoColor,
+        1,
+        1440),
+ 2911: (CheesyEffectReward,
+        ToontownGlobals.CEInvisible,
+        1,
+        1440),
+ 2920: (CheesyEffectReward,
+        ToontownGlobals.CENormal,
+        0,
+        0),
+ 2921: (CheesyEffectReward,
+        ToontownGlobals.CEBigHead,
+        1,
+        2880),
+ 2922: (CheesyEffectReward,
+        ToontownGlobals.CESmallHead,
+        1,
+        2880),
+ 2923: (CheesyEffectReward,
+        ToontownGlobals.CEBigLegs,
+        1,
+        2880),
+ 2924: (CheesyEffectReward,
+        ToontownGlobals.CESmallLegs,
+        1,
+        2880),
+ 2925: (CheesyEffectReward,
+        ToontownGlobals.CEBigToon,
+        0,
+        2880),
+ 2926: (CheesyEffectReward,
+        ToontownGlobals.CESmallToon,
+        0,
+        2880),
+ 2927: (CheesyEffectReward,
+        ToontownGlobals.CEFlatPortrait,
+        1,
+        2880),
+ 2928: (CheesyEffectReward,
+        ToontownGlobals.CEFlatProfile,
+        1,
+        2880),
+ 2929: (CheesyEffectReward,
+        ToontownGlobals.CETransparent,
+        1,
+        2880),
+ 2930: (CheesyEffectReward,
+        ToontownGlobals.CENoColor,
+        1,
+        2880),
+ 2931: (CheesyEffectReward,
+        ToontownGlobals.CEInvisible,
+        1,
+        2880),
+ 2940: (CheesyEffectReward,
+        ToontownGlobals.CENormal,
+        0,
+        0),
+ 2941: (CheesyEffectReward,
+        ToontownGlobals.CEBigHead,
+        1,
+        10080),
+ 2942: (CheesyEffectReward,
+        ToontownGlobals.CESmallHead,
+        1,
+        10080),
+ 2943: (CheesyEffectReward,
+        ToontownGlobals.CEBigLegs,
+        1,
+        10080),
+ 2944: (CheesyEffectReward,
+        ToontownGlobals.CESmallLegs,
+        1,
+        10080),
+ 2945: (CheesyEffectReward,
+        ToontownGlobals.CEBigToon,
+        0,
+        10080),
+ 2946: (CheesyEffectReward,
+        ToontownGlobals.CESmallToon,
+        0,
+        10080),
+ 2947: (CheesyEffectReward,
+        ToontownGlobals.CEFlatPortrait,
+        1,
+        10080),
+ 2948: (CheesyEffectReward,
+        ToontownGlobals.CEFlatProfile,
+        1,
+        10080),
+ 2949: (CheesyEffectReward,
+        ToontownGlobals.CETransparent,
+        1,
+        10080),
+ 2950: (CheesyEffectReward,
+        ToontownGlobals.CENoColor,
+        1,
+        10080),
+ 2951: (CheesyEffectReward,
+        ToontownGlobals.CEInvisible,
+        1,
+        10080),
+ 2960: (CheesyEffectReward,
+        ToontownGlobals.CENormal,
+        0,
+        0),
+ 2961: (CheesyEffectReward,
+        ToontownGlobals.CEBigHead,
+        1,
+        43200),
+ 2962: (CheesyEffectReward,
+        ToontownGlobals.CESmallHead,
+        1,
+        43200),
+ 2963: (CheesyEffectReward,
+        ToontownGlobals.CEBigLegs,
+        1,
+        43200),
+ 2964: (CheesyEffectReward,
+        ToontownGlobals.CESmallLegs,
+        1,
+        43200),
+ 2965: (CheesyEffectReward,
+        ToontownGlobals.CEBigToon,
+        0,
+        43200),
+ 2966: (CheesyEffectReward,
+        ToontownGlobals.CESmallToon,
+        0,
+        43200),
+ 2967: (CheesyEffectReward,
+        ToontownGlobals.CEFlatPortrait,
+        1,
+        43200),
+ 2968: (CheesyEffectReward,
+        ToontownGlobals.CEFlatProfile,
+        1,
+        43200),
+ 2969: (CheesyEffectReward,
+        ToontownGlobals.CETransparent,
+        1,
+        43200),
+ 2970: (CheesyEffectReward,
+        ToontownGlobals.CENoColor,
+        1,
+        43200),
+ 2971: (CheesyEffectReward,
+        ToontownGlobals.CEInvisible,
+        1,
+        43200),
+ 4000: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftLegUpper),
+ 4001: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftLegLower),
+ 4002: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftLegFoot),
+ 4003: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightLegUpper),
+ 4004: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightLegLower),
+ 4005: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightLegFoot),
+ 4006: (CogSuitPartReward, 'm', CogDisguiseGlobals.upperTorso),
+ 4007: (CogSuitPartReward, 'm', CogDisguiseGlobals.torsoPelvis),
+ 4008: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftArmUpper),
+ 4009: (CogSuitPartReward, 'm', CogDisguiseGlobals.leftArmLower),
+ 4010: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightArmUpper),
+ 4011: (CogSuitPartReward, 'm', CogDisguiseGlobals.rightArmLower),
+ 4100: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftLegUpper),
+ 4101: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftLegLower),
+ 4102: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftLegFoot),
+ 4103: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightLegUpper),
+ 4104: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightLegLower),
+ 4105: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightLegFoot),
+ 4106: (CogSuitPartReward, 'l', CogDisguiseGlobals.upperTorso),
+ 4107: (CogSuitPartReward, 'l', CogDisguiseGlobals.torsoPelvis),
+ 4108: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftArmUpper),
+ 4109: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftArmLower),
+ 4110: (CogSuitPartReward, 'l', CogDisguiseGlobals.leftArmHand),
+ 4111: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightArmUpper),
+ 4112: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightArmLower),
+ 4113: (CogSuitPartReward, 'l', CogDisguiseGlobals.rightArmHand),
+ 4200: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftLegUpper),
+ 4201: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftLegLower),
+ 4202: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftLegFoot),
+ 4203: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightLegUpper),
+ 4204: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightLegLower),
+ 4205: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightLegFoot),
+ 4206: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoLeftShoulder),
+ 4207: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoRightShoulder),
+ 4208: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoChest),
+ 4209: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoHealthMeter),
+ 4210: (CogSuitPartReward, 'c', CogDisguiseGlobals.torsoPelvis),
+ 4211: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftArmUpper),
+ 4212: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftArmLower),
+ 4213: (CogSuitPartReward, 'c', CogDisguiseGlobals.leftArmHand),
+ 4214: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmUpper),
+ 4215: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmLower),
+ 4216: (CogSuitPartReward, 'c', CogDisguiseGlobals.rightArmHand)}
 
-# Maps AP location strings to the Quest Reward IDs defined in RewardDict
-__AP_LOCATION_TO_REWARD_ID: Dict[str, int] = {
-
-}
-# Loop through every single reward, if it is an APLocationReward, map its string ID to the rewardID
-for rewardID, rewardDescription in RewardDict.items():
-    rewardClass = rewardDescription[0]
-    if rewardClass == APLocationReward:
-        __AP_LOCATION_TO_REWARD_ID[rewardDescription[1]] = rewardID
-
-
-# Given an AP location name (locations.DONALDS_DREAMLAND_TASK_11 for example) return the reward ID that corresponds w it
-# Returns -1 if not a valid AP location
-def getRewardIdFromAPLocationName(location_name: str) -> int:
-    return __AP_LOCATION_TO_REWARD_ID[location_name]
-
-
-# Given a hood ID, return a list of reward IDs that this hood will have
-def getRewardIdsFromHood(hoodId) -> List[int]:
-    # Loop through all the AP location names for this hood and find the reward id from it
-    rewards = []
-    for apLocationName in util.hood_to_task_locations(hoodId):
-        rewardId = getRewardIdFromAPLocationName(apLocationName)
-        rewards.append(rewardId)
-
-    return rewards
-
-
-# Given an AP Reward ID, return the first playground that is able to give a task that contains this reward
-def getHoodFromRewardId(rewardId) -> int:
-    for hood in ToontownGlobals.Hoods:
-        if rewardId in getRewardIdsFromHood(hood):
-            return hood
-
-    raise KeyError(f"Reward ID: {rewardID} is unobtainable from all available hoods")
-
-
-
-# Returns all registered AP reward IDs
-def getAllAPRewardIds() -> set[int]:
-    return set(__AP_LOCATION_TO_REWARD_ID.values())
+def getNumTiers():
+    return len(RequiredRewardTrackDict) - 1
 
 
 def isLoopingFinalTier(tier):
@@ -3744,8 +3719,20 @@ def getRewardsInTier(tier):
     return RequiredRewardTrackDict.get(tier, [])
 
 
+def getNumRewardsInTier(tier):
+    return len(RequiredRewardTrackDict.get(tier, []))
+
+
+def rewardTierExists(tier):
+    return tier in RequiredRewardTrackDict
+
+
 def getOptionalRewardsInTier(tier):
     return OptionalRewardTrackDict.get(tier, [])
+
+
+def getRewardIdFromTrackId(trackId):
+    return 401 + trackId
 
 
 RequiredRewardTrackDict = {TT_TIER: (100,),
@@ -4201,7 +4188,6 @@ OptionalRewardTrackDict = {TT_TIER: (),
               2970,
               2971)}
 
-
 def isRewardOptional(tier, rewardId):
     return tier in OptionalRewardTrackDict and rewardId in OptionalRewardTrackDict[tier]
 
@@ -4210,11 +4196,47 @@ def getItemName(itemId):
     return ItemDict[itemId][0]
 
 
+def getPluralItemName(itemId):
+    return ItemDict[itemId][1]
+
+
+def avatarHasTrolleyQuest(av):
+    return len(av.quests) == 1 and av.quests[0][0] == TROLLEY_QUEST_ID
+
+
+def avatarHasCompletedTrolleyQuest(av):
+    return av.quests[0][4] > 0
+
+
+def avatarHasFirstCogQuest(av):
+    return len(av.quests) == 1 and av.quests[0][0] == FIRST_COG_QUEST_ID
+
+
+def avatarHasCompletedFirstCogQuest(av):
+    return av.quests[0][4] > 0
+
+
+def avatarHasFriendQuest(av):
+    return len(av.quests) == 1 and av.quests[0][0] == FRIEND_QUEST_ID
+
+
+def avatarHasCompletedFriendQuest(av):
+    return av.quests[0][4] > 0
+
+
+def avatarHasPhoneQuest(av):
+    return len(av.quests) == 1 and av.quests[0][0] == PHONE_QUEST_ID
+
+
+def avatarHasCompletedPhoneQuest(av):
+    return av.quests[0][4] > 0
+
+
 def avatarWorkingOnRequiredRewards(av):
     tier = av.getRewardTier()
     rewardList = list(getRewardsInTier(tier))
     for i in range(len(rewardList)):
-        actualRewardId = transformReward(rewardList[i])
+        actualRewardId = transformReward(rewardList[i], av)
         rewardList[i] = actualRewardId
 
     for questDesc in av.quests:
@@ -4223,7 +4245,7 @@ def avatarWorkingOnRequiredRewards(av):
         if rewardId in rewardList:
             return 1
         elif rewardId == NA:
-            rewardId = transformReward(getFinalRewardId(questId, fAll=1))
+            rewardId = transformReward(getFinalRewardId(questId, fAll=1), av)
             if rewardId in rewardList:
                 return 1
 
@@ -4250,7 +4272,7 @@ def avatarHasAllRequiredRewards(av, tier):
                     notify.debug('avatarHasAllRequiredRewards: rewardId 900 not found')
                 return 0
         else:
-            actualRewardId = transformReward(rewardId)
+            actualRewardId = transformReward(rewardId, av)
             if actualRewardId in rewardHistory:
                 rewardHistory.remove(actualRewardId)
             elif getRewardClass(rewardId) == CogSuitPartReward:
@@ -4276,3 +4298,53 @@ def avatarHasAllRequiredRewards(av, tier):
                 notify.warning('required reward found, expected only optional: %s' % rewardId)
 
     return 1
+
+
+def nextQuestList(nextQuest):
+    if nextQuest == NA:
+        return None
+    seqTypes = (list, tuple)
+    if type(nextQuest) in seqTypes:
+        return nextQuest
+    else:
+        return (nextQuest,)
+    return None
+
+
+def checkReward(questId, forked = 0):
+    quest = QuestDict[questId]
+    reward = quest[5]
+    nextQuests = nextQuestList(quest[6])
+    if nextQuests is None:
+        validRewards = list(RewardDict.keys()) + [Any,
+         AnyCashbotSuitPart,
+         AnyLawbotSuitPart,
+         OBSOLETE]
+        if reward is OBSOLETE:
+            print('warning: quest %s is obsolete' % questId)
+        return reward
+    else:
+        forked = forked or len(nextQuests) > 1
+        firstReward = checkReward(nextQuests[0], forked)
+        for qId in nextQuests[1:]:
+            thisReward = checkReward(qId, forked)
+
+        return firstReward
+    return
+
+
+def assertAllQuestsValid():
+    print('checking quests...')
+    for questId in list(QuestDict.keys()):
+        try:
+            quest = getQuest(questId)
+        except AssertionError as e:
+            err = 'invalid quest: %s' % questId
+            print(err)
+            raise
+
+    for questId in list(QuestDict.keys()):
+        quest = QuestDict[questId]
+        tier, start, questDesc, fromNpc, toNpc, reward, nextQuest, dialog = quest
+        if start:
+            checkReward(questId)

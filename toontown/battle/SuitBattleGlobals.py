@@ -551,19 +551,19 @@ __registerSuitAttributes(__THE_BIG_CHEESE)
 __CLUB_PRESIDENT_ATTACKS = set()
 __CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.EVIL_EYE,
-    damage={8: 8,},
+    damage={8: 8, 35: 32},
     accuracy=75,
     weight=50,
 ))
 __CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.TEE_OFF,
-    damage={8: 10,},
+    damage={8: 10, 35: 29},
     accuracy=50,
     weight=30,
 ))
 __CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.QUAKE,
-    damage={8: 7,},
+    damage={8: 7, 35: 26},
     accuracy=75,
     weight=20,
 ))

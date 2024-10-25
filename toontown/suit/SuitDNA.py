@@ -772,6 +772,14 @@ class SuitDNA(AvatarDNA.AvatarDNA):
         bottom = _base + offset
         top = bottom + suitsPerLevel[level - 1]
         self.name = suitHeadTypes[random.choice(list(range(bottom, top)))]
+        
+         # we get it's parent suit
+        if self.name == 'f':
+            # we define it's rng
+            alternateSuitChance = 0.4
+            # if the rng is less than the chance, we set the suit to the alternate suit
+            if random.random() < alternateSuitChance:
+                self.name = 'bar'
 
         self.body = getSuitBodyType(self.name)
         return

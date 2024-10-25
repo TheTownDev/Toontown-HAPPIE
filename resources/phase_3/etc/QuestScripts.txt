@@ -260,91 +260,6 @@ POS localToon 0.776 14.6 0
 HPR localToon 47.5 0 0
 FINISH_QUEST_MOVIE
 
-
-ID quest_assign_110
-DEBUG "quest assign 110"
-LOAD_DIALOGUE harryDialogue_01 "phase_3.5/audio/dial/CC_harry_tutorial_questscript01.ogg"
-LOAD_DIALOGUE harryDialogue_02 "phase_3.5/audio/dial/CC_harry_tutorial_questscript02.ogg"
-LOAD_DIALOGUE harryDialogue_03 "phase_3.5/audio/dial/CC_harry_tutorial_questscript03.ogg"
-LOAD_DIALOGUE harryDialogue_04 "phase_3.5/audio/dial/CC_harry_tutorial_questscript04.ogg"
-LOAD_DIALOGUE harryDialogue_05 "phase_3.5/audio/dial/CC_harry_tutorial_questscript05.ogg"
-LOAD_DIALOGUE harryDialogue_06 "phase_3.5/audio/dial/CC_harry_tutorial_questscript06.ogg"
-LOAD_DIALOGUE harryDialogue_07 "phase_3.5/audio/dial/CC_harry_tutorial_questscript07.ogg"
-LOAD_DIALOGUE harryDialogue_08 "phase_3.5/audio/dial/CC_harry_tutorial_questscript08.ogg"
-LOAD_DIALOGUE harryDialogue_09 "phase_3.5/audio/dial/CC_harry_tutorial_questscript09.ogg"
-LOAD_DIALOGUE harryDialogue_10 "phase_3.5/audio/dial/CC_harry_tutorial_questscript10.ogg"
-LOAD_DIALOGUE harryDialogue_11 "phase_3.5/audio/dial/CC_harry_tutorial_questscript11.ogg"
-SET_MUSIC_VOLUME 0.4 activityMusic 0.5 0.7
-LOCAL_CHAT_CONFIRM npc QuestScript110_1 harryDialogue_01
-OBSCURE_BOOK 0
-REPARENTTO bookOpenButton aspect2d
-SHOW bookOpenButton
-POS bookOpenButton 0 0 0
-SCALE bookOpenButton 0.5 0.5 0.5
-LERP_COLOR_SCALE bookOpenButton 1 1 1 0 1 1 1 1 0.5
-WRTREPARENTTO bookOpenButton bottomRight
-WAIT 1.5
-LERP_POS bookOpenButton -0.158 0 0.17 1
-LERP_SCALE bookOpenButton 0.305 0.305 0.305 1
-WAIT 1
-LOCAL_CHAT_CONFIRM npc QuestScript110_2 harryDialogue_02
-REPARENTTO arrows bottomRight
-ARROWS_ON -0.41 0.11 0 -0.11 0.36 90
-LOCAL_CHAT_PERSIST npc QuestScript110_3 harryDialogue_03
-WAIT_EVENT "enterStickerBook"
-ARROWS_OFF
-SHOW_BOOK
-HIDE bookPrevArrow
-HIDE bookNextArrow
-CLEAR_CHAT npc
-WAIT 0.5
-TOON_HEAD npc -0.2 -0.45 1
-LOCAL_CHAT_CONFIRM npc QuestScript110_4 harryDialogue_04
-REPARENTTO arrows aspect2d
-ARROWS_ON 0.85 -0.75 -90 0.85 -0.75 -90
-SHOW bookNextArrow
-LOCAL_CHAT_PERSIST npc QuestScript110_5 harryDialogue_05
-WAIT_EVENT "stickerBookPageChange-3"
-HIDE bookPrevArrow
-HIDE bookNextArrow
-ARROWS_OFF
-CLEAR_CHAT npc
-WAIT 0.5
-LOCAL_CHAT_CONFIRM npc QuestScript110_6 harryDialogue_06
-ARROWS_ON 0.85 -0.75 -90 0.85 -0.75 -90
-SHOW bookNextArrow
-LOCAL_CHAT_PERSIST npc QuestScript110_7 harryDialogue_07
-WAIT_EVENT "stickerBookPageChange-4"
-HIDE bookNextArrow
-HIDE bookPrevArrow
-ARROWS_OFF
-CLEAR_CHAT npc
-LOCAL_CHAT_CONFIRM npc QuestScript110_8 harryDialogue_08
-LOCAL_CHAT_CONFIRM npc QuestScript110_9 harryDialogue_09
-LOCAL_CHAT_PERSIST npc QuestScript110_10 harryDialogue_10
-ENABLE_CLOSE_BOOK
-REPARENTTO arrows bottomRight
-ARROWS_ON -0.41 0.11 0 -0.11 0.36 90
-WAIT_EVENT "exitStickerBook"
-ARROWS_OFF
-TOON_HEAD npc 0 0 0
-HIDE_BOOK
-HIDE bookOpenButton
-LOCAL_CHAT_CONFIRM npc QuestScript110_11 1 harryDialogue_11
-SET_MUSIC_VOLUME 0.7 activityMusic 1.0 0.4
-# Lots of cleanup
-UPON_TIMEOUT DEBUG "testing upon death"
-UPON_TIMEOUT OBSCURE_BOOK 0
-UPON_TIMEOUT ARROWS_OFF
-UPON_TIMEOUT REPARENTTO arrows aspect2d
-UPON_TIMEOUT HIDE_BOOK
-UPON_TIMEOUT COLOR_SCALE bookOpenButton 1 1 1 1
-UPON_TIMEOUT POS bookOpenButton -0.158 0 0.17
-UPON_TIMEOUT SCALE bookOpenButton 0.305 0.305 0.305
-UPON_TIMEOUT TOON_HEAD npc 0 0 0
-UPON_TIMEOUT SHOW bookOpenButton
-FINISH_QUEST_MOVIE
-
 ID tutorial_blocker
 LOAD_DIALOGUE blockerDialogue_01 "phase_3.5/audio/dial/CC_flippy_tutorial_blocker01.ogg"
 LOAD_DIALOGUE blockerDialogue_02 "phase_3.5/audio/dial/CC_flippy_tutorial_blocker02.ogg"
@@ -571,4 +486,6 @@ UPON_TIMEOUT HIDE_FRIENDS_LIST
 UPON_TIMEOUT ARROWS_OFF
 UPON_TIMEOUT REPARENTTO arrows aspect2d
 FINISH_QUEST_MOVIE
+
+
 

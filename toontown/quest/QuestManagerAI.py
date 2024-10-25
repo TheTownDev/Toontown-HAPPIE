@@ -1,6 +1,7 @@
 from direct.directnotify import DirectNotifyGlobal
 
 from toontown.quest import Quests
+from toontown.hood import ZoneUtil
 
 
 class QuestManagerAI:
@@ -63,7 +64,7 @@ class QuestManagerAI:
 
     def toonKilledCogdo(self, toon, difficulty, numFloors, zoneId, activeToons):
         pass
-
+    
     def toonKilledBuilding(self, toon, track, difficulty, floors, zoneId, activeToons):
         # Thank you difficulty, very cool!
         for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):
@@ -128,19 +129,14 @@ class QuestManagerAI:
         if not av:
             return
 
-
-        # A list of Reward IDs this toon is currently working on
-        currentlyWorkingOnRewards = []
-
         for index, quest in enumerate(self.__toonQuestsList2Quests(av.quests)):
-
             questId, fromNpcId, toNpcId, rewardId, toonProgress = av.quests[index]
-            currentlyWorkingOnRewards.append(rewardId)
             isComplete = quest.getCompletionStatus(av, av.quests[index], npc)
-
-            # Quest is not complete, go to next one
             if isComplete != Quests.COMPLETE:
                 continue
+
+            if avId in list(self.air.tutorialManager.avId2fsm.keys()):
+                self.air.tutorialManager.avId2fsm[avId].demand('Tunnel')
 
             if isinstance(quest, Quests.DeliverGagQuest):
                 track, level = quest.getGagType()
@@ -148,8 +144,6 @@ class QuestManagerAI:
                 av.b_setInventory(av.inventory.makeNetString())
 
             nextQuest = Quests.getNextQuest(questId, npc, av)
-
-            # There is no next quest, complete it and give them their reward
             if nextQuest == (Quests.NA, Quests.NA):
                 if isinstance(quest, Quests.TrackChoiceQuest):
                     npc.presentTrackChoice(avId, questId, quest.getChoices())
@@ -159,24 +153,38 @@ class QuestManagerAI:
                 npc.completeQuest(avId, questId, rewardId)
                 self.completeQuest(av, questId)
                 self.giveReward(av, rewardId)
-                av.checkWinCondition()
+                return
+            else:
+                self.completeQuest(av, questId)
+                nextQuestId = nextQuest[0]
+                nextRewardId = Quests.getFinalRewardId(questId, 1)
+                nextToNpcId = nextQuest[1]
+                self.npcGiveQuest(npc, av, nextQuestId, nextRewardId, nextToNpcId)
                 return
 
-            # There is another part to this quest, complete this one and assign the next
-            self.completeQuest(av, questId)
-            nextQuestId = nextQuest[0]
-            nextRewardId = Quests.getFinalRewardId(questId, 1)
-            nextToNpcId = nextQuest[1]
-            self.npcGiveQuest(npc, av, nextQuestId, nextRewardId, nextToNpcId)
-            return
-
-        # We cannot pickup any more quests
         if len(self.__toonQuestsList2Quests(av.quests)) >= av.getQuestCarryLimit():
             npc.rejectAvatar(avId)
             return
 
-        # Randomly pick some quests to pick from
-        bestQuests = Quests.chooseBestQuests(npc, av, excludeRewards=currentlyWorkingOnRewards, seed=av.getSeed())
+        if avId in list(self.air.tutorialManager.avId2fsm.keys()):
+            if av.getRewardHistory()[0] == 0:
+                self.npcGiveQuest(npc, av, 101, Quests.findFinalRewardId(101)[0], Quests.getQuestToNpcId(101),
+                                  storeReward=True)
+                self.air.tutorialManager.avId2fsm[avId].demand('Battle')
+                return
+
+        tier = av.getRewardHistory()[0]
+        if Quests.avatarHasAllRequiredRewards(av, tier):
+            if not Quests.avatarWorkingOnRequiredRewards(av):
+                if tier != Quests.LOOPING_FINAL_TIER:
+                    tier += 1
+
+                av.b_setRewardHistory(tier, [])
+            else:
+                npc.rejectAvatarTierNotDone(avId)
+                return
+
+        bestQuests = Quests.chooseBestQuests(tier, npc, av)
         if not bestQuests:
             npc.rejectAvatar(avId)
             return
@@ -185,6 +193,9 @@ class QuestManagerAI:
         return
 
     def __toonQuestsList2Quests(self, quests):
+        return [Quests.getQuest(x[0]) for x in quests]
+    
+    def toonQuestsList2Quests(self, quests):
         return [Quests.getQuest(x[0]) for x in quests]
 
     def avatarCancelled(self, avId):
@@ -198,7 +209,7 @@ class QuestManagerAI:
         self.npcGiveQuest(npc, av, questId, rewardId, toNpcId, storeReward=True)
 
     def npcGiveQuest(self, npc, av, questId, rewardId, toNpcId, storeReward=False):
-        rewardId = Quests.transformReward(rewardId)
+        rewardId = Quests.transformReward(rewardId, av)
         finalReward = rewardId if storeReward else 0
         progress = 0
         av.addQuest((questId, npc.getDoId(), toNpcId, rewardId, progress), finalReward)
@@ -206,6 +217,29 @@ class QuestManagerAI:
 
     def __incrementQuestProgress(self, quest):
         quest[4] += 1
+    
+    def isLocationMatch(self, zoneId):
+        loc = zoneId
+        if loc is Quests.Anywhere:
+            return 1
+        if ZoneUtil.isPlayground(loc):
+            if loc == ZoneUtil.getCanonicalHoodId(zoneId):
+                return 1
+            else:
+                return 0
+        elif loc == ZoneUtil.getCanonicalBranchZone(zoneId):
+            return 1
+        elif loc == zoneId:
+            return 1
+        else:
+            return 0
+    
+    def incrementQuestProgressCustom(self, quest, toon, zoneId):
+        if self.isLocationMatch(zoneId):
+            quest[4] += 1
+            
+            if toon.quests:
+                toon.d_setQuests(toon.getQuests())
 
     def completeQuest(self, toon, questId):
         toon.toonUp(toon.getMaxHp())

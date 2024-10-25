@@ -1,8 +1,3 @@
-from typing import List
-
-from apworld.toontown.fish import can_av_fish_at_zone
-from apworld.toontown import locations
-from toontown.quest import Quests
 from . import ShtikerPage
 from toontown.toonbase import ToontownGlobals
 from otp.otpbase import PythonUtil
@@ -10,9 +5,6 @@ from toontown.hood import ZoneUtil
 from direct.gui.DirectGui import *
 from panda3d.core import *
 from toontown.toonbase import TTLocalizer
-from .QuestsAvailablePoster import QuestsAvailablePoster, FishAvailablePoster, TreasureAvailablePoster, PetsAvailablePoster, CanRacePoster, CanGolfPoster
-from ..building import FADoorCodes
-
 
 class MapPage(ShtikerPage.ShtikerPage):
 
@@ -70,15 +62,6 @@ class MapPage(ShtikerPage.ShtikerPage):
          (0.45, 0.0, -0.45))
         self.labels = []
         self.clouds = []
-        self.cloudAlphas = []
-
-        self.questsAvailableIcons: List[QuestsAvailablePoster] = []
-        self.fishAvailableIcons: List[FishAvailablePoster] = []
-        self.treasureAvailableIcons: List[TreasureAvailablePoster] = []
-        self.petsAvailableIcons: List[PetsAvailablePoster] = []
-        self.raceIcons: List[CanRacePoster] = []
-        self.golfIcons: List[CanGolfPoster] = []
-
         guiButton = loader.loadModel('phase_3/models/gui/quit_button')
         buttonLoc = (0.45, 0, - 0.74)
         if base.housingEnabled:
@@ -92,6 +75,7 @@ class MapPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.MapPageBackToPlayground,
             text_scale=TTLocalizer.MPsafeZoneButton,
             text_pos=(0, -0.02),
+            textMayChange=0,
             command=self.backToSafeZone)
         self.goHomeButton = DirectButton(
             parent=self.map,
@@ -102,6 +86,7 @@ class MapPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.MapPageGoHome,
             text_scale=TTLocalizer.MPgoHomeButton,
             text_pos=(0, -0.02),
+            textMayChange=0,
             command=self.goHome)
 
         # todo fix estates
@@ -121,7 +106,6 @@ class MapPage(ShtikerPage.ShtikerPage):
         self.hoodLabel.hide()
         cloudModel = loader.loadModel('phase_3.5/models/gui/cloud')
         cloudImage = cloudModel.find('**/cloud')
-
         for hood in self.allZones:
             abbrev = base.cr.hoodMgr.getNameFromId(hood)
             fullname = base.cr.hoodMgr.getFullnameFromId(hood)
@@ -140,16 +124,10 @@ class MapPage(ShtikerPage.ShtikerPage):
                 pressEffect=0,
                 command=self.__buttonCallback,
                 extraArgs=[hood],
-                sortOrder=5)
+                sortOrder=1)
+            label.bind(DGG.WITHIN, self.__hoverCallback, extraArgs=[1, hoodIndex])
+            label.bind(DGG.WITHOUT, self.__hoverCallback, extraArgs=[0, hoodIndex])
             label.resetFrameSize()
-            self.questsAvailableIcons.append(QuestsAvailablePoster(hood, parent=label, pos=(0.06, 0, 0.08), scale=.1, sortOrder=1))
-            self.fishAvailableIcons.append(FishAvailablePoster(hood, parent=label, pos=(0.19, 0, 0.08), scale=.1, sortOrder=1))
-            self.treasureAvailableIcons.append(TreasureAvailablePoster(hood, parent=label, pos=(-0.06, 0, 0.09), scale=.1, sortOrder=1))
-            self.petsAvailableIcons.append(PetsAvailablePoster(hood, parent=label, pos=(-0.16, 0, 0.09), scale=.1, sortOrder=1))
-            self.raceIcons.append(CanRacePoster(hood, parent=label, pos=(0.06, 0, 0.09), scale=.1, sortOrder=1))
-            self.golfIcons.append(CanGolfPoster(hood, parent=label, pos=(0.06, 0, 0.09), scale=.1, sortOrder=1))
-            label.bind(DGG.WITHIN, self.showTasksAvailableFrame, extraArgs=[hood, hoodIndex])
-            label.bind(DGG.WITHOUT, self.hideTasksAvailableFrame, extraArgs=[hood, hoodIndex])
             self.labels.append(label)
             hoodClouds = []
             for cloudScale, cloudPos in zip(self.cloudScaleList[hoodIndex], self.cloudPosList[hoodIndex]):
@@ -164,112 +142,14 @@ class MapPage(ShtikerPage.ShtikerPage):
                 hoodClouds.append(cloud)
 
             self.clouds.append(hoodClouds)
-            self.cloudAlphas.append(1)
 
         cloudModel.removeNode()
         self.resetFrameSize()
         return
 
-    def showTasksAvailableFrame(self, hood, hoodIndex, pos):
-        self.__hoverCallback(1, hoodIndex, pos)
-        for questPoster, fishPoster, treasurePoster, petPoster, racePoster, golfPoster in zip(self.questsAvailableIcons, self.fishAvailableIcons, self.treasureAvailableIcons, self.petsAvailableIcons, self.raceIcons, self.golfIcons):
-            if hood == questPoster.getHoodId():
-                treasurePoster.show()
-                # Only show if we need to.
-                if hood == ToontownGlobals.OutdoorZone and base.localAvatar.slotData.get("golfing_logic"):
-                    golfPoster.show()
-                if hood == ToontownGlobals.GoofySpeedway and base.localAvatar.slotData.get("racing_logic"):
-                    racePoster.show()
-                if hood in FADoorCodes.PLAYGROUND_ZONES:
-                    questPoster.show()
-                    fishPoster.show()
-                    petPoster.show()
-            else:
-                continue
-
-    def hideTasksAvailableFrame(self, hood, hoodIndex, pos):
-        self.__hoverCallback(0, hoodIndex, pos)
-        for questPoster, fishPoster, treasurePoster, petPoster, racePoster, golfPoster in zip(self.questsAvailableIcons, self.fishAvailableIcons, self.treasureAvailableIcons, self.petsAvailableIcons, self.raceIcons, self.golfIcons):
-            if hood == questPoster.getHoodId():
-                treasurePoster.hide()
-                # Only hide if we need to.
-                if hood == ToontownGlobals.OutdoorZone and base.localAvatar.slotData.get("golfing_logic"):
-                    golfPoster.hide()
-                if hood == ToontownGlobals.GoofySpeedway and base.localAvatar.slotData.get("racing_logic"):
-                    racePoster.hide()
-                if hood in FADoorCodes.PLAYGROUND_ZONES:
-                    questPoster.hide()
-                    fishPoster.hide()
-                    petPoster.hide()
-            else:
-                continue
-
-    def updateTasksAvailableFrames(self):
-
-        # Loop through all the posters
-        for questPoster, fishPoster, treasurePoster, petPoster, racePoster, golfPoster in zip(self.questsAvailableIcons, self.fishAvailableIcons, self.treasureAvailableIcons, self.petsAvailableIcons, self.raceIcons, self.golfIcons):
-            treasurePoster.hide()
-            questPoster.hide()
-            fishPoster.hide()
-            petPoster.hide()
-            racePoster.hide()
-            golfPoster.hide()
-            hoodId = questPoster.getHoodId()
-
-            treasurePoster.update(base.localAvatar)
-            golfPoster.update(base.localAvatar)
-            racePoster.update(base.localAvatar)
-
-            # Are there pets here?
-            if petPoster.hoodId in ToontownGlobals.ZONE_TO_ID_TO_CHECK.keys():
-                petPoster.update(base.localAvatar)
-
-            # Can we fish here?
-            if not fishPoster.isVisible(base.localAvatar):
-                fishPoster.hide()
-            elif not can_av_fish_at_zone(base.localAvatar, hoodId):
-                fishPoster.showLocked()
-            else:
-                fishPoster.update(base.localAvatar)
-
-            # Do we not have access to this hood?
-            if hoodId in FADoorCodes.PLAYGROUND_ZONES:
-                if FADoorCodes.ZONE_TO_ACCESS_CODE[hoodId] not in base.localAvatar.getAccessKeys():
-                    questPoster.showLocked()
-                else:
-                    # Get the reward IDs from this playground
-                    rewardIds = Quests.getRewardIdsFromHood(hoodId)
-                    rewardIdCopy = rewardIds.copy()
-
-                    # Filter out the rewards we can't get bc we already earned them
-                    for reward in rewardIds:
-                        apLocation = Quests.RewardDict.get(reward)[1]
-                        if apLocation is not None:
-                            if locations.LOCATION_NAME_TO_ID[apLocation] in base.localAvatar.getCheckedLocations():
-                                rewardIdCopy.remove(reward)
-
-                    # Now filter out the rewards we are working on
-                    for quest in base.localAvatar.quests:
-                        questId, fromNpcId, toNpcId, rewardId, toonProgress = quest
-                        if rewardId in rewardIdCopy:
-                            rewardIdCopy.remove(rewardId)
-
-                    # Now we have a number that tells us how many quests this person can learn here
-                    questPoster.showNumAvailable(len(rewardIdCopy))
-
     def unload(self):
         for labelButton in self.labels:
             labelButton.destroy()
-
-        for questPoster, fishPoster, treasurePoster, petPoster in zip(self.questsAvailableIcons, self.fishAvailableIcons, self.treasureAvailableIcons, self.petsAvailableIcons):
-            questPoster.destroy()
-            fishPoster.destroy()
-            treasurePoster.destroy()
-            petPoster.destroy()
-        self.questsAvailableIcons.clear()
-        self.fishAvailableIcons.clear()
-        self.treasureAvailableIcons.clear()
-        self.petsAvailableIcons.clear()
 
         del self.labels
         del self.clouds
@@ -283,8 +163,6 @@ class MapPage(ShtikerPage.ShtikerPage):
             zone = base.cr.playGame.getPlace().getZoneId()
         except:
             zone = 0
-
-        self.updateTasksAvailableFrames()
 
         if base.localAvatar.lastHood >= ToontownGlobals.BossbotHQ:
             self.safeZoneButton['text'] = TTLocalizer.MapPageBackToCogHQ
@@ -319,39 +197,29 @@ class MapPage(ShtikerPage.ShtikerPage):
         else:
             self.hoodLabel.hide()
         safeZonesVisited = base.localAvatar.hoodsVisited
+        hoodsAvailable = base.cr.hoodMgr.getAvailableZones()
+        hoodVisibleList = PythonUtil.intersection(safeZonesVisited, hoodsAvailable)
         hoodTeleportList = base.localAvatar.getTeleportAccess()
         for hood in self.allZones:
-            idx = self.allZones.index(hood)
-            label = self.labels[idx]
-            clouds = self.clouds[idx]
-
-            # Set cloud visibility.
-            if hood in safeZonesVisited:
+            label = self.labels[self.allZones.index(hood)]
+            clouds = self.clouds[self.allZones.index(hood)]
+            if not self.book.safeMode and hood in hoodVisibleList:
                 label['text_fg'] = (0, 0, 0, 1)
+                label.show()
                 for cloud in clouds:
                     cloud.hide()
+
+                fullname = base.cr.hoodMgr.getFullnameFromId(hood)
+                if hood in hoodTeleportList:
+                    text = TTLocalizer.MapPageGoTo % fullname
+                    label['text'] = ('', text, text)
+                else:
+                    label['text'] = ('', fullname, fullname)
             else:
                 label['text_fg'] = (0, 0, 0, 0.65)
+                label.show()
                 for cloud in clouds:
                     cloud.show()
-
-            # Set label text.
-            label.show()
-            fullname = base.cr.hoodMgr.getFullnameFromId(hood)
-            if hood in hoodTeleportList:
-                text = TTLocalizer.MapPageGoTo % fullname
-                label['text'] = ('', text, text)
-            else:
-                label['text'] = ('', fullname, fullname)
-
-            # Set cloud opacity.
-            if hood in hoodTeleportList:
-                self.cloudAlphas[idx] = 0.5
-            else:
-                self.cloudAlphas[idx] = 1.0
-            cloudAlpha = self.cloudAlphas[idx]
-            for cloud in clouds:
-                cloud.setColor(1, 1, 1, cloudAlpha)
 
     def exit(self):
         ShtikerPage.ShtikerPage.exit(self)
@@ -377,11 +245,10 @@ class MapPage(ShtikerPage.ShtikerPage):
             messenger.send(self.doneEvent)
 
     def __hoverCallback(self, inside, hoodIndex, pos):
+        alpha = PythonUtil.choice(inside, 0.25, 1.0)
         try:
-            alpha = PythonUtil.choice(inside, 0.25, self.cloudAlphas[hoodIndex])
             clouds = self.clouds[hoodIndex]
         except ValueError:
-            alpha = 1.0
             clouds = []
 
         for cloud in clouds:

@@ -262,8 +262,33 @@ QuestsLocationArticle = ''
 def getLocalNum(num):
     return str(num)
 
+QuestsTreasureQuestCollectIconNames = {
+                        2000: "ttr_t_gui_qst_iceCream",
+                        1000: "ttr_t_gui_qst_starFish",
+                        5000: "ttr_t_gui_qst_flower",
+                        4000: "ttr_t_gui_qst_music",
+                        3000: "ttr_t_gui_qst_snowflake",
+                        9000: "ttr_t_gui_qst_zzz",
+                        1: "ttr_t_gui_qst_popsicle"
+                    }
+
+QuestsTreasureQuestCollectNames = {
+            2000: 'Icecream Cones',
+            1000: 'Star Fish',
+            5000: 'Flowers',
+            4000: 'Musical Notes',
+            3000: 'Snowflakes',
+            9000: 'Zzzs',
+            1: 'Treasures'
+        }
 
 QuestsItemNameAndNum = '%(num)s %(name)s'
+QuestsTreasureQuestProgress = '%(progress)s of %(numTreasures)s collected'
+QuestsTreasureCollectDesc = '%(numTreasures)s %(nameTreasure)s'
+QuestsTreasureQuestCollect = 'Collect %s'
+QuestsTreasureQuestSCStringS = 'I need to collect %(treasureName)s%(treasureLoc)s.'
+QuestsTreasureQuestSCStringP = 'I need to collect some %(treasureName)s%(treasureLoc)s.'
+QuestsTreasureQuestHeadline = 'WANTED'
 QuestsCogQuestProgress = '%(progress)s of %(numCogs)s defeated'
 QuestsCogQuestHeadline = 'WANTED'
 QuestsCogQuestSCStringS = 'I need to defeat %(cogName)s%(cogLoc)s.'
@@ -632,10 +657,11 @@ QuestDialogDict = {160: {GREETING: '',
        LEAVING: QuestsDefaultLeaving},
  164: {QUEST: 'You look like you could use some new gags.\x07Go see %s, maybe he can help you out._where_' % Flippy},
  165: {QUEST: 'Hi there.\x07Looks like you need to practice training your gags.\x07Every time you hit a Cog with one of your gags, your experience increases.\x07When you get enough experience, you will be able to use an even better gag.\x07Go practice your gags by defeating 4 Cogs.'},
- 166: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Bossbots.'},
- 167: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Lawbots.'},
- 168: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Sellbots.'},
- 169: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Cashbots.'},
+ 166: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Resourcebots and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat a Flunky.'},
+ 167: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Resourcebots and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat a Bottom Feeder.'},
+ 168: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Resourcebots and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat a Cold Caller.'},
+ 169: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Resourcebots and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat a Short Change.'},
+ 170000: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Resourcebots and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat a Barista.'},
  170: {QUEST: 'Nice work, now you know the difference between the 4 types of Cogs.\x07I think you are ready to start training for your third gag track.\x07Go talk to _toNpcName_ to choose your next gag track - he can give you some expert advice._where_'},
  171: {QUEST: 'Nice work, now you know the difference between the 4 types of Cogs.\x07I think you are ready to start training for your third gag track.\x07Go talk to _toNpcName_ to choose your next gag track - he can give you some expert advice._where_'},
  172: {QUEST: 'Nice work, now you know the difference between the 4 types of Cogs.\x07I think you are ready to start training for your third gag track.\x07Go talk to _toNpcName_ to choose your next gag track - she can give you some expert advice._where_'},
