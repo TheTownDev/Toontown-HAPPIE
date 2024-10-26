@@ -322,12 +322,6 @@ group "toontownCentral" [
       color [ 0.94 0.71 0.66 1 ]
      ]
     ]
-    prop "prop_tree_small_brickbox_ul_DNARoot" [
-     code [ "prop_tree_small_brickbox_ul" ]
-     pos [ -24 -8 0 ]
-     nhpr [ -0 0 -0 ]
-     scale [ 0.8 0.8 0.8 ]
-    ]
    ]
    flat_building "tb44:random20_DNARoot" [
     pos [ -90 -140 0 ]

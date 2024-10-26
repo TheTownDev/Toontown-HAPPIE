@@ -186,6 +186,7 @@ archiSpawnPoints = {
                       (-105.743,  -51.885,  0.525),
                       (-134.931,  58.005,  0.525)
                       ],
+    SillyStreet + 1: [(-95.81, -174.66, 0.03),],
     ClearCoasts: [(-74.65, -74.92, 7.821),
                   (56.15, -83.5, 3.28),
                   (-24.3, -1.7, 5.763),
@@ -336,6 +337,11 @@ archiSpawnPoints = {
                 (-23.79, 113.6, 0.025),
                 (46.1, 130.75, 0.28)
                 ],
+}
+
+PackageZones = [SillyStreet + 1,]
+PackageZone2Id = {
+     SillyStreet + 1: 1,
 }
 
 healAmounts = {

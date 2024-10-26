@@ -4,6 +4,12 @@ from toontown.quest.Quests import *
 (TreasureQuest,
         ToontownGlobals.ToontownCentral,
         5),
+
+(TreasureQuest,
+        ToontownGlobals.SillyStreet,
+        1,
+        1),
+
 """
 
 QuestDict = {

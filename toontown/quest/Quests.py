@@ -456,9 +456,16 @@ class TreasureQuest(LocationBasedQuest):
         LocationBasedQuest.__init__(self, id, quest)
         if self.__class__ == TreasureQuest:
             self.checkNumTreasures(self.quest[1])
+            self.checkPackageId(self.quest[2])
         
     def checkNumTreasures(self, num):
         self.check(1, 'invalid number of treasures: %s' % num)
+    
+    def checkPackageId(self, num):
+        self.check(1, 'invalid number of treasures: %s' % num)
+    
+    def getPackageId(self):
+        return self.quest[2]
     
     def getNumQuestItems(self):
         return self.getNumTreasures()
@@ -485,7 +492,10 @@ class TreasureQuest(LocationBasedQuest):
         
         text = TTLocalizer.QuestsTreasureCollectDesc
         
-        name = TTLocalizer.QuestsTreasureQuestCollectNames[loc]
+        if self.quest[2]:
+            name = TTLocalizer.QuestsTreasurePackageQuestCollectNames[self.quest[2]]
+        else:
+            name = TTLocalizer.QuestsTreasureQuestCollectNames[loc]
         count = self.getNumTreasures()
         return (text % {'numTreasures': count,
           'nameTreasure': name},)
@@ -514,7 +524,10 @@ class TreasureQuest(LocationBasedQuest):
             return getFinishToonTaskSCStrings(toNpcId)
         loc = self.getLocation()
         
-        treasureName = TTLocalizer.QuestsTreasureQuestCollectNames[loc]
+        if self.quest[2]:
+            treasureName = TTLocalizer.QuestsTreasurePackageQuestCollectNames[self.quest[2]]
+        else:
+            treasureName = TTLocalizer.QuestsTreasureQuestCollectNames[loc]
         numTreasures = self.getNumTreasures()
         if numTreasures == 1:
             text = TTLocalizer.QuestsTreasureQuestSCStringS

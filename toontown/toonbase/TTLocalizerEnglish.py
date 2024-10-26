@@ -282,6 +282,10 @@ QuestsTreasureQuestCollectNames = {
             1: 'Treasures'
         }
 
+QuestsTreasurePackageQuestCollectNames = {
+            1: "Flippy's Package",
+        }
+
 QuestsItemNameAndNum = '%(num)s %(name)s'
 QuestsTreasureQuestProgress = '%(progress)s of %(numTreasures)s collected'
 QuestsTreasureCollectDesc = '%(numTreasures)s %(nameTreasure)s'

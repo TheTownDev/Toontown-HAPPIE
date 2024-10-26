@@ -34,7 +34,8 @@ class DistributedSZTreasureAI(DistributedTreasureAI.DistributedTreasureAI):
             if isinstance(quest, Quests.TreasureQuest):
                 if quest.getCompletionStatus(av, av.quests[index]) != Quests.COMPLETE:
                     if quest.isLocationMatch(self.zoneId):
-                        return 1
+                        if not quest.getPackageId():
+                            return 1
         return 0
 
     def validAvatar(self, av):

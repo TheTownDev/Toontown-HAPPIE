@@ -14,6 +14,10 @@ class ArchipelagoTreasurePlannerAI(TreasurePlannerAI.TreasurePlannerAI):
         self.taskName = '%s%s' % (zoneId, archiIndex)
         self.spawnInterval = 3
         self.maxTreasures = treasureCount
+        self.packageId = -1
+        
+        if zoneId in TreasureGlobals.PackageZones:
+            self.packageId = TreasureGlobals.PackageZone2Id[zoneId]
 
     def start(self):
         self.preSpawnTreasures()
@@ -41,6 +45,13 @@ class ArchipelagoTreasurePlannerAI(TreasurePlannerAI.TreasurePlannerAI):
             self.placeRandomTreasure()
         taskMgr.doMethodLater(self.spawnInterval, self.upkeepTreasurePopulation, self.taskName)
         return Task.done
+    
+    def placeTreasure(self, index):
+        spawnPoint = self.spawnPoints[index]
+        treasure = self.treasureConstructor(simbase.air, self, spawnPoint[0], spawnPoint[1], spawnPoint[2])
+        treasure.generateWithRequired(self.zoneId)
+        treasure.packageId = self.packageId
+        self.treasures[index] = treasure
 
     def placeRandomTreasure(self):
 

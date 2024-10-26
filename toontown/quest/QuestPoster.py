@@ -779,9 +779,12 @@ class QuestPoster(DirectFrame):
                 rIconGeomScale = 1
         else:
             frameBgColor = 'blue'
-            if quest.getType() == Quests.TreasureQuest:                
+            if quest.getType() == Quests.TreasureQuest:
                 Icons = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_qst_toontask_icons')
-                lIconGeom = Icons.find('**/' + TTLocalizer.QuestsTreasureQuestCollectIconNames[quest.getLocation()])
+                if quest.getPackageId():
+                    lIconGeom = Icons.find('**/' + 'ttr_t_gui_qst_package')
+                else:
+                    lIconGeom = Icons.find('**/' + TTLocalizer.QuestsTreasureQuestCollectIconNames[quest.getLocation()])
                 lIconGeomScale = IMAGE_SCALE_SMALL
                 Icons.removeNode()
             if quest.getType() == Quests.CogTrackQuest:
