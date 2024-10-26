@@ -452,24 +452,6 @@ ID quest_assign_141
 CHAT_CONFIRM npc QuestScript141_1 1
 FINISH_QUEST_MOVIE
 
-ID quest_assign_145
-CHAT_CONFIRM npc QuestScript145_1 1
-LOAD frame "phase_4/models/gui/tfa_images" "FrameBlankA"
-LOAD tunnel "phase_4/models/gui/tfa_images" "tunnelSignA"
-POSHPRSCALE tunnel 0 0 0 0 0 0 0.8 0.8 0.8
-REPARENTTO tunnel frame
-POSHPRSCALE frame 0 0 0 0 0 0 0.1 0.1 0.1
-REPARENTTO frame aspect2d
-LERP_SCALE frame 1.0 1.0 1.0 1.0
-WAIT 3.0
-LERP_SCALE frame 0.1 0.1 0.1 0.5
-WAIT 0.5
-REPARENTTO frame hidden
-CHAT_CONFIRM npc QuestScript145_2 1
-UPON_TIMEOUT FUNCTION frame "removeNode"
-FINISH_QUEST_MOVIE
-
-
 ID quest_assign_150
 CHAT_CONFIRM npc QuestScript150_1
 REPARENTTO arrows topRight

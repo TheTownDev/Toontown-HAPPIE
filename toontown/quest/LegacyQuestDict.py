@@ -10,6 +10,11 @@ from toontown.quest.Quests import *
         1,
         1),
 
+(TreasureQuest,
+        ToontownGlobals.SillyStreet,
+        1,
+        1),
+
 """
 
 QuestDict = {
@@ -89,15 +94,15 @@ QuestDict = {
        DefaultDialog),
  145: (TT_TIER,
        Cont,
-       (CogQuest,
-        Anywhere,
+       (TreasureQuest,
+        ToontownGlobals.SillyStreet,
         1,
-        Any),
+        1),
        ToonHQ,
        ToonHQ,
        NA,
-       175,
-       DefaultDialog),
+       165,
+       TTLocalizer.QuestDialogDict[145]),
  150: (TT_TIER,
        OBSOLETE,
        (TrolleyQuest,),

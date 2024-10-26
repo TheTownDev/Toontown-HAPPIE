@@ -9,6 +9,7 @@ from toontown.suit.SuitAvatarPanel import SuitAvatarPanel
 from toontown.battle.SuitBattleGlobals import *
 from toontown.toonbase.ToontownBattleGlobals import *
 from direct.gui.DirectGui import *
+from direct.showbase.MessengerGlobal import messenger
 
 
 class TownBattleSuitPanel(DirectFrame):
@@ -31,12 +32,16 @@ class TownBattleSuitPanel(DirectFrame):
 
         self.hidden = False
         self.panelId = id
-        self.cogSelectButton = DirectButton(parent=self, pos=(0, 0, 0), text_scale=0.0, text_pos=(0, 0, 0), text='', command=self.handleCogSelect)
-        self.cogSelectButton.setScale(0.5)
+        cogSelectIcon = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect').find('**/ttr_t_gui_bat_statusEffect_icon_increasedacc')
+        self.cogSelectButton = DirectButton(parent=self, relief=None, geom=cogSelectIcon, pos=(0, 0, 0), text_scale=0.0, text_pos=(0, 0, 0), text='', command=self.handleCogSelect)
+        self.cogSelectButton.setScale(0.025)
+        self.cogSelectButton.setX(0.23)
+        self.cogSelectButton.setZ(-0.1)
         self.cogSelectButton.setBin("gui-popup", 50)
         self.cog = None
         self.isLoaded = 0
         self.notify.info("Loading Suit Battle Panel!")
+        #ttr_t_gui_bat_statusEffect_icon_increasedacc
         self.healthText = DirectLabel(parent=self, text='', pos=(0, 0, -0.075), text_scale=0.05)
         healthGui = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
         button = healthGui.find('**/minnieCircle')
@@ -61,6 +66,7 @@ class TownBattleSuitPanel(DirectFrame):
         self.button = button
         self.glow = glow
         self.head = None
+        self.chooseCogPanelDoneEvent = 'choose-cog-panel-done'
         self.hide()
         healthGui.removeNode()
         gui.removeNode()
@@ -99,6 +105,10 @@ class TownBattleSuitPanel(DirectFrame):
     def handleCogSelect(self):
         base.localAvatar.setActiveCog(self.panelId)
         base.localAvatar.setSystemMessage(0, "Cog Selected!")
+        
+        doneStatus = {'mode': 'Avatar',
+         'avatar': self.panelId}
+        messenger.send(self.chooseCogPanelDoneEvent, [doneStatus])
 
     def updateHealthBar(self):
 

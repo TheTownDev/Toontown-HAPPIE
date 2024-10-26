@@ -106,14 +106,13 @@ class DistributedBattleFinal(DistributedBattleBase.DistributedBattleBase):
             suit.setPos(self.bossCog, 0, 0, 0)
             suit.headsUp(self)
             suit.setScale(3.8 / suit.height)
-            if suit in self.joiningSuits:
-                i = len(self.pendingSuits) + self.joiningSuits.index(suit)
-                destPos, h = self.suitPendingPoints[i]
-                destHpr = VBase3(h, 0, 0)
-            else:
-                destPos, destHpr = self.getActorPosHpr(suit, self.suits)
-            suitTrack.append(Track((delay, self.createAdjustInterval(suit, destPos, destHpr)), (delay + 0.1875, suit.scaleInterval(0.1875, 1))))
-            delay += 0.125
+            
+            destPos, destHpr = self.getActorPosHpr(suit, self.suits)
+            
+            if len(self.activeSuits) > 0:
+                destPos[1] += 2
+            suitTrack.append(Track((delay, self.createAdjustInterval(suit, destPos, destHpr)), (delay + 1.5, suit.scaleInterval(1.5, 1))))
+            delay += 1
 
         if self.hasLocalToon():
             camera.reparentTo(self)

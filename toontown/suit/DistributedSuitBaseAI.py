@@ -26,6 +26,7 @@ class DistributedSuitBaseAI(DistributedAvatarAI.DistributedAvatarAI, SuitBase.Su
         self.reviveFlag = 0
         self.buildingHeight = None
         self.effectHandler = None
+        self.statusEffectInfo = {}
         return
 
     def generate(self):

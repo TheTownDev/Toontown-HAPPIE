@@ -3036,10 +3036,13 @@ class Toon(Avatar.Avatar, ToonHead):
                 self.stopTrackAnimToSpeed()
                 self.startTrackAnimToSpeed()
             self.controlManager.disableAvatarJump()
-            indices = list(range(OTPLocalizer.SCMenuCommonCogIndices[0], OTPLocalizer.SCMenuCommonCogIndices[1] + 1))
-            customIndices = OTPLocalizer.SCMenuCustomCogIndices[suitType]
-            indices += list(range(customIndices[0], customIndices[1] + 1))
-            self.chatMgr.chatInputSpeedChat.addCogMenu(indices)
+            try:
+                indices = list(range(OTPLocalizer.SCMenuCommonCogIndices[0], OTPLocalizer.SCMenuCommonCogIndices[1] + 1))
+                customIndices = OTPLocalizer.SCMenuCustomCogIndices[suitType]
+                indices += list(range(customIndices[0], customIndices[1] + 1))
+                self.chatMgr.chatInputSpeedChat.addCogMenu(indices)
+            except:
+                pass
         self.suit.loop('neutral')
         self.isDisguised = 1
         self.setFont(ToontownGlobals.getSuitFont())

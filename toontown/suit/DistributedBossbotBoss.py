@@ -739,7 +739,7 @@ class DistributedBossbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         intervalName = 'VictoryMovie'
         seq = Sequence(self.makeVictoryMovie(), Func(self.__continueVictory), name=intervalName)
         seq.start()
-        seq.setPlayRate(3.0)
+        seq.setPlayRate(1.0)
         self.bossHealthBar.deinitialize()
         self.storeInterval(seq, intervalName)
         base.playMusic(self.phaseFourMusic, looping=1, volume=0.9)

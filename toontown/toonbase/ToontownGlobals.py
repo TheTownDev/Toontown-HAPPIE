@@ -917,7 +917,7 @@ TOT_REWARD_END_OFFSET_AMOUNT = 0
 
 LawbotBossMaxDamage = 2700
 LawbotBossWinningTilt = 40
-LawbotBossInitialDamage = 1350
+LawbotBossInitialDamage = 600
 LawbotBossBattleOnePosHpr = (-2.798,
  -60,
  0,

@@ -151,6 +151,80 @@ ELEVATOR_T = 4.0
 BATTLE_SMALL_VALUE = 1e-07
 MAX_EXPECTED_DISTANCE_FROM_BATTLE = 50.0
 
+"""
+suitPoints = (((Point3(10, 5, 0), 170),),
+
+                  ((Point3(12, 5, 0), 170),
+                   (Point3(5, 5, 0), 180)),
+
+                  ((Point3(12, 5, 0), 170),
+                   (Point3(5, 5, 0), 180),
+                   (Point3(-12, 5, 0), 190)),
+
+                  ((Point3(12, 5, 0), 140),
+                   (Point3(6.5, 6, 0), 150),
+                   (Point3(-12, 5, 0), 220),
+                   (Point3(-6.5, 6, 0), 210)),
+
+                  ((Point3(12, 5, 0), 100),
+                   (Point3(5, 5, 0), 110),
+                   (Point3(12, 5, 0), 180),
+                   (Point3(-5, 5, 0), 200),
+                   (Point3(-12, 5, 0), 220)),
+
+                  ((Point3(10, 4.4, 0), 155),
+                   (Point3(6, 5.4, 0), 160),
+                   (Point3(2, 7.3, 0), 170),
+                   (Point3(-2, 7.3, 0), 190),
+                   (Point3(-6, 5.4, 0), 200),
+                   (Point3(-10, 4.4, 0), 205)),
+                  ((Point3(12, 5.0, 0), 158),
+                   (Point3(8, 6.4, 0), 163),
+                   (Point3(4, 7.2, 0), 170),
+                   (Point3(0, 8, 0), 179),
+                   (Point3(-4, 7.2, 0), 190),
+                   (Point3(-8, 6.4, 0), 197),
+                   (Point3(-12, 5.0, 0), 203)),
+                  ((Point3(14, 3.6, 0), 150),
+                   (Point3(10, 5.4, 0), 155),
+                   (Point3(6, 6.4, 0), 160),
+                   (Point3(2, 8.3, 0), 170),
+                   (Point3(-2, 8.3, 0), 190),
+                   (Point3(-6, 6.4, 0), 200),
+                   (Point3(-10, 5.4, 0), 205),
+                   (Point3(-14, 3.6, 0), 210)),
+                  ((Point3(14, 3.6, 0), 150),
+                   (Point3(10, 5.4, 0), 155),
+                   (Point3(6, 6.4, 0), 160),
+                   (Point3(2, 8.3, 0), 170),
+                   (Point3(-2, 8.3, 0), 190),
+                   (Point3(-6, 6.4, 0), 200),
+                   (Point3(-10, 5.4, 0), 205),
+                   (Point3(-14, 3.6, 0), 210),
+                   (Point3(-18, 2.8, 0), 210)),
+                  ((Point3(14, 3.6, 0), 150),
+                   (Point3(10, 5.4, 0), 155),
+                   (Point3(6, 6.4, 0), 160),
+                   (Point3(2, 8.3, 0), 170),
+                   (Point3(-2, 8.3, 0), 190),
+                   (Point3(-6, 6.4, 0), 200),
+                   (Point3(-10, 5.4, 0), 205),
+                   (Point3(-14, 3.6, 0), 210),
+                   (Point3(-18, 2.8, 0), 210),
+                   (Point3(16, 2.8, 0), 210)))
+
+BattleCamFaceOffFov = 30.0
+BattleCamFaceOffPos = Point3(0, -10, 9.5)
+BattleCamDefaultPos = Point3(0, -9, 3.0)
+BattleCamDefaultHpr = Vec3(0, -40, 0)
+BattleCamDefaultFov = 90.0
+BattleCamMenuFov = 85.0
+BattleCamJoinPos = Point3(0, -12, 13)
+BattleCamJoinHpr = Vec3(0, -45, 0)
+
+"""
+
+
 class BattleBase:
     notify = DirectNotifyGlobal.directNotify.newCategory('BattleBase')
     suitPoints = (((Point3(0, 5, 0), 179),),

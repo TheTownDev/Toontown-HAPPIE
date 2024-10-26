@@ -433,6 +433,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         elevatorModel.reparentTo(self.elevatorEntrance)
         self.setupElevator(elevatorModel)
         self.battleTwoMusic = self.juryMusic
+        self.battleTwoMusic = loader.loadMusic('phase_11/audio/bgm/ttr_s_ara_lhq_facilityBattle')
         floor = self.geom.find('**/MidVaultFloor1')
         if floor.isEmpty():
             floor = self.geom.find('**/CR3_Floor')
@@ -1304,7 +1305,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             self.flashRed()
         elif pieCode == ToontownGlobals.PieCodeBossCog:
             if toon == localAvatar:
-                self.d_hitBoss(1)
+                self.d_hitBoss(40)
             if self.dizzy:
                 self.flashRed()
                 self.doAnimate('hit', now=1)

@@ -41,11 +41,11 @@ SuitBuildingInfo = (
 )
 SuitBossInfo = (
  ((1, 1), (7, 14), (8, 8), (150, 150), (1, 1, 1, 1, 1)),  # 0 VP Round 1
- ((1, 1), (4, 8), (8, 8), (100, 100), (1, 1, 1, 1, 1)),  # 1 VP Round 2 Skelecogs
- ((1, 1), (1, 10), (10, 10), (100, 100), (1, 1, 1, 1, 1)),  # 2 CFO Round 1 NONSKELECOGS ONLY
- ((1, 1), (6, 10), (10, 10), (150, 150), (1, 1, 1, 1, 1)),  # 3 CFO Round 2 SKELECOGS ONLY
- ((1, 1), (8, 12), (12, 12), (275, 275), (1, 1, 1, 1, 1)),  # 4 CJ Round 1
- ((1, 1), (9, 14), (14, 14), (260, 260), (1, 1, 1, 1, 1), (0,)),  # 5 CEO Round 1
+ ((1, 1), (6, 13), (13, 14), (100, 100), (1, 1, 1, 1, 1)),  # 1 VP Round 2 Skelecogs
+ ((1, 1), (6, 14), (13, 15), (120, 120), (1, 1, 1, 1, 1)),  # 2 CFO Round 1 NONSKELECOGS ONLY
+ ((1, 1), (7, 16), (16, 16), (70, 70), (1, 1, 1, 1, 1)),  # 3 CFO Round 2 SKELECOGS ONLY
+ ((1, 1), (8, 18), (18, 18), (100, 100), (1, 1, 1, 1, 1)),  # 4 CJ Round 1
+ ((1, 1), (8, 20), (20, 20), (120, 120), (1, 1, 1, 1, 1), (0,)),  # 5 CEO Round 1
  ((1, 1), (1, 5), (5, 5), (33, 33), (1, 1, 1, 1, 1)),  # 6 Storm Sellbot Round 1
  ((1, 1), (4, 5), (5, 5), (50, 50), (1, 1, 1, 1, 1))  # 7 Storm Sellbot Round 2
 )
@@ -61,7 +61,7 @@ TO_TOON_BLDG_TIME = 8
 VICTORY_SEQUENCE_TIME = VICTORY_RUN_TIME + TO_TOON_BLDG_TIME
 CLEAR_OUT_TOON_BLDG_TIME = 4
 TO_SUIT_BLDG_TIME = 8
-NUM_TOONS_TO_COGS_RATIO = {1: 0.2,
+NUM_TOONS_TO_COGS_RATIO = {1: 1,
                            2: 0.35,
                            3: 0.45,
                            4: 0.6,

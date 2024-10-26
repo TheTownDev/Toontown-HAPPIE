@@ -286,6 +286,10 @@ QuestsTreasurePackageQuestCollectNames = {
             1: "Flippy's Package",
         }
 
+PackageHints = {
+       1: "This Mayor's request is located in the street of laughter in Toontown Central!"
+}
+
 QuestsItemNameAndNum = '%(num)s %(name)s'
 QuestsTreasureQuestProgress = '%(progress)s of %(numTreasures)s collected'
 QuestsTreasureCollectDesc = '%(numTreasures)s %(nameTreasure)s'
@@ -635,7 +639,8 @@ TheBrrrghTrackQuestDict = {GREETING: '',
  LEAVING: 'Good luck.  Return to me when you have mastered your new skill.'}
 QuestDialog_3225 = {QUEST: "Oh, thanks for coming, _avName_!\x07The Cogs in the neighborhood frightened away my delivery person.\x07I don't have anyone to deliver this salad to _toNpcName_!\x07Can you do it for me? Thanks so much!_where_"}
 QuestDialog_2910 = {QUEST: 'Back so soon?\x07Great job on the spring.\x07The final item is a counter weight.\x07Stop by and see _toNpcName_ and bring back whatever you can get._where_'}
-QuestDialogDict = {160: {GREETING: '',
+QuestDialogDict = {145: {QUEST: 'Well look who it is!\x07Remember Flippy? Of course you do!\x07We got a request from him not to long ago.\x07He needed a package delivered, and it seems to have made its way!\x07And he said that YOUR the toon for it!\x07Good Luck!'},
+ 160: {GREETING: '',
        QUEST: "Ok, now I think you are ready for something more rewarding.\x07If you can defeat 3 Bossbots I'll give you a little bonus.",
        INCOMPLETE_PROGRESS: TheCogs + ' are out in the streets, through the tunnels.',
        INCOMPLETE_WRONG_NPC: 'Good job defeating those Cogs. Now go to the Toon Headquarters for your next step!',
