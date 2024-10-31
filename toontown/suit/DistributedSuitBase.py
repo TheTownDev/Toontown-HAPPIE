@@ -56,6 +56,7 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         self.skeleRevives = 0
         self.maxSkeleRevives = 0
         self.sillySurgeText = False
+        self.facilitySuit = 0
         self.interactivePropTrackBonus = -1
         return
 

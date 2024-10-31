@@ -33,6 +33,17 @@ def getPulseLargerIval(np, name, duration=PULSE_GUI_DURATION, scale=1):
         )
     )
 
+def getPulseLargerIval2(np, name, duration=PULSE_GUI_DURATION, scale=1):
+    return Parallel(
+        getPulseIval(np, name, 1 + PULSE_GUI_CHANGE, duration=duration, scale=scale),
+        Sequence(
+            np.colorScaleInterval(PULSE_GUI_DURATION, Vec4(0, 1.0, 0, 1), startColorScale=Vec4(1.0, 1.0, 1.0, 1.0),
+                                  blendType='easeOut', name=name),
+            np.colorScaleInterval(PULSE_GUI_DURATION, Vec4(1.0, 1.0, 1.0, 1.0), startColorScale=Vec4(0, 1.0, 0, 1),
+                                  blendType='easeIn', name=name)
+        )
+    )
+
 
 def getPulseSmallerIval(np, name, duration=PULSE_GUI_DURATION, scale=1):
     return Parallel(

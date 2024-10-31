@@ -5,7 +5,9 @@ from direct.directnotify import DirectNotifyGlobal
 import random
 from direct.particles import ParticleEffect
 from . import BattleParticles
-from . import BattleProps
+from . import BattleProps, MovieCamera
+from libotp import *
+from toontown.suit import SuitDNA
 from toontown.toonbase import TTLocalizer
 notify = DirectNotifyGlobal.directNotify.newCategory('MovieUtil')
 SUIT_LOSE_DURATION = 6.0
@@ -390,7 +392,15 @@ def createSuitDeathTrack(suit, toon, battle, npcs = []):
     for mtoon in npcs:
         toonMTrack.append(Sequence(Wait(1.0), ActorInterval(mtoon, 'duck'), ActorInterval(mtoon, 'duck', startTime=1.8), Func(mtoon.loop, 'neutral')))
 
-    return Parallel(suitTrack, deathSoundTrack, gears1Track, gears2MTrack, toonMTrack)
+    movie = Parallel(suitTrack, deathSoundTrack, gears1Track, gears2MTrack, toonMTrack)
+    
+    if suit.dna.name in SuitDNA.supervisors:
+        cameraExtra = MovieCamera.randomActorShot(suit, battle, movie.duration, 'suit', groupShot = 0)
+        cogSaying = Func(suit.setChatAbsolute, random.choice(TTLocalizer.SupervisorDeathPhrases[suit.dna.name]), CFSpeech | CFTimeout)
+        #SupervisorDeathPhrases
+        return Parallel(movie, cameraExtra, cogSaying)
+    else:
+        return movie
 
 
 def createSuitDodgeMultitrack(tDodge, suit, leftSuits, rightSuits):

@@ -136,7 +136,7 @@ class CogdoMazeBossCodeFrame(DirectFrame):
         self.setHit(False)
         self._bossIconX.show()
         ToontownIntervals.cleanup('boss_code%i' % self._id)
-        ToontownIntervals.start(Sequence(Parallel(ToontownIntervals.getPresentGuiIval(self._bossIcon, '', startPos=(0, 0, -0.15))), Wait(1.0), ToontownIntervals.getPulseLargerIval(self._bg, ''), name='boss_code%i' % self._id))
+        ToontownIntervals.start(Sequence(Parallel(ToontownIntervals.getPresentGuiIval(self._bossIcon, '', startPos=(0, 0, -0.15))), Wait(1.0), ToontownIntervals.getPulseLargerIval2(self._bg, ''), name='boss_code%i' % self._id))
 
     def setHit(self, hit):
         if hit:
@@ -208,7 +208,7 @@ class CogdoMazeBossGui(DirectFrame):
         if self._markersShown == self._codeLength:
             self._openDoor.unstash()
             self._closedDoor.stash()
-            ToontownIntervals.start(ToontownIntervals.getPulseLargerIval(self._openDoor, 'bosscodedoor'))
+            ToontownIntervals.start(ToontownIntervals.getPulseLargerIval2(self._openDoor, 'bosscodedoor'))
 
 
 class CogdoMazeHud:

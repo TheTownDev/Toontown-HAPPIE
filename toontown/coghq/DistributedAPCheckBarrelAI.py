@@ -126,6 +126,3 @@ class DistributedAPCheckBarrelAI(DistributedBarrelBaseAI.DistributedBarrelBaseAI
         self.notify.debug('d_setGrab %s' % avId)
         self.sendUpdate('setGrab', [avId])
         av = self.air.doId2do.get(avId)
-        ap_check_id: int = util.ap_location_name_to_id(self.getAPLocationMapping())
-        if av:
-            av.addCheckedLocation(ap_check_id)

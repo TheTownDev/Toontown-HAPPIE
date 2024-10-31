@@ -106,6 +106,10 @@ def createParticleEffect(name = None, file = None, numParticles = None, color = 
         return loadParticleFile('synergy.ptf')
     elif name == 'Waterfall':
         return loadParticleFile('waterfall.ptf')
+    elif name == 'FloodSynergy':
+        return loadParticleFile('flood_synergy.ptf')
+    elif name == 'FloodWaterfall':
+        return loadParticleFile('flood_synergyWaterfall.ptf')
     elif name == 'PoundKey':
         return loadParticleFile('poundkey.ptf')
     elif name == 'RubOut':

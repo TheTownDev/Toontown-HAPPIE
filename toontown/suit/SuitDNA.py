@@ -101,7 +101,6 @@ suitBTypes = [
     'def',
     'sd',
     'bc',
-    'ski',
     'ls',
     'tm',
     'ms',
@@ -119,7 +118,8 @@ suitCTypes = [
     'mb',
     'cc',
     'gh',
-    'bar'
+    'bar',
+    'ski'
 ]
 
 suitDepts = [
@@ -560,8 +560,8 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual('cfn',  7.0 / aSize,   salesPolyColor,                None,                         None,                   ['confinscator'],              8.95),
 
     SuitVisual('trf',  7.6 / aSize,  VBase4(0.886, 0.737, 0.784, 1.0),                None,                         None,                   'factoryforeman',             8.80),
-    SuitVisual('ski',  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        'skinflint.jpg',      'telemarketer',        7.9),
-    SuitVisual('def',  4.4 / bSize,   moneyPolyColor,                None,                        'suit-heads_palette_3cmla_5.jpg',                   ['downsizer', 'downsizer_hat'],         5.95),
+    SuitVisual('ski',  5.7 / cSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        None,      'mintauditor',        6.8),
+    SuitVisual('def',  7.0 / bSize,   moneyPolyColor,                None,                        None,                   'officeclerk',         10.0),
     SuitVisual('bgh',   4.65 / aSize,   corpPolyColor,                 None,                         None,                   'clubpresident', 6.3),
 }
 

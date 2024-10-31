@@ -507,6 +507,8 @@ class BossCog(Avatar.Avatar):
         if not dizzy:
             self.stars.detachNode()
             self.birdsSfx.stop()
+            if self.dna.dept == 'm':
+                self.neck.loop('neutral')
             return
 
         # Make him dizzy
@@ -514,6 +516,10 @@ class BossCog(Avatar.Avatar):
         self.stars.reparentTo(self.neck)
         base.playSfx(self.birdsSfx, looping=1)
         self.dizzy = dizzy
+        
+        if self.dna.dept == 'm':
+            self.neck.loop('stun-loop')
+        
         self.doAnimate('hit', now=1)
 
     def getAngryActorInterval(self, animName, **kw):

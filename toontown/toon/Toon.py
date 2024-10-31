@@ -3053,9 +3053,14 @@ class Toon(Avatar.Avatar, ToonHead):
                 name = self.getName()
             suitDept = SuitDNA.suitDepts.index(SuitDNA.getSuitDept(suitType))
             suitName = SuitBattleGlobals.getSuitAttributes(suitType).name
-            self.nametag.setDisplayName(TTLocalizer.SuitBaseNameWithLevel % {'name': name,
-             'dept': suitName,
-             'level': self.cogLevels[suitDept] + 1})
+            if suitType in SuitDNA.supervisors: #SupervisorBaseNameWithLevel
+                self.nametag.setDisplayName(TTLocalizer.SupervisorBaseNameWithLevel % {'name': name,
+                'dept': suitName,
+                'level': "Supervisor"})
+            else:
+                self.nametag.setDisplayName(TTLocalizer.SuitBaseNameWithLevel % {'name': name,
+                'dept': suitName,
+                'level': self.cogLevels[suitDept] + 1})
             self.nametag.setNameWordwrap(9.0)
         self.suit.setBlend(frameBlend=True)
 

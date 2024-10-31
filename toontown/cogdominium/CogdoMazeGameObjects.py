@@ -50,7 +50,7 @@ class CogdoMazeSplattable:
         self.splat.setPos(self.object, 0, 0, 3.0)
         self.splat.setY(self.splat.getY() - 1.0)
         self._splatSfxIval.node = self.splat
-        self.splatTrack = Parallel(self._splatSfxIval, Sequence(Func(self.splat.showThrough), LerpScaleInterval(self.splat, duration=0.5, scale=6, startScale=1, blendType='easeOut'), Func(self.splat.hide)))
+        self.splatTrack = Parallel(Sequence(Func(self.splat.showThrough), LerpScaleInterval(self.splat, duration=0.5, scale=6, startScale=1, blendType='easeOut'), Func(self.splat.hide)))
         self.splatTrack.start()
 
 

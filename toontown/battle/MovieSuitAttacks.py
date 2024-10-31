@@ -172,7 +172,7 @@ def doSuitAttack(attack):
     elif attackType == SuitAttackType.FIVE_O_CLOCK_SHADOW:
         suitTrack = doDefault(attack)
     elif attackType == SuitAttackType.FLOOD_THE_MARKET:
-        suitTrack = doDefault(attack)
+        suitTrack = doFloodTheMarket(attack)
     elif attackType == SuitAttackType.FOUNTAIN_PEN:
         suitTrack = doFountainPen(attack)
     elif attackType == SuitAttackType.FREEZE_ASSETS:
@@ -872,6 +872,50 @@ def doShred(attack):
     soundTrack = getSoundTrack('SA_shred.ogg', delay=3.4, node=suit)
     return Parallel(suitTrack, paperPropTrack, shredderPropTrack, partTrack, toonTrack, soundTrack)
 
+def doFloodTheMarket(attack):
+    suit = attack['suit']
+    battle = attack['battle']
+    targets = attack['target']
+    damageDelay = 1.7
+    hitAtleastOneToon = 0
+    for t in targets:
+        if t['hp'] > 0:
+            hitAtleastOneToon = 1
+
+    particleEffect = BattleParticles.createParticleEffect('FloodSynergy')
+    waterfallEffect = BattleParticles.createParticleEffect(file='flood_synergyWaterfall')
+    suitTrack = getSuitAnimTrack(attack)
+    partTrack = getPartTrack(particleEffect, 1.0, 4.6, [particleEffect, suit, 0])
+    waterfallTrack = getPartTrack(waterfallEffect, 0.8, 4.6, [waterfallEffect, suit, 0])
+    suitType = getSuitBodyType(attack['suitName'])
+    if suitType == 'a':
+        partDelay = 0.2
+        damageDelay = 1.5
+        dodgeDelay = 1.45
+    elif suitType == 'b':
+        partDelay = 0.2
+        damageDelay = 2.5
+        dodgeDelay = 1.45
+    elif suitType == 'c':
+        partDelay = 0.2
+        damageDelay = 1.5
+        dodgeDelay = 1.45
+    damageAnims = [['slip-forward']]
+    dodgeAnims = []
+    dodgeAnims.append(['jump',
+     0.01,
+     0,
+     0.6])
+    dodgeAnims.extend(getSplicedLerpAnims('jump', 0.31, 1.3, startTime=0.6))
+    dodgeAnims.append(['jump', 0, 0.91])
+    damageAnims = [['melt'], ['jump', 1.5, 0.4]]
+    toonTracks = getToonTracks(attack, damageDelay=damageDelay, splicedDamageAnims=damageAnims, dodgeDelay=dodgeDelay, splicedDodgeAnims=dodgeAnims, showMissedExtraTime=1.0)
+    synergySoundTrack = Sequence(Wait(0.9), SoundInterval(globalBattleSoundCache.getSound('SA_synergy.ogg'), node=suit))
+    if hitAtleastOneToon > 0:
+        fallingSoundTrack = Sequence(Wait(damageDelay + 0.5), SoundInterval(globalBattleSoundCache.getSound('ttr_s_ene_bat_floodTheMarket.ogg'), node=suit))
+        return Parallel(suitTrack, partTrack, waterfallTrack, synergySoundTrack, fallingSoundTrack, toonTracks)
+    else:
+        return Parallel(suitTrack, partTrack, waterfallTrack, synergySoundTrack, toonTracks)
 
 def doFillWithLead(attack):
     suit = attack['suit']

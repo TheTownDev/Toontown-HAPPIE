@@ -1384,12 +1384,12 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         else:
             self.cogLevels[dept] += 1
             self.d_setCogLevels(self.cogLevels)
-            # if lastCog:
-            #     if self.cogLevels[dept] in ToontownGlobals.CogSuitHPLevels:
-            #         maxHp = self.getMaxHp()
-            #         maxHp = min(ToontownGlobals.MaxHpLimit, maxHp + 1)
-            #         self.b_setMaxHp(maxHp)
-            #         self.toonUp(maxHp)
+            if lastCog:
+                if self.cogLevels[dept] in ToontownGlobals.CogSuitHPLevels:
+                    maxHp = self.getMaxHp()
+                    maxHp = min(ToontownGlobals.MaxHpLimit, maxHp + 1)
+                    self.b_setMaxHp(maxHp)
+                    self.toonUp(maxHp)
         self.air.writeServerEvent('cogSuit', self.doId, '%s|%s|%s' % (dept, self.cogTypes[dept], self.cogLevels[dept]))
 
     def getNumPromotions(self, dept):
@@ -1476,7 +1476,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def b_setCogMerits(self, merits):
         # We do not care about changing merits at all in this game
-        merits = [30000, 30000, 30000, 30000]
         self.setCogMerits(merits)
         self.d_setCogMerits(merits)
 

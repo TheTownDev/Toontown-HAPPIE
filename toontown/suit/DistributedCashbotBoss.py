@@ -27,6 +27,7 @@ from panda3d.core import *
 from panda3d.physics import *
 from panda3d.direct import *
 from libotp import *
+from direct.actor.Actor import Actor
 import random
 import math
 import json
@@ -344,8 +345,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
 
     def loadEnvironment(self):
         DistributedBossCog.DistributedBossCog.loadEnvironment(self)
-        self.midVault = loader.loadModel('phase_10/models/cogHQ/MidVault.bam')
-        self.endVault = loader.loadModel('phase_10/models/cogHQ/EndVault.bam')
+        self.midVault = loader.loadModel('phase_10/models/cashbotHQ/ttr_m_ara_chq_bossMidVault.bam')
+        self.endVault = loader.loadModel('phase_10/models/cashbotHQ/ttr_m_ara_chq_bossEndVault.bam')
         self.lightning = loader.loadModel('phase_10/models/cogHQ/CBLightning.bam')
         self.magnet = loader.loadModel('phase_10/models/cogHQ/CBMagnet.bam')
         self.craneArm = loader.loadModel('phase_10/models/cogHQ/CBCraneArm.bam')
@@ -354,11 +355,28 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.safe = loader.loadModel('phase_10/models/cogHQ/CBSafe.bam')
         self.eyes = loader.loadModel('phase_10/models/cogHQ/CashBotBossEyes.bam')
         self.cableTex = self.craneArm.findTexture('MagnetControl')
-
+        
+        self.battleThreeMusic = loader.loadMusic('phase_10/audio/bgm/ttr_s_ara_chq_crane.ogg')
+        
+        self.neck.hide()
+        
+        self.bossHead = Actor('phase_10/models/cashbotHQ/cashbotBoss-head-zero.bam', {'grunt': 'phase_10/models/cashbotHQ/cashbotBoss-head-grunt.bam',
+                                                                                      'neutral': 'phase_10/models/cashbotHQ/cashbotBoss-head-neutral.bam',
+                                                                                      'murmur': 'phase_10/models/cashbotHQ/cashbotBoss-head-murmur.bam',
+                                                                                      'stun-into': 'phase_10/models/cashbotHQ/cashbotBoss-head-stun-into.bam',
+                                                                                      'stun-out': 'phase_10/models/cashbotHQ/cashbotBoss-head-stun-out.bam',
+                                                                                      'stun-loop': 'phase_10/models/cashbotHQ/cashbotBoss-head-stun-loop.bam'})
+        self.bossHead.reparentTo(self.find('**/joint34'))
+        self.bossHead.loop('neutral')
+        self.bossHead.setBlend(frameBlend=True)
+        self.bossHead.setX(-0.54)
+        self.pelvis.setSx(0.8)
+        self.getGeomNode().setTwoSided(1)
+        self.neck = self.bossHead
         # Get the eyes ready for putting outside the helmet.
-        self.eyes.setPosHprScale(4.5, 0, -2.5, 90, 90, 0, 0.4, 0.4, 0.4)
-        self.eyes.reparentTo(self.neck)
-        self.eyes.hide()
+        #self.eyes.setPosHprScale(4.5, 0, -2.5, 90, 90, 0, 0.4, 0.4, 0.4)
+        #self.eyes.reparentTo(self.neck)
+        #self.eyes.hide()
 
         # Position the two rooms relative to each other, and so that
         # the floor is at z == 0
@@ -593,8 +611,12 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                             
                             #Close-up of the CFO...
                             Func(self.setChatAbsolute, TTL.CashbotBossDiscoverToons1, CFSpeech),
+                            ActorInterval(self.bossHead, 'question'),
+                            Func(self.bossHead.loop, 'neutral'),
                             camera.posHprInterval(1.5, Point3(93.3, -230, 0.7), VBase3(-92.9, 39.7, 8.3)),
                             Func(self.setChatAbsolute, TTL.CashbotBossDiscoverToons2, CFSpeech),
+                            ActorInterval(self.bossHead, 'grunt'),
+                            Func(self.bossHead.loop, 'neutral'),
                             Wait(4),
                             
                             # Cut to toons losing their cog suits.
@@ -627,6 +649,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                                     Func(rToon.clearChat),
                                     Func(camera.setPosHpr, 93.3, -230, 0.7, -92.9, 39.7, 8.3),
                                     Func(self.setChatAbsolute, attackToons, CFSpeech),
+                                    ActorInterval(self.bossHead, 'grunt'),
+                                    Func(self.bossHead.loop, 'neutral'),
                                     Wait(2),
                                     Func(self.clearChat))
 		

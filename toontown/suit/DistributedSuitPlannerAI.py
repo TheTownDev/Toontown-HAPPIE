@@ -18,8 +18,8 @@ from toontown.toonbase import ToontownGlobals
 import math, time, random
 
 class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlannerBase.SuitPlannerBase):
-    CogdoPopFactor = config.GetFloat('cogdo-pop-factor', 1.5)
-    CogdoRatio = min(1.0, max(0.0, config.GetFloat('cogdo-ratio', 0.5)))
+    CogdoPopFactor = config.GetFloat('cogdo-pop-factor', 0.4)
+    CogdoRatio = min(1.0, max(0.0, config.GetFloat('cogdo-ratio', 0.2)))
     MinimumOfOne = config.GetBool('minimum-of-one-building', 0)
     # boss, law, cash, sell
     SuitHoodInfo = [

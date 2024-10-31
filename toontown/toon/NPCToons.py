@@ -11725,9 +11725,9 @@ HQnpcFriends = {
     4219: (ToontownBattleGlobals.SOUND_TRACK, 4, 60, 4),
     4115: (ToontownBattleGlobals.SOUND_TRACK, 3, 30, 3),
 
-    1116: (ToontownBattleGlobals.DROP_TRACK, 5, 170, 5),
-    2311: (ToontownBattleGlobals.DROP_TRACK, 4, 110, 4),
-    4140: (ToontownBattleGlobals.DROP_TRACK, 3, 60, 3),
+    1116: (ToontownBattleGlobals.DROP_TRACK, 5, 190, 5),
+    2311: (ToontownBattleGlobals.DROP_TRACK, 4, 140, 4),
+    4140: (ToontownBattleGlobals.DROP_TRACK, 3, 90, 3),
 
     3137: (ToontownBattleGlobals.NPC_COGS_MISS,  0, 0, 4),
     # 4327: (ToontownBattleGlobals.NPC_COGS_MISS, 0, 0, 4),

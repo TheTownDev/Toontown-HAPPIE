@@ -138,11 +138,9 @@ class DistributedLevelBattle(DistributedBattle.DistributedBattle):
                 else:
                     taunt = SuitBattleGlobals.getFaceoffTaunt(suit.getStyleName(), suit.doId)
                 oneSuitTrack.append(Func(suit.setChatAbsolute, taunt, CFSpeech | CFTimeout))
-            destPos, destHpr = self.getActorPosHpr(suit, self.suits)
             oneSuitTrack.append(Wait(delay))
             if suitIsLeader == 1:
                 oneSuitTrack.append(Func(suit.clearChat))
-            oneSuitTrack.append(self.createAdjustInterval(suit, destPos, destHpr))
             suitTrack.append(oneSuitTrack)
 
         suitHeight = suitLeader.getHeight()

@@ -13,6 +13,7 @@ class DistributedFactorySuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
         self.battleCellIndex = None
         self.chasing = 0
         self.factoryGone = 0
+        self.facilitySuit = 1
         return
 
     def factoryIsGoingDown(self):

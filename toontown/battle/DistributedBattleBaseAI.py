@@ -528,6 +528,18 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         else:
             self.notify.warning('suitRequestJoin() - not joinable - joinable state: %s max suits: %d' % (self.joinableFsm.getCurrentState().getName(), self.maxSuits))
             return 0
+    
+    def suitRequestFacilityAdd(self, suit):
+        self.notify.debug('suitRequestJoin(%d)' % suit.getDoId())
+        if self.suitCanJoin():
+            self.addSuit(suit)
+            self.activeSuits.append(suit)
+            self.d_setMembers()
+            suit.prepareToJoinBattle()
+            return 1
+        else:
+            self.notify.warning('suitRequestJoin() - not joinable - joinable state: %s max suits: %d' % (self.joinableFsm.getCurrentState().getName(), self.maxSuits))
+            return 0
 
     def addToon(self, avId):
         print('DBB-addToon %s' % avId)
@@ -2042,8 +2054,10 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
 
     def __adjustDone(self):
         for s in self.adjustingSuits:
-            self.pendingSuits.remove(s)
-            self.activeSuits.append(s)
+            if s in self.pendingSuits:
+                self.pendingSuits.remove(s)
+            if s not in self.activeSuits:
+                self.activeSuits.append(s)
 
         self.adjustingSuits = []
         for toon in self.adjustingToons:

@@ -1,5 +1,5 @@
 from . import CogHood
-from toontown.toonbase import ToontownGlobals
+from toontown.toonbase import ToontownGlobals, TTLocalizer
 from toontown.coghq import BossbotCogHQLoader
 from toontown.hood import ZoneUtil
 from panda3d.core import Fog
@@ -36,9 +36,12 @@ class BossbotHQ(CogHood.CogHood):
         base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear, ToontownGlobals.DefaultCameraFar)
         CogHood.CogHood.exit(self)
 
-    def spawnTitleText(self, zoneId, floorNum = None):
+    def spawnTitleText(self, zoneId, countryClub=None, floorNum = None):
         if ZoneUtil.isMintInteriorZone(zoneId):
             text = '%s\n%s' % (ToontownGlobals.StreetNames[zoneId][-1], TTLocalizer.MintFloorTitle % (floorNum + 1))
+            self.doSpawnTitleText(text)
+        if ZoneUtil.isCGCInteriorZone(zoneId):
+            text = '%s\n%s\n%s' % (ToontownGlobals.StreetNames[zoneId][-1], TTLocalizer.CountryFloorTitle % TTLocalizer.CountryClubLetters[countryClub], TTLocalizer.MintFloorTitle % (floorNum + 1))
             self.doSpawnTitleText(text)
         else:
             CogHood.CogHood.spawnTitleText(self, zoneId)

@@ -71,7 +71,8 @@ class DistributedBattleAI(DistributedBattleBaseAI.DistributedBattleBaseAI):
 
     def handleFaceOffDone(self):
         self.timer.stop()
-        self.activeSuits.append(self.suits[0])
+        if not self.suits[0].facilitySuit:
+            self.activeSuits.append(self.suits[0])
         if len(self.toons) == 0:
             self.b_setState('Resume')
         elif self.faceOffToon == self.toons[0]:

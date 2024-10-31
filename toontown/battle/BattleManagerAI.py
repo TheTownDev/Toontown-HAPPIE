@@ -33,6 +33,9 @@ class BattleManagerAI:
 
     def requestBattleAddSuit(self, cellId, suit):
         return self.cellId2battle[cellId].suitRequestJoin(suit)
+    
+    def requestBattleAddSuitFacility(self, cellId, suit):
+        return self.cellId2battle[cellId].suitRequestFacilityAdd(suit)
 
     def destroy(self, battle):
         cellId = battle.battleCellId

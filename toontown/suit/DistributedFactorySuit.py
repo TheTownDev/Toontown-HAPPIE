@@ -35,6 +35,7 @@ class DistributedFactorySuit(DistributedSuitBase.DistributedSuitBase, DelayDelet
             self.paused = 0
             self.pauseTime = 0
             self.velocity = 3
+            self.facilitySuit = 1
             self.factoryRequest = None
 
         return

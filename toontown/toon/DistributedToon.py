@@ -1048,7 +1048,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
             if CogDisguiseGlobals.isPaidSuitComplete(self, parts, index):
                 cogIndex = self.cogTypes[index] + SuitDNA.suitsPerDept * index
                 
-                if cogIndex > SuitDNA.suitsPerDept + 1:
+                if self.cogTypes[index] > 7:
                     cog = SuitDNA.dept2SuitSupervisor[SuitDNA.suitDepts[index]]
                 else:
                     cog = SuitDNA.suitHeadTypes[cogIndex]

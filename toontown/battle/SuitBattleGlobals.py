@@ -135,7 +135,7 @@ class SuitAttackType(IntEnum):
     # todo maybe a better way to do this with per enum definitions?
     def isGroupAttack(self) -> bool:
         return self in {self.GUILT_TRIP, self.PARADIGM_SHIFT, self.POWER_TRIP, self.QUAKE, self.SHAKE,
-                        self.SONG_AND_DANCE, self.SYNERGY, self.TREMOR}
+                        self.SONG_AND_DANCE, self.SYNERGY, self.TREMOR, self.FLOOD_THE_MARKET}
 
 
 # Represents an attack definition for a suit.
@@ -530,13 +530,13 @@ __THE_BIG_CHEESE_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.FLOOD_THE_MARKET,
     damage={8: 8, 9: 10, 10: 12, 11: 14, 12: 16},
     accuracy=95,
-    weight=10,
+    weight=50,
 ))
 __THE_BIG_CHEESE_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.POWER_TRIP,
     damage={8: 12, 9: 15, 10: 18, 11: 21, 12: 24},
     accuracy=60,
-    weight=50,
+    weight=10,
 ))
 __THE_BIG_CHEESE_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.TEE_OFF,
@@ -791,19 +791,19 @@ __registerSuitAttributes(__MR_HOLLYWOOD)
 __TRAFFIC_MANAGER_ATTACKS = set()
 __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.FIRED,
-    damage={6: 9, 7: 11, 8: 13, 9: 14, 10: 16},
+    damage={8: 4},
     accuracy=60,
     weight=30,
 ))
 __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.POWER_TRIP,
-    damage={6: 7, 7: 9, 8: 11, 9: 14, 10: 17},
+    damage={8: 1},
     accuracy=50,
     weight=15,
 ))
 __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.PLAY_HARDBALL,
-    damage={6: 11, 7: 13, 8: 15, 9: 18, 10: 21},
+    damage={8: 8,},
     accuracy=60,
     weight=30,
 ))
@@ -813,7 +813,7 @@ __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     accuracy=60,
     weight=25,
 ))
-__TRAFFIC_MANAGER: SuitAttributes = SuitAttributes(key='trf', name=TTLocalizer.SuitTrafficManager, singular=TTLocalizer.SuitTrafficManagerS, plural=TTLocalizer.SuitTrafficManagerP, tier=5, attacks=__TRAFFIC_MANAGER_ATTACKS)
+__TRAFFIC_MANAGER: SuitAttributes = SuitAttributes(key='trf', name=TTLocalizer.SuitTrafficManager, singular=TTLocalizer.SuitTrafficManagerS, plural=TTLocalizer.SuitTrafficManagerP, tier=7, attacks=__TRAFFIC_MANAGER_ATTACKS)
 __registerSuitAttributes(__TRAFFIC_MANAGER)
 
 __SHORT_CHANGE_ATTACKS = set()
@@ -1030,13 +1030,13 @@ __registerSuitAttributes(__ROBBER_BARON)
 
 __SKIN_FLINT_ATTACKS = set()
 __SKIN_FLINT_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.PICK_POCKET,
+    attack=SuitAttackType.CALCULATE,
     damage={6: 11, 7: 13, 8: 15, 9: 17, 10: 19},
     accuracy=60,
     weight=30,
 ))
 __SKIN_FLINT_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.FINGER_WAG,
+    attack=SuitAttackType.MARKET_CRASH,
     damage={6: 8, 7: 10, 8: 12, 9: 14, 10: 16},
     accuracy=60,
     weight=45,
@@ -1358,25 +1358,25 @@ __registerSuitAttributes(__BIG_WIG)
 __DEFENDENT_ATTACKS = set()
 __DEFENDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.MUMBO_JUMBO,
-    damage={4: 5, 5: 7, 6: 10, 7: 12, 8: 14},
+    damage={4: 5, 5: 7, 6: 10, 7: 12, 40: 21},
     accuracy=95,
     weight=20,
 ))
 __DEFENDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.JARGON,
-    damage={4: 6, 5: 8, 6: 10, 7: 12, 8: 14},
+    damage={40: 26},
     accuracy=75,
     weight=25,
 ))
 __DEFENDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.GUILT_TRIP,
-    damage={4: 5, 5: 7, 6: 8, 7: 11, 8: 13},
+    damage={4: 5, 5: 7, 6: 8, 7: 11, 40: 31},
     accuracy=75,
     weight=25,
 ))
 __DEFENDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.LEGALESE,
-    damage={4: 8, 5: 10, 6: 12, 7: 15, 8: 17},
+    damage={4: 8, 5: 10, 6: 12, 7: 15, 40: 32},
     accuracy=95,
     weight=30,
 ))
@@ -1474,7 +1474,7 @@ __SuitAttacksToDefaultAnimation = {
     SuitAttackType.FINGER_WAG:          'finger-wag',
     SuitAttackType.FIRED:               'magic2',
     SuitAttackType.FIVE_O_CLOCK_SHADOW: 'glower',
-    SuitAttackType.FLOOD_THE_MARKET:    'glower',
+    SuitAttackType.FLOOD_THE_MARKET:    'magic3',
     SuitAttackType.FOUNTAIN_PEN:        'pen-squirt',
     SuitAttackType.FREEZE_ASSETS:       'glower',
     SuitAttackType.GAVEL:               'gavel',

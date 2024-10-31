@@ -66,7 +66,8 @@ BR_TIER = 11
 DL_TIER = 14
 LAWBOT_HQ_TIER = 18
 BOSSBOT_HQ_TIER = 32
-ELDER_TIER = 49
+ELDER_TIER = 50
+TEST_TIER = 33
 LOOPING_FINAL_TIER = ELDER_TIER
 VISIT_QUEST_ID = 1000
 TROLLEY_QUEST_ID = 110
@@ -78,6 +79,15 @@ SELLBOT_HQ_NEWBIE_HP = 50
 CASHBOT_HQ_NEWBIE_HP = 85
 from toontown.toonbase.ToontownGlobals import FT_FullSuit, FT_Leg, FT_Arm, FT_Torso
 QuestRandGen = random.Random()
+
+tierToSuitDNADict = {0: ['f', 'bf', 'sc', 'cc', 'bar'],
+                     1: ['p', 'b', 'pp', 'tm'],
+                     2: ['ym', 'dt', 'tw', 'nd'],
+                     3: ['mm', 'ac', 'bc', 'gh'],
+                     4: ['ds', 'bs', 'nc', 'ms'],
+                     5: ['hh', 'sd', 'mb', 'tf'],
+                     6: ['cr', 'le', 'ls', 'm', 'inv'],
+                     7: ['tbc', 'bw', 'rb', 'mh', 'cfn']}
 
 def seedRandomGen(npcId, avId, tier, rewardHistory):
     QuestRandGen.seed(npcId * 100 + avId + tier + len(rewardHistory))
@@ -616,6 +626,26 @@ class CogQuest(LocationBasedQuest):
         questCogType = self.getCogType()
         return (questCogType is Any or questCogType is cogDict['type']) and avId in cogDict['activeToons'] and self.isLocationMatch(zoneId)
 
+class CogTierQuest(CogQuest):
+    def __init__(self, id, quest):
+        CogQuest.__init__(self, id, quest)
+        if self.__class__ == CogNewbieQuest:
+            self.checkNumCogs(self.quest[1])
+            self.checkCogTier(self.quest[2])
+    
+    def getCogNameString(self):
+        numCogs = self.getNumCogs()
+        if numCogs == 1:
+            return 'a Tier ' + str(self.quest[2] + 1) + ' Cog'
+        else:
+            return 'Tier ' + str(self.quest[2] + 1) + ' Cogs'
+    
+    def getCogTier(self):
+        return self.quest[2]
+     
+    def doesCogCount(self, avId, cogDict, zoneId, avList):
+        tierNeeded = tierToSuitDNADict[self.quest[2]]
+        return cogDict['type'] in tierNeeded and avId in cogDict['activeToons'] and self.isLocationMatch(zoneId)
 
 class CogNewbieQuest(CogQuest, NewbieQuest):
     def __init__(self, id, quest):
@@ -2724,6 +2754,28 @@ class Reward:
     def getPosterString(self):
         return 'base class'
 
+class SOSCardReward(Reward):
+    def __init__(self, id, reward):
+        Reward.__init__(self, id, reward)
+
+    def getAmount(self):
+        return self.reward[0]
+    
+    def getGivenAmmount(self):
+        return self.reward[1]
+
+    def sendRewardAI(self, av):
+        for i in range(self.getGivenAmmount()):
+            av.attemptAddNPCFriend(self.getAmount())
+
+    def countReward(self, qrc):
+        pass
+
+    def getString(self):
+        return TTLocalizer.QuestsSOSReward % (self.getGivenAmmount(), TTLocalizer.NPCToonNames[self.getAmount()])
+
+    def getPosterString(self):
+        return TTLocalizer.QuestsSOSRewardPoster % (self.getGivenAmmount(), TTLocalizer.NPCToonNames[self.getAmount()])
 
 class MaxHpReward(Reward):
     def __init__(self, id, reward):
@@ -3195,6 +3247,7 @@ RewardDict = {100: (MaxHpReward, 1),
  107: (MaxHpReward, 8),
  108: (MaxHpReward, 9),
  109: (MaxHpReward, 10),
+ 1400: (SOSCardReward, 1116, 4),
  200: (MaxGagCarryReward, 25, TTLocalizer.QuestsMediumPouch),
  201: (MaxGagCarryReward, 30, TTLocalizer.QuestsLargePouch),
  202: (MaxGagCarryReward, 35, TTLocalizer.QuestsSmallBag),
@@ -3953,6 +4006,13 @@ RequiredRewardTrackDict = {TT_TIER: (100,),
  BOSSBOT_HQ_TIER + 14: (4214,),
  BOSSBOT_HQ_TIER + 15: (4215,),
  BOSSBOT_HQ_TIER + 16: (4216,),
+ TEST_TIER: (1400,
+             100,
+             100,
+             100,
+             100,
+             100,
+             100),
  ELDER_TIER: (4000,
               4001,
               4002,

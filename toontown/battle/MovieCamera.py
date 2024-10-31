@@ -395,6 +395,8 @@ def chooseSuitShot(attack, attackDuration):
         camTrack.append(defaultCamera(openShotDuration=2.6))
     elif attackType == SuitAttackType.FREEZE_ASSETS:
         camTrack.append(defaultCamera(openShotDuration=2.5))
+    elif attackType == SuitAttackType.FLOOD_THE_MARKET:
+        camTrack.append(defaultCamera(openShotDuration=1.7))
     elif attackType == SuitAttackType.HALF_WINDSOR:
         camTrack.append(defaultCamera(openShotDuration=2.8))
     elif attackType == SuitAttackType.HEAD_SHRINK:

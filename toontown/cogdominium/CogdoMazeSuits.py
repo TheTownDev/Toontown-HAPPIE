@@ -23,8 +23,8 @@ class CogdoMazeSuit(MazeSuit, FSM, CogdoMazeSplattable):
             self.suit.setScale(data['scale'])
         self.hp = data['hp']
         self.type = cogdoSuitType
-        self.memos = data['memos']
-        self.deathSuit = self.suit.getLoseActor()
+        self.memos = 3
+        self.deathSuit = self.suit
         self.deathSuit.pose('lose', 0)
         BattleParticles.loadParticles()
         self._initSfx()

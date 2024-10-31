@@ -25,7 +25,7 @@ class CashbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.musicJson = json.loads(fileSystem.readFile(ToontownGlobals.musicJsonFilePath, True))
         self.musicFile = 'phase_9/audio/bgm/encntr_suit_HQ_nbrhood.ogg'
         self.cogHQExteriorModelPath = 'phase_10/models/cogHQ/CashBotShippingStation'
-        self.cogHQLobbyModelPath = 'phase_10/models/cogHQ/VaultLobby'
+        self.cogHQLobbyModelPath = 'phase_10/models/cogHQ/ttr_m_ara_chq_bossVaultLobby'
         self.geom = None
         return
 
@@ -63,8 +63,8 @@ class CashbotCogHQLoader(CogHQLoader.CogHQLoader):
                 self.notify.info('QA-REGRESSION: COGHQ: Visit CashbotLobby')
             self.geom = loader.loadModel(self.cogHQLobbyModelPath)
 
-            buildings = self.geom.findAllMatches('**/BGBuildings2')
-            sky = self.geom.find('**/SkyBox')
+            buildings = self.geom.findAllMatches('**/grp_M_bgBuildings_01')
+            sky = self.geom.find('**/grp_M_skyBox_01')
 
             fog = Fog('CBHQLobby')
             fog.setColor(.15, .17, .15)

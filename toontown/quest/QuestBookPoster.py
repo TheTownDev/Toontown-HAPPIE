@@ -37,6 +37,7 @@ class QuestBookPoster(QuestPoster):
             self.questInfo.setPos(0, 0, -0.063)
             self.rewardText.setPos(0, 0, -0.19)
             self.rewardText.show()
+            self.rewardText.setX(-.46)
             self.questProgress.setPos(0, 0, -0.12)
             self.rewardText.setScale(1.33)
             self.questProgress.setScale(0.28)

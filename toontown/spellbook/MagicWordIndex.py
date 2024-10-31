@@ -341,7 +341,7 @@ class MaxToon(MagicWord):
         experience = Experience.Experience(toon.getExperience(), toon)
         for i, track in enumerate(toon.getTrackAccess()):
             if track:
-                experience.experience[i] = ToontownBattleGlobals.MaxSkill
+                experience.experience[i] = 10000
         toon.b_setExperience(experience.getCurrentExperience())
 
         toon.inventory.maxInventory(clearFirst=True)
@@ -353,8 +353,8 @@ class MaxToon(MagicWord):
         toon.b_setMoney(toon.getMaxMoney())
         toon.b_setBankMoney(ToontownGlobals.DefaultMaxBankMoney)
 
-        toon.b_setMaxHp(ToontownGlobals.MaxHpLimit)
-        toon.toonUp(ToontownGlobals.MaxHpLimit)
+        toon.b_setMaxHp(140)
+        toon.toonUp(140)
 
         toon.b_setHoodsVisited(ToontownGlobals.Hoods)
         toon.b_setTeleportAccess(ToontownGlobals.HoodsForTeleportAll)
@@ -377,7 +377,7 @@ class MaxToon(MagicWord):
         for id in toon.getQuests():
             toon.removeQuest(id)
         toon.b_setQuestCarryLimit(ToontownGlobals.MaxQuestCarryLimit)
-        toon.b_setRewardHistory(Quests.LOOPING_FINAL_TIER, toon.getRewardHistory()[1])
+        toon.b_setRewardHistory(Quests.TEST_TIER, toon.getRewardHistory()[1])
 
         allFish = TTLocalizer.FishSpeciesNames
         fishLists = [[], [], []]
@@ -2768,13 +2768,8 @@ class SetCogSuit(MagicWord):
             return "Invalid cog type specified.."
         typeIndex = types.index(type)
 
-        # Make sure they gave a level that is in range.
-        if typeIndex == 7:
-            # The final suit can go up to Level 50.
-            levelRange = list(range(8, 51))  # Last digit is exclusive.
-        else:
-            levelRange = list(range((typeIndex + 1), (typeIndex + 6)))
-        if level not in levelRange:
+        levelRanges = SuitDNA.validCogs[typeIndex]
+        if level not in levelRanges:
             return "Invalid level specified for %s disguise %s." % (
                 corp.capitalize(), SuitBattleGlobals.getSuitAttributes(type).name)
 

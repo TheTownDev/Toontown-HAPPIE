@@ -17,6 +17,7 @@ from toontown.toontowngui.TeaserPanel import TeaserPanel
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toontowngui import TTDialog
 from otp.otpbase import OTPLocalizer
+import random
 IMAGE_SCALE_LARGE = 0.2
 IMAGE_SCALE_SMALL = 0.15
 POSTER_WIDTH = 0.7
@@ -825,6 +826,9 @@ class QuestPoster(DirectFrame):
                     lIconGeom = cogIcons.find('**/cog')
                     lIconGeomScale = IMAGE_SCALE_SMALL
                     cogIcons.removeNode()
+            elif quest.getType() == Quests.CogTierQuest:
+                lIconGeom = self.createSuitHead(random.choice(Quests.tierToSuitDNADict[quest.getCogTier()]))
+                lIconGeomScale = IMAGE_SCALE_SMALL
             elif quest.getType() == Quests.CogLevelQuest:
                 cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
                 lIconGeom = cogIcons.find('**/cog')

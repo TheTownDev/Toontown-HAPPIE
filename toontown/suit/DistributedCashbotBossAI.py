@@ -948,7 +948,7 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
         # The clients will play a cutscene.  When they are done
         # watching the movie, we continue.
-        self.barrier = self.beginBarrier('PrepareBattleThree', self.involvedToons, 55, self.__donePrepareBattleThree)
+        self.barrier = self.beginBarrier('PrepareBattleThree', self.involvedToons, 60, self.__donePrepareBattleThree)
 
     def __donePrepareBattleThree(self, avIds):
         self.b_setState('BattleThree')

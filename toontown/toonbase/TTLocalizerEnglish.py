@@ -166,6 +166,22 @@ FactoryTypeLeg = 'Leg'
 FactoryTypeArm = 'Arm'
 FactoryTypeTorso = 'Torso'
 MintFloorTitle = 'Floor %s'
+CountryFloorTitle = 'Country Club %s'
+CountryClubLetters = {
+       0: 'A',
+       1: 'B',
+       2: 'C',
+       3: 'D',
+       4: 'E',
+       5: 'F',
+       6: 'G',
+       7: 'H',
+       8: 'I',
+       9: 'J',
+       10: 'K',
+       11: 'M',
+       12: 'N'
+}
 lCancel = 'Cancel'
 lClose = 'Close'
 lOK = 'OK'
@@ -450,6 +466,8 @@ QuestsMinigameNewbieQuestObjective = 'Play %d minigames with new Toons'
 QuestsMinigameNewbieQuestSCString = 'I need to play minigames with new Toons.'
 QuestsMinigameNewbieQuestCaption = 'Help a new Toon %d laff or less'
 QuestsMinigameNewbieQuestAux = 'Play:'
+QuestsSOSReward = 'You have been given %s SOS for %s.'
+QuestsSOSRewardPoster = 'Reward: %s %s SOSes'
 QuestsMaxHpReward = 'Your Laff limit has been increased by %s.'
 QuestsMaxHpRewardPoster = 'Reward: %s point Laff boost'
 QuestsMoneyRewardSingular = 'You get 1 jellybean.'
@@ -2445,12 +2463,12 @@ SuitBackStabberP = 'Back Stabbers'
 SuitSpinDoctorP = 'Spin Doctors'
 SuitLegalEagleP = 'Legal Eagles'
 SuitBigWigP = 'Big Wigs'
-SuitDefendent = 'Defendent'
-SuitDefendentS = 'a Defendent'
-SuitDefendentP = 'Defendents'
-SuitSkinflint = 'Skinflint'
-SuitSkinflintS = 'a Skinflint'
-SuitSkinflintP = 'Skinflints'
+SuitDefendent = 'The Office Clerk'
+SuitDefendentS = 'a Office Clerk'
+SuitDefendentP = 'Office Clerks'
+SuitSkinflint = 'The Mint Auditor'
+SuitSkinflintS = 'a Mint Auditor'
+SuitSkinflintP = 'Mint Auditors'
 SuitTrafficManager = 'The Factory Foreman'
 SuitTrafficManagerS = 'a Factory Foreman'
 SuitTrafficManagerP = 'Factory Foremen'
@@ -2963,6 +2981,15 @@ SuitAttackTaunts = {'AUDIT': ["I believe your books don't balance.",
            "Hey, what's shakin'? You!",
            'Ever been in an earthquake?',
            "You're on shaky ground now!"],
+ 'FLOOD_THE_MARKET': ["This is why you shouldn't make bets.",
+                     "Your worth is dropping, Toon.",
+                     "I hope you know how to swim.",
+                     "You took the gamble, and look where it got you.",
+                     "I don't believe in pseudonyms.",
+                     "Looks like the Jellybean has been devalued.",
+                     "The waters are rising for you, Toon.",
+                     "You should have sold days ago.",
+                     "Looks like you made the wrong investment."],
  'RAZZLE_DAZZLE': ['Read my lips.',
                   'How about these choppers?',
                   "Aren't I charming?",
@@ -5017,6 +5044,16 @@ EmoteSad = 'Sad'
 EmoteAnnoyed = 'Annoyed'
 EmoteSleep = 'Sleepy'
 TIPPageTitle = 'TIP'
+SupervisorDeathPhrases = {
+       'trf': ["We should have neglected safety protocols.",
+               "A minor setback for production."],
+       'ski': ["I did not account for this.",
+               "I'll write this off as a loss."],
+       'def': ["Strike this from the record.",
+               "It appears you've created a legal loophole."],
+       'bgh': ["I should have stayed in my Country Club.",
+               "Your lucky the C.E.O. does not know this."]
+}
 SuitBaseNameWithLevel = '%(name)s\n%(dept)s\nLevel %(level)s'
 SupervisorBaseNameWithLevel = '%(name)s\n%(dept)s\n%(level)s'
 HealthForceAcknowledgeMessage = 'You cannot leave the playground until your Laff meter is smiling!'
@@ -5851,11 +5888,11 @@ ResistanceToonRestockAllInstructions = 'all the Toons near you will restock all 
 ResistanceToonLastPromotion = "\x07Wow, you've reached level %s on your Cog suit!\x07Cogs don't get promoted higher than that.\x07You can't upgrade your Cog suit anymore, but you can certainly keep working for the Resistance!"
 ResistanceToonHPBoost = "\x07You've done a lot of work for the Resistance.\x07The Toon Council has decided to give you another Laff point. Congratulations!"
 ResistanceToonMaxed = '\x07I see that you have a level %s Cog suit. Very impressive!\x07On behalf of the Toon Council, thank you for coming back to rescue more Toons!'
-CashbotBossCogAttack = 'Get them!!!'
+CashbotBossCogAttack = 'GET THEM OR YOUR FIRED!!'
 ResistanceToonWelcome = 'Hey, you made it!  Follow me to the main vault before the C.F.O. finds us!'
 ResistanceToonTooLate = "Blast it!  We're too late!"
-CashbotBossDiscoverToons1 = 'Ah-HAH!'
-CashbotBossDiscoverToons2 = 'I thought I smelled something a little toony in here!  Imposters!'
+CashbotBossDiscoverToons1 = 'What is that smell?'
+CashbotBossDiscoverToons2 = 'THEY LET TOONS INTO MY VAULT!!??'
 ResistanceToonKeepHimBusy = "Keep him busy!  I'm going to set a trap!"
 ResistanceToonWatchThis = 'Watch this!'
 CashbotBossGetAwayFromThat = 'Hey!  Get away from that!'

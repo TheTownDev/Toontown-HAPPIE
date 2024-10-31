@@ -38,4 +38,4 @@ class CogdoMemoGui(DirectFrame):
         self._countLabel['text'] = str(count)
         self._countLabel.setText()
         ToontownIntervals.cleanup('memocount_pulse')
-        ToontownIntervals.start(ToontownIntervals.getPulseLargerIval(self._memoIcon, 'memocount_pulse', scale=MEMOICON_SCALE))
+        ToontownIntervals.start(ToontownIntervals.getPulseLargerIval2(self._memoIcon, 'memocount_pulse', scale=MEMOICON_SCALE))

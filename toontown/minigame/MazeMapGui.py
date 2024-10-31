@@ -179,7 +179,7 @@ class MazeMapGui(DirectFrame):
         hType = toon.style.getType()
         if hType == 'rabbit':
             hType = 'bunny'
-        return self._laffMeterModel.find('**/' + hType + 'head')
+        return self._laffMeterModel.find('**/laffMeter_' + hType)
 
     def addToon(self, toon, tX, tY):
         marker = NodePath('toon_marker-%i' % toon.doId)

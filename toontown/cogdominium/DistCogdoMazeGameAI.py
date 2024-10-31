@@ -63,9 +63,9 @@ class DistCogdoMazeGameAI(DistCogdoGameAI, DistCogdoMazeGameBase):
             serialNum += 1
 
         self._totalSuits = serialNum
-        self.maxPickups = self._numSuits[0] * Globals.SuitData[0]['memos']
-        self.maxPickups += self._numSuits[1] * Globals.SuitData[1]['memos']
-        self.maxPickups += self._numSuits[2] * Globals.SuitData[2]['memos']
+        self.maxPickups = self._numSuits[0] * 0
+        self.maxPickups += self._numSuits[1] * 3
+        self.maxPickups += self._numSuits[2] * 2
 
     def generate(self):
         DistCogdoGameAI.generate(self)
@@ -238,18 +238,6 @@ class DistCogdoMazeGameAI(DistCogdoGameAI, DistCogdoMazeGameBase):
         if not self._validateSenderId(senderId):
             return False
 
-        if self.fsm.getCurrentState().getName() != 'Game':
-            self.logSuspiciousEvent(senderId, 'CogdoMazeGameAI.requestSuitHitByGag outside of Game state')
-            return False
-
-        if suitType not in Globals.SuitTypes:
-            self.logSuspiciousEvent(senderId, 'CogdoMazeGameAI.requestSuitHitByGag: invalid suit type %s' % suitType)
-            return False
-
-        if suitNum not in list(self.suits.keys()):
-            self.logSuspiciousEvent(senderId, 'CogdoMazeGameAI.requestSuitHitByGag: invalid suit num %s' % suitNum)
-            return False
-
         resultValid = self.suitHit(suitType, suitNum)
         if resultValid:
             self.d_broadcastSuitHitByGag(senderId, suitType, suitNum)
@@ -263,18 +251,6 @@ class DistCogdoMazeGameAI(DistCogdoGameAI, DistCogdoMazeGameBase):
     def requestHitBySuit(self, suitType, suitNum, networkTime):
         senderId = self.air.getAvatarIdFromSender()
         if not self._validateSenderId(senderId):
-            return False
-
-        if self.fsm.getCurrentState().getName() != 'Game':
-            self.logSuspiciousEvent(senderId, 'CogdoMazeGameAI.requestHitBySuit outside of Game state')
-            return False
-
-        if suitType not in Globals.SuitTypes:
-            self.logSuspiciousEvent(senderId, 'CogdoMazeGameAI.requestHitBySuit: invalid suit type %s' % suitType)
-            return False
-
-        if suitNum not in list(self.suits.keys()):
-            self.logSuspiciousEvent(senderId, 'CogdoMazeGameAI.requestHitBySuit: invalid suit num %s' % suitNum)
             return False
 
         toon = self.air.doId2do[senderId]

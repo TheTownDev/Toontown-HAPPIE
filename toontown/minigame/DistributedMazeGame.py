@@ -11,12 +11,13 @@ from direct.showbase import RandomNumGen
 from direct.task.Task import Task
 from direct.distributed.ClockDelta import globalClockDelta
 from panda3d.core import Point3, Vec3
-from toontown.toonbase import TTLocalizer
+from toontown.toonbase import TTLocalizer, ToontownGlobals
 from toontown.toonbase import ToontownTimer
 from .DistributedMinigame import DistributedMinigame
 from .MazeSuit import MazeSuit
 from .OrthoWalk import OrthoWalk
 from .OrthoDrive import OrthoDrive
+from toontown.quest import Quests
 from . import MazeGameGlobals
 from . import MazeData
 from . import MazeTreasure
@@ -24,6 +25,17 @@ from . import Trajectory
 from . import Maze
 from . import MinigameAvatarScorePanel
 from . import MinigameGlobals
+import random
+
+cogTierTable = {
+    ToontownGlobals.ToontownCentral: 0,
+    ToontownGlobals.DonaldsDock: 1,
+    ToontownGlobals.DaisyGardens: 2,
+    ToontownGlobals.MinniesMelodyland: 3,
+    ToontownGlobals.TheBrrrgh: 4,
+    ToontownGlobals.DonaldsDreamland: 5,
+    ToontownGlobals.ClearCoasts: 6
+}
 
 class DistributedMazeGame(DistributedMinigame):
     notify = directNotify.newCategory('DistributedMazeGame')
@@ -1010,7 +1022,7 @@ class DistributedMazeGame(DistributedMinigame):
         self.notify.debug('suit periods: ' + repr(suitPeriods))
         self.randomNumGen.shuffle(suitPeriods)
         for i in range(self.numSuits):
-            self.suits.append(MazeSuit(i, self.maze, self.randomNumGen, suitPeriods[i], self.getDifficulty()))
+            self.suits.append(MazeSuit(i, self.maze, self.randomNumGen, suitPeriods[i], self.getDifficulty(), suitDnaName=random.choice(Quests.tierToSuitDNADict[cogTierTable[safeZone]])))
 
     def __unloadSuits(self):
         self.notify.debug('unloadSuits')

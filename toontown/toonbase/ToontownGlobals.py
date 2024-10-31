@@ -111,10 +111,11 @@ CogImmuneColor = Vec4(1, 1, 1, 1)
 CogImmuneGlowColor = CogImmuneColor - Vec4(0, 0, 0, 0.5)
 MaxCogSuitLevel = 50 - 1
 CogSuitHPLevels = (15 - 1,
- 20 - 1,
- 30 - 1,
- 40 - 1,
- 50 - 1)
+ 16 - 1,
+ 17 - 1,
+ 18 - 1,
+ 19 - 1,
+ 20 - 1)
 setInterfaceFont(TTLocalizer.InterfaceFont)
 setSignFont(TTLocalizer.SignFont)
 from toontown.toontowngui import TTDialog

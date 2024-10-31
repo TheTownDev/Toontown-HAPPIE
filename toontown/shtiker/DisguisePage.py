@@ -175,7 +175,7 @@ class DisguisePage(ShtikerPage.ShtikerPage):
         self.bkgd.setColor(DeptColors[index])
         self.deptLabel['text'] = (SuitDNA.suitDeptFullnames[SuitDNA.suitDepts[index]],)
         cogIndex = base.localAvatar.cogTypes[index] + SuitDNA.suitsPerDept * index
-        if cogIndex > SuitDNA.suitsPerDept + 1:
+        if base.localAvatar.cogTypes[index] > 7:
             cog = SuitDNA.dept2SuitSupervisor[SuitDNA.suitDepts[index]]
         else:
             cog = SuitDNA.suitHeadTypes[cogIndex]

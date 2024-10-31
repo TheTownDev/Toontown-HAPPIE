@@ -53,6 +53,7 @@ class BattleCalculatorAI:
         self.__skillCreditMultiplier = 1
         self.tutorialFlag = tutorialFlag
         self.trainTrapTriggered = False
+        self.supervisorCutscenePlayed = False
 
     def setSkillCreditMultiplier(self, mult):
         self.__skillCreditMultiplier = mult
@@ -86,7 +87,7 @@ class BattleCalculatorAI:
         attack = self.battle.toonAttacks[attackIndex]
         atkTrack, atkLevel = self.__getActualTrackLevel(attack)
         if atkTrack in [LURE, HEAL, SQUIRT, SOUND]:
-            return 1, 95
+            return 1, 100
         if atkTrack == NPCSOS:
             return (1, 95)
         if atkTrack == FIRE:
@@ -1484,10 +1485,8 @@ class BattleCalculatorAI:
         
         for suit in self.battle.activeSuits:
             if suit.dna.name == 'trf':
-                randomSuitPool = self.battle.activeSuits[:]
-                randomSuitPool.remove(suit)
-                randomSuit = random.choice(randomSuitPool)
-                self.battle.suitsCheatFirst.append([2, suit.doId, [50,], [randomSuit.doId,], 0])
+                if not self.supervisorCutscenePlayed:
+                    self.battle.cutscenesFirst.append([2, suit.doId, [10], [], 0])
         
         self.__calculateToonAttacks()
         self.__processBonuses(hp=0)

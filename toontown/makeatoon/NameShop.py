@@ -1017,8 +1017,8 @@ class NameShop(StateData.StateData):
         self.notify.debug('skipTutorial')
         if base.config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: SKIPTUTORIAL: Skip Tutorial')
-        self.__handleSkipTutorial()
-        self.promptTutorialDialog.destroy()
+        #self.__handleSkipTutorial()
+        #self.promptTutorialDialog.destroy()
 
     def logAvatarCreation(self):
         dislId = 0

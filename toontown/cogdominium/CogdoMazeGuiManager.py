@@ -76,7 +76,7 @@ class CogdoMazeGuiManager:
         ToontownIntervals.start(ToontownIntervals.getPresentGuiIval(self._memoGui, 'present_memo'))
 
     def startGame(self, firstMessage):
-        self._presentGuiIval = ToontownIntervals.start(Sequence(ToontownIntervals.getPresentGuiIval(self._bossGui, '', startPos=(0, 0, -0.15)), Func(self.mazeMapGui.show), ToontownIntervals.getPulseLargerIval(self.mazeMapGui, '', scale=self.mazeMapGui.getScale()), Func(self.setMessage, firstMessage), name='present_gui'))
+        self._presentGuiIval = ToontownIntervals.start(Sequence(ToontownIntervals.getPresentGuiIval(self._bossGui, '', startPos=(0, 0, -0.15)), Func(self.mazeMapGui.show), ToontownIntervals.getPulseLargerIval2(self.mazeMapGui, '', scale=self.mazeMapGui.getScale()), Func(self.setMessage, firstMessage), name='present_gui'))
 
     def hideMazeMap(self):
         self.mazeMapGui.hide()

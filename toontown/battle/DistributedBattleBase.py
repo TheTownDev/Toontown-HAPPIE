@@ -398,7 +398,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             if s in self.cr.doId2do:
                 suit = self.cr.doId2do[s]
                 suit.setState('Battle')
-                self.suits.append(suit)
+                if suit not in self.suits:
+                    self.suits.append(suit)
                 suit.interactivePropTrackBonus = self.interactivePropTrackBonus
                 try:
                     suit.battleTrap
@@ -438,7 +439,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         activeSuits = []
         for s in suitsActive:
             suit = self.suits[int(s)]
-            if suit != None and self.activeSuits.count(suit) == 0:
+            if suit != None and suit not in activeSuits:
                 activeSuits.append(suit)
 
         oldLuredSuits = self.luredSuits
@@ -953,7 +954,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             if self.pendingSuits.count(s):
                 self.pendingSuits.remove(s)
             self.notify.debug('__makeAvsActive() - suit: %d' % s.doId)
-            self.activeSuits.append(s)
+            if s not in self.activeSuits:
+                self.activeSuits.append(s)
 
         if len(self.activeSuits) >= 1:
             for suit in self.activeSuits:
