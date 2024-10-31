@@ -393,7 +393,7 @@ class LocationBasedQuest(Quest):
     def getLocationName(self):
         loc = self.getLocation()
         if loc == Anywhere:
-            locName = ''
+            locName = 'Anywhere'
         elif loc in ToontownGlobals.hoodNameMap:
             locName = TTLocalizer.QuestInLocationString % {'inPhrase': ToontownGlobals.hoodNameMap[loc][1],
              'location': ToontownGlobals.hoodNameMap[loc][-1] + TTLocalizer.QuestsLocationArticle}
@@ -1228,6 +1228,102 @@ class BuildingQuest(CogQuest):
     def doesBuildingCount(self, avId, avList):
         return 1
 
+class BuildingFloorsQuest(CogQuest):
+    trackCodes = ['c',
+     'l',
+     'm',
+     's']
+    trackNames = [TTLocalizer.Bossbot,
+     TTLocalizer.Lawbot,
+     TTLocalizer.Cashbot,
+     TTLocalizer.Sellbot]
+
+    def __init__(self, id, quest):
+        CogQuest.__init__(self, id, quest)
+        self.checkBuildingFloors(self.quest[1])
+        self.checkBuildingTrack(self.quest[2])
+    
+    def getLocationName(self):
+        loc = self.getLocation()
+        if loc == Anywhere:
+            locName = 'Any'
+        elif loc in ToontownGlobals.hoodNameMap:
+            locName = TTLocalizer.QuestInLocationString % {'inPhrase': ToontownGlobals.hoodNameMap[loc][1],
+             'location': ToontownGlobals.hoodNameMap[loc][-1] + TTLocalizer.QuestsLocationArticle}
+        elif loc in ToontownGlobals.StreetBranchZones:
+            locName = TTLocalizer.QuestInLocationString % {'inPhrase': ToontownGlobals.StreetNames[loc][1],
+             'location': ToontownGlobals.StreetNames[loc][-1] + TTLocalizer.QuestsLocationArticle}
+        else:
+            locName = f"Unknown Location: {loc}"
+        buildingTrack = self.getBuildingTrack()
+        if buildingTrack == Any:
+            type = TTLocalizer.Cog
+        else:
+            type = self.trackNames[self.trackCodes.index(buildingTrack)]
+        extra_name = ' ' + type + ' Buildings'
+        return locName + extra_name
+
+    def getNumFloors(self):
+        return self.quest[1]
+
+    def getBuildingTrack(self):
+        return self.quest[2]
+
+    def getNumQuestItems(self):
+        return self.getNumFloors()
+
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= self.getNumFloors()
+        return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
+
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        else:
+            return TTLocalizer.QuestsBuildingQuestProgressString % {'progress': questDesc[4],
+             'num': self.getNumFloors()}
+
+    def getObjectiveStrings(self):
+        count = self.getNumFloors()
+        floors = self.getNumFloors()
+        buildingTrack = self.getBuildingTrack()
+        if buildingTrack == Any:
+            type = TTLocalizer.Cog
+        else:
+            type = self.trackNames[self.trackCodes.index(buildingTrack)]
+        
+        text = TTLocalizer.QuestsBuildingFloorsQuestString
+        return (text % {
+          'floors': floors,
+          'objective': type},)
+
+    def getString(self):
+        return TTLocalizer.QuestsBuildingQuestString % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumFloors():
+            return getFinishToonTaskSCStrings(toNpcId)
+        count = self.getNumFloors()
+        floors = TTLocalizer.QuestsBuildingQuestFloorNumbers[self.getNumFloors() - 1]
+        buildingTrack = self.getBuildingTrack()
+        if buildingTrack == Any:
+            type = TTLocalizer.Cog
+        else:
+            type = self.trackNames[self.trackCodes.index(buildingTrack)]
+        location = self.getLocationName()
+        return TTLocalizer.QuestsBuildingFloorsQuestSCString % {'objective': type,
+         'floors': floors}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsBuildingQuestHeadline
+
+    def doesCogCount(self, avId, cogDict, zoneId, avList):
+        return 0
+
+    def doesBuildingCount(self, avId, avList):
+        return 1
+
 
 class BuildingNewbieQuest(BuildingQuest, NewbieQuest):
     def __init__(self, id, quest):
@@ -1257,6 +1353,22 @@ class FactoryQuest(LocationBasedQuest):
         LocationBasedQuest.__init__(self, id, quest)
         self.checkNumFactories(self.quest[1])
 
+    def getLocationName(self):
+        loc = self.getLocation()
+        if loc == Anywhere:
+            locName = 'Any Sellbot Factory'
+        elif loc == ToontownGlobals.SellbotHQ:
+            locName = 'Any Sellbot Factory'
+        elif loc in ToontownGlobals.hoodNameMap:
+            locName = TTLocalizer.QuestInLocationString % {'inPhrase': ToontownGlobals.hoodNameMap[loc][1],
+             'location': ToontownGlobals.hoodNameMap[loc][-1] + TTLocalizer.QuestsLocationArticle}
+        elif loc in ToontownGlobals.StreetBranchZones:
+            locName = TTLocalizer.QuestInLocationString % {'inPhrase': ToontownGlobals.StreetNames[loc][1],
+             'location': ToontownGlobals.StreetNames[loc][-1] + TTLocalizer.QuestsLocationArticle}
+        else:
+            locName = f"Unknown Location: {loc}"
+        return locName
+    
     def getNumQuestItems(self):
         return self.getNumFactories()
 
@@ -1330,6 +1442,22 @@ class FactoryNewbieQuest(FactoryQuest, NewbieQuest):
     def __init__(self, id, quest):
         FactoryQuest.__init__(self, id, quest)
         self.checkNewbieLevel(self.quest[2])
+    
+    def getLocationName(self):
+        loc = self.getLocation()
+        if loc == Anywhere:
+            locName = 'Any Sellbot Factory'
+        elif loc == ToontownGlobals.SellbotHQ:
+            locName = 'Any Sellbot Factory'
+        elif loc in ToontownGlobals.hoodNameMap:
+            locName = TTLocalizer.QuestInLocationString % {'inPhrase': ToontownGlobals.hoodNameMap[loc][1],
+             'location': ToontownGlobals.hoodNameMap[loc][-1] + TTLocalizer.QuestsLocationArticle}
+        elif loc in ToontownGlobals.StreetBranchZones:
+            locName = TTLocalizer.QuestInLocationString % {'inPhrase': ToontownGlobals.StreetNames[loc][1],
+             'location': ToontownGlobals.StreetNames[loc][-1] + TTLocalizer.QuestsLocationArticle}
+        else:
+            locName = f"Unknown Location: {loc}"
+        return locName
 
     def getNewbieLevel(self):
         return self.quest[2]
@@ -4007,6 +4135,11 @@ RequiredRewardTrackDict = {TT_TIER: (100,),
  BOSSBOT_HQ_TIER + 15: (4215,),
  BOSSBOT_HQ_TIER + 16: (4216,),
  TEST_TIER: (1400,
+             100,
+             100,
+             100,
+             100,
+             100,
              100,
              100,
              100,

@@ -74,6 +74,11 @@ class QuestManagerAI:
                         if floors >= quest.getNumFloors():
                             for _ in range(quest.doesBuildingCount(toon.getDoId(), activeToons)):
                                 self.__incrementQuestProgress(toon.quests[index])
+            elif isinstance(quest, Quests.BuildingFloorsQuest):
+                if quest.isLocationMatch(zoneId):
+                    if quest.getBuildingTrack() == Quests.Any or quest.getBuildingTrack() == track:        
+                        for _ in range(quest.doesBuildingCount(toon.getDoId(), activeToons)):
+                            self.__incrementQuestProgress(toon.quests[index], amt=floors)
 
         if toon.quests:
             toon.d_setQuests(toon.getQuests())
@@ -215,8 +220,8 @@ class QuestManagerAI:
         av.addQuest((questId, npc.getDoId(), toNpcId, rewardId, progress), finalReward)
         npc.assignQuest(av.getDoId(), questId, rewardId, toNpcId)
 
-    def __incrementQuestProgress(self, quest):
-        quest[4] += 1
+    def __incrementQuestProgress(self, quest, amt=1):
+        quest[4] += amt
     
     def isLocationMatch(self, zoneId):
         loc = zoneId

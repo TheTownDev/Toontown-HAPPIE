@@ -206,6 +206,21 @@ class QuestPoster(DirectFrame):
         elevatorNodePath.reparentTo(suitDoorOrigin)
         elevatorNodePath.setPosHpr(0, 0, 0, 0, 0, 0)
         return
+    
+    def loadElevatorNonLights(self, building, numFloors):
+        elevatorNodePath = hidden.attachNewNode('elevatorNodePath')
+        elevatorModel = loader.loadModel('phase_4/models/modules/elevator')
+        floorIndicator = [None,
+         None,
+         None,
+         None,
+         None]
+
+        elevatorModel.reparentTo(elevatorNodePath)
+        suitDoorOrigin = building.find('**/*_door_origin')
+        elevatorNodePath.reparentTo(suitDoorOrigin)
+        elevatorNodePath.setPosHpr(0, 0, 0, 0, 0, 0)
+        return
 
     def fitGeometry(self, geom, fFlip = 0, dimension = 0.8):
         p1 = Point3()
@@ -456,6 +471,33 @@ class QuestPoster(DirectFrame):
                 bookModel.removeNode()
             if lIconGeom and track != Quests.Any:
                 self.loadElevator(lIconGeom, numFloors)
+                lIconGeom.setH(180)
+                self.fitGeometry(lIconGeom, fFlip=0)
+                lIconGeomScale = IMAGE_SCALE_SMALL
+            else:
+                lIconGeomScale = 0.13
+            if not fComplete:
+                infoText = quest.getLocationName()
+                if infoText == '':
+                    infoText = TTLocalizer.QuestPosterAnywhere
+        elif quest.getType() == Quests.BuildingFloorsQuest:
+            frameBgColor = 'blue'
+            track = quest.getBuildingTrack()
+            numFloors = quest.getNumFloors()
+            if track == 'c':
+                lIconGeom = loader.loadModel('phase_4/models/modules/suit_landmark_corp')
+            elif track == 'l':
+                lIconGeom = loader.loadModel('phase_4/models/modules/suit_landmark_legal')
+            elif track == 'm':
+                lIconGeom = loader.loadModel('phase_4/models/modules/suit_landmark_money')
+            elif track == 's':
+                lIconGeom = loader.loadModel('phase_4/models/modules/suit_landmark_sales')
+            else:
+                bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+                lIconGeom = bookModel.find('**/COG_building')
+                bookModel.removeNode()
+            if lIconGeom and track != Quests.Any:
+                self.loadElevatorNonLights(lIconGeom, numFloors)
                 lIconGeom.setH(180)
                 self.fitGeometry(lIconGeom, fFlip=0)
                 lIconGeomScale = IMAGE_SCALE_SMALL

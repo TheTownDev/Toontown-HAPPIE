@@ -52,4 +52,6 @@ class DistributedSZTreasureAI(DistributedTreasureAI.DistributedTreasureAI):
             for index, quest in enumerate(self.air.questManager.toonQuestsList2Quests(av.quests)):
                 if isinstance(quest, Quests.TreasureQuest):
                     if quest.getCompletionStatus(av, av.quests[index]) != Quests.COMPLETE:
-                        self.air.questManager.incrementQuestProgressCustom(av.quests[index], av, self.zoneId)
+                        if quest.isLocationMatch(self.zoneId):
+                            if not quest.getPackageId():
+                                self.air.questManager.incrementQuestProgressCustom(av.quests[index], av, self.zoneId)
