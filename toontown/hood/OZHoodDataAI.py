@@ -10,6 +10,7 @@ from toontown.safezone import DistributedPicnicBasketAI
 from toontown.distributed import DistributedTimerAI
 import string
 from toontown.safezone import DistributedPicnicTableAI
+from toontown.safezone import DistributedBenchAI
 from toontown.safezone import DistributedChineseCheckersAI
 from toontown.safezone import DistributedCheckersAI
 from toontown.safezone import ArchipelagoTreasurePlannerAI
@@ -37,6 +38,7 @@ class OZHoodDataAI(HoodDataAI.HoodDataAI):
         self.timer = DistributedTimerAI.DistributedTimerAI(self.air)
         self.timer.generateWithRequired(self.zoneId)
         self.createPicnicTables()
+        self.createBenches()
         if simbase.config.GetBool('want-game-tables', 0):
             self.createGameTables()
 
@@ -175,6 +177,28 @@ class OZHoodDataAI(HoodDataAI.HoodDataAI):
                 picnicTables += childPicnicTables
 
         return picnicTables
+    
+    def findAndCreateBenches(self, dnaGroup, zoneId, area, overrideDNAZone = 0, type = 'bench'):
+        picnicTables = []
+        picnicTableGroups = []
+        # if isinstance(dnaGroup, DNAGroup) and string.find(dnaGroup.getName(), type) >= 0:
+        
+        if isinstance(dnaGroup, DNAGroup) and dnaGroup.getName().find(type) >= 0:
+            if type == 'bench':   
+                pos = Point3(-87.0614, -136.779, 0.45)
+                hpr = Vec3(0, 0, 0)
+                        
+                picnicTable = DistributedBenchAI.DistributedBenchAI(self.air, 1, pos[0], pos[1], pos[2], hpr[0], hpr[1], hpr[2])
+                picnicTable.generateWithRequired(zoneId)
+                picnicTables.append(picnicTable)
+        else:
+            if isinstance(dnaGroup, DNAVisGroup) and not overrideDNAZone:
+                zoneId = ZoneUtil.getTrueZoneId(int(dnaGroup.getName().split(':')[0]), zoneId)
+            for i in range(dnaGroup.getNumChildren()):
+                childPicnicTables = self.findAndCreateBenches(dnaGroup.at(i), zoneId, area, overrideDNAZone, type)
+                picnicTables += childPicnicTables
+
+        return picnicTables
 
     def createGameTables(self):
         self.gameTables = []
@@ -204,6 +228,22 @@ class OZHoodDataAI(HoodDataAI.HoodDataAI):
         for picnicTable in self.picnicTables:
             picnicTable.start()
             self.addDistObj(picnicTable)
+
+        return
+
+    def createBenches(self):
+        self.benches = []
+        for zone in self.air.zoneTable[self.canonicalHoodId]:
+            zoneId = ZoneUtil.getTrueZoneId(zone[0], self.zoneId)
+            dnaData = self.air.dnaDataMap.get(zone[0], None)
+            if isinstance(dnaData, DNAData):
+                area = ZoneUtil.getCanonicalZoneId(zoneId)
+                foundTables = self.findAndCreateBenches(dnaData, zoneId, area, overrideDNAZone=True)
+                self.benches += foundTables
+
+        for bench in self.benches:
+            bench.start()
+            self.addDistObj(bench)
 
         return
 

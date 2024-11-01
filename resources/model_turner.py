@@ -6,10 +6,10 @@ class MyApp(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
         
-        self.room = loader.loadModel('phase_4/models/props/ttr_m_ara_ext_bench.bam')
+        self.room = loader.loadModel('golf_outdoor_zone.bam')
         self.room.reparentTo(render)
         
-        self.room.place()
+        self.camera.place()
         
         camera.reparentTo(self.room)
         

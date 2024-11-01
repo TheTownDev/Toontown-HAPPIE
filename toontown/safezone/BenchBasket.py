@@ -16,7 +16,6 @@ class PicnicBasket(StateData.StateData):
         StateData.StateData.__init__(self, doneEvent)
         self.tableNumber = tableNumber
         self.seatNumber = seatNumber
-        self.safeZone = safeZone
         self.fsm = ClassicFSM.ClassicFSM('PicnicBasket', [
             State.State('start',
                         self.enterStart,
@@ -147,20 +146,12 @@ class PicnicBasket(StateData.StateData):
     def exitRequestBoard(self):
         return None
 
-    def enterBoarding(self, nodePath, side):
+    def enterBoarding(self, nodePath, side):    
+        nodePath = render.find('**/*bench_3')
+        camera.wrtReparentTo(nodePath)
         heading = PythonUtil.fitDestAngle2Src(camera.getH(nodePath), 90 * side)
-        if self.safeZone.loader.hood.id == ToontownGlobals.OutdoorZone:
-            camera.wrtReparentTo(nodePath)
-            cameraBoardTrackQuat = LerpQuatInterval(camera, 1.0, Point3(180, 0, 0))
-            cameraBoardTrack = LerpPosInterval(camera, 1.0, Point3(-87.0614, -116.779, 3.80))
-            self.cameraBoardTrackFull = Parallel(cameraBoardTrackQuat, cameraBoardTrack)
-            self.cameraBoardTrackFull.start()
-        elif self.safeZone.loader.hood.id == ToontownGlobals.ToontownCentral:
-            camera.wrtReparentTo(nodePath)
-            cameraBoardTrackQuat = LerpQuatInterval(camera, 1.0, Point3(180, 0, 0))
-            cameraBoardTrack = LerpPosInterval(camera, 1.0, Point3(-45, -70, 3.80))
-            self.cameraBoardTrackFull = Parallel(cameraBoardTrackQuat, cameraBoardTrack)
-            self.cameraBoardTrackFull.start()
+        self.cameraBoardTrack = LerpPosHprInterval(camera, 1.0, Point3(-87.0614 -116.779, 4.80), Point3(180, 0, 0))
+        self.cameraBoardTrack.start()
         return None
 
     def exitBoarding(self):
@@ -172,7 +163,7 @@ class PicnicBasket(StateData.StateData):
         return None
 
     def exitBoarded(self):
-        self.cameraBoardTrackFull.finish()
+        self.cameraBoardTrack.finish()
         self.disableExitButton()
         return None
 

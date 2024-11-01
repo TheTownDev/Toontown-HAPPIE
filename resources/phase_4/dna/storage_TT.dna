@@ -19,6 +19,10 @@ hood_model "phase_3.5/models/props/HQ_telescope-mod" [
 //	store_node [ "prop" "animated_prop_FishAnimatedProp" "fish" ]
 //	]
 
+place_model "phase_4/models/props/ttr_m_ara_ext_bench" [
+	store_node [ "prop" "prop_bench" "" ]
+	]
+
 hood_model "phase_3.5/models/props/trees" [
 	store_node [ "holiday_prop" "prop_tree_large_brickbox_ur" ]
 	store_node [ "holiday_prop" "prop_tree_large_brickbox_ul" ]

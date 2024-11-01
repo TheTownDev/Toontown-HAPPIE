@@ -20,10 +20,6 @@ class OZPlayground(Playground.Playground):
         self.picnicBasketBlockDoneEvent = 'picnicBasketBlockDone'
         self.cameraSubmerged = -1
         self.toonSubmerged = -1
-        self.fsm.addState(State.State('picnicBasketBlock', self.enterPicnicBasketBlock, self.exitPicnicBasketBlock, ['walk']))
-        state = self.fsm.getStateNamed('walk')
-        state.addTransition('picnicBasketBlock')
-        self.picnicBasketDoneEvent = 'picnicBasketDone'
 
     def load(self):
         Playground.Playground.load(self)

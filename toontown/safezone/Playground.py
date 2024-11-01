@@ -18,6 +18,7 @@ from toontown.trolley import Trolley
 from toontown.toontowngui import TTDialog
 from toontown.toonbase import ToontownGlobals
 from toontown.toon.Toon import teleportDebug
+from toontown.safezone import PicnicBasket
 from toontown.toonbase import TTLocalizer
 from direct.gui import DirectLabel
 from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
@@ -193,6 +194,10 @@ class Playground(BattlePlace):
                         self.exitFinal, [
                             'start'])],
             'start', 'final')
+        self.fsm.addState(State.State('picnicBasketBlock', self.enterPicnicBasketBlock, self.exitPicnicBasketBlock, ['walk']))
+        state = self.fsm.getStateNamed('walk')
+        state.addTransition('picnicBasketBlock')
+        self.picnicBasketDoneEvent = 'picnicBasketDone'
         self.parentFSM = parentFSM
         self.tunnelOriginList = []
         self.trolleyDoneEvent = 'trolleyDone'
@@ -483,6 +488,49 @@ class Playground(BattlePlace):
         base.localAvatar.setPosHpr(render, x, y, z, h, p, r)
         Place.Place.enterTeleportIn(self, requestStatus)
         return
+    
+    def enterPicnicBasketBlock(self, picnicBasket):
+        base.localAvatar.laffMeter.start()
+        base.localAvatar.b_setAnimState('off', 1)
+        base.localAvatar.cantLeaveGame = 1
+        self.accept(self.picnicBasketDoneEvent, self.handlePicnicBasketDone)
+        self.trolley = PicnicBasket.PicnicBasket(self, self.fsm, self.picnicBasketDoneEvent, picnicBasket.getDoId(), picnicBasket.seatNumber)
+        self.trolley.load()
+        self.trolley.enter()
+
+    def exitPicnicBasketBlock(self):
+        base.localAvatar.laffMeter.stop()
+        base.localAvatar.cantLeaveGame = 0
+        self.ignore(self.trolleyDoneEvent)
+        self.trolley.unload()
+        self.trolley.exit()
+        del self.trolley
+
+    def detectedPicnicTableSphereCollision(self, picnicBasket):
+        self.fsm.request('picnicBasketBlock', [picnicBasket])
+
+    def handleStartingBlockDone(self, doneStatus):
+        self.notify.debug('handling StartingBlock done event')
+        where = doneStatus['where']
+        if where == 'reject':
+            self.fsm.request('walk')
+        elif where == 'exit':
+            self.fsm.request('walk')
+        elif where == 'racetrack':
+            self.doneStatus = doneStatus
+            messenger.send(self.doneEvent)
+        else:
+            self.notify.error('Unknown mode: ' + where + ' in handleStartingBlockDone')
+
+    def handlePicnicBasketDone(self, doneStatus):
+        self.notify.debug('handling picnic basket done event')
+        mode = doneStatus['mode']
+        if mode == 'reject':
+            self.fsm.request('walk')
+        elif mode == 'exit':
+            self.fsm.request('walk')
+        else:
+            self.notify.error('Unknown mode: ' + mode + ' in handlePicnicBasketDone')
 
     def __cleanupDialog(self, value):
         if self.dialog:

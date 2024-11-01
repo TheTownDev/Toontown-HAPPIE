@@ -25,6 +25,10 @@ place_model "phase_6/models/golf/picnic_table" [
 	store_node [ "prop" "prop_picnic_table" "" ]
 	]
 
+place_model "phase_4/models/props/ttr_m_ara_ext_bench" [
+	store_node [ "prop" "prop_bench" "" ]
+	]
+
 place_model "phase_6/models/golf/golf_bridge" [
 	store_node [ "prop" "prop_golf_bridge" "" ]
 	]

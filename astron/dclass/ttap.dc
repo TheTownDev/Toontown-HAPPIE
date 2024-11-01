@@ -276,6 +276,7 @@ from toontown.friends import OnlinePlayerManager/UD
 from toontown.uberdog import TTSpeedchatRelay/UD
 from toontown.safezone import DistributedGolfKart/AI
 from toontown.safezone import DistributedPicnicBasket/AI
+from toontown.safezone import DistributedBench/AI
 from toontown.distributed import DistributedTimer/AI
 from toontown.suit import DistributedBossbotBoss/AI
 from toontown.coghq import DistributedCogKart/AI
@@ -3617,6 +3618,26 @@ dclass DistributedTimer : DistributedObject {
 };
 
 dclass DistributedPicnicBasket : DistributedObject {
+  setState(string, uint16, int16) broadcast ram;
+  fillSlot0(uint32) broadcast ram;
+  fillSlot1(uint32) broadcast ram;
+  fillSlot2(uint32) broadcast ram;
+  fillSlot3(uint32) broadcast ram;
+  emptySlot0(uint32, int16) broadcast ram;
+  emptySlot1(uint32, int16) broadcast ram;
+  emptySlot2(uint32, int16) broadcast ram;
+  emptySlot3(uint32, int16) broadcast ram;
+  requestBoard(int16) airecv clsend;
+  rejectBoard(uint32);
+  requestExit() airecv clsend;
+  doneExit() airecv clsend;
+  setMinigameZone(uint32, uint16);
+  setPicnicDone();
+  setPosHpr(int16/10, int16/10, int16/10, int16/10, int16/10, int16/10) required broadcast ram;
+  setTableNumber(int16) required broadcast ram;
+};
+
+dclass DistributedBench : DistributedObject {
   setState(string, uint16, int16) broadcast ram;
   fillSlot0(uint32) broadcast ram;
   fillSlot1(uint32) broadcast ram;

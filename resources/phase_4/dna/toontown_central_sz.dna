@@ -149,6 +149,13 @@ group "toontownCentral" [
      ]
     ]
    ]
+   node "bench_3" [
+    prop "prop_bench_DNARoot" [
+     code [ "prop_bench" ]
+     pos [ -45 -85 0.53 ]
+     nhpr [ 8.75 0 0 ]
+    ]
+   ]
    prop "linktunnel_tt_2132_DNARoot" [
     code [ "prop_safe_zone_tunnel" ]
     pos [ -68.38 -202.64 -3.58 ]
