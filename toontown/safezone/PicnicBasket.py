@@ -161,6 +161,12 @@ class PicnicBasket(StateData.StateData):
             cameraBoardTrack = LerpPosInterval(camera, 1.0, Point3(-45, -70, 3.80))
             self.cameraBoardTrackFull = Parallel(cameraBoardTrackQuat, cameraBoardTrack)
             self.cameraBoardTrackFull.start()
+        elif self.safeZone.loader.hood.id == ToontownGlobals.TheBrrrgh:
+            camera.wrtReparentTo(nodePath)
+            cameraBoardTrackQuat = LerpQuatInterval(camera, 1.0, Point3(180, 0, 0))
+            cameraBoardTrack = LerpPosInterval(camera, 1.0, Point3(-35, -128, 10.17))
+            self.cameraBoardTrackFull = Parallel(cameraBoardTrackQuat, cameraBoardTrack)
+            self.cameraBoardTrackFull.start()
         return None
 
     def exitBoarding(self):

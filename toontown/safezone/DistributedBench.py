@@ -62,6 +62,14 @@ class DistributedBench(DistributedObject.DistributedObject):
             self.picnicTable.find('**/geo_bench_rightLeg').flattenLight()
             self.picnicTable.find('**/geo_bench_seat').setTexture(benchTex, 1)
             self.picnicTable.find('**/geo_bench_seat').flattenLight()
+        elif self.loader.hood.id == ToontownGlobals.TheBrrrgh:
+            benchTex = loader.loadTexture('phase_4/maps/ttr_t_ara_ext_bench_tbr.jpg')
+            self.picnicTable.find('**/geo_bench_leftLeg').setTexture(benchTex, 1)
+            self.picnicTable.find('**/geo_bench_leftLeg').flattenLight()
+            self.picnicTable.find('**/geo_bench_rightLeg').setTexture(benchTex, 1)
+            self.picnicTable.find('**/geo_bench_rightLeg').flattenLight()
+            self.picnicTable.find('**/geo_bench_seat').setTexture(benchTex, 1)
+            self.picnicTable.find('**/geo_bench_seat').flattenLight()
         
         self.picnicTableSphereNodes = []
         self.numSeats = 2

@@ -56,7 +56,9 @@ hood_model "phase_8/models/modules/BR_windows" [
 	store_node [ "window" "window_BR_sm_round_ul" "window_sm_round_ul" ]
 	]
 
-
+place_model "phase_4/models/props/ttr_m_ara_ext_bench" [
+	store_node [ "prop" "prop_bench" "" ]
+	]
 
 store_texture [ "texture" "street_street_BR_tex"
 		"phase_3.5/maps/cobblestone_blue.jpg"	]

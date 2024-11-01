@@ -1143,6 +1143,13 @@ group "theBurrrgh" [
     pos [ -50 -20 0 ]
     nhpr [ 90 0 -0 ]
    ]
+   node "bench_3" [
+    prop "prop_bench_DNARoot" [
+     code [ "prop_bench" ]
+     pos [ -35 -148 6.17 ]
+     nhpr [ 7.50 0 0 ]
+    ]
+   ]
    prop "prop_post_three_light_DNARoot" [
     code [ "prop_post_three_light" ]
     pos [ -13.55 79.14 6 ]

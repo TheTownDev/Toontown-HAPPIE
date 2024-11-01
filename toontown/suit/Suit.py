@@ -369,6 +369,8 @@ class Suit(Avatar.Avatar):
         self.rightHand = self.find('**/jnt_R_attachProp_01')
         self.shadowJoint = self.find('**/jnt_M_shadow_01')
         self.nametagJoint = self.find('**/jnt_M_nameTag_01')
+        self.nametag3d.wrtReparentTo(self.nametagJoint)
+        self.nametag3d.setEffect(CompassEffect.make(render, CompassEffect.PScale))
 
     def makeWaiter(self, modelRoot = None):
         if not modelRoot:
