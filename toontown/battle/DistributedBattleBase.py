@@ -594,7 +594,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             return
 
         movieHasBeenMade, activeToons, activeSuits, toonAttacks, suitAttacks, suitsCheatFirst, suitsCheatSecond, dots, cutscenesFirst, cutscenesSecond = battleMovie
-
+        
         if movieHasBeenMade:
             self.movie.genAttackDicts(activeToons, activeSuits, toonAttacks, suitAttacks, suitsCheatFirst, suitsCheatSecond, dots, cutscenesFirst, cutscenesSecond)
 

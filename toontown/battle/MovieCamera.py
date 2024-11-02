@@ -638,6 +638,9 @@ def allGroupLowDiagonalShot(avatar, duration):
     return heldShot(7, 5, 6, 119, -30, 0, duration, 'allGroupLowShot')
 
 
+def allGroupHighShot(avatar, duration):
+    return heldShot(0, -10, 10, 0, -25, 0, duration, 'allGroupHighShot')
+
 def toonGroupShot(avatar, duration):
     return heldShot(10, 0, 10, 115, -30, 0, duration, 'toonGroupShot')
 

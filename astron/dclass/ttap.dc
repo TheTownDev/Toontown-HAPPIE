@@ -1530,7 +1530,7 @@ struct DOTs {
   uint64 target;
   int64[] hp;
   uint64[] otherTargets;
-  int64 isToon;
+  int64 died;
 };
 
 struct CutscenesFirst {

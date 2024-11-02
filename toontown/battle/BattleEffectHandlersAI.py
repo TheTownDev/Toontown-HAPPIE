@@ -86,3 +86,24 @@ class BattleEffectLureKnockbackAI(BattleCalculationObjectAI):
         if self.children['timer'] <= 0:
             if self.children['timer'] != -1:
                 self.handler.removeChild(self.children['name'])
+
+class BattleEffectDOTDamageAI(BattleCalculationObjectAI):
+    notify = DirectNotifyGlobal.directNotify.newCategory('BattleEffectDOTDamageAI')
+
+    def __init__(self, battle, av, handler):
+        BattleCalculationObjectAI.__init__(self, battle)
+        self.av = av
+        self.handler = handler
+        self.addChild('timer', -1)
+        self.addChild('name', 'damageDOT')
+        self.addChild('value', 30)
+        self.addChild('timing', 0)
+
+    def startEffect(self):
+        pass
+
+    def tick(self):
+        if self.children['timer'] != -1:
+            self.children['timer'] -= 1
+            if self.children['timer'] <= 0:    
+                self.handler.removeChild(self.children['name'])

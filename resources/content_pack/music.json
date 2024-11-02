@@ -13,6 +13,11 @@
       "boss-none-epilogue": "phase_9/audio/bgm/encntr_head_suit_theme.ogg",
       "boss-none-sting": "phase_9/audio/bgm/encntr_head_suit_theme.ogg",
       "boss-none-jury": "phase_9/audio/bgm/encntr_head_suit_theme.ogg",
+
+      "10000_battle": "phase_12/audio/bgm/ttr_s_ara_bhq_facilityBattle.ogg",
+      "11000_battle": "phase_12/audio/bgm/ttr_s_ara_bhq_facilityBattle.ogg",
+      "12000_battle": "phase_12/audio/bgm/ttr_s_ara_bhq_facilityBattle.ogg",
+      "13000_battle": "phase_12/audio/bgm/ttr_s_ara_bhq_facilityBattle.ogg",
       
       "11500_battle": "phase_9/audio/bgm/ttr_s_ara_shq_facilityBattle.ogg",
 

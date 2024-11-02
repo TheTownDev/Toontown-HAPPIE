@@ -68,39 +68,68 @@ def printNumBattles():
 
     iterateBossbotCountryClubs(func)
 
+"""
+BossbotCountryClubSpecModules = {
+    0: BossbotCountryClubEntrance_Action00,
+    2: BossbotCountryClubTeeOffRoom_Action00,
+    4: BossbotCountryClubFairwayRoom_Battle00,
+    5: BossbotCountryClubMazeRoom_Battle00,
+    6: BossbotCountryClubMazeRoom_Battle01,
+    7: BossbotCountryClubMazeRoom_Battle02,
+    9: BossbotCountryClubGreenRoom_Action00,
+    17: BossbotCountryClubKartRoom_Battle00,
+    18: BossbotCountryClubPresidentRoom_Battle00,
+    22: BossbotCountryClubTeeOffRoom_Action01,
+    32: BossbotCountryClubTeeOffRoom_Action02,
+    29: BossbotCountryClubGreenRoom_Action01,
+    39: BossbotCountryClubGreenRoom_Action02,
+    40: BossbotCountryClubCornerRoom_Battle00,
+    41: BossbotCountryClubCornerGreenRoom_Action00,
+    42: BossbotCountryClubFountainRoom_Battle00,
+    43: BossbotCountryClubOilRoom_Action00,
+    44: BossbotCountryClubCornerRoomInverse_Battle00
+}
+"""
+
 
 ClubLayout3_0 = [
     # (0, 2, 5, 9, 17),
     # (0, 2, 4, 9, 17),
-    (0, 43, 41, 2, 44, 9, 18)
+    (0, 41, 5, 43, 2, 22, 17,),
+    (0, 41, 2, 44, 6, 42, 18)
 ]
 ClubLayout3_1 = [
     # (0, 2, 5, 9, 17),
     # (0, 2, 4, 9, 17),
-    (0, 42, 41, 2, 44, 18)
+    (0, 41, 5, 43, 2, 22, 17,),
+    (0, 41, 2, 44, 6, 42, 18)
 ]
 
 ClubLayout3_2 = [
     # (0, 2, 4, 9, 17),
     # (0, 2, 4, 9, 17),
-    (0, 43, 44, 42, 4, 9, 18)
+    (0, 41, 5, 43, 2, 22, 17,),
+    (0, 41, 2, 44, 6, 42, 18)
 ]
 
 ClubLayout3_3 = [
     # (0, 2, 5, 9, 17),
     # (0, 2, 4, 9, 17),
-    (0, 43, 44, 41, 2, 9, 18)
+    (0, 41, 5, 43, 2, 22, 17,),
+    (0, 41, 2, 44, 6, 42, 18)
 ]
 ClubLayout3_4 = [
     # (0, 2, 5, 9, 17),
     # (0, 2, 4, 9, 17),
-    (0, 42, 41, 43, 44, 18)
+    (0, 41, 5, 43, 2, 22, 17,),
+    (0, 41, 2, 44, 6, 42, 18)
 ]
 
 ClubLayout3_5 = [
     # (0, 2, 4, 9, 17),
     # (0, 2, 4, 9, 17),
-    (0, 2, 44, 42, 4, 9, 18)
+    (0, 41, 5, 43, 2, 22, 17,),
+    (0, 41, 2, 44, 6, 42, 18)
 ]
 
 ClubLayout6_0 = [

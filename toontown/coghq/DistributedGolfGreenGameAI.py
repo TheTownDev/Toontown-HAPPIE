@@ -61,7 +61,8 @@ class DistributedGolfGreenGameAI(BattleBlockerAI.BattleBlockerAI, NodePath, Basi
         numToons = 0
         if hasattr(self, 'level'):
             numToons = len(self.level.presentAvIds)
-        numBoards = self.puzzleBase + numToons * self.puzzlePerPlayer
+        numBoards = 1
+        #numBoards = self.puzzleBase + numToons * self.puzzlePerPlayer
         boardSelect = list(range(0, len(gameBoards)))
         didGetLast = 1
         for index in range(numBoards):
@@ -207,11 +208,9 @@ class DistributedGolfGreenGameAI(BattleBlockerAI.BattleBlockerAI, NodePath, Basi
             else:
                 self.boardList[assigned][0].remove(senderId)
         boardIndex = self.choosePattern()
-        if boardIndex == None:
-            self.__handleFinsihed(1)
-        else:
-            self.boardList[boardIndex][0].append(senderId)
-            self.sendUpdateToAvatarId(senderId, 'startBoard', [self.boardData[self.boardList[boardIndex][1]], self.attackPatterns[self.boardList[boardIndex][2]]])
+        
+        self.boardList[boardIndex][0].append(senderId)
+        self.sendUpdateToAvatarId(senderId, 'startBoard', [self.boardData[self.boardList[boardIndex][1]], self.attackPatterns[self.boardList[boardIndex][2]]])
         return
 
     def addGag(self, avId):

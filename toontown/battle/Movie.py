@@ -867,6 +867,8 @@ class Movie(DirectObject.DirectObject):
             camTrack.append(camIval)
         for scene in self.dots:
             ival, camIval = MovieDots.doScene(scene, self.battle)
+            track.append(ival)
+            camTrack.append(camIval)
 
         if len(track) == 0:
             return None, None

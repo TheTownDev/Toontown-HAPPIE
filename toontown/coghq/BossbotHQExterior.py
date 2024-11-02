@@ -60,7 +60,9 @@ class BossbotHQExterior(CogHQExterior.CogHQExterior):
     def enter(self, requestStatus):
         CogHQExterior.CogHQExterior.enter(self, requestStatus)
         self.loader.hood.setFog()
+        self.loader.hood.startSky()
 
     def exit(self):
         CogHQExterior.CogHQExterior.exit(self)
         self.loader.hood.setNoFog()
+        self.loader.hood.stopSky()

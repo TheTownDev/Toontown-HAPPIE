@@ -58,24 +58,23 @@ class BossbotHQDataAI(HoodDataAI.HoodDataAI):
             self.addDistObj(extDoor)
 
         makeDoor(ToontownGlobals.BossbotLobby, 0, 0, FADoorCodes.BB_DISGUISE_INCOMPLETE)
+        makeDoor(ToontownGlobals.BossbotLobby, 1, 1, FADoorCodes.UNKNOWN_COG_AREA)
+        
         kartIdList = self.createCogKarts()
         if simbase.config.GetBool('want-boarding-groups', 1):
             self.courseBoardingParty = DistributedBoardingPartyAI.DistributedBoardingPartyAI(self.air, kartIdList, 4)
             self.courseBoardingParty.generateWithRequired(self.zoneId)
 
     def createCogKarts(self):
-        posList = (
-         (154.762, 37.169, 0), (141.403, -81.887, 0), (-48.44, 15.308, 0))
-        hprList = ((110.815, 0, 0), (61.231, 0, 0), (-105.481, 0, 0))
-        lockList = (FADoorCodes.FRONT_THREE_ACCESS_MISSING, FADoorCodes.MIDDLE_SIX_ACCESS_MISSING, FADoorCodes.BACK_NINE_ACCESS_MISSING)
-        mins = ToontownGlobals.FactoryLaffMinimums[3]
+        posList = ((-26.5658, 237.459, 0), (-28.725, -235.706, 0))
+        hprList = ((-159, 0, 0), (-21, 0, 0))
+        lockList = (FADoorCodes.FRONT_THREE_ACCESS_MISSING, FADoorCodes.BACK_NINE_ACCESS_MISSING)
         kartIdList = []
         for cogCourse in range(len(posList)):
             pos = posList[cogCourse]
             hpr = hprList[cogCourse]
-            cogKart = DistributedCogKartAI.DistributedCogKartAI(self.air, cogCourse, pos[0], pos[1], pos[2], hpr[0], hpr[1], hpr[2], self.air.countryClubMgr, minLaff=mins[cogCourse])
+            cogKart = DistributedCogKartAI.DistributedCogKartAI(self.air, cogCourse, pos[0], pos[1], pos[2], hpr[0], hpr[1], hpr[2], self.air.countryClubMgr, minLaff=0)
             cogKart.generateWithRequired(self.zoneId)
-            cogKart.setLock(lockList[cogCourse])
             self.cogKarts.append(cogKart)
             kartIdList.append(cogKart.doId)
 

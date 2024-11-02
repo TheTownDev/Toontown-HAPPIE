@@ -84,6 +84,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         self.newSuits = []
         self.numNPCAttacks = 0
         self.battleScenes = []
+        self.extraDeadSuits = []
         self.npcAttacks = {}
         self.pets = {}
         self.fsm = ClassicFSM.ClassicFSM('DistributedBattleAI', [State.State('FaceOff', self.enterFaceOff, self.exitFaceOff, ['WaitForInput', 'Resume']),
@@ -114,6 +115,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
     def clearAttacks(self):
         self.toonAttacks = {}
         self.battleScenes = []
+        self.extraDeadSuits = []
         self.suitsCheatFirst, self.suitsCheatSecond, self.dots, self.cutscenesFirst, self.cutscenesSecond = [], [], [], [], []
         self.suitAttacks = getDefaultSuitAttacks()
 
@@ -472,7 +474,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         
         if self.suits[0].dna.name == 'trf':
             if suit.dna.name != 'trf':
-                suit.setLevel(suit.getActualLevel() + int(self.suits[0].getActualLevel() / 4))
+                suit.setLevel(suit.getActualLevel() + 1)
 
     def __joinSuit(self, suit):
         self.joiningSuits.append(suit)
@@ -1717,6 +1719,9 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
                                 if died != 0:
                                     if deadSuits.count(target) == 0:
                                         deadSuits.append(target)
+        
+        for deadSuit in self.extraDeadSuits:
+            deadSuits.append(deadSuit)
 
         self.exitedToons = []
         for suitKey in list(trapDict.keys()):

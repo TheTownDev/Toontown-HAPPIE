@@ -1,0 +1,601 @@
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <42, STREET_POINT, -593.84 262.217 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <98, STREET_POINT, 60.2228 252.121 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <3, STREET_POINT, 57.7568 168.313 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <64, STREET_POINT, -474.139 223.772 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <63, STREET_POINT, -475.346 212.712 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <26, STREET_POINT, -374.663 268.087 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <87, STREET_POINT, -88.7239 284.216 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <80, STREET_POINT, -235.264 294.667 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <33, STREET_POINT, -465.303 201.304 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <74, STREET_POINT, -343.463 281.991 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <25, STREET_POINT, -343.909 267.633 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <85, STREET_POINT, -169.312 281.983 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <43, STREET_POINT, -594.207 290.076 -0.5>
+Setting Access 2
+('Setting toonID ', 100000008)
+DBB-addToon 100000008
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+[100000008, 2, 4, 401004731, [-1], 0, 0, [1], 0, 0]
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+[100000008, 4, 3, 401004731, [94], 0, 0, [277], 1, 0]
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+('Setting toonID ', 100000008)
+DBB-addToon 100000008
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+[100000008, 2, 5, 0, [-1], 0, 0, [1], 0, 0]
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <58, STREET_POINT, -546.99 199.752 -0.5>
+    to: <89, STREET_POINT, -22.2786 285.596 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <58, STREET_POINT, -546.99 199.752 -0.5>
+    to: <66, STREET_POINT, -473.911 246.069 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <58, STREET_POINT, -546.99 199.752 -0.5>
+    to: <69, STREET_POINT, -457.402 277.514 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <10, STREET_POINT, 27.5428 269.029 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <100, STREET_POINT, 69.1844 212.101 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <15, STREET_POINT, -23.9604 268.403 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <6, STREET_POINT, 46.6572 178.03 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <74, STREET_POINT, -343.463 281.991 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <29, STREET_POINT, -448.831 268.195 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <18, STREET_POINT, -161.845 268.111 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <36, STREET_POINT, -527.25 189.188 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <28, STREET_POINT, -425.588 268.491 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <1, STREET_POINT, 55.3138 107.538 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <33, STREET_POINT, -465.303 201.304 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <31, STREET_POINT, -460.847 234.713 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <84, STREET_POINT, -191.782 280.388 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <16, STREET_POINT, -85.5906 267.404 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <34, STREET_POINT, -479.637 190.443 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <99, STREET_POINT, 69.7838 251.005 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <42, STREET_POINT, -593.84 262.217 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <22, STREET_POINT, -279.818 252.723 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <14, STREET_POINT, -24.3365 252.747 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <95, STREET_POINT, 43.688 279.388 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <101, STREET_POINT, 69.9168 178.724 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <94, STREET_POINT, 29.848 282.221 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <5, STREET_POINT, 52.05 177.671 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <77, STREET_POINT, -306.289 293.859 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <91, STREET_POINT, -7.24801 297.807 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <21, STREET_POINT, -245.008 252.191 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <83, STREET_POINT, -189.908 291.682 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <51, STREET_POINT, -579.565 297.865 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <9, STREET_POINT, 41.3001 265.221 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <2, STREET_POINT, 56.6995 160.716 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <90, STREET_POINT, -22.4757 297.614 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <78, STREET_POINT, -280.188 293.85 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <106, STREET_POINT, 70.3852 129.111 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <72, STREET_POINT, -408.149 282.564 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <64, STREET_POINT, -474.139 223.772 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <12, STREET_POINT, 10.3266 252.792 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <26, STREET_POINT, -374.663 268.087 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <37, STREET_POINT, -548.277 188.696 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <103, STREET_POINT, 65.778 168.253 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <85, STREET_POINT, -169.312 281.983 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <4, STREET_POINT, 50.9094 168.493 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <46, STREET_POINT, -594.001 361.853 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <79, STREET_POINT, -252.129 294.007 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <44, STREET_POINT, -594.13 310.459 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <86, STREET_POINT, -128.982 283.421 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <23, STREET_POINT, -323.816 253.569 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <76, STREET_POINT, -328.418 296.261 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <88, STREET_POINT, -46.3688 283.375 -0.5>
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+[100000008, 5, 3, 401004695, [46], 0, 0, [192], 1, 0]
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <11, STREET_POINT, 10.2523 268.678 -0.5>
+    to: <26, STREET_POINT, -374.663 268.087 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <87, STREET_POINT, -88.7239 284.216 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <80, STREET_POINT, -235.264 294.667 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <33, STREET_POINT, -465.303 201.304 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <74, STREET_POINT, -343.463 281.991 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <25, STREET_POINT, -343.909 267.633 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <85, STREET_POINT, -169.312 281.983 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <62, STREET_POINT, -476.786 205.644 -0.5>
+    to: <43, STREET_POINT, -594.207 290.076 -0.5>
+Setting Access 2
+('Setting toonID ', 100000008)
+DBB-addToon 100000008
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+[100000008, 2, 4, 401004731, [-1], 0, 0, [1], 0, 0]
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+[100000008, 4, 3, 401004731, [94], 0, 0, [277], 1, 0]
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+:DistributedBattleAI(warning): Attempting to find suit: 401004731
+('Setting toonID ', 100000008)
+DBB-addToon 100000008
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+[100000008, 2, 5, 0, [-1], 0, 0, [1], 0, 0]
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <58, STREET_POINT, -546.99 199.752 -0.5>
+    to: <89, STREET_POINT, -22.2786 285.596 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <58, STREET_POINT, -546.99 199.752 -0.5>
+    to: <66, STREET_POINT, -473.911 246.069 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <58, STREET_POINT, -546.99 199.752 -0.5>
+    to: <69, STREET_POINT, -457.402 277.514 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <10, STREET_POINT, 27.5428 269.029 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <100, STREET_POINT, 69.1844 212.101 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <15, STREET_POINT, -23.9604 268.403 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <6, STREET_POINT, 46.6572 178.03 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <74, STREET_POINT, -343.463 281.991 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <29, STREET_POINT, -448.831 268.195 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <18, STREET_POINT, -161.845 268.111 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <36, STREET_POINT, -527.25 189.188 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <28, STREET_POINT, -425.588 268.491 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <1, STREET_POINT, 55.3138 107.538 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <33, STREET_POINT, -465.303 201.304 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <31, STREET_POINT, -460.847 234.713 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <84, STREET_POINT, -191.782 280.388 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <16, STREET_POINT, -85.5906 267.404 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <34, STREET_POINT, -479.637 190.443 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <99, STREET_POINT, 69.7838 251.005 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <42, STREET_POINT, -593.84 262.217 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <22, STREET_POINT, -279.818 252.723 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <14, STREET_POINT, -24.3365 252.747 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <95, STREET_POINT, 43.688 279.388 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <101, STREET_POINT, 69.9168 178.724 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <94, STREET_POINT, 29.848 282.221 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <5, STREET_POINT, 52.05 177.671 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <77, STREET_POINT, -306.289 293.859 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <91, STREET_POINT, -7.24801 297.807 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <21, STREET_POINT, -245.008 252.191 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <83, STREET_POINT, -189.908 291.682 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <51, STREET_POINT, -579.565 297.865 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <9, STREET_POINT, 41.3001 265.221 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <2, STREET_POINT, 56.6995 160.716 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <90, STREET_POINT, -22.4757 297.614 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <78, STREET_POINT, -280.188 293.85 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <106, STREET_POINT, 70.3852 129.111 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <72, STREET_POINT, -408.149 282.564 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <64, STREET_POINT, -474.139 223.772 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <12, STREET_POINT, 10.3266 252.792 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <26, STREET_POINT, -374.663 268.087 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <37, STREET_POINT, -548.277 188.696 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <103, STREET_POINT, 65.778 168.253 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <85, STREET_POINT, -169.312 281.983 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <4, STREET_POINT, 50.9094 168.493 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <46, STREET_POINT, -594.001 361.853 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <79, STREET_POINT, -252.129 294.007 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <44, STREET_POINT, -594.13 310.459 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <86, STREET_POINT, -128.982 283.421 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <23, STREET_POINT, -323.816 253.569 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <76, STREET_POINT, -328.418 296.261 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <69, STREET_POINT, -457.402 277.514 -0.5>
+    to: <88, STREET_POINT, -46.3688 283.375 -0.5>
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+[100000008, 5, 3, 401004695, [46], 0, 0, [192], 1, 0]
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <11, STREET_POINT, 10.2523 268.678 -0.5>
+    to: <26, STREET_POINT, -374.663 268.087 -0.5>
+:DistributedBattleAI(warning): Attempting to find suit: 401004695
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <39, STREET_POINT, -584.284 195.622 -0.5>
+    to: <58, STREET_POINT, -546.99 199.752 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <39, STREET_POINT, -584.284 195.622 -0.5>
+    to: <26, STREET_POINT, -374.663 268.087 -0.5>
+:dna(warning): Could not find point 106 in map.
+:dna(warning): get_suit_path: could not find path
+  from: <39, STREET_POINT, -584.284 195.622 -0.5>
+    to: <4, STREET_POINT, 50.9094 168.493 -0.5>
+('Setting toonID ', 100000008)
+DBB-addToon 100000008
+:DistributedBattleAI(warning): Attempting to find suit: 401004849
+:DistributedBattleAI(warning): Attempting to find suit: 401004849
+:DistributedBattleAI(warning): Attempting to find suit: 401004849
+:DistributedBattleAI(warning): Attempting to find suit: 401004849
+:DistributedBattleAI(warning): Attempting to find suit: 401004849
+[100000008, 2, 4, 401004849, [-1], 0, 0, [1], 0, 0]
+:DistributedBattleAI(warning): Attempting to find suit: 401004849
+:DistributedBattleAI(warning): Attempting to find suit: 401004849
+[100000008, 1, 4, 401004790, [-1], 0, 0, [-1], 0, 0]
+[100000008, 2, 4, 401004790, [514], 0, 0, [1], 1, 0]
+[100000008, 97, 5, 1116, [190], 0, 0, [-1], 1, 0]

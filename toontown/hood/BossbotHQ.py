@@ -2,7 +2,8 @@ from . import CogHood
 from toontown.toonbase import ToontownGlobals, TTLocalizer
 from toontown.coghq import BossbotCogHQLoader
 from toontown.hood import ZoneUtil
-from panda3d.core import Fog
+from panda3d.core import *
+from direct.interval.LerpInterval import LerpHprInterval
 
 class BossbotHQ(CogHood.CogHood):
 
@@ -11,13 +12,13 @@ class BossbotHQ(CogHood.CogHood):
         self.id = ToontownGlobals.BossbotHQ
         self.cogHQLoaderClass = BossbotCogHQLoader.BossbotCogHQLoader
         self.storageDNAFile = None
-        self.skyFile = 'phase_9/models/cogHQ/cog_sky'
+        self.skyFile = 'phase_12/models/bossbotHQ/ttr_m_ara_bhq_extSkybox'
         self.titleColor = (0.78, 0.70, 0.67, 1.0)
         return
 
     def load(self):
         CogHood.CogHood.load(self)
-        self.sky.hide()
+        self.sky.setScale(3)
         self.parentFSM.getStateNamed('BossbotHQ').addChild(self.fsm)
         self.fog = Fog('BBHQ')
 
@@ -28,8 +29,8 @@ class BossbotHQ(CogHood.CogHood):
 
     def enter(self, *args):
         CogHood.CogHood.enter(self, *args)
-        localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
-        base.camLens.setNearFar(ToontownGlobals.BossbotHQCameraNear, ToontownGlobals.BossbotHQCameraFar)
+        localAvatar.setCameraFov(ToontownGlobals.DefaultCameraFov)
+        base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear, ToontownGlobals.DefaultCameraFar)
 
     def exit(self):
         localAvatar.setCameraFov(ToontownGlobals.DefaultCameraFov)
@@ -54,4 +55,19 @@ class BossbotHQ(CogHood.CogHood):
             render.setFog(self.fog)
             self.sky.clearFog()
             self.sky.setFog(self.fog)
+    
+    def startSky(self):
+        CogHood.CogHood.startSky(self)
+        self.sky.reparentTo(render)
+        ce = CompassEffect.make(NodePath(), CompassEffect.PRot | CompassEffect.PZ)
+        self.sky.node().setEffect(ce)
+        self.sky.setBin('background', 0)
+        self.sky.setZ(-500)
+        #self.skyLerp = LerpHprInterval(self.sky.find('**/MiddleGroup'), 200, (0, 0, 0), (0, 0, 360))
+        #self.skyLerp.loop()
+
+    def stopSky(self):
+        #self.skyLerp.finish()
+        #self.skyLerp = None
+        CogHood.CogHood.stopSky(self)
 

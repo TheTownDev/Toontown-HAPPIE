@@ -6,6 +6,7 @@ from . import MovieCamera, MovieUtil
 from .BattleBase import *
 from .BattleProps import *
 from .BattleSounds import *
+from .MovieCamera import *
 from . import BattleParticles
 from toontown.toon.ToonDNA import *
 from toontown.suit.SuitDNA import *
@@ -21,6 +22,27 @@ def doScene(scene, battle):
     #how this works:
     if scene[0] == 1:
         return doNothing(scene, battle)
+    if scene[0] == 2:
+        return doDOTDamage(scene, battle)
 
 def doNothing(scene, battle):
     return ("InsertSuitTrack", "InsertCamTrack")
+
+def doDOTDamage(scene, battle):
+    suit = battle.findSuit(scene[1])
+    #lucky_suit = battle.findSuit(scene[3][0])
+    
+    hp = scene[2][0]
+    died = scene[4]
+    showDamage = Func(suit.showHpText, -hp, openEnded=0)
+    updateHealthBar = Func(suit.updateHealthBar, hp)
+    
+    movie = Sequence(Parallel(ActorInterval(suit, 'squirt-small-react'), updateHealthBar, showDamage))
+    
+    if died:
+        extraMovie = MovieUtil.createSuitDeathTrack(suit, battle.activeToons[0], battle)
+        movie.append(extraMovie)
+    
+    cameraTrack = heldRelativeShot(suit, 3, 8, suit.getHeight() * 0.66, 159, 3.6, 0, movie.duration, 'avatarCloseUpDOTShot')
+    
+    return (movie, cameraTrack)

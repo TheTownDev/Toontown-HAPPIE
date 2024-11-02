@@ -87,7 +87,8 @@ class BattleCalculatorAI:
         attack = self.battle.toonAttacks[attackIndex]
         atkTrack, atkLevel = self.__getActualTrackLevel(attack)
         if atkTrack in [LURE, HEAL, SQUIRT, SOUND]:
-            return 1, 100
+            attack[TOON_ACCBONUS_COL] = 0
+            return (1, 100)
         if atkTrack == NPCSOS:
             return (1, 95)
         if atkTrack == FIRE:
@@ -1240,6 +1241,11 @@ class BattleCalculatorAI:
                 theSuit = self.battle.findSuit(attack[SUIT_ID_COL])
                 atkInfo = SuitBattleGlobals.getSuitAttack(theSuit.dna.name, theSuit.getActualLevel(), atkType)
                 result = atkInfo['hp']
+                
+                DMG_Eff = theSuit.effectHandler.children.get('damageBonus', None)
+                if DMG_Eff is not None:
+                    dmgEff = theSuit.effectHandler.children['damageBonus']    
+                    result += dmgEff.children['value']
 
                 # Divide attack damage by 2 if they were trapped this turn
                 if attack[SUIT_ID_COL] in self.suitsTrappedThisTurn:
@@ -1483,11 +1489,6 @@ class BattleCalculatorAI:
         except:
             pass
         
-        for suit in self.battle.activeSuits:
-            if suit.dna.name == 'trf':
-                if not self.supervisorCutscenePlayed:
-                    self.battle.cutscenesFirst.append([2, suit.doId, [10], [], 0])
-        
         self.__calculateToonAttacks()
         self.__processBonuses(hp=0)
         self.__processBonuses(hp=1)
@@ -1547,6 +1548,66 @@ class BattleCalculatorAI:
         
 
         # buildASuitAttack goes here! :)
+        """
+        for suit in self.battle.activeSuits:
+            DOT_Eff = suit.effectHandler.children.get('damageDOT', None)
+            print('DOT setup time!')
+            if DOT_Eff is None:
+                print('DOT assign time!')
+                suit.effectHandler.addEffect('BattleEffectDOTDamageAI')
+                lureEff = suit.effectHandler.children['damageDOT']    
+                lureEff.children['value'] = 40
+        
+        for suit in self.battle.activeSuits:
+            DOT_Eff = suit.effectHandler.children.get('damageDOT', None)
+            if DOT_Eff is not None:
+                print('DOT time!')
+                suit.currHP -= DOT_Eff.children['value']
+                died = self.checkIfSuitDied(suit)
+                self.battle.dots.append([2, suit.doId, [DOT_Eff.children['value']], [], died])
+                self.makeSuitDead(suit)
+        """
+        """
+        for suit in self.battle.activeSuits:
+            if suit.dna.name == 'trf':
+                if suit.currHP >= 1 and suit not in self.battle.luredSuits:
+                    toonList = []
+                    toonIdList = self.battle.activeToons[:]
+                    for toonId in toonIdList:
+                        toon = simbase.air.doId2do.get(toonId)
+                        if toon.hp >= 1:
+                            toonList.append(toon)
+                    
+                    rand_toon = random.choice(toonList)
+                    
+                    suitAttackMovie = [suit.doId, SuitAttackType.COMPANY_RESTRICTION, self.battle.activeToons.index(rand_toon.doId), [10,], 0, 0, 0]
+                    
+                    rand_toon.hp -= 10
+                    
+                    if rand_toon.hp < 1:
+                        suitAttackMovie[4] == 1
+                    self.battle.suitAttacks.append(suitAttackMovie)
+                        
+                    
+        
+        for suit in self.battle.activeSuits:
+            if suit.dna.name == 'trf':
+                if suit.currHP >= 1 and suit not in self.battle.luredSuits:
+                    activeSuitList = self.battle.activeSuits[:]
+                    activeSuitList.remove(suit)
+                    
+                    if len(activeSuitList) >= 1:
+                        for tgt_suit in activeSuitList:
+                            DMG_Eff = tgt_suit.effectHandler.children.get('damageBonus', None)
+                            if DMG_Eff is None:
+                                tgt_suit.effectHandler.addEffect('BattleEffectExtraDamageAI')
+                                dmg_eff = tgt_suit.effectHandler.children['damageBonus']    
+                                dmg_eff.children['value'] = 10
+                                self.battle.suitsCheatSecond.append([2, suit.doId, [dmg_eff.children['value']], [tgt_suit.doId], 0])
+                                continue
+        """
+                
+                
         
         if toonsHit == 1:
             BattleCalculatorAI.toonsAlwaysHit = 0
@@ -1556,6 +1617,16 @@ class BattleCalculatorAI:
             self.notify.debug('Toon skills gained after this round: ' + repr(self.toonSkillPtsGained))
             self.__printSuitAtkStats()
         return None
+    
+    def checkIfSuitDied(self, suit):
+        died = 0
+        if suit.currHP <= 0:
+            died = 1
+        return died
+    
+    def makeSuitDead(self, suit):
+        if self.checkIfSuitDied(suit):
+            self.battle.extraDeadSuits.append(suit)
 
     def __calculateFiredCogs():
         import pdb

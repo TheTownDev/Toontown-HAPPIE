@@ -112,6 +112,7 @@ GlobalStreetNames = {20000: ('to', 'on', 'Tutorial Terrace'),
  7200: ('to', 'on', 'Vacation Ally'),
  7300: ('to', 'on', 'Tan-ical Way'),
  10000: ('to', 'in', 'Bossbot HQ Country Club'),
+ 10300: ('to', 'in', 'Executive Office'),
  10100: ('to the', 'in the', 'Bossbot HQ Lobby'),
  10200: ('to the', 'in the', 'The Clubhouse'),
  10500: ('to the', 'in the', 'The Front One'),
@@ -153,6 +154,7 @@ MyEstate = ('to', 'in', 'your house')
 WelcomeValley = ('to', 'in', 'Welcome Valley')
 GolfZone = ('to', 'in', lGolfZone)
 PartyHood = ('to the', 'in the', lPartyHood)
+BCHQLofficeText = 'Executive Office'
 Factory = 'Factory'
 Headquarters = 'Headquarters'
 SellbotFrontEntrance = 'Front Entrance'
@@ -2499,6 +2501,7 @@ SuitAttackNames = {'AUDIT': 'Audit!',
  'CONFISCATE': 'Confiscate!',
  'CIGAR_SMOKE': 'Cigar Smoke!',
  'CLIP_ON_TIE': 'Clip On Tie!',
+ 'COMPANY RESTRICTION': 'Company Restriction!',
  'CRUNCH': 'Crunch!',
  'DEMOTION': 'Demotion!',
  'DOWNSIZE': 'Downsize!',
@@ -3264,6 +3267,7 @@ FADoorCodes_SELLBOT_FACILTIES_MISSING = "No access!\n\nIn order to access this e
 FADoorCodes_CASHBOT_FACILTIES_MISSING = "No access!\n\nIn order to access this elevator, you need another CBHQ Access Key."
 FADoorCodes_LAWBOT_FACILTIES_MISSING  = "No access!\n\nIn order to access this elevator, you need another LBHQ Access Key."
 FADoorCodes_BOSSBOT_FACILTIES_MISSING = "No access!\n\nIn order to access this elevator, you need another BBHQ Access Key."
+FADoorCodes_UNKNOWN_COG_AREA = "Woah there! That area is much too dangerous for Toons. A security goon would catch you on the spot.\n\nOnly time will tell what business the Cogs may be plotting inside..."
 
 KnockKnockContestJokes = {2100: ['Wally', "Wally's not looking, hit him with a pie!"],
  2200: {28: ['Biscuit', 'Biscuit out of here the Cogs are coming!'],

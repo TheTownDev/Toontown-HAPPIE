@@ -60,6 +60,7 @@ class SuitAttackType(IntEnum):
     CONFISCATE = auto()
     CIGAR_SMOKE = auto()
     CLIPON_TIE = auto()
+    COMPANY_RESTRICTION = auto()
     CRUNCH = auto()
     DEMOTION = auto()
     DOWNSIZE = auto()
@@ -813,6 +814,12 @@ __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     accuracy=60,
     weight=25,
 ))
+__TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.COMPANY_RESTRICTION,
+    damage={6: 8,},
+    accuracy=100,
+    weight=0,
+))
 __TRAFFIC_MANAGER: SuitAttributes = SuitAttributes(key='trf', name=TTLocalizer.SuitTrafficManager, singular=TTLocalizer.SuitTrafficManagerS, plural=TTLocalizer.SuitTrafficManagerP, tier=7, attacks=__TRAFFIC_MANAGER_ATTACKS)
 __registerSuitAttributes(__TRAFFIC_MANAGER)
 
@@ -1462,6 +1469,7 @@ __SuitAttacksToDefaultAnimation = {
     SuitAttackType.CHOMP:               'throw-paper',
     SuitAttackType.CONFISCATE:          'pickpocket',
     SuitAttackType.CIGAR_SMOKE:         'cigar-smoke',
+    SuitAttackType.COMPANY_RESTRICTION: 'throw-object',
     SuitAttackType.CLIPON_TIE:          'throw-paper',
     SuitAttackType.CRUNCH:              'throw-object',
     SuitAttackType.DEMOTION:            'magic1',

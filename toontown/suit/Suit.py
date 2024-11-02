@@ -370,7 +370,7 @@ class Suit(Avatar.Avatar):
         self.shadowJoint = self.find('**/jnt_M_shadow_01')
         self.nametagJoint = self.find('**/jnt_M_nameTag_01')
         self.nametag3d.wrtReparentTo(self.nametagJoint)
-        self.nametag3d.setEffect(CompassEffect.make(render, CompassEffect.PScale))
+        self.nametag3d.setEffect(CompassEffect.make(self, CompassEffect.PScale))
 
     def makeWaiter(self, modelRoot = None):
         if not modelRoot:
@@ -667,6 +667,8 @@ class Suit(Avatar.Avatar):
         self.loop(anim)
         self.isSkeleton = 1
         self.setBlend(frameBlend=True)
+        self.nametag3d.wrtReparentTo(self.nametagJoint)
+        self.nametag3d.setEffect(CompassEffect.make(self.getGeomNode(), CompassEffect.PScale))
 
     def getHeadParts(self):
         return self.headParts

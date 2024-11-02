@@ -237,6 +237,9 @@ __GENERAL_SUIT_ANIMATIONS: Set[SuitAnimation] = {
     SuitAnimation(key='lured', suit='A', path='lured', phase='5'),
     SuitAnimation(key='lured', suit='B', path='lured', phase='5'),
     SuitAnimation(key='lured', suit='C', path='lured', phase='5'),
+    SuitAnimation(key='powered-up', suit='A', path='powered-up', phase='5'),
+    SuitAnimation(key='powered-up', suit='B', path='powered-up', phase='5'),
+    SuitAnimation(key='powered-up', suit='C', path='powered-up', phase='5'),
 
     # "Minigame" animations that every suit has.
     SuitAnimation(key='victory', suit='A', path='victory', phase='4'),
