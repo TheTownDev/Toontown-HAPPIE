@@ -153,6 +153,10 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
     
     def getMaxHP(self):
         return self.maxHP
+    
+    def setMaxHP(self, hp):
+        self.maxHP = hp
+    
 
     def setHP(self, hp):
         if hp > self.maxHP:
@@ -388,6 +392,11 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         SuitBase.SuitBase.setSkelecog(self, flag)
         if flag:
             Suit.Suit.makeSkeleton(self)
+    
+    def setGoldSkelecog(self, flag):
+        SuitBase.SuitBase.setGoldSkelecog(self, flag)
+        if flag:
+            Suit.Suit.makeGoldSkeleton(self)
 
     def showHpText(self, number, bonus = 0, scale = 1, attackTrack = -1, immuneRevert=0):
         if self.HpTextEnabled and not self.ghostMode:

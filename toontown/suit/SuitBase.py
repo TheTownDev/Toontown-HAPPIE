@@ -22,6 +22,7 @@ class SuitBase:
         self.maxHP = 10
         self.currHP = 10
         self.isSkelecog = 0
+        self.isGoldSkelecog = 0
         self.isImmune = 0
         return
 
@@ -73,6 +74,12 @@ class SuitBase:
 
     def setSkelecog(self, flag):
         self.isSkelecog = flag
+    
+    def getGoldSkelecog(self):
+        return self.isGoldSkelecog
+
+    def setGoldSkelecog(self, flag):
+        self.isGoldSkelecog = flag
 
     def setImmuneStatus(self, num):
         if num == None:

@@ -206,6 +206,7 @@ class Suit(Avatar.Avatar):
         self.isWaiter = 0
         self.isRental = 0
         self.isImmune = 0
+        self.isGoldSkeleton = 0
         if not base.colorBlindMode:
             self.healthBarColors = self.healthColors
             self.healthBarGlowColors = self.healthGlowColors
@@ -603,7 +604,7 @@ class Suit(Avatar.Avatar):
         self.loseActor.setBlend(frameBlend=True)
         
         # Set the hand color
-        if not self.isSkeleton:
+        if not self.isSkeleton and not self.isGoldSkeleton:
             handTexture = loader.loadTexture('phase_' + str(suitDeptToPhase[self.style.dept]) + '/maps/tt_t_ene_suitHand_' + self.style.name + '.png')
             self.loseActor.find('**/hands').setTexture(handTexture, 1)
         return self.loseActor
@@ -669,6 +670,51 @@ class Suit(Avatar.Avatar):
         self.setBlend(frameBlend=True)
         self.nametag3d.wrtReparentTo(self.nametagJoint)
         self.nametag3d.setEffect(CompassEffect.make(self.getGeomNode(), CompassEffect.PScale))
+    
+    def makeGoldSkeleton(self):
+        model = 'phase_5/models/char/ttr_r_ene_cg' + self.style.body.lower() + '_skelecog'
+        anims = self.generateAnimDict()
+        anim = self.getCurrentAnim()
+        dropShadow = self.dropShadow
+        if not dropShadow.isEmpty():
+            dropShadow.reparentTo(hidden)
+        self.removePart('modelRoot')
+        self.loadModel(model)
+        self.loadAnims(anims)
+        self.getGeomNode().setScale(self.scale * 1.0173)
+        self.getGeomNode().setColor(0.9, 0.9, 0, 1)
+        self.generateHealthBar()
+        self.generateCorporateMedallion()
+        self.generateCorporateTie()
+        self.setHeight(self.height)
+        parts = self.findAllMatches('**/pPlane*')
+        for partNum in range(0, parts.getNumPaths()):
+            bb = parts.getPath(partNum)
+            bb.setTwoSided(1)
+
+        self.setName(TTLocalizer.GoldSkeleton)
+        if self.dna.name in Resourcebots:
+            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
+            'dept': "Resourcebot",
+            'level': self.getActualLevel()}
+        else:
+            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
+            'dept': self.getStyleDept(),
+            'level': self.getActualLevel()}
+        self.setDisplayName(nameInfo)
+        self.leftHand = self.find('**/jnt_L_attachProp_01')
+        self.rightHand = self.find('**/jnt_R_attachProp_01')
+        self.shadowJoint = self.find('**/jnt_M_shadow_01')
+        self.nametagJoint = self.find('**/jnt_M_nameTag_01')
+        if not dropShadow.isEmpty():
+            dropShadow.setScale(0.75)
+            if not self.shadowJoint.isEmpty():
+                dropShadow.reparentTo(self.shadowJoint)
+        self.loop(anim)
+        self.isGoldSkeleton = 1
+        self.setBlend(frameBlend=True)
+        self.nametag3d.wrtReparentTo(self.nametagJoint)
+        self.nametag3d.setEffect(CompassEffect.make(self.getGeomNode(), CompassEffect.PScale))
 
     def getHeadParts(self):
         return self.headParts
@@ -686,7 +732,7 @@ class Suit(Avatar.Avatar):
         return []
 
     def getDialogueArray(self):
-        if self.isSkeleton:
+        if self.isSkeleton or self.isGoldSkeleton:
             loadSkelDialog()
             return SkelSuitDialogArray
         else:

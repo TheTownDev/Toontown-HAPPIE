@@ -449,6 +449,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         else:
             newSuit.setupSuitDNA(suitLevel, suitType, suitTrack)
         newSuit.buildingHeight = buildingHeight
+        #newSuit.setGoldSkelecog(1)
         gotDestination = self.chooseDestination(newSuit, startTime, toonBlockTakeover=toonBlockTakeover, cogdoTakeover=cogdoTakeover, minPathLen=minPathLen, maxPathLen=maxPathLen)
         if not gotDestination:
             self.notify.debug("Couldn't get a destination in %d!" % self.zoneId)
@@ -456,14 +457,16 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
             newSuit.delete()
             return
         newSuit.initializePath()
-        self.zoneChange(newSuit, None, newSuit.zoneId)
         if skelecog:
             newSuit.setSkelecog(skelecog)
         if revives:
             newSuit.setSkeleRevives(revives)
         newSuit.generateWithRequired(newSuit.zoneId)
+        self.zoneChange(newSuit, None, newSuit.zoneId)
+        #ewSuit.doGoldSkelecogAttributes()
         newSuit.moveToNextLeg(None)
         self.suitList.append(newSuit)
+        
         if newSuit.flyInSuit:
             self.numFlyInSuits += 1
         if newSuit.buildingSuit:

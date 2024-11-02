@@ -27,6 +27,7 @@ class DistributedSuitBaseAI(DistributedAvatarAI.DistributedAvatarAI, SuitBase.Su
         self.buildingHeight = None
         self.effectHandler = None
         self.facilitySuit = 0
+        self.goldSkelecog = 0
         self.statusEffectInfo = {}
         return
 
@@ -63,6 +64,14 @@ class DistributedSuitBaseAI(DistributedAvatarAI.DistributedAvatarAI, SuitBase.Su
         hp = attributes.getBaseMaxHp(self.getActualLevel())
         self.maxHP = hp
         self.currHP = hp
+    
+    def doGoldSkelecogAttributes(self):
+        attributes: SuitAttributes = SuitBattleGlobals.getSuitAttributes(self.dna.name)
+        
+        hp = attributes.getBaseMaxHp(self.getActualLevel() + 2)
+        self.maxHP = hp
+        self.sendUpdate('setMaxHP', [self.maxHP])
+        self.b_setHP(hp)
 
     def getLevelDist(self):
         return self.getLevel()
@@ -204,6 +213,17 @@ class DistributedSuitBaseAI(DistributedAvatarAI.DistributedAvatarAI, SuitBase.Su
 
     def d_setSkelecog(self, flag):
         self.sendUpdate('setSkelecog', [flag])
+    
+    def b_setGoldSkelecog(self, flag):
+        self.setGoldSkelecog(flag)
+        self.d_setGoldSkelecog(flag)
+
+    def setGoldSkelecog(self, flag):
+        self.setGoldSkelecog = flag
+        SuitBase.SuitBase.setGoldSkelecog(self, flag)
+
+    def d_setGoldSkelecog(self, flag):
+        self.sendUpdate('setGoldSkelecog', [flag])
 
     def isForeman(self):
         return 0
