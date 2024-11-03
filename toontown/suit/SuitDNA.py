@@ -55,7 +55,8 @@ suitHeadTypes = [
     'trf',
     'ski',
     'def',
-    'bgh'
+    'bgh',
+    'barr'
 ]
 
 supervisors = [
@@ -82,6 +83,7 @@ suitATypes = [
     'dt',
     'bs',
     'le',
+    'barr',
     'bw',
     'pp',
     'nc',
@@ -495,6 +497,8 @@ class SuitVisual:
                     headPath = self.headModelPath(suit.style.body, 'phase_4/models/char/suitB-heads2')
                 if self.key in ['bar', 'inv', 'cfn']:
                     headPath = self.headModelPath(suit.style.body, 'phase_15/models/char/ttr_r_ene_cgr_heads')
+                if self.key == 'barr':
+                    headPath = self.headModelPath(suit.style.body, 'phase_11/models/char/ttr_r_ene_lawbotBarrister')
                 headModel = loader.loadModel(headPath)
                 head = headModel.find('**/' + head)
                 head.reparentTo(suit.find(attachPoint))
@@ -541,6 +545,7 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual('sd',  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                         'spin-doctor.jpg',      'telemarketer',        7.9),
     SuitVisual('le',  7.125 / aSize, VBase4(0.25, 0.25, 0.5, 1.0),  None,                         None,                   'legaleagle',          8.27),
     SuitVisual('bw',  7.0 / aSize,   legalPolyColor,                None,                         None,                   'bigwig',              8.69),
+    SuitVisual('barr', 7.0 / aSize,   legalPolyColor,                None,                         None,                   ['barrister'],              8.75),
     SuitVisual('sc',  3.6 / cSize,   moneyPolyColor,                None,                         None,                   'coldcaller',          4.77),
     SuitVisual('pp',  3.55 / aSize,  VBase4(1.0, 0.5, 0.6, 1.0),    None,                         None,                   'pennypincher',        5.26),
     SuitVisual('tw',  4.5 / cSize,   moneyPolyColor,                None,                         None,                   'tightwad',            5.41),
@@ -627,6 +632,7 @@ customSuit2Dept = {
     'trf': 's',
     'ski': 'm',
     'def': 'l',
+    'barr': 'l',
     'bgh': 'c',
     'bar': 'c',
     'inv': 'c',
@@ -719,7 +725,7 @@ class SuitDNA(AvatarDNA.AvatarDNA):
         dg = PyDatagram()
         dg.addFixedString(self.type, 1)
         if self.type == 's':
-            dg.addFixedString(self.name, 3)
+            dg.addFixedString(self.name, 20)
             dg.addFixedString(self.dept, 1)
         elif self.type == 'b':
             dg.addFixedString(self.dept, 1)
@@ -734,7 +740,7 @@ class SuitDNA(AvatarDNA.AvatarDNA):
         dgi = PyDatagramIterator(dg)
         self.type = dgi.getFixedString(1)
         if self.type == 's':
-            self.name = dgi.getFixedString(3)
+            self.name = dgi.getFixedString(20)
             self.dept = dgi.getFixedString(1)
             self.body = getSuitBodyType(self.name)
         elif self.type == 'b':
@@ -794,6 +800,13 @@ class SuitDNA(AvatarDNA.AvatarDNA):
             # if the rng is less than the chance, we set the suit to the alternate suit
             if random.random() < alternateSuitChance:
                 self.name = 'bar'
+        
+        if self.name == 'le':
+            # we define it's rng
+            alternateSuitChance = 0.4
+            # if the rng is less than the chance, we set the suit to the alternate suit
+            if random.random() < alternateSuitChance:
+                self.name = 'barr'
 
         self.body = getSuitBodyType(self.name)
         return
@@ -829,12 +842,12 @@ class SuitDNA(AvatarDNA.AvatarDNA):
                 self.name = 'bgh'
 
         # we get it's parent suit
-        if self.name == 'ac':
+        if self.name == 'le':
             # we define it's rng
             alternateSuitChance = 0.4
             # if the rng is less than the chance, we set the suit to the alternate suit
             if random.random() < alternateSuitChance:
-                self.name = 'def'
+                self.name = 'barr'
         
         # we get it's parent suit
         if self.name == 'mb':

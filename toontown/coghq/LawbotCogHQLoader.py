@@ -44,8 +44,8 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
 
         if str(zoneId) in self.musicJson['global_music']:
             self.music = base.loader.loadMusic(self.musicJson['global_music'][str(zoneId)])
-            if (str(zoneId) + '_battle') in self.musicJson['global_music']:
-                self.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(zoneId) + '_battle')])
+        if (str(zoneId) + '_battle') in self.musicJson['global_music']:
+            self.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(zoneId) + '_battle')])
 
     def unloadPlaceGeom(self):
         if self.geom:

@@ -1259,6 +1259,28 @@ __LEGAL_EAGLE_ATTACKS.add(SuitAttackAttribute(
 __LEGAL_EAGLE: SuitAttributes = SuitAttributes(key='le', name=TTLocalizer.SuitLegalEagle, singular=TTLocalizer.SuitLegalEagleS, plural=TTLocalizer.SuitLegalEagleP, tier=6, attacks=__LEGAL_EAGLE_ATTACKS)
 __registerSuitAttributes(__LEGAL_EAGLE)
 
+__BARRISTER_ATTACKS = set()
+__BARRISTER_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.MUMBO_JUMBO,
+    damage={7: 10, 8: 13, 9: 15, 10: 17, 11: 19},
+    accuracy=60,
+    weight=40,
+))
+__BARRISTER_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.JARGON,
+    damage={7: 9, 8: 11, 9: 12, 10: 15, 11: 17},
+    accuracy=60,
+    weight=20,
+))
+__BARRISTER_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.PLAY_HARDBALL,
+    damage={7: 11, 8: 13, 9: 16, 10: 19, 11: 21},
+    accuracy=45,
+    weight=40,
+))
+__BARRISTER: SuitAttributes = SuitAttributes(key='barr', name=TTLocalizer.SuitBarrister, singular=TTLocalizer.SuitBarristerS, plural=TTLocalizer.SuitBarristerP, tier=6, attacks=__BARRISTER_ATTACKS)
+__registerSuitAttributes(__BARRISTER)
+
 __BIG_WIG_ATTACKS = set()
 __BIG_WIG_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.GUILT_TRIP,
