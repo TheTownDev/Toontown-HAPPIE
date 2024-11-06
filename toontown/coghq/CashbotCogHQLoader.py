@@ -23,8 +23,8 @@ class CashbotCogHQLoader(CogHQLoader.CogHQLoader):
 
         fileSystem = VirtualFileSystem.getGlobalPtr()
         self.musicJson = json.loads(fileSystem.readFile(ToontownGlobals.musicJsonFilePath, True))
-        self.musicFile = 'phase_9/audio/bgm/encntr_suit_HQ_nbrhood.ogg'
-        self.cogHQExteriorModelPath = 'phase_10/models/cogHQ/CashBotShippingStation'
+        self.musicFile = 'phase_10/audio/bgm/CBHQ_LOBBY_bg.ogg'
+        self.cogHQExteriorModelPath = 'phase_10/models/cogHQ/ttr_m_ara_chq_cashbotShippingStation'
         self.cogHQLobbyModelPath = 'phase_10/models/cogHQ/ttr_m_ara_chq_bossVaultLobby'
         self.geom = None
         return
@@ -35,8 +35,8 @@ class CashbotCogHQLoader(CogHQLoader.CogHQLoader):
 
         if str(zoneId) in self.musicJson['global_music']:
             self.music = base.loader.loadMusic(self.musicJson['global_music'][str(zoneId)])
-            if (str(zoneId) + '_battle') in self.musicJson['global_music']:
-                self.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(zoneId) + '_battle')])
+        if (str(zoneId) + '_battle') in self.musicJson['global_music']:
+            self.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(zoneId) + '_battle')])
 
     def unloadPlaceGeom(self):
         if self.geom:
@@ -50,12 +50,10 @@ class CashbotCogHQLoader(CogHQLoader.CogHQLoader):
         zoneId = zoneId - zoneId % 100
         if zoneId == ToontownGlobals.CashbotHQ:
             self.geom = loader.loadModel(self.cogHQExteriorModelPath)
-            ddLinkTunnel = self.geom.find('**/LinkTunnel1')
+            ddLinkTunnel = self.geom.find('**/TunnelEntrance')
             ddLinkTunnel.setName('linktunnel_dl_9252_DNARoot')
             locator = self.geom.find('**/sign_origin')
-            backgroundGeom = self.geom.find('**/EntranceFrameFront')
-            backgroundGeom.node().setEffect(DecalEffect.make())
-            signText = DirectGui.OnscreenText(text=TTLocalizer.DonaldsDreamland[-1], font=ToontownGlobals.getSuitFont(), scale=3, fg=(0.87, 0.87, 0.87, 1), mayChange=False, parent=backgroundGeom)
+            signText = DirectGui.OnscreenText(text=TTLocalizer.DonaldsDreamland[-1], font=ToontownGlobals.getSuitFont(), scale=3, fg=(0.87, 0.87, 0.87, 1), mayChange=False, parent=locator)
             signText.setPosHpr(locator, 0, 0, 0, 0, 0, 0)
             signText.setDepthWrite(0)
         elif zoneId == ToontownGlobals.CashbotLobby:
@@ -63,8 +61,8 @@ class CashbotCogHQLoader(CogHQLoader.CogHQLoader):
                 self.notify.info('QA-REGRESSION: COGHQ: Visit CashbotLobby')
             self.geom = loader.loadModel(self.cogHQLobbyModelPath)
 
-            buildings = self.geom.findAllMatches('**/grp_M_bgBuildings_01')
-            sky = self.geom.find('**/grp_M_skyBox_01')
+            buildings = self.geom.findAllMatches('**/BGBuildings')
+            sky = self.geom.find('**/SkyBox')
 
             fog = Fog('CBHQLobby')
             fog.setColor(.15, .17, .15)

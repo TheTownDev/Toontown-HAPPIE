@@ -283,12 +283,15 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
 
         suitTraps = ''
         for s in self.suits:
-            if s.battleTrap == NO_TRAP:
-                suitTraps += '9'
-            elif s.battleTrap == BattleCalculatorAI.BattleCalculatorAI.TRAP_CONFLICT:
-                suitTraps += '9'
-            else:
-                suitTraps += str(s.battleTrap)
+            try:
+                if s.battleTrap == NO_TRAP:
+                    suitTraps += '9'
+                elif s.battleTrap == BattleCalculatorAI.BattleCalculatorAI.TRAP_CONFLICT:
+                    suitTraps += '9'
+                else:
+                    suitTraps += str(s.battleTrap)
+            except:
+                pass
 
         toons = []
         for t in self.toons:
@@ -534,10 +537,11 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
     def suitRequestFacilityAdd(self, suit):
         self.notify.debug('suitRequestJoin(%d)' % suit.getDoId())
         if self.suitCanJoin():
-            self.addSuit(suit)
-            self.activeSuits.append(suit)
-            self.d_setMembers()
-            suit.prepareToJoinBattle()
+            if suit not in self.activeSuits:
+                self.addSuit(suit)
+                self.activeSuits.append(suit)
+                self.d_setMembers()
+                suit.prepareToJoinBattle()
             return 1
         else:
             self.notify.warning('suitRequestJoin() - not joinable - joinable state: %s max suits: %d' % (self.joinableFsm.getCurrentState().getName(), self.maxSuits))
@@ -1464,6 +1468,8 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
                         
                     #s.effectHandler.addEffect('BattleEffectHeathBonusSuitAI')
                     #s.effectHandler.children['healthBonusSuit'].startEffect()
+        print(self.suits)
+        print(self.activeSuits)
 
     def exitWaitForInput(self):
         self.npcAttacks = {}

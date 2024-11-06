@@ -429,6 +429,11 @@ def __createWeddingCakeFlight(throw, groupHitDict, pie, pies):
      [cakeParts[1]],
      [cakeParts[2]],
      [cakeParts[3]]]
+    cakePartDivisions[5] = [[cakeParts[0]],
+     [cakeParts[1]],
+     [cakeParts[2]],
+     [cakeParts[3]],
+     [cakeParts[1]]]
     cakePartDivToUse = cakePartDivisions[len(throw['target'])]
     groupPieTracks = Parallel()
     for i in range(numTargets):

@@ -478,15 +478,18 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             trapid = int(s)
             if trapid == 9:
                 trapid = -1
-            suit = self.suits[index]
-            index += 1
-            if suit != None:
-                if (trapid == NO_TRAP or trapid != suit.battleTrap) and suit.battleTrapProp != None:
-                    self.notify.debug('569 calling self.removeTrap, suit=%d' % suit.doId)
-                    self.removeTrap(suit)
-                if trapid != NO_TRAP and suit.battleTrapProp == None:
-                    if self.fsm.getCurrentState().getName() != 'PlayMovie':
-                        self.loadTrap(suit, trapid)
+            try:
+                suit = self.suits[index]
+                index += 1
+                if suit != None:
+                    if (trapid == NO_TRAP or trapid != suit.battleTrap) and suit.battleTrapProp != None:
+                        self.notify.debug('569 calling self.removeTrap, suit=%d' % suit.doId)
+                        self.removeTrap(suit)
+                    if trapid != NO_TRAP and suit.battleTrapProp == None:
+                        if self.fsm.getCurrentState().getName() != 'PlayMovie':
+                            self.loadTrap(suit, trapid)
+            except:
+                pass
 
         if len(oldSuitTraps) != len(self.suitTraps):
             self.needAdjustTownBattle = 1

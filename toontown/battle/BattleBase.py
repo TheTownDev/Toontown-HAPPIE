@@ -108,7 +108,7 @@ def getDefaultSuitAttack():
 
 
 def getDefaultSuitAttacks():
-    return [getDefaultSuitAttack() for _ in range(4)]
+    return [getDefaultSuitAttack() for _ in range(8)]
 
 
 def findToonAttack(toons, attacks, track):
@@ -230,10 +230,36 @@ class BattleBase:
     suitPoints = (((Point3(0, 5, 0), 179),),
      ((Point3(2, 5.3, 0), 170), (Point3(-2, 5.3, 0), 180)),
      ((Point3(4, 5.2, 0), 170), (Point3(0, 6, 0), 179), (Point3(-4, 5.2, 0), 190)),
-     ((Point3(6, 4.4, 0), 160),
+     ((Point3(6, 4.4, 0), 150),
       (Point3(2, 6.3, 0), 170),
       (Point3(-2, 6.3, 0), 190),
-      (Point3(-6, 4.4, 0), 200)))
+      (Point3(-6, 4.4, 0), 210)),
+     ((Point3(8, 5.4, 0), 138),
+      (Point3(4, 6.2, 0), 160),
+      (Point3(0, 7, 0), 179),
+      (Point3(-4, 6.2, 0), 210),
+      (Point3(-8, 5.4, 0), 222)),
+      ((Point3(10, 4.4, 0), 155),
+      (Point3(6, 5.4, 0), 160),
+      (Point3(2, 7.3, 0), 170),
+      (Point3(-2, 7.3, 0), 190),
+      (Point3(-6, 5.4, 0), 200),
+      (Point3(-10, 4.4, 0), 205)),
+      ((Point3(12, 5.0, 0), 158),
+      (Point3(8, 6.4, 0), 163),
+      (Point3(4, 7.2, 0), 170),
+      (Point3(0, 8, 0), 179),
+      (Point3(-4, 7.2, 0), 190),
+      (Point3(-8, 6.4, 0), 197),
+      (Point3(-12, 5.0, 0), 203)),
+      ((Point3(14, 3.6, 0), 150),
+      (Point3(10, 5.4, 0), 155),
+      (Point3(6, 6.4, 0), 160),
+      (Point3(2, 8.3, 0), 170),
+      (Point3(-2, 8.3, 0), 190),
+      (Point3(-6, 6.4, 0), 200),
+      (Point3(-10, 5.4, 0), 205),
+      (Point3(-14, 3.6, 0), 210)))
     suitPendingPoints = ((Point3(-4, 8.2, 0), 190),
      (Point3(0, 9, 0), 179),
      (Point3(4, 8.2, 0), 170),

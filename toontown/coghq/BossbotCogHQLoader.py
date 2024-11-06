@@ -260,7 +260,6 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
     def enterCogHQLobby(self, requestStatus):
         self.hood.startSky()
         CogHQLoader.CogHQLoader.enterCogHQLobby(self, requestStatus)
-        self.startRain()
 
     def exitCogHQLobby(self):
         self.stopRain()

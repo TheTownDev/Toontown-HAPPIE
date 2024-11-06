@@ -75,10 +75,11 @@ class StageInterior(BattlePlace.BattlePlace):
 
         if str(self.zoneId) in self.musicJson['global_music']:
             self.music = base.loader.loadMusic(self.musicJson['global_music'][str(self.zoneId)])
-            if (str(self.zoneId) + '_battle') in self.musicJson['global_music']:
-                self.loader.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(self.zoneId) + '_battle')])
         else:
             self.music = base.loader.loadMusic('phase_9/audio/bgm/CHQ_FACT_bg.ogg')
+        if (str(self.zoneId) + '_battle') in self.musicJson['global_music']:
+            self.loader.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(self.zoneId) + '_battle')])
+        
 
     def unload(self):
         self.parentFSM.getStateNamed('stageInterior').removeChild(self.fsm)

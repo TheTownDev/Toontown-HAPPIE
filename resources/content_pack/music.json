@@ -15,6 +15,7 @@
       "boss-none-jury": "phase_9/audio/bgm/encntr_head_suit_theme.ogg",
 
       "10000_battle": "phase_12/audio/bgm/ttr_s_ara_bhq_facilityBattle.ogg",
+      "10100": "phase_12/audio/bgm/Bossbot_Factory_Finale.ogg",
       "11000_battle": "phase_9/audio/bgm/ttr_s_ara_shq_facilityBattle.ogg",
       "12000_battle": "phase_10/audio/bgm/ttr_s_ara_chq_facilityBattle.ogg",
       "13000_battle": "phase_11/audio/bgm/ttr_s_ara_lhq_facilityBattle.ogg",
@@ -23,6 +24,12 @@
       "13400_battle": "phase_11/audio/bgm/ttr_s_ara_lhq_facilityBattle.ogg",
       "13500_battle": "phase_11/audio/bgm/ttr_s_ara_lhq_facilityBattle.ogg",
       "13600_battle": "phase_11/audio/bgm/ttr_s_ara_lhq_facilityBattle.ogg",
+
+      "13300": "phase_11/audio/bgm/LB_Office.ogg",
+      "13400": "phase_11/audio/bgm/LB_Office.ogg",
+      "13500": "phase_11/audio/bgm/LB_Office.ogg",
+      "13600": "phase_11/audio/bgm/LB_Office.ogg",
+      
 
       "11500_battle": "phase_9/audio/bgm/ttr_s_ara_shq_facilityBattle.ogg",
 

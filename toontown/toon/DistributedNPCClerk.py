@@ -17,7 +17,7 @@ MISSING_ORIGIN_ZONE_POSITION_FALLBACK = {
     ToontownGlobals.SellbotHQ: (2, -164, -19.594, -180),
     ToontownGlobals.CashbotHQ: (62, 128, -23.439, -135),
     ToontownGlobals.LawbotHQ: (90, -366, -68.367, 0),
-    ToontownGlobals.BossbotHQ: (75, 120, 0, 145),
+    ToontownGlobals.BossbotHQ: (-235.28, -183.74, 3.92, -25.0),
 
     # Begin hacky street NPC positioning. As a reminder, if you modify any of these either:
     # - Be sure that the position is in the same zone.

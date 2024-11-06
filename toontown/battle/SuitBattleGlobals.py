@@ -165,7 +165,7 @@ class SuitAttackAttribute:
 
     # Given an amount of levels we are overflowed by, return how much extra damage an attack should do.
     def __getOverflowDamage(self, overflow):
-        return overflow * 3  # Simply just 3 damage per level of overflow this suit is for a given attack definition.
+        return overflow * 2  # Simply just 3 damage per level of overflow this suit is for a given attack definition.
 
     # Given an amount of levels we are underflowed by, return how less damage an attack should do.
     def __getUnderflowDamage(self, underflow):
@@ -1181,6 +1181,34 @@ __AMBULANCE_CHASER_ATTACKS.add(SuitAttackAttribute(
 __AMBULANCE_CHASER: SuitAttributes = SuitAttributes(key='ac', name=TTLocalizer.SuitAmbulanceChaser, singular=TTLocalizer.SuitAmbulanceChaserS, plural=TTLocalizer.SuitAmbulanceChaserP, tier=3, attacks=__AMBULANCE_CHASER_ATTACKS)
 __registerSuitAttributes(__AMBULANCE_CHASER)
 
+__ATTORNEY_ATTACKS = set()
+__ATTORNEY_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.AUDIT,
+    damage={4: 4, 5: 6, 6: 9, 7: 12, 8: 15},
+    accuracy=95,
+    weight=20,
+))
+__ATTORNEY_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.CALCULATE,
+    damage={4: 4, 5: 6, 6: 9, 7: 12, 8: 15},
+    accuracy=75,
+    weight=25,
+))
+__ATTORNEY_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.TABULATE,
+    damage={4: 4, 5: 6, 6: 9, 7: 12, 8: 15},
+    accuracy=75,
+    weight=25,
+))
+__ATTORNEY_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.WRITE_OFF,
+    damage={4: 4, 5: 6, 6: 9, 7: 12, 8: 15},
+    accuracy=95,
+    weight=30,
+))
+__ATTORNEY: SuitAttributes = SuitAttributes(key='att', name=TTLocalizer.SuitAttorny, singular=TTLocalizer.SuitAttornyS, plural=TTLocalizer.SuitAttornyP, tier=3, attacks=__ATTORNEY_ATTACKS)
+__registerSuitAttributes(__ATTORNEY)
+
 __BACK_STABBER_ATTACKS = set()
 __BACK_STABBER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.GUILT_TRIP,
@@ -1313,13 +1341,13 @@ __registerSuitAttributes(__BARISTA)
 
 __INVESTIGATOR_ATTACKS = set()
 __INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.GUILT_TRIP,
+    attack=SuitAttackType.EVIL_EYE,
     damage={7: 10, 8: 11, 9: 13, 10: 15, 11: 17},
     accuracy=60,
     weight=30,
 ))
 __INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.EVICTION_NOTICE,
+    attack=SuitAttackType.GLOWER_POWER,
     damage={7: 13, 8: 15, 9: 17, 10: 19, 11: 21},
     accuracy=60,
     weight=35,
@@ -1331,7 +1359,7 @@ __INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
     weight=20,
 ))
 __INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.WRITE_OFF,
+    attack=SuitAttackType.EVICTION_NOTICE,
     damage={7: 6, 8: 8, 9: 10, 10: 12, 11: 14},
     accuracy=70,
     weight=15,

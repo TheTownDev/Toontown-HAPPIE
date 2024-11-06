@@ -1,6 +1,6 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import *
-from toontown.coghq.BossbotCountryClubCornerRoomInverse_Battle00 import GlobalEntities
+from toontown.coghq.LawbotOfficeLavaRoomFoyer_Battle00 import GlobalEntities
 from otp.level import LevelUtil
 
 if __debug__:
@@ -162,6 +162,12 @@ class MyApp(ShowBase):
                 model.setHpr(self.room[entity]['hpr'])
                 model.setScale(self.room[entity]['scale'])
                 self.roomEntId2Model[entity] = model
+            if self.room[entity]['type'] == 'securityCamera':
+                model = loader.loadModel("phase_3/models/misc/sphere.bam")
+                model.setPos(self.room[entity]['pos'])
+                model.setHpr(self.room[entity]['hpr'])
+                model.setScale(self.room[entity]['scale'])
+                self.roomEntId2Model[entity] = model
             if self.room[entity]['type'] == 'door':
                 model = loader.loadModel('phase_9/models/cogHQ/CogDoorHandShake.bam')
                 if self.room[entity]['parentEntId'] != 0:
@@ -271,6 +277,14 @@ class MyApp(ShowBase):
         
         for entity in self.room:
             if self.room[entity]['type'] == 'battleBlocker':
+                entityModel = self.roomEntId2Model[entity]
+                if self.room[entity]['parentEntId'] != 0:
+                    entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
+                else:
+                    entityModel.reparentTo(self.roomModel)
+        
+        for entity in self.room:
+            if self.room[entity]['type'] == 'securityCamera':
                 entityModel = self.roomEntId2Model[entity]
                 if self.room[entity]['parentEntId'] != 0:
                     entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])

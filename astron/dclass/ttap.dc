@@ -42,6 +42,9 @@ from toontown.suit import DistributedMintSuit/AI
 from toontown.suit import DistributedStageSuit/AI
 from toontown.suit import DistributedSellbotBoss/AI
 from toontown.suit import DistributedCashbotBoss/AI
+from toontown.suit import DistributedCogHQEntity/AI
+from toontown.suit import DistributedCogHQGoon/AI
+from toontown.suit import DistributedExecutiveCogHQGoon/AI
 from toontown.coghq import DistributedCashbotBossSafe/AI
 from toontown.coghq import DistributedCashbotBossCrane/AI
 from toontown.coghq import DistributedCashbotBossSideCrane/AI
@@ -1450,6 +1453,38 @@ dclass DistributedCashbotBossObject : DistributedObject {
   setSmPosHpr : setComponentX, setComponentY, setComponentZ, setComponentH, setComponentP, setComponentR, setComponentT;
   setSmPosHprL : setComponentL, setComponentX, setComponentY, setComponentZ, setComponentH, setComponentP, setComponentR, setComponentT;
   clearSmoothing(int8) broadcast clsend;
+};
+
+dclass DistributedCogHQEntity : DistributedObject {
+  setOuch(uint8 penalty) airecv clsend;
+  zapToon(int16/10, int16/10, int16/10, int16/10, int16/10, int16/10, uint8, int16) airecv clsend;
+  showZapToon(uint32, int16/10, int16/10, int16/10, int16/10, int16/10, int16/10, uint8, int16) broadcast;
+  trapFire(bool isCamera) airecv clsend;
+  showObstacle() broadcast ram;
+  setPos(int16/10 x, int16/10 y, int16/10 z) broadcast ram;
+  setHpr(int16/10 h, int16/10 p, int16/10 r) broadcast ram;
+  setPosHpr(int16/10 x, int16/10 y, int16/10 z, int16/10 h, int16/10 p, int16/10 r) broadcast ram;
+  setScale(int16/10 sx, int16/10 sy, int16/10 sz) broadcast ram;
+};
+
+dclass DistributedCogHQGoon : DistributedCogHQEntity {
+  requestBattle(int16/10 pauseTime) airecv clsend;
+  requestStunned(int16/10 pauseTime) airecv clsend;
+  setStrength(uint8 strength) broadcast ram;
+  setPath(int16/10 xi, int16/10 yi, int16/10 zi, int16/10 xf, int16/10 yf, int16/10 zf) broadcast ram;
+  setPathDuration(uint8 pathDuration) broadcast ram;
+  setReverseTheta(bool reverseTheta) broadcast ram;
+  setMovie(uint8 mode, uint32 avId, int32/10 pauseTime, int16 timestamp) broadcast ram;
+};
+
+dclass DistributedExecutiveCogHQGoon : DistributedCogHQEntity {
+  requestBattle(int16/10 pauseTime) airecv clsend;
+  requestStunned(int16/10 pauseTime) airecv clsend;
+  setStrength(uint8 strength) broadcast ram;
+  setPath(int16/10 xi, int16/10 yi, int16/10 zi, int16/10 xf, int16/10 yf, int16/10 zf) broadcast ram;
+  setPathDuration(uint8 pathDuration) broadcast ram;
+  setReverseTheta(bool reverseTheta) broadcast ram;
+  setMovie(uint8 mode, uint32 avId, int32/10 pauseTime, int16 timestamp) broadcast ram;
 };
 
 dclass DistributedCashbotBossSafe : DistributedCashbotBossObject {

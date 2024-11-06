@@ -56,7 +56,8 @@ suitHeadTypes = [
     'ski',
     'def',
     'bgh',
-    'barr'
+    'barr',
+    'att',
 ]
 
 supervisors = [
@@ -107,7 +108,8 @@ suitBTypes = [
     'tm',
     'ms',
     'trf',
-    'inv'
+    'inv',
+    'att'
 ]
 
 suitCTypes = [
@@ -344,6 +346,10 @@ __GENERAL_SUIT_ANIMATIONS: Set[SuitAnimation] = {
     SuitAnimation(key='speak', suit='B', path='speak', phase='5'),
     SuitAnimation(key='speak', suit='C', path='speak', phase='5'),
     SuitAnimation(key='chop-chop', suit='B', path='chop-chop', phase='5'),
+    SuitAnimation(key='golf-club-swing', suit='A', path='golf-club-swing', phase='5'),
+    SuitAnimation(key='glower', suit='A', path='glower', phase='5'),
+    SuitAnimation(key='glower', suit='B', path='glower', phase='5'),
+    SuitAnimation(key='glower', suit='C', path='glower', phase='5'),
 }
 
 __SUIT_BATTLE_ANIMATIONS: Set[SuitAnimation] = {
@@ -392,9 +398,6 @@ __SUIT_BATTLE_ANIMATIONS: Set[SuitAnimation] = {
     SuitAnimation(key='rubber-stamp', suit='A', path='rubber-stamp', phase='5'),
     SuitAnimation(key='rubber-stamp', suit='C', path='rubber-stamp', phase='5'),
 
-    SuitAnimation(key='glower', suit='A', path='glower', phase='5'),
-    SuitAnimation(key='glower', suit='C', path='glower', phase='5'),
-
     # CB Animations (A Cannot use).
     SuitAnimation(key='effort', suit='C', path='effort', phase='5'),
     SuitAnimation(key='effort', suit='B', path='effort', phase='5'),
@@ -403,7 +406,6 @@ __SUIT_BATTLE_ANIMATIONS: Set[SuitAnimation] = {
     SuitAnimation(key='smile', suit='A', path='smile', phase='5'),
     SuitAnimation(key='cigar-smoke', suit='A', path='cigar-smoke', phase='8'),
     SuitAnimation(key='song-and-dance', suit='A', path='song-and-dance', phase='8'),
-    SuitAnimation(key='golf-club-swing', suit='A', path='golf-club-swing', phase='5'),
     SuitAnimation(key='gavel', suit='A', path='gavel', phase='8'),
 
     # Animations exlcusive to Suit B (Skinny).
@@ -493,7 +495,7 @@ class SuitVisual:
         if isinstance(self.head_type, list):
             for head in self.head_type:
                 headPath = self.headModelPath(suit.style.body)
-                if self.key in ['ds', 'def']:
+                if self.key in ['ds', 'att']:
                     headPath = self.headModelPath(suit.style.body, 'phase_4/models/char/suitB-heads2')
                 if self.key in ['bar', 'inv', 'cfn']:
                     headPath = self.headModelPath(suit.style.body, 'phase_15/models/char/ttr_r_ene_cgr_heads')
@@ -541,6 +543,7 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual('b',   4.375 / bSize, VBase4(0.95, 0.95, 1.0, 1.0),  None,                         'blood-sucker.jpg',     'movershaker',         6.17),
     SuitVisual('dt',  4.25 / aSize,  legalPolyColor,                None,                         'double-talker.jpg',    'twoface',             5.63),
     SuitVisual('ac',  4.35 / bSize,  legalPolyColor,                None,                         None,                   'ambulancechaser',     6.39),
+    SuitVisual('att',  4.5 / bSize,   corpPolyColor,                 None,                         'suit-heads_palette_3cmla_5.jpg',                   ['downsizer', 'downsizer_hat'],         6.08),
     SuitVisual('bs',  4.5 / aSize,   legalPolyColor,                None,                         None,                   'backstabber',         6.71),
     SuitVisual('sd',  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                         'spin-doctor.jpg',      'telemarketer',        7.9),
     SuitVisual('le',  7.125 / aSize, VBase4(0.25, 0.25, 0.5, 1.0),  None,                         None,                   'legaleagle',          8.27),
@@ -636,6 +639,7 @@ customSuit2Dept = {
     'bgh': 'c',
     'bar': 'c',
     'inv': 'c',
+    'att': 'l',
     'cfn': 'c'
 }
 
@@ -674,13 +678,13 @@ def getSuitType(name):
 
 
 validCogs = {
-    1   :   [1,2,3,4,5,6],
-    2   :   [2,3,4,5,6,7,8],
-    3   :   [3,4,5,6,7,8,9,10],
-    4   :   [4,5,6,7,8,9,10,11,12],
+    1   :   [1,2,3,4,5,6,7,8,9,10,11],
+    2   :   [2,3,4,5,6,7,8,9,10,11],
+    3   :   [3,4,5,6,7,8,9,10,11],
+    4   :   [4,5,6,7,8,9,10,11,12,13,14],
     5   :   [5,6,7,8,9,10,11,12,13,14],
-    6   :   [6,7,8,9,10,11,12,13,14,15,16],
-    7   :   [7,8,9,10,11,12,13,14,15,16,17,18],
+    6   :   [8,9,10,11,12,13,14,15,16,17,18,19,20],
+    7   :   [8,9,10,11,12,13,14,15,16,17,18,19,20],
     8   :   [8,9,10,11,12,13,14,15,16,17,18,19,20]
 }
 def getRandomSuitType(cogLevel, rng = random):
@@ -807,6 +811,13 @@ class SuitDNA(AvatarDNA.AvatarDNA):
             # if the rng is less than the chance, we set the suit to the alternate suit
             if random.random() < alternateSuitChance:
                 self.name = 'barr'
+        
+        if self.name == 'ac':
+            # we define it's rng
+            alternateSuitChance = 0.4
+            # if the rng is less than the chance, we set the suit to the alternate suit
+            if random.random() < alternateSuitChance:
+                self.name = 'att'
 
         self.body = getSuitBodyType(self.name)
         return

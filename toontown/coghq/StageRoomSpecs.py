@@ -4,17 +4,21 @@ from toontown.coghq import NullCogs
 from toontown.coghq import LawbotOfficeOilRoom_Battle00_Cogs
 from toontown.coghq import LawbotOfficeOilRoom_Battle01_Cogs
 from toontown.coghq import LawbotOfficeBoilerRoom_Battle00_Cogs
+from toontown.coghq import LawbotOfficeBoilerRoom_Battle01_Cogs
 from toontown.coghq import LawbotOfficeBoilerRoom_Trap00_Cogs
 from toontown.coghq import LawbotOfficeLobby_Trap00_Cogs
 from toontown.coghq import LawbotOfficeDiamondRoom_Trap00_Cogs
 from toontown.coghq import LawbotOfficeDiamondRoom_Battle00_Cogs
+from toontown.coghq import LawbotOfficeDiamondRoom_Battle01_Cogs
 from toontown.coghq import LawbotOfficeGearRoom_Battle00_Cogs
+from toontown.coghq import LawbotOfficeLavaRoomFoyer_Battle00_Cogs
 
 from toontown.coghq import LawbotOfficeEntrance_Action00
 from toontown.coghq import LawbotOfficeOilRoom_Battle00
 from toontown.coghq import LawbotOfficeOilRoom_Battle01
 from toontown.coghq import LawbotOfficeBoilerRoom_Security00
 from toontown.coghq import LawbotOfficeBoilerRoom_Battle00
+from toontown.coghq import LawbotOfficeBoilerRoom_Battle01
 from toontown.coghq import LawbotOfficeGearRoom_Action00
 from toontown.coghq import LawbotOfficeLobby_Action00
 from toontown.coghq import LawbotOfficeGearRoom_Security00
@@ -28,7 +32,9 @@ from toontown.coghq import LawbotOfficeDiamondRoom_Action00
 from toontown.coghq import LawbotOfficeDiamondRoom_Action01
 from toontown.coghq import LawbotOfficeLobby_Action01
 from toontown.coghq import LawbotOfficeDiamondRoom_Battle00
+from toontown.coghq import LawbotOfficeDiamondRoom_Battle01
 from toontown.coghq import LawbotOfficeGearRoom_Battle00
+from toontown.coghq import LawbotOfficeLavaRoomFoyer_Battle00
 
 
 LawbotStageSpecModules = {
@@ -51,6 +57,9 @@ LawbotStageSpecModules = {
     103: LawbotOfficeLobby_Action01,
     104: LawbotOfficeDiamondRoom_Battle00,
     105: LawbotOfficeGearRoom_Battle00,
+    106: LawbotOfficeDiamondRoom_Battle01,
+    107: LawbotOfficeBoilerRoom_Battle01,
+    108: LawbotOfficeLavaRoomFoyer_Battle00
 }
 
 # Ok don't freak out. What we are doing here is grabbing the name of the module that we imported.
@@ -67,7 +76,10 @@ CogSpecModules = {
     'LawbotOfficeLobby_Trap00': LawbotOfficeLobby_Trap00_Cogs,
     'LawbotOfficeDiamondRoom_Trap00': LawbotOfficeDiamondRoom_Trap00_Cogs,
     'LawbotOfficeDiamondRoom_Battle00': LawbotOfficeDiamondRoom_Battle00_Cogs,
-    'LawbotOfficeGearRoom_Battle00': LawbotOfficeGearRoom_Battle00_Cogs
+    'LawbotOfficeGearRoom_Battle00': LawbotOfficeGearRoom_Battle00_Cogs,
+    'LawbotOfficeDiamondRoom_Battle01': LawbotOfficeDiamondRoom_Battle01_Cogs,
+    'LawbotOfficeBoilerRoom_Battle01': LawbotOfficeBoilerRoom_Battle01_Cogs,
+    'LawbotOfficeLavaRoomFoyer_Battle00': LawbotOfficeLavaRoomFoyer_Battle00_Cogs
 }
 
 

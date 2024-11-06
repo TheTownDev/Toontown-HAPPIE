@@ -28,7 +28,7 @@ class TownBattleChooseAvatarPanel(StateData.StateData):
         else:
             self.textFrame['text'] = TTLocalizer.TownBattleChooseAvatarCogTitle
         self.avatarButtons = []
-        for i in range(4):
+        for i in range(8):
             button = DirectButton(parent=self.frame, relief=None, image=(gui.find('**/PckMn_Arrow_Up'), gui.find('**/PckMn_Arrow_Dn'), gui.find('**/PckMn_Arrow_Rlvr')), command=self.__handleAvatar, extraArgs=[i])
             if self.toon:
                 button.setScale(1, 1, -1)
@@ -96,26 +96,13 @@ class TownBattleChooseAvatarPanel(StateData.StateData):
         self.__placeButtons(numToons, [] if invalidTargets is None else invalidTargets, localNum)
 
     def __placeButtons(self, numAvatars, invalidTargets, localNum):
-        for i in range(4):
-            if numAvatars > i and i not in invalidTargets:
+        for i in range(8):
+            if numAvatars > i != localNum and i not in invalidTargets:
                 self.avatarButtons[i].show()
             else:
                 self.avatarButtons[i].hide()
 
-        if numAvatars == 1:
-            self.avatarButtons[0].setX(0)
-        elif numAvatars == 2:
-            self.avatarButtons[0].setX(0.2)
-            self.avatarButtons[1].setX(-0.2)
-        elif numAvatars == 3:
-            self.avatarButtons[0].setX(0.4)
-            self.avatarButtons[1].setX(0.0)
-            self.avatarButtons[2].setX(-0.4)
-        elif numAvatars == 4:
-            self.avatarButtons[0].setX(0.6)
-            self.avatarButtons[1].setX(0.2)
-            self.avatarButtons[2].setX(-0.2)
-            self.avatarButtons[3].setX(-0.6)
-        else:
-            self.notify.error('Invalid number of avatars: %s' % numAvatars)
+        origin = 0.0 + ((numAvatars - 1) * 0.2)
+        for i in range(numAvatars):
+            self.avatarButtons[i].setX(origin - (i * 0.4))
         return None

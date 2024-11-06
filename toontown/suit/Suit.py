@@ -295,7 +295,7 @@ class Suit(Avatar.Avatar):
         self.generateHealthBar()
         self.generateCorporateMedallion()
         self.setBlend(frameBlend=True)
-        self.getGeomNode().writeBamFile(SuitBattleGlobals.getSuitAttributes(dna.name).name + '.bam')
+        #self.getGeomNode().writeBamFile(SuitBattleGlobals.getSuitAttributes(dna.name).name + '.bam')
         return
 
     def generateBody(self):

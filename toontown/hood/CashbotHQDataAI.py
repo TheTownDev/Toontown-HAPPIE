@@ -11,6 +11,7 @@ from toontown.building import FADoorCodes
 from toontown.building import DistributedBoardingPartyAI
 from toontown.safezone import ArchipelagoTreasurePlannerAI
 from toontown.safezone import DistributedArchiTreasureAI
+from toontown.suit.DistributedCogHQGoonAI import DistributedCogHQGoonAI
 
 class CashbotHQDataAI(HoodDataAI.HoodDataAI):
     notify = DirectNotifyGlobal.directNotify.newCategory('CashbotHqDataAI')
@@ -20,6 +21,7 @@ class CashbotHQDataAI(HoodDataAI.HoodDataAI):
         if zoneId == None:
             zoneId = hoodId
         HoodDataAI.HoodDataAI.__init__(self, air, zoneId, hoodId)
+        self.goons = []
         return
 
     def startup(self):
@@ -28,15 +30,9 @@ class CashbotHQDataAI(HoodDataAI.HoodDataAI):
         self.testElev0 = DistributedMintElevatorExtAI.DistributedMintElevatorExtAI(self.air, self.air.mintMgr, ToontownGlobals.CashbotMintIntA, antiShuffle=0, minLaff=mins[0])
         self.testElev0.generateWithRequired(ToontownGlobals.CashbotHQ)
         self.addDistObj(self.testElev0)
-        self.testElev0.setLock(FADoorCodes.COIN_MINT_ACCESS_MISSING)
-        self.testElev1 = DistributedMintElevatorExtAI.DistributedMintElevatorExtAI(self.air, self.air.mintMgr, ToontownGlobals.CashbotMintIntB, antiShuffle=0, minLaff=mins[1])
-        self.testElev1.generateWithRequired(ToontownGlobals.CashbotHQ)
-        self.addDistObj(self.testElev1)
-        self.testElev1.setLock(FADoorCodes.DOLLAR_MINT_ACCESS_MISSING)
         self.testElev2 = DistributedMintElevatorExtAI.DistributedMintElevatorExtAI(self.air, self.air.mintMgr, ToontownGlobals.CashbotMintIntC, antiShuffle=0, minLaff=mins[2])
         self.testElev2.generateWithRequired(ToontownGlobals.CashbotHQ)
         self.addDistObj(self.testElev2)
-        self.testElev2.setLock(FADoorCodes.BULLION_MINT_ACCESS_MISSING)
         self.lobbyMgr = LobbyManagerAI.LobbyManagerAI(self.air, DistributedCashbotBossAI.DistributedCashbotBossAI)
         self.lobbyMgr.generateWithRequired(ToontownGlobals.CashbotLobby)
         self.addDistObj(self.lobbyMgr)
@@ -45,6 +41,65 @@ class CashbotHQDataAI(HoodDataAI.HoodDataAI):
         self.addDistObj(self.lobbyElevator)
         self.treasurePlanner = [ArchipelagoTreasurePlannerAI.ArchipelagoTreasurePlannerAI(self.zoneId, DistributedArchiTreasureAI.DistributedArchiTreasureAI, 0, treasureCount=5),
                                 ]
+        newGoon = DistributedCogHQGoonAI(self.air)
+        self.goons.append(newGoon)
+        newGoon.setHFov(8)
+        newGoon.setVelocity(8)
+        newGoon.generateWithRequired(self.zoneId)
+        newGoon.d_setPosHpr(-56.60, -397.97, -23.44, 180, 0, 0)
+        newGoon.b_setStrength(20)
+        newGoon.d_setPath(
+            -56.80,
+            -460.82,
+            -23.44,
+            -56.60,
+            -397.97,
+            -23.44
+            )
+        newGoon.d_setPathDuration(9)
+        newGoon.d_setScale(1.7)
+        
+        newGoon1 = DistributedCogHQGoonAI(self.air)
+        self.goons.append(newGoon1)
+        newGoon1.setHFov(8)
+        newGoon1.setVelocity(8)
+        newGoon1.generateWithRequired(self.zoneId)
+        newGoon1.d_setPosHpr(-113.13, -87.44, -23.44, 0, 0, 0)
+        newGoon1.b_setStrength(18)
+        newGoon1.d_setPath(
+            -113.43,
+            34.86,
+            -23.44,
+            -113.13,
+            87.44,
+            -23.44
+            )
+        newGoon1.d_setPathDuration(9)
+        newGoon1.d_setScale(1.4)
+        
+        newGoon2 = DistributedCogHQGoonAI(self.air)
+        self.goons.append(newGoon2)
+        newGoon2.setHFov(8)
+        newGoon2.setVelocity(8)
+        newGoon2.generateWithRequired(self.zoneId)
+        newGoon2.d_setPosHpr(-90.24, 35.89, -23.44, 0, 0, 0)
+        newGoon2.b_setStrength(8)
+        newGoon2.d_setPath(
+            -90.44,
+            66.57,
+            -23.44,
+            -90.24,
+            35.89,
+            -23.44,
+            )
+        newGoon2.d_setPathDuration(9)
+        newGoon2.d_setScale(0.6)
+        
+        
+        for goon in self.goons:
+            goon.startGoon()
+            goon.d_showObstacle()
+        
         for planner in self.treasurePlanner:
             planner.start()
         if simbase.config.GetBool('want-boarding-groups', 1):
@@ -58,7 +113,7 @@ class CashbotHQDataAI(HoodDataAI.HoodDataAI):
         intDoor0.setOtherDoor(extDoor0)
         intDoor0.zoneId = ToontownGlobals.CashbotLobby
         mintIdList = [
-         self.testElev0.doId, self.testElev1.doId, self.testElev2.doId]
+         self.testElev0.doId, self.testElev2.doId]
         if simbase.config.GetBool('want-boarding-groups', 1):
             self.mintBoardingParty = DistributedBoardingPartyAI.DistributedBoardingPartyAI(self.air, mintIdList, 4)
             self.mintBoardingParty.generateWithRequired(self.zoneId)

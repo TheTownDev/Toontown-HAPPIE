@@ -14,6 +14,7 @@ from toontown.building import FADoorCodes
 from toontown.coghq import DistributedCogKartAI
 from toontown.safezone import ArchipelagoTreasurePlannerAI
 from toontown.safezone import DistributedArchiTreasureAI
+from toontown.suit.DistributedExecutiveCogHQGoonAI import DistributedExecutiveCogHQGoonAI
 
 class BossbotHQDataAI(HoodDataAI.HoodDataAI):
     notify = DirectNotifyGlobal.directNotify.newCategory('BossbotHQDataAI')
@@ -25,6 +26,7 @@ class BossbotHQDataAI(HoodDataAI.HoodDataAI):
             zoneId = hoodId
         HoodDataAI.HoodDataAI.__init__(self, air, zoneId, hoodId)
         self.cogKarts = []
+        self.goons = []
         return
 
     def startup(self):
@@ -64,6 +66,73 @@ class BossbotHQDataAI(HoodDataAI.HoodDataAI):
         if simbase.config.GetBool('want-boarding-groups', 1):
             self.courseBoardingParty = DistributedBoardingPartyAI.DistributedBoardingPartyAI(self.air, kartIdList, 4)
             self.courseBoardingParty.generateWithRequired(self.zoneId)
+        
+        newGoon = DistributedExecutiveCogHQGoonAI(self.air)
+        self.goons.append(newGoon)
+        newGoon.setHFov(8)
+        newGoon.setVelocity(8)
+        newGoon.generateWithRequired(self.zoneId)
+        newGoon.d_setPosHpr(-432.7,
+            188,
+            3.92, 180, 0, 0)
+        newGoon.b_setStrength(42)
+        newGoon.d_setPath(
+            -432.2,
+            287.35,
+            3.97,
+            -432.7,
+            188,
+            3.92,
+            )
+        newGoon.d_setPathDuration(6)
+        newGoon.d_setScale(9)
+        newGoon.d_setReverseTheta(True)
+        
+        newGoon1 = DistributedExecutiveCogHQGoonAI(self.air)
+        self.goons.append(newGoon1)
+        newGoon1.setHFov(8)
+        newGoon1.setVelocity(8)
+        newGoon1.generateWithRequired(self.zoneId)
+        newGoon1.d_setPosHpr(-548.86,
+            431.85,
+            3.92, 180, 0, 0)
+        newGoon1.b_setStrength(42)
+        newGoon1.d_setPath(
+            -548.46,
+            383.85,
+            3.92,
+            -548.96,
+            432.15,
+            3.92,
+            )
+        newGoon1.d_setPathDuration(6)
+        newGoon1.d_setScale(9)
+        newGoon1.d_setReverseTheta(True)
+        
+        newGoon2 = DistributedExecutiveCogHQGoonAI(self.air)
+        self.goons.append(newGoon2)
+        newGoon2.setHFov(8)
+        newGoon2.setVelocity(8)
+        newGoon2.generateWithRequired(self.zoneId)
+        newGoon2.d_setPosHpr(-437.19,
+            224.73,
+            3.92, 0, 0, 0)
+        newGoon2.b_setStrength(42)
+        newGoon2.d_setPath(
+            -437.19,
+            295.73,
+            3.92,
+            -437.79,
+            224.83,
+            3.92,
+            )
+        newGoon2.d_setPathDuration(6)
+        newGoon2.d_setScale(9)
+        newGoon2.d_setReverseTheta(True)
+        
+        for goon in self.goons:
+            goon.startGoon()
+            goon.d_showObstacle()
 
     def createCogKarts(self):
         posList = ((-26.5658, 237.459, 0), (-28.725, -235.706, 0))

@@ -156,7 +156,7 @@ def chooseSoundOpenShot(sounds, targets, attackDuration):
             shotChoices = [avatarCloseUpThreeQuarterRightShotWide, allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
         else:
             shotChoices = [avatarCloseUpThreeQuarterRightShot, allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
-    elif numSounds >= 2 and numSounds <= 4:
+    elif numSounds >= 2 and numSounds <= 8:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of sounds: %s' % numSounds)
@@ -174,7 +174,7 @@ def chooseSoundCloseShot(sounds, targets, openDuration, openName, attackDuration
          avatarCloseUpThreeQuarterLeftShot,
          allGroupLowShot,
          suitGroupThreeQuarterLeftBehindShot]
-    elif numSuits >= 2 and numSuits <= 4:
+    elif numSuits >= 2 and numSuits <= 8:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of suits: %s' % numSuits)
@@ -202,7 +202,7 @@ def chooseThrowOpenShot(throws, suitThrowsDict, attackDuration):
          avatarBehindShot,
          allGroupLowShot,
          suitGroupThreeQuarterLeftBehindShot]
-    elif numThrows >= 2 and numThrows <= 4:
+    elif numThrows >= 2 and numThrows <= 8:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of throws: %s' % numThrows)
@@ -220,7 +220,7 @@ def chooseThrowCloseShot(throws, suitThrowsDict, openDuration, openName, attackD
          avatarCloseUpThreeQuarterLeftShot,
          allGroupLowShot,
          suitGroupThreeQuarterLeftBehindShot]
-    elif numSuits >= 2 and numSuits <= 4 or numSuits == 0:
+    elif numSuits >= 2 and numSuits <= 8 or numSuits == 0:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of suits: %s' % numSuits)
@@ -248,7 +248,7 @@ def chooseSquirtOpenShot(squirts, suitSquirtsDict, attackDuration):
          avatarBehindShot,
          allGroupLowShot,
          suitGroupThreeQuarterLeftBehindShot]
-    elif numSquirts >= 2 and numSquirts <= 4:
+    elif numSquirts >= 2 and numSquirts <= 8:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of squirts: %s' % numSquirts)
@@ -266,7 +266,7 @@ def chooseSquirtCloseShot(squirts, suitSquirtsDict, openDuration, openName, atta
          avatarCloseUpThreeQuarterLeftShot,
          allGroupLowShot,
          suitGroupThreeQuarterLeftBehindShot]
-    elif numSuits >= 2 and numSuits <= 4:
+    elif numSuits >= 2 and numSuits <= 8:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of suits: %s' % numSuits)
@@ -296,7 +296,7 @@ def chooseDropOpenShot(drops, suitDropsDict, attackDuration):
          avatarBehindShot,
          allGroupLowShot,
          suitGroupThreeQuarterLeftBehindShot]
-    elif numDrops >= 2 and numDrops <= 4 or numDrops == 0:
+    elif numDrops >= 2 and numDrops <= 8 or numDrops == 0:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of drops: %s' % numDrops)
@@ -314,7 +314,7 @@ def chooseDropCloseShot(drops, suitDropsDict, openDuration, openName, attackDura
          avatarCloseUpThreeQuarterLeftShot,
          allGroupLowShot,
          suitGroupThreeQuarterLeftBehindShot]
-    elif numSuits >= 2 and numSuits <= 4 or numSuits == 0:
+    elif numSuits >= 2 and numSuits <= 8 or numSuits == 0:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of suits: %s' % numSuits)
@@ -951,7 +951,7 @@ def chooseFireOpenShot(throws, suitThrowsDict, attackDuration):
          avatarBehindShot,
          allGroupLowShot,
          suitGroupThreeQuarterLeftBehindShot]
-    elif numThrows >= 2 and numThrows <= 4:
+    elif numThrows >= 2 and numThrows <= 8:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of throws: %s' % numThrows)
@@ -971,7 +971,7 @@ def chooseFireCloseShot(throws, suitThrowsDict, openDuration, openName, attackDu
          avatarCloseUpThreeQuarterLeftFireShot,
          allGroupLowShot,
          suitGroupThreeQuarterLeftBehindShot]
-    elif numSuits >= 2 and numSuits <= 4 or numSuits == 0:
+    elif numSuits >= 2 and numSuits <= 8 or numSuits == 0:
         shotChoices = [allGroupLowShot, suitGroupThreeQuarterLeftBehindShot]
     else:
         notify.error('Bad number of suits: %s' % numSuits)
