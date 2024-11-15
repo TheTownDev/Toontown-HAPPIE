@@ -1,5 +1,5 @@
 # Toontown: Happie!
-Welcome to the repository of the Archipelago version of the Toontown!
+Welcome to the repository of the Toontown Happie!
 
 This source is built on the foundation of Toontown Archipelago! If you have not checked out Toontown Archipelago before, It's a amazing toontown project that built alot of the systems that are being used for Toontown Happie!
 [Toontown Archipelago](https://github.com/toontown-archipelago/toontown-archipelago)
