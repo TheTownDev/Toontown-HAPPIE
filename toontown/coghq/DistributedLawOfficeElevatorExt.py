@@ -34,24 +34,22 @@ class DistributedLawOfficeElevatorExt(DistributedElevatorExt.DistributedElevator
         else:
             self.notify.error('No origin found for originId: %s' % entranceId)
         entranceId2zoneId = {0: ToontownGlobals.LawbotStageIntA,
-         1: ToontownGlobals.LawbotStageIntB,
-         2: ToontownGlobals.LawbotStageIntC,
-         3: ToontownGlobals.LawbotStageIntD}
+         1: ToontownGlobals.LawbotStageIntD}
         self.intZoneId = entranceId2zoneId[entranceId]
         locator = geom.find('**/elevator_signorigin_%s' % entranceId)
-        backgroundGeom = geom.find('**/ElevatorFrameFront_%d' % entranceId)
-        backgroundGeom.node().setEffect(DecalEffect.make())
-        signText = DirectGui.OnscreenText(text=TextEncoder.upper(TTLocalizer.GlobalStreetNames[self.intZoneId][-1]), font=ToontownGlobals.getSuitFont(), scale=2, fg=(0.87, 0.87, 0.87, 1), mayChange=False, parent=backgroundGeom)
-        signText.setPosHpr(locator, 0, 0, 0, 0, 0, 0)
-        signText.setDepthWrite(0)
+        #backgroundGeom = geom.find('**/ElevatorFrameFront_%d' % entranceId)
+        #backgroundGeom.node().setEffect(DecalEffect.make())
+        #signText = DirectGui.OnscreenText(text=TextEncoder.upper(TTLocalizer.GlobalStreetNames[self.intZoneId][-1]), font=ToontownGlobals.getSuitFont(), scale=2, fg=(0.87, 0.87, 0.87, 1), mayChange=False, parent=backgroundGeom)
+        #signText.setPosHpr(locator, 0, 0, 0, 0, 0, 0)
+        #signText.setDepthWrite(0)
 
     def setupElevator(self):
-        self.elevatorModel = loader.loadModel('phase_10/models/cogHQ/mintElevator')
+        self.elevatorModel = loader.loadModel('phase_11/models/lawbotHQ/ttr_m_ara_lhq_elevatorDAOffices')
         self.elevatorModel.reparentTo(render)
         self.leftDoor = self.elevatorModel.find('**/left_door')
         self.rightDoor = self.elevatorModel.find('**/right_door')
         DistributedElevator.DistributedElevator.setupElevator(self)
-        self.elevatorSphereNodePath.setY(-1.42)
+        #self.elevatorSphereNodePath.setY(-1.42)
 
     def getElevatorModel(self):
         return self.elevatorModel
@@ -99,9 +97,5 @@ class DistributedLawOfficeElevatorExt(DistributedElevatorExt.DistributedElevator
     def getDestName(self):
         if self.intZoneId == ToontownGlobals.LawbotStageIntA:
             return TTLocalizer.ElevatorLawBotCourse0
-        elif self.intZoneId == ToontownGlobals.LawbotStageIntB:
-            return TTLocalizer.ElevatorLawBotCourse1
-        elif self.intZoneId == ToontownGlobals.LawbotStageIntC:
-            return TTLocalizer.ElevatorLawBotCourse2
-        elif self.intZoneId == ToontownGlobals.LawbotStageIntD:
+        if self.intZoneId == ToontownGlobals.LawbotStageIntD:
             return TTLocalizer.ElevatorLawBotCourse3

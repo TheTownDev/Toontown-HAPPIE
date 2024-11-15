@@ -17,6 +17,9 @@ def isMintInteriorZone(zoneId):
 def isCGCInteriorZone(zoneId):
     return zoneId in (BossbotCountryClubIntA, BossbotCountryClubIntB, BossbotCountryClubIntC)
 
+def isDAInteriorZone(zoneId):
+     return zoneId in (LawbotStageIntA, LawbotStageIntD)
+
 
 def isDynamicZone(zoneId):
     return zoneId >= DynamicZonesBegin and zoneId < DynamicZonesEnd

@@ -1,4 +1,7 @@
 
+hood_model "phase_3.5/models/modules/hqTT" [
+	store_node [ "toon_landmark" "toon_landmark_hqTT" "" ]
+	]
 
 place_model "phase_6/models/props/ship_masts" [
 	store_node [ "prop" "prop_shipmasts" "" ]

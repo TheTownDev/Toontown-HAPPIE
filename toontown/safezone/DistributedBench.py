@@ -52,9 +52,12 @@ class DistributedBench(DistributedObject.DistributedObject):
         return
 
     def announceGenerate(self):
-        self.picnicTable = self.loader.geom.find('**/bench')
-        
         if self.loader.hood.id == ToontownGlobals.ToontownCentral:
+            self.picnicTable = loader.loadModel('phase_4/models/props/ttr_m_ara_ext_bench.bam')
+            self.picnicTable.setPos(-45, -85, 0.53)
+            self.picnicTable.setH(8.75)
+            
+            self.picnicTable.reparentTo(self.loader.geom)
             benchTex = loader.loadTexture('phase_4/maps/ttr_t_ara_ext_bench_ttc.jpg')
             self.picnicTable.find('**/geo_bench_leftLeg').setTexture(benchTex, 1)
             self.picnicTable.find('**/geo_bench_leftLeg').flattenLight()
@@ -63,6 +66,10 @@ class DistributedBench(DistributedObject.DistributedObject):
             self.picnicTable.find('**/geo_bench_seat').setTexture(benchTex, 1)
             self.picnicTable.find('**/geo_bench_seat').flattenLight()
         elif self.loader.hood.id == ToontownGlobals.TheBrrrgh:
+            self.picnicTable = loader.loadModel('phase_4/models/props/ttr_m_ara_ext_bench.bam')
+            self.picnicTable.setPos(-35, -148, 6.17)
+            self.picnicTable.setH(7.50)
+            self.picnicTable.reparentTo(self.loader.geom)
             benchTex = loader.loadTexture('phase_4/maps/ttr_t_ara_ext_bench_tbr.jpg')
             self.picnicTable.find('**/geo_bench_leftLeg').setTexture(benchTex, 1)
             self.picnicTable.find('**/geo_bench_leftLeg').flattenLight()
@@ -87,7 +94,7 @@ class DistributedBench(DistributedObject.DistributedObject):
             self.picnicTableSphereNodes[i].node().addSolid(CollisionSphere(0, 0, 0, 1))
 
         self.tableclothSphereNode = self.tablecloth.attachNewNode(CollisionNode('benchcloth_sphere'))
-        self.tableclothSphereNode.node().addSolid(CollisionSphere(0, 0, -1, 4))
+        self.tableclothSphereNode.node().addSolid(CollisionSphere(0, 0, -1, 1))
         angle = self.startingHpr[0]
         angle -= 90
         radAngle = deg2Rad(angle)

@@ -3,6 +3,7 @@ from . import HoodDataAI
 from toontown.toonbase import ToontownGlobals
 from toontown.coghq import DistributedLawOfficeElevatorExtAI
 from toontown.coghq import DistributedCogHQDoorAI
+from toontown.coghq.LawbotOfficeExterior_Action00 import GlobalEntities
 from toontown.building import DistributedDoorAI
 from toontown.building import DoorTypes
 from toontown.coghq import LobbyManagerAI
@@ -13,6 +14,7 @@ from toontown.building import FADoorCodes
 from toontown.building import DistributedBoardingPartyAI
 from toontown.safezone import ArchipelagoTreasurePlannerAI
 from toontown.safezone import DistributedArchiTreasureAI
+from toontown.suit.DistributedCogHQHealBarrelAI import DistributedCogHQHealBarrelAI
 
 class LawbotHQDataAI(HoodDataAI.HoodDataAI):
     notify = DirectNotifyGlobal.directNotify.newCategory('LawbotHQDataAI')
@@ -22,6 +24,8 @@ class LawbotHQDataAI(HoodDataAI.HoodDataAI):
         hoodId = ToontownGlobals.LawbotHQ
         if zoneId == None:
             zoneId = hoodId
+        self.healBarrels = []
+        self.room = GlobalEntities
         HoodDataAI.HoodDataAI.__init__(self, air, zoneId, hoodId)
         return
 
@@ -29,19 +33,15 @@ class LawbotHQDataAI(HoodDataAI.HoodDataAI):
         HoodDataAI.HoodDataAI.startup(self)
 
         def makeOfficeElevator(index, antiShuffle=0, minLaff=0):
-            destZone = (ToontownGlobals.LawbotStageIntA, ToontownGlobals.LawbotStageIntB, ToontownGlobals.LawbotStageIntC, ToontownGlobals.LawbotStageIntD)[index]
-            lock = (FADoorCodes.OFFICE_A_ACCESS_MISSING, FADoorCodes.OFFICE_B_ACCESS_MISSING, FADoorCodes.OFFICE_C_ACCESS_MISSING, FADoorCodes.OFFICE_D_ACCESS_MISSING)[index]
+            destZone = (ToontownGlobals.LawbotStageIntA, ToontownGlobals.LawbotStageIntD)[index]
             elev = DistributedLawOfficeElevatorExtAI.DistributedLawOfficeElevatorExtAI(self.air, self.air.lawMgr, destZone, index, antiShuffle=0, minLaff=minLaff)
             elev.generateWithRequired(ToontownGlobals.LawbotOfficeExt)
             self.addDistObj(elev)
-            elev.setLock(lock)
             return elev.doId
 
         mins = ToontownGlobals.FactoryLaffMinimums[2]
         officeId0 = makeOfficeElevator(0, 0, mins[0])
-        officeId1 = makeOfficeElevator(1, 0, mins[1])
-        officeId2 = makeOfficeElevator(2, 0, mins[2])
-        officeId3 = makeOfficeElevator(3, 0, mins[3])
+        officeId3 = makeOfficeElevator(1, 0, mins[0])
         self.lobbyMgr = LobbyManagerAI.LobbyManagerAI(self.air, DistributedLawbotBossAI.DistributedLawbotBossAI)
         self.lobbyMgr.generateWithRequired(ToontownGlobals.LawbotLobby)
         self.addDistObj(self.lobbyMgr)
@@ -71,8 +71,22 @@ class LawbotHQDataAI(HoodDataAI.HoodDataAI):
 
         makeDoor(ToontownGlobals.LawbotLobby, 0, 1, FADoorCodes.LB_DISGUISE_INCOMPLETE)
         makeDoor(ToontownGlobals.LawbotOfficeExt, 0, 0)
+        
+        for entity in self.room: # battleBlocker
+            if self.room[entity]['type'] == 'healBarrel':
+                self.addHealBarrel(self.room[entity]['pos'], self.room[entity]['hpr'])
+        
+        for healBarrel in self.healBarrels:
+            healBarrel.d_showObstacle()
         officeIdList = [
-         officeId0, officeId1, officeId2, officeId3]
+         officeId0, officeId3]
         if simbase.config.GetBool('want-boarding-parties', 1):
             self.officeBoardingParty = DistributedBoardingPartyAI.DistributedBoardingPartyAI(self.air, officeIdList, 4)
             self.officeBoardingParty.generateWithRequired(ToontownGlobals.LawbotOfficeExt)
+
+    def addHealBarrel(self, pos, hpr):
+        newHealBarrel = DistributedCogHQHealBarrelAI(self.air)
+        self.healBarrels.append(newHealBarrel)
+        newHealBarrel.generateWithRequired(ToontownGlobals.LawbotOfficeExt)
+        newHealBarrel.d_setPos(pos[0], pos[1], pos[2])
+        newHealBarrel.d_setHpr(hpr[0], hpr[1], hpr[2])

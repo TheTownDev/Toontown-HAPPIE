@@ -38,6 +38,7 @@ class BRSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
 
     def enter(self, requestStatus):
         SafeZoneLoader.SafeZoneLoader.enter(self, requestStatus)
+        self.bench = self.geom.find('**/bench_3')
         self.snow.start(camera, self.snowRender)
         self.accept('enterigloo-interior', self.enterIgloo)
         self.accept('exitigloo-interior', self.exitIgloo)

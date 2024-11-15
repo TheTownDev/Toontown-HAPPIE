@@ -82,9 +82,9 @@ FishAudioFileDict = {
 }
 FishFileDict = {
     -1: (4, "clownFish-zero", "clownFish-swim", "clownFish-swim", None, (0.12, 0, -0.15), 0.38, -35, 20),
-    FishGenus.BalloonFish:    (4, "balloonFish-zero", "balloonFish-swim", "balloonFish-swim", None, (0.0, 0, 0.0), 1.0, 0, 0),
-    FishGenus.CatFish:        (4, "catFish-zero", "catFish-swim", "catFish-swim", None, (1.2, -2.0, 0.5), 0.22, -35, 10),
-    FishGenus.Clownfish:      (4, "clownFish-zero", "clownFish-swim", "clownFish-swim", None, (0.12, 0, -0.15), 0.38, -35, 20),
+    FishGenus.BalloonFish:    (4, "balloonFish-zero", "balloonFish-swim", "balloonFish-swim", None, (0.0, 0, 0.0), 1.0, 0, 0, '**/ttr_t_gui_fsh_balloonFish_card'),
+    FishGenus.CatFish:        (4, "catFish-zero", "catFish-swim", "catFish-swim", None, (1.2, -2.0, 0.5), 0.22, -35, 10, '**/ttr_t_gui_fsh_catFish_card'),
+    FishGenus.Clownfish:      (4, "clownFish-zero", "clownFish-swim", "clownFish-swim", None, (0.12, 0, -0.15), 0.38, -35, 20, '**/ttr_t_gui_fsh_clownFish_card'),
     FishGenus.Frozen_Fish:    (4, "frozenFish-zero", "frozenFish-swim", "frozenFish-swim", None, (0, 0, 0), 0.5, -35, 20),
     FishGenus.Starfish:       (4, "starFish-zero", "starFish-swim", "starFish-swimLOOP", None, (0, 0, -0.38), 0.36, -35, 20),
     FishGenus.Holy_Mackerel:  (4, "holeyMackerel-zero", "holeyMackerel-swim", "holeyMackerel-swim", None, None, 0.4, 0, 0),

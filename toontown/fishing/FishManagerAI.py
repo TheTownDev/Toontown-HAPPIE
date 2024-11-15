@@ -11,6 +11,7 @@ from toontown.fishing import FishGlobals
 from toontown.fishing.DistributedFishingPondAI import DistributedFishingPondAI
 from toontown.fishing.FishBase import FishBase
 from toontown.safezone.DistributedFishingSpotAI import DistributedFishingSpotAI
+from toontown.quest import Quests
 
 
 # How much pity to add per rod (.01) = 1%
@@ -140,12 +141,30 @@ class FishManagerAI:
 
             # Route species logic for pity
             if self.shouldForceNewSpecies(av):
+                for index, quest in enumerate(self.air.questManager.toonQuestsList2Quests(av.quests)):
+                    if isinstance(quest, Quests.FishQuest):
+                        if quest.getCompletionStatus(av, av.quests[index]) != Quests.COMPLETE:
+                            if quest.isLocationMatch(zoneId):
+                                if quest.getFish():
+                                    genus = quest.getFish()
+                                    fish = FishBase(genus, species, weight)
                 fish = self.attemptForceNewSpecies(av, zoneId, fish)
 
             # Catch the fish
             fishType = av.fishCollection.collectFish(fish)
 
             self.addNewSpeciesPity(av)
+            
+            for index, quest in enumerate(self.air.questManager.toonQuestsList2Quests(av.quests)):
+                if isinstance(quest, Quests.FishQuest):
+                    if quest.getCompletionStatus(av, av.quests[index]) != Quests.COMPLETE:
+                        if quest.isLocationMatch(zoneId):
+                            if quest.getFish():
+                                if quest.getFish() == genus:
+                                    self.air.questManager.incrementQuestProgressCustom(av.quests[index], av, zoneId)
+                            else:
+                                self.air.questManager.incrementQuestProgressCustom(av.quests[index], av, zoneId)
+
 
             # If we have a new species, reset pity
             if fishType == FishGlobals.COLLECT_NEW_ENTRY:

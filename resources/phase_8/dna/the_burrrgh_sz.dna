@@ -1148,6 +1148,7 @@ group "theBurrrgh" [
      code [ "prop_bench" ]
      pos [ -35 -148 6.17 ]
      nhpr [ 7.50 0 0 ]
+     scale [ 0.001 0.001 0.001 ]
     ]
    ]
    prop "prop_post_three_light_DNARoot" [

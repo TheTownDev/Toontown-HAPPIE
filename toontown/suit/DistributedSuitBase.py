@@ -373,6 +373,9 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         if self.dna.name == 'trf':
             foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
             foremanMusic.play()
+        if self.dna.name == 'def':
+            foremanMusic = base.loader.loadMusic('phase_11/audio/bgm/ttr_s_ara_lhq_facilityBoss.ogg')
+            foremanMusic.play()
         if self.currHP < self.maxHP:
             self.updateHealthBar(0, 1)
 

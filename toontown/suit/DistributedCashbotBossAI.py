@@ -255,7 +255,7 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def generateSuits(self, battleNumber):
         cogs = self.invokeSuitPlanner(2, 0)
-        skelecogs = self.invokeSuitPlanner(3, 1)
+        skelecogs = self.invokeSuitPlanner(3, 3)
 
         # Now combine the lists of suits together, so that they all
         # come out mix-and-match.

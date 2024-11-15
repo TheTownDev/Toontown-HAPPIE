@@ -469,10 +469,7 @@ class DistributedFishingSpot(DistributedObject.DistributedObject, DelayDeletable
         if not self.pityLabel:
             return
 
-        if len(localAvatar.fishCollection) >= 70:
-            self.pityLabel.hide()
-            return
-
+        
         fishLocation = FishLocation(localAvatar.slotData.get('fish_locations', 1))
         catchableFish = get_catchable_fish_no_rarity(self.zoneId, localAvatar.fishingRod, fishLocation)
 

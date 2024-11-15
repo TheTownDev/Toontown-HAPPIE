@@ -461,6 +461,95 @@ class NewbieQuest:
 
         return num
 
+class FishQuest(LocationBasedQuest):
+    def __init__(self, id, quest):
+        LocationBasedQuest.__init__(self, id, quest)
+        if self.__class__ == FishQuest:
+            self.checkNumFish(self.quest[1])
+            self.checkFish(self.quest[2])
+        
+    def checkNumFish(self, num):
+        self.check(1, 'invalid number of Fish: %s' % num)
+    
+    def checkFish(self, num):
+        self.check(1, 'invalid Fish: %s' % num)
+    
+    def getNumQuestItems(self):
+        return self.getNumFish()
+    
+    def getNumFish(self):
+        return self.quest[1]
+    
+    def getFish(self):
+        return self.quest[2]
+
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= self.getNumFish()
+        return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
+    
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        elif self.getNumFish() == 1:
+            return ''
+        else:
+            return TTLocalizer.QuestsFishQuestProgress % {'progress': questDesc[4],
+             'numTreasures': self.getNumFish()}
+    
+    def getObjectiveStrings(self):
+        loc = self.getLocation()
+        
+        text = TTLocalizer.QuestsFishCollectDesc
+        
+        if self.quest[2] > -1:
+            name = TTLocalizer.FishGenusNames[self.quest[2]]
+        else:
+            name = " Fish"
+        count = self.getNumFish()
+        return (text % {'numTreasures': count,
+          'nameTreasure': name},)
+    
+    def isLocationMatch(self, zoneId):
+        loc = self.getLocation()
+        if loc is Anywhere:
+            return 1
+        if ZoneUtil.isPlayground(loc):
+            if loc == ZoneUtil.getCanonicalHoodId(zoneId):
+                return 1
+            else:
+                return 0
+        elif loc == ZoneUtil.getCanonicalBranchZone(zoneId):
+            return 1
+        elif loc == zoneId:
+            return 1
+        else:
+            return 0
+    
+    def getString(self):
+        return TTLocalizer.QuestsFishQuestCollect % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumFish():
+            return getFinishToonTaskSCStrings(toNpcId)
+        loc = self.getLocation()
+        
+        if self.quest[2] > -1:
+            name = TTLocalizer.FishGenusNames[self.quest[2]]
+        else:
+            name = " Fish"
+        numTreasures = self.getNumFish()
+        if numTreasures == 1:
+            text = TTLocalizer.QuestsFishQuestSCStringS
+        else:
+            text = TTLocalizer.QuestsFishQuestSCStringP
+        treasureLoc = self.getLocationName()
+        return text % {'treasureName': name,
+         'treasureLoc': treasureLoc}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsFishQuestHeadline
+
 class TreasureQuest(LocationBasedQuest):
     def __init__(self, id, quest):
         LocationBasedQuest.__init__(self, id, quest)
@@ -735,6 +824,84 @@ class CogTrackQuest(CogQuest):
         questCogTrack = self.getCogTrack()
         return questCogTrack == cogDict['track'] and avId in cogDict['activeToons'] and self.isLocationMatch(zoneId)
 
+class CogVariousTracksQuest(CogQuest):
+    trackCodes = ['c',
+     'l',
+     'm',
+     's']
+    trackNames = [TTLocalizer.Bossbot,
+     TTLocalizer.Lawbot,
+     TTLocalizer.Cashbot,
+     TTLocalizer.Sellbot]
+    trackNamesS = [TTLocalizer.BossbotS,
+     TTLocalizer.LawbotS,
+     TTLocalizer.CashbotS,
+     TTLocalizer.SellbotS]
+    trackNamesP = [TTLocalizer.BossbotP,
+     TTLocalizer.LawbotP,
+     TTLocalizer.CashbotP,
+     TTLocalizer.SellbotP]
+
+    def __init__(self, id, quest):
+        CogQuest.__init__(self, id, quest)
+        if self.__class__ == CogVariousTracksQuest:
+            self.checkNumCogs(self.quest[1])
+            self.checkCogTrack(self.quest[2])
+            self.checkCogTrack(self.quest[3])
+
+    def getCogTrack(self):
+        return self.quest[2]
+    
+    def getCogTrackTwo(self):
+        return self.quest[3]
+
+    def getProgressString(self, avatar, questDesc):
+        if self.getCompletionStatus(avatar, questDesc) == COMPLETE:
+            return CompleteString
+        elif self.getNumCogs() == 1:
+            return ''
+        else:
+            return TTLocalizer.QuestsCogTrackVariousQuestProgress % {'progress': questDesc[4],
+             'numCogs': self.getNumCogs()}
+
+    def getObjectiveStrings(self):
+        numCogs = self.getNumCogs()
+        track = self.trackCodes.index(self.getCogTrack())
+        trackTwo = self.trackCodes.index(self.getCogTrackTwo())
+        if numCogs == 1:
+            text = self.trackNamesS[track] + ' or ' + self.trackNames[trackTwo]
+        else:
+            text = TTLocalizer.QuestsCogTrackVariousDefeatDesc % {'numCogs': numCogs,
+             'trackName': self.trackNamesP[track],
+             'trackName2': self.trackNamesP[trackTwo]}
+        return (text,)
+
+    def getString(self):
+        return TTLocalizer.QuestsCogTrackVariousQuestDefeat % self.getObjectiveStrings()[0]
+
+    def getSCStrings(self, toNpcId, progress):
+        if progress >= self.getNumCogs():
+            return getFinishToonTaskSCStrings(toNpcId)
+        numCogs = self.getNumCogs()
+        track = self.trackCodes.index(self.getCogTrack())
+        if numCogs == 1:
+            cogText = self.trackNamesS[track]
+            text = TTLocalizer.QuestsCogTrackVariousQuestSCStringS
+        else:
+            cogText = self.trackNamesP[track]
+            text = TTLocalizer.QuestsCogTrackVariousQuestSCStringP
+        cogLocName = self.getLocationName()
+        return text % {'cogText': cogText,
+         'cogLoc': cogLocName}
+
+    def getHeadlineString(self):
+        return TTLocalizer.QuestsCogTrackVariousQuestHeadline
+
+    def doesCogCount(self, avId, cogDict, zoneId, avList):
+        questCogTrack = self.getCogTrack()
+        questCogTrackTwo = self.getCogTrackTwo()
+        questCogTracks = [questCogTrack, questCogTrackTwo]
+        return cogDict['track'] in questCogTracks and avId in cogDict['activeToons'] and self.isLocationMatch(zoneId)
 
 class CogLevelQuest(CogQuest):
     def __init__(self, id, quest):
@@ -1305,7 +1472,7 @@ class BuildingFloorsQuest(CogQuest):
         if progress >= self.getNumFloors():
             return getFinishToonTaskSCStrings(toNpcId)
         count = self.getNumFloors()
-        floors = TTLocalizer.QuestsBuildingQuestFloorNumbers[self.getNumFloors() - 1]
+        floors = str(self.getNumFloors())
         buildingTrack = self.getBuildingTrack()
         if buildingTrack == Any:
             type = TTLocalizer.Cog
@@ -4135,6 +4302,10 @@ RequiredRewardTrackDict = {TT_TIER: (100,),
  BOSSBOT_HQ_TIER + 15: (4215,),
  BOSSBOT_HQ_TIER + 16: (4216,),
  TEST_TIER: (1400,
+             100,
+             100,
+             100,
+             100,
              100,
              100,
              100,

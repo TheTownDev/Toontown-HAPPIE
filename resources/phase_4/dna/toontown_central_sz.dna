@@ -154,6 +154,7 @@ group "toontownCentral" [
      code [ "prop_bench" ]
      pos [ -45 -85 0.53 ]
      nhpr [ 8.75 0 0 ]
+     scale [ 0.001 0.001 0.001 ]
     ]
    ]
    prop "linktunnel_tt_2132_DNARoot" [

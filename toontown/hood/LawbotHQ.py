@@ -1,6 +1,8 @@
 from . import CogHood
 from toontown.toonbase import ToontownGlobals
 from toontown.coghq import LawbotCogHQLoader
+from toontown.hood import ZoneUtil
+from toontown.toonbase import ToontownGlobals, TTLocalizer
 from panda3d.core import Fog
 
 class LawbotHQ(CogHood.CogHood):
@@ -35,6 +37,13 @@ class LawbotHQ(CogHood.CogHood):
         localAvatar.setCameraFov(ToontownGlobals.DefaultCameraFov)
         base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear, ToontownGlobals.DefaultCameraFar)
         CogHood.CogHood.exit(self)
+    
+    def spawnTitleText(self, zoneId, countryClub=None, floorNum = None):
+        if ZoneUtil.isDAInteriorZone(zoneId):
+            text = '%s\n%s\n%s' % (ToontownGlobals.StreetNames[zoneId][-1], TTLocalizer.LawbotFloorTitle % TTLocalizer.LawbotOfficeLetters[countryClub], TTLocalizer.MintFloorTitle % (floorNum + 1))
+            self.doSpawnTitleText(text)
+        else:
+            CogHood.CogHood.spawnTitleText(self, zoneId)
 
     def setColorScale(self):
         # colouring render didn't look too great tbh

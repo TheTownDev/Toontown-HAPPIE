@@ -1567,10 +1567,10 @@ class BattleCalculatorAI:
                 self.battle.dots.append([2, suit.doId, [DOT_Eff.children['value']], [], died])
                 self.makeSuitDead(suit)
         """
-        """
+
         for suit in self.battle.activeSuits:
             if suit.dna.name == 'trf':
-                if suit.currHP >= 1 and suit not in self.battle.luredSuits:
+                if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
                     toonList = []
                     toonIdList = self.battle.activeToons[:]
                     for toonId in toonIdList:
@@ -1592,7 +1592,7 @@ class BattleCalculatorAI:
         
         for suit in self.battle.activeSuits:
             if suit.dna.name == 'trf':
-                if suit.currHP >= 1 and suit not in self.battle.luredSuits:
+                if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
                     activeSuitList = self.battle.activeSuits[:]
                     activeSuitList.remove(suit)
                     
@@ -1605,9 +1605,22 @@ class BattleCalculatorAI:
                                 dmg_eff.children['value'] = 10
                                 self.battle.suitsCheatSecond.append([2, suit.doId, [dmg_eff.children['value']], [tgt_suit.doId], 0])
                                 continue
-        """
                 
-                
+        for suit in self.battle.activeSuits:
+            if suit.dna.name == 'def':
+                if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
+                    activeSuitList = self.battle.activeSuits[:]
+                    activeSuitList.remove(suit)
+                    
+                    if len(activeSuitList) >= 1:
+                        for tgt_suit in activeSuitList:
+                            DMG_Eff = tgt_suit.effectHandler.children.get('damageBonus', None)
+                            if DMG_Eff is None:
+                                tgt_suit.effectHandler.addEffect('BattleEffectExtraDamageAI')
+                                dmg_eff = tgt_suit.effectHandler.children['damageBonus']    
+                                dmg_eff.children['value'] = 10
+                                self.battle.suitsCheatSecond.append([3, suit.doId, [dmg_eff.children['value']], [tgt_suit.doId], 0])
+                                continue        
         
         if toonsHit == 1:
             BattleCalculatorAI.toonsAlwaysHit = 0

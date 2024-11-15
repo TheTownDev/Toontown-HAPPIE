@@ -11,6 +11,7 @@ from . import LawbotHQExterior
 from . import LawbotHQBossBattle
 from . import LawbotOfficeExterior
 from panda3d.core import Fog, VirtualFileSystem
+from .LawbotOfficeExterior_Action00 import GlobalEntities
 import json
 aspectSF = 0.7227
 
@@ -33,8 +34,10 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.musicJson = json.loads(fileSystem.readFile(ToontownGlobals.musicJsonFilePath, True))
         self.musicFile = 'phase_11/audio/bgm/LB_courtyard.ogg'
         self.cogHQExteriorModelPath = 'phase_11/models/lawbotHQ/LawbotPlaza'
-        self.factoryExteriorModelPath = 'phase_11/models/lawbotHQ/LB_DA_Lobby'
+        self.factoryExteriorModelPath = 'phase_11/models/lawbotHQ/ttr_m_ara_lhq_daLobby'
         self.cogHQLobbyModelPath = 'phase_11/models/lawbotHQ/LB_CH_Lobby'
+        self.officeExtModels = []
+        self.room = GlobalEntities
         self.geom = None
         return
 
@@ -66,12 +69,15 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
             ug.setBin('ground', -10)
             brLinkTunnel = self.geom.find('**/TunnelEntrance1')
             brLinkTunnel.setName('linktunnel_br_3326_DNARoot')
+            for prop in self.officeExtModels:
+                prop.removeNode()
         elif zoneId == ToontownGlobals.LawbotOfficeExt:
             self.geom = loader.loadModel(self.factoryExteriorModelPath)
-            self.geom.setY(120)
-            self.geom.setX(-50)
+            self.geom.setY(0)
+            self.geom.setX(0)
             ug = self.geom.find('**/underground')
             ug.setBin('ground', -10)
+            self.makeOfficeProps()
         elif zoneId == ToontownGlobals.LawbotLobby:
             if base.config.GetBool('want-qa-regression', 0):
                 self.notify.info('QA-REGRESSION: COGHQ: Visit LawbotLobby')
@@ -103,6 +109,21 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
     def unload(self):
         CogHQLoader.CogHQLoader.unload(self)
         Toon.unloadSellbotHQAnims()
+    
+    def makeOfficeProps(self):
+        for entity in self.room:
+            if self.room[entity]['type'] == 'model':
+                modelName = self.room[entity]['modelPath']
+
+                if 'modelPart' in self.room[entity]:
+                    model = loader.loadModel(modelName).find(self.room[entity]['modelPart'])
+                else:
+                    model = loader.loadModel(modelName)
+                model.reparentTo(render)
+                model.setPos(self.room[entity]['pos'])
+                model.setHpr(self.room[entity]['hpr'])
+                model.setScale(self.room[entity]['scale'])
+                self.officeExtModels.append(model)
 
     def enterStageInterior(self, requestStatus):
         self.placeClass = StageInterior.StageInterior

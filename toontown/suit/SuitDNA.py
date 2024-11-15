@@ -133,6 +133,13 @@ suitDepts = [
     's'
 ]
 
+suitDept2Icon = {
+    's': '**/SalesIcon',
+    'm': '**/MoneyIcon',
+    'l': '**/LegalIcon',
+    'c': '**/CorpIcon'
+}
+
 suitDeptToPhase = {'s': 9,
                    'm': 10,
                    'l': 11,
@@ -350,6 +357,8 @@ __GENERAL_SUIT_ANIMATIONS: Set[SuitAnimation] = {
     SuitAnimation(key='glower', suit='A', path='glower', phase='5'),
     SuitAnimation(key='glower', suit='B', path='glower', phase='5'),
     SuitAnimation(key='glower', suit='C', path='glower', phase='5'),
+    SuitAnimation(key='promoting', suit='B', path='promoting', phase='5'),
+    SuitAnimation(key='promoting', suit='C', path='promoting', phase='5'),
 }
 
 __SUIT_BATTLE_ANIMATIONS: Set[SuitAnimation] = {

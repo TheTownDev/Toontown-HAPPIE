@@ -10,6 +10,7 @@ from toontown.hood import ZoneUtil
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 from toontown.safezone import TreasureGlobals
+from toontown.fishing import FishGlobals
 import string, types
 from toontown.toon import LaffMeter
 from toontown.toonbase.ToontownBattleGlobals import AvPropsNew
@@ -844,6 +845,18 @@ class QuestPoster(DirectFrame):
                     lIconGeom = Icons.find('**/' + TTLocalizer.QuestsTreasureQuestCollectIconNames[quest.getLocation()])
                 lIconGeomScale = IMAGE_SCALE_SMALL
                 Icons.removeNode()
+            if quest.getType() == Quests.FishQuest:
+                Icons = loader.loadModel('phase_4/models/gui/ttr_m_gui_fsh_fishIcons')
+                #if quest.getPackageId():
+                    #lIconGeom = Icons.find('**/' + 'ttr_t_gui_qst_package')
+                    #HintButtonIcon = Icons.find('**/ttr_t_gui_qst_search')
+                    #self.HintButton = DirectButton(parent=self, geom=HintButtonIcon, relief=None, command=self.hintGive, extraArgs=[quest.getPackageId(),])
+                    #self.HintButton.setScale(0.12)
+                    #self.HintButton.setX(.25)
+                    #self.HintButton.setZ(-.16)
+                lIconGeom = Icons.find(FishGlobals.FishFileDict[quest.getFish()][9])
+                lIconGeomScale = 0.06
+                Icons.removeNode()
             if quest.getType() == Quests.CogTrackQuest:
                 dept = quest.getCogTrack()
                 cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
@@ -858,6 +871,28 @@ class QuestPoster(DirectFrame):
                     icon = cogIcons.find('**/MoneyIcon')
                 lIconGeom = icon.copyTo(hidden)
                 lIconGeom.setColor(Suit.Suit.medallionColors[dept])
+                cogIcons.removeNode()
+            if quest.getType() == Quests.CogVariousTracksQuest:
+                dept = quest.getCogTrack()
+                deptTwo = quest.getCogTrackTwo()
+                cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
+                lIconGeomScale = 0.13
+                
+                iconOne = cogIcons.find(SuitDNA.suitDept2Icon[dept])
+                iconTwo = cogIcons.find(SuitDNA.suitDept2Icon[deptTwo])
+                
+                icon = iconOne
+                icon.setColor(Suit.Suit.medallionColors[dept])
+                icon.setScale(0.77)
+                icon.flattenLight()
+                iconTwo.reparentTo(icon)
+                iconTwo.setX(0.3)
+                iconTwo.setColor(Suit.Suit.medallionColors[deptTwo])
+                iconTwo.setScale(0.77)
+                
+                lIconGeom = icon.copyTo(hidden)
+                self.lQuestIcon.setX(-0.020)
+                
                 cogIcons.removeNode()
             elif quest.getType() == Quests.CogQuest:
                 if quest.getCogType() != Quests.Any:

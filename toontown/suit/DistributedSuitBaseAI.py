@@ -217,6 +217,7 @@ class DistributedSuitBaseAI(DistributedAvatarAI.DistributedAvatarAI, SuitBase.Su
     def b_setGoldSkelecog(self, flag):
         self.setGoldSkelecog(flag)
         self.d_setGoldSkelecog(flag)
+        self.doGoldSkelecogAttributes()
 
     def setGoldSkelecog(self, flag):
         self.setGoldSkelecog = flag

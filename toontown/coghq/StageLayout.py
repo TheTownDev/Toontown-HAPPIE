@@ -134,80 +134,83 @@ testLayout = [
     (0, 7, 8, 105, 2)
 ]
 
+"""
+LawbotStageSpecModules = {
+    0: LawbotOfficeEntrance_Action00,
+    1: LawbotOfficeOilRoom_Battle00,
+    2: LawbotOfficeOilRoom_Battle01,
+    3: LawbotOfficeBoilerRoom_Security00,
+    4: LawbotOfficeBoilerRoom_Battle00,
+    5: LawbotOfficeGearRoom_Action00,
+    6: LawbotOfficeLobby_Action00,
+    7: LawbotOfficeGearRoom_Security00,
+    8: LawbotOfficeLobby_Trap00,
+    9: LawbotOfficeDiamondRoom_Security00,
+    10: LawbotOfficeDiamondRoom_Trap00,
+    11: LawbotOfficeGearRoom_Platform00,
+    12: LawbotOfficeLobby_Lights00,
+    100: LawbotOfficeBoilerRoom_Action01,
+    101: LawbotOfficeDiamondRoom_Action00,
+    102: LawbotOfficeDiamondRoom_Action01,
+    103: LawbotOfficeLobby_Action01,
+    104: LawbotOfficeDiamondRoom_Battle00,
+    105: LawbotOfficeGearRoom_Battle00,
+    106: LawbotOfficeDiamondRoom_Battle01,
+    107: LawbotOfficeBoilerRoom_Battle01,
+    108: LawbotOfficeLavaRoomFoyer_Battle00
+}
+"""
+
 LawOfficeLayout2_0 = [
-    (0, 10, 104, 3, 1),
-    (0, 3, 105, 12, 2)
+    (0, 4, 3, 1),
+    (0, 12, 10, 105, 2)
 ]
 
 LawOfficeLayout2_1 = [
-    (0, 3, 105, 8, 1),
-    (0, 103, 3, 104, 2)
+    (0, 3, 104, 1),
+    (0, 106, 8, 108, 2)
 ]
 
 LawOfficeLayout2_2 = [
-    (0, 3, 104, 100, 1),
-    (0, 8, 105, 3, 2)
+    (0, 7, 9, 107, 1),
+    (0, 4, 10, 2)
 ]
 
-LawOfficeLayout3_0 = [
-    (0, 100, 3, 104, 1),
-    (0, 105, 10, 3, 2)
-]
-
-LawOfficeLayout3_1 = [
-    (0, 8, 3, 105, 1),
-    (0, 104, 12, 3, 2)
-]
-
-LawOfficeLayout3_2 = [
-    (0, 11, 104, 3, 1),
-    (0, 105, 3, 10, 2)
-]
-
-LawOfficeLayout4_0 = [
-    (0, 8, 104, 3, 1),
-    (0, 3, 105, 12, 2)
-]
-
-LawOfficeLayout4_1 = [
-    (0, 10, 3, 105, 1),
-    (0, 3, 104, 102, 2)
-]
-
-LawOfficeLayout4_2 = [
-    (0, 8, 3, 105, 1),
-    (0, 104, 3, 11, 2)
+LawOfficeLayout2_3 = [
+    (0, 4, 3, 1),
+    (0, 105, 8, 2)
 ]
 
 LawOfficeLayout5_0 = [
-    (0, 108, 107, 106, 4, 10, 104, 3, 1),
-    (0, 106, 3, 105, 100, 2)
+    (0, 4, 3, 1),
+    (0, 12, 10, 105, 2)
 ]
 
 LawOfficeLayout5_1 = [
-    (0, 108, 107, 106, 4, 8, 3, 105, 1),
-    (0, 106, 104, 12, 3, 2)
+    (0, 3, 104, 1),
+    (0, 106, 8, 108, 2)
 ]
 
 LawOfficeLayout5_2 = [
-    (0, 108, 107, 106, 4, 3, 11, 104, 1),
-    (0, 106, 105, 3, 10, 2)
+    (0, 7, 9, 107, 1),
+    (0, 4, 10, 2)
 ]
 
-stageLayouts = [
-    LawOfficeLayout2_0,
+LawOfficeLayout5_3 = [
+    (0, 4, 3, 1),
+    (0, 105, 8, 2)
+]
+
+stageLayouts = {
+    ToontownGlobals.LawbotStageIntA: [LawOfficeLayout2_0,
     LawOfficeLayout2_1,
     LawOfficeLayout2_2,
-    LawOfficeLayout3_0,
-    LawOfficeLayout3_1,
-    LawOfficeLayout3_2,
-    LawOfficeLayout4_0,
-    LawOfficeLayout4_1,
-    LawOfficeLayout4_2,
-    LawOfficeLayout5_0,
+    LawOfficeLayout2_3],
+    ToontownGlobals.LawbotStageIntD: [LawOfficeLayout5_0,
     LawOfficeLayout5_1,
-    LawOfficeLayout5_2
-]
+    LawOfficeLayout5_2,
+    LawOfficeLayout5_3]
+}
 
 stageLayouts1 = [
     testLayout,
@@ -238,7 +241,7 @@ class StageLayout:
         self.roomIds = []
         self.hallways = []
         self.layoutId = stageLayout
-        self.roomIds = stageLayouts[stageLayout][floorNum]
+        self.roomIds = stageLayouts[stageId][stageLayout][floorNum]
         self.numRooms = 1 + len(self.roomIds)
         self.numHallways = self.numRooms - 1
         hallwayRng = self.getRng()
@@ -303,7 +306,7 @@ class StageLayout:
         return self.floorNum
 
     def getNumFloors(self):
-        return len(stageLayouts[self.layoutId])
+        return len(stageLayouts[stageId][self.layoutId])
 
     def getRng(self):
         return random.Random(self.stageId * self.floorNum)

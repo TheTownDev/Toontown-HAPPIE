@@ -1,6 +1,6 @@
 import os
 from direct.task.Task import Task
-import json
+import json, sys
 from otp.ai.AIBaseGlobal import *
 from . import DistributedBuildingAI, HQBuildingAI, GagshopBuildingAI, PetshopBuildingAI
 from toontown.building.KartShopBuildingAI import KartShopBuildingAI

@@ -101,7 +101,7 @@ class StageInterior(BattlePlace.BattlePlace):
             base.playMusic(self.music, looping=1, volume=0.8)
             base.transitions.irisIn()
             stage = bboard.get(DistributedStage.DistributedStage.ReadyPost)
-            self.loader.hood.spawnTitleText(stage.stageId)
+            self.loader.hood.spawnTitleText(stage.stageId, stage.layoutIndex, stage.floorNum)
 
         self.stageReadyWatcher = BulletinBoardWatcher.BulletinBoardWatcher('StageReady', DistributedStage.DistributedStage.ReadyPost, commence)
         self.stageDefeated = 0

@@ -184,6 +184,22 @@ CountryClubLetters = {
        11: 'M',
        12: 'N'
 }
+LawbotFloorTitle = 'Office %s'
+LawbotOfficeLetters = {
+       0: 'A',
+       1: 'B',
+       2: 'C',
+       3: 'D',
+       4: 'E',
+       5: 'F',
+       6: 'G',
+       7: 'H',
+       8: 'I',
+       9: 'J',
+       10: 'K',
+       11: 'M',
+       12: 'N'
+}
 lCancel = 'Cancel'
 lClose = 'Close'
 lOK = 'OK'
@@ -317,7 +333,15 @@ QuestsTreasureCollectDesc = '%(numTreasures)s %(nameTreasure)s'
 QuestsTreasureQuestCollect = 'Collect %s'
 QuestsTreasureQuestSCStringS = 'I need to collect %(treasureName)s%(treasureLoc)s.'
 QuestsTreasureQuestSCStringP = 'I need to collect some %(treasureName)s%(treasureLoc)s.'
-QuestsTreasureQuestHeadline = 'WANTED'
+QuestsTreasureQuestHeadline = 'COLLECT'
+
+QuestsFishQuestProgress = '%(progress)s of %(numTreasures)s catched'
+QuestsFishCollectDesc = '%(numTreasures)s %(nameTreasure)s'
+QuestsFishQuestCollect = 'Collect %s'
+QuestsFishQuestSCStringS = 'I need to fish for a %(treasureName)s%(treasureLoc)s.'
+QuestsFishQuestSCStringP = 'I need to fish some %(treasureName)s%(treasureLoc)s.'
+QuestsFishQuestHeadline = 'CATCH'
+
 QuestsCogQuestProgress = '%(progress)s of %(numCogs)s defeated'
 QuestsCogQuestHeadline = 'WANTED'
 QuestsCogQuestSCStringS = 'I need to defeat %(cogName)s%(cogLoc)s.'
@@ -337,6 +361,14 @@ QuestsCogTrackQuestSCStringP = 'I need to defeat some %(cogText)s%(cogLoc)s.'
 QuestsCogTrackQuestDefeat = 'Defeat %s'
 QuestsCogTrackDefeatDesc = '%(numCogs)s %(trackName)s'
 QuestsCogLevelQuestProgress = '%(progress)s of %(numCogs)s defeated'
+
+QuestsCogTrackVariousQuestHeadline = 'WANTED'
+QuestsCogTrackVariousQuestSCStringS = 'I need to defeat %(cogText)s%(cogLoc)s.'
+QuestsCogTrackVariousQuestSCStringP = 'I need to defeat some %(cogText)s%(cogLoc)s.'
+QuestsCogTrackVariousQuestDefeat = 'Defeat %s'
+QuestsCogTrackVariousDefeatDesc = '%(numCogs)s %(trackName)s or %(trackName2)s'
+QuestsCogTrackVariousQuestProgress = '%(progress)s of %(numCogs)s defeated'
+
 QuestsCogLevelQuestHeadline = 'WANTED'
 QuestsCogLevelQuestDefeat = 'Defeat %s'
 QuestsCogLevelQuestDesc = 'a Level %(level)s+ %(name)s'

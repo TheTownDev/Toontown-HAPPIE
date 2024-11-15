@@ -653,15 +653,21 @@ class DistributedBossCogAI(DistributedAvatarAI.DistributedAvatarAI):
         suits = planner.genFloorSuits(0)
         if skelecog != 0:
             for suit in suits['activeSuits']:
-                suit.b_setSkelecog(1)
                 if skelecog == 2:
                     suit.b_setVirtual(1)
+                elif skelecog == 3:
+                    suit.b_setGoldSkelecog(1)
+                else:
+                    suit.b_setSkelecog(1)
 
             for reserve in suits['reserveSuits']:
                 suit = reserve[0]
-                suit.b_setSkelecog(1)
                 if skelecog == 2:
                     suit.b_setVirtual(1)
+                elif skelecog == 3:
+                    suit.b_setGoldSkelecog(1)
+                else:
+                    suit.b_setSkelecog(1)
         if reviveChance != 0:
             for suit in suits['activeSuits']:
                 if random.randint(1, 100) <= reviveChance:

@@ -38,7 +38,7 @@ class OZHoodDataAI(HoodDataAI.HoodDataAI):
         self.timer = DistributedTimerAI.DistributedTimerAI(self.air)
         self.timer.generateWithRequired(self.zoneId)
         self.createPicnicTables()
-        self.createBenches()
+        
         if simbase.config.GetBool('want-game-tables', 0):
             self.createGameTables()
 

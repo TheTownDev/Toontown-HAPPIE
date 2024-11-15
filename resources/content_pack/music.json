@@ -19,6 +19,8 @@
       "11000_battle": "phase_9/audio/bgm/ttr_s_ara_shq_facilityBattle.ogg",
       "12000_battle": "phase_10/audio/bgm/ttr_s_ara_chq_facilityBattle.ogg",
       "13000_battle": "phase_11/audio/bgm/ttr_s_ara_lhq_facilityBattle.ogg",
+
+      "boss-m-one": "phase_10/audio/bgm/ttr_s_ara_chq_bossCogs.ogg",
       
       "13300_battle": "phase_11/audio/bgm/ttr_s_ara_lhq_facilityBattle.ogg",
       "13400_battle": "phase_11/audio/bgm/ttr_s_ara_lhq_facilityBattle.ogg",

@@ -1,6 +1,6 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import *
-from toontown.coghq.LawbotOfficeLavaRoomFoyer_Battle00 import GlobalEntities
+from toontown.coghq.LawbotOfficeEntrance_Action00 import GlobalEntities
 from otp.level import LevelUtil
 
 if __debug__:
@@ -147,7 +147,10 @@ class MyApp(ShowBase):
                 if '.bam' not in self.room[entity]['modelPath']:
                     modelName = self.room[entity]['modelPath'] + '.bam'
 
-                model = loader.loadModel(modelName)
+                if 'modelPart' in self.room[entity]:
+                    model = loader.loadModel(modelName).find(self.room[entity]['modelPart'])
+                else:
+                    model = loader.loadModel(modelName)
                 if self.room[entity]['parentEntId'] != 0:
                     model.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
                 else:

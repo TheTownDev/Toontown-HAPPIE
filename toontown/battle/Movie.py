@@ -464,14 +464,18 @@ class Movie(DirectObject.DirectObject):
             if ival:
                 track.append(ival)
                 camTrack.append(camIval)
+            throwSquirtTrack = Parallel()
+            throwSquirtTrackCam = Parallel()
             ival, camIval = MovieThrow.doThrows(self.__findToonAttack(THROW))
             if ival:
-                track.append(ival)
-                camTrack.append(camIval)
+                throwSquirtTrack.append(ival)
+                throwSquirtTrackCam.append(camIval)
             ival, camIval = MovieSquirt.doSquirts(self.__findToonAttack(SQUIRT))
             if ival:
-                track.append(ival)
-                camTrack.append(camIval)
+                throwSquirtTrack.append(ival)
+                throwSquirtTrackCam.append(camIval)
+            track.append(throwSquirtTrack)
+            camTrack.append(throwSquirtTrackCam)
             ival, camIval = MovieDrop.doDrops(self.__findToonAttack(DROP))
             if ival:
                 track.append(ival)

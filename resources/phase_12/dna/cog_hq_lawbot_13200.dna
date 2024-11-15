@@ -1,0 +1,29 @@
+store_suit_point [ 1, STREET_POINT, 89.13 27.79 31.92 ]
+store_suit_point [ 2, STREET_POINT, 88.76 -70.49 31.92 ]
+store_suit_point [ 3, STREET_POINT, 125.48 -70.48 31.92 ]
+store_suit_point [ 4, STREET_POINT, 126.41 26.08 31.92 ]
+
+
+group "lawbotHQExt" [
+ visgroup "13200" [ 
+  vis [ "13200" "13201" "13202" "13203" ]
+  suit_edge [ 1 2 ]
+  battle_cell [ 20 20 126.41 26.08 31.92 ]
+ ]
+ 
+ visgroup "10001" [
+  vis [ "13200" "13201" "13202" "13203" ]
+  suit_edge [ 2 3 ]
+  battle_cell [ 20 20 125.48 -70.48 31.92 ]
+ ]
+ visgroup "10002" [
+  vis [ "13200" "13201" "13202" "13203" ] 
+  suit_edge [ 3 4 ]
+  battle_cell [ 20 20 88.76 -70.49 31.92 ]
+ ]
+ visgroup "10003" [
+  vis [ "13200" "13201" "13202" "13203" ] 
+  suit_edge [ 4 1 ]
+  battle_cell [ 20 20 89.13 27.79 31.92 ] 
+ ]
+]
