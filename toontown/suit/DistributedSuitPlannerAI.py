@@ -225,6 +225,25 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     def delete(self):
         self.cleanup()
         DistributedObjectAI.DistributedObjectAI.delete(self)
+    
+    def generateWithRequired(self, zoneId):
+        DistributedObjectAI.DistributedObjectAI.generateWithRequired(self, zoneId)
+        if self.zoneId in [2100, 2200, 2300]:
+            self.spawnSupervisorCog('trf', 35)
+            taskMgr.doMethodLater(60*30, self.spawnSupervisorCog, 'foreman_spawner', extraArgs=['trf', 35])
+        if self.zoneId in [9100, 9200, 9300]:
+            self.spawnSupervisorCog('bgh', 50)
+            taskMgr.doMethodLater(60*30, self.spawnSupervisorCog, 'president_spawner', extraArgs=['bgh', 50])
+    
+    def spawnSupervisorCog(self, name, level):
+        hasTheCog = False
+        for suit in self.suitList:
+            if suit.dna.name == name:
+                hasTheCog = True
+        
+        if not hasTheCog:
+            self.createNewSuit([], self.streetPointList, suitName=name, suitLevel=level)
+        
 
     def initBuildingsAndPoints(self):
         if not self.buildingMgr:
@@ -1120,7 +1139,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
         if len(battle.suits) >= 4:
             return 0
         for suit in battle.suits:
-            if suit.dna.name == 'trf':
+            if suit.dna.name in SuitDNA.supervisors:
                 return 1
         if battle:
             if simbase.config.GetBool('suits-always-join', 0):

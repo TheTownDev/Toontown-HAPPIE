@@ -20,7 +20,9 @@ from . import DistributedSuitPlanner
 from . import SuitDNA
 from direct.directnotify import DirectNotifyGlobal
 from . import SuitDialog
-from toontown.battle import BattleProps
+from toontown.toontowngui import TTDialog
+from toontown.distributed import DelayDelete
+from toontown.battle import BattleProps, SuitBattleGlobals
 import math
 import copy
 
@@ -187,6 +189,25 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         if self.notify.getDebug():
             self.notify.debug('Got level %d from server for suit %d' % (level, self.getDoId()))
         self.setLevel(level)
+        
+        if self.dna.name not in SuitDNA.customSuit2Dept:
+            if self.dna.name not in SuitDNA.mainTypes:
+                cogName = SuitBattleGlobals.getSuitAttributes(self.dna.name).name
+                message = "WARNING: The Cog %s has no assigned dept! Please check SuitDNA.py." % cogName
+                self.rejectDeptDialog = TTDialog.TTGlobalDialog(message=message, doneEvent='suitWarningDept', style=TTDialog.Acknowledge)
+                self.rejectDeptDialog.show()
+                self.rejectDeptDialog.delayDelete = DelayDelete.DelayDelete(self, '__suitWarningDeptEnter')
+                self.acceptOnce('suitWarningDept', self.__handleDeptRejectAck)
+
+    def __handleDeptRejectAck(self):
+        self.ignore('suitWarningDept')
+        doneStatus = self.rejectDeptDialog.doneStatus
+        if doneStatus != 'ok':
+            self.notify.error('Unrecognized doneStatus: ' + str(doneStatus))
+        self.cr.playGame.getPlace().setState('walk')
+        self.rejectDeptDialog.delayDelete.destroy()
+        self.rejectDeptDialog.cleanup()
+        del self.rejectDeptDialog
 
     def attachPropeller(self):
         if self.prop == None:
@@ -369,12 +390,15 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         self.healthBar.show()
         if self.dna.name == 'bgh':
             foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+            foremanMusic.setLoop(1)
             foremanMusic.play()
         if self.dna.name == 'trf':
             foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+            foremanMusic.setLoop(1)
             foremanMusic.play()
         if self.dna.name == 'def':
             foremanMusic = base.loader.loadMusic('phase_11/audio/bgm/ttr_s_ara_lhq_facilityBoss.ogg')
+            foremanMusic.setLoop(1)
             foremanMusic.play()
         if self.currHP < self.maxHP:
             self.updateHealthBar(0, 1)

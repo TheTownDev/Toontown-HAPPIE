@@ -79,21 +79,25 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
         for suit in self.suits:
             if suit.dna.name == 'trf':
                 foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
         
         for suit in self.pendingSuits:
             if suit.dna.name == 'trf':
                 foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
         
         for suit in self.suits:
             if suit.dna.name == 'bgh':
                 foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
         
         for suit in self.pendingSuits:
             if suit.dna.name == 'bgh':
                 foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
 
     def __faceOff(self, ts, name, callback):
@@ -189,31 +193,37 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
         for suit in self.suits:
             if suit.dna.name == 'trf':
                 foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
         
         for suit in self.pendingSuits:
             if suit.dna.name == 'trf':
                 foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
         
         for suit in self.joiningSuits:
             if suit.dna.name == 'trf':
                 foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
         
         for suit in self.suits:
             if suit.dna.name == 'bgh':
                 foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
             
         for suit in self.pendingSuits:
             if suit.dna.name == 'bgh':
                 foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
             
         for suit in self.joiningSuits:
             if suit.dna.name == 'bgh':
                 foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
+                foremanMusic.setLoop(1)
                 foremanMusic.play()
 
     def __handleFaceOffDone(self):

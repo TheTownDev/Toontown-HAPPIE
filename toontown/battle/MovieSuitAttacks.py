@@ -1364,7 +1364,7 @@ def doTeeOff(attack):
     battle = attack['battle']
     target = attack['target']
     toon = target['toon']
-    club = globalPropPool.getProp('golf-club')
+    club = globalPropPool.getProp('ttr_m_ene_prp_bat_golfClub')
     ball = globalPropPool.getProp('golf-ball')
     suitTrack = getSuitTrack(attack)
     clubPosPoints = [MovieUtil.PNT3_ZERO, VBase3(63.097, 43.988, -18.435)]

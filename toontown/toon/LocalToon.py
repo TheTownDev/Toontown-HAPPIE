@@ -183,7 +183,6 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             self.camPoints = []
             self.camera = camera
 
-            self.archipelagoLog: ArchipelagoOnscreenLog = None
             self.archipelagoRewardDisplay: ArchipelagoRewardDisplay = None
             self.locationScoutsCache: LocationScoutsCache = LocationScoutsCache()
             self.currentlyInHQ = False
@@ -294,8 +293,6 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         if base.wantNametags:
             self.nametag.unmanage(base.marginManager)
         taskMgr.removeTasksMatching('*ioorrd234*')
-        self.archipelagoLog.destroy()
-        del self.archipelagoLog
         self.archipelagoRewardDisplay.destroy()
         del self.archipelagoRewardDisplay
         self.ignoreAll()
@@ -412,20 +409,20 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             self.purchaseButton = DirectButton(parent=aspect2d, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=0.9, text=TTLocalizer.OptionsPagePurchase, text_scale=0.05, text_pos=(0, -0.01), textMayChange=0, pos=(0.885, 0, -0.94), sortOrder=100, command=self.__handlePurchase)
             base.setCellsAvailable([base.bottomCells[4]], 0)
 
-        self.archipelagoLog = ArchipelagoOnscreenLog()
-        self.archipelagoRewardDisplay = ArchipelagoRewardDisplay(
-            frameColor=(0.1, 0.1, 0.1, .9),
-            frameSize=(0, .9, 0, .2),
-            pos=(-1, 0, -.4),
-            text='',
-            text_scale=.035,
-            text_align=TextNode.ACenter,
-            text_fg=(1, 1, 1, 1),
-            text_pos=(.55, 0.138)
-        )
-        self.archipelagoRewardDisplay.reparentTo(base.a2dTopLeft)
-        self.archipelagoRewardDisplay.set_default_options()
-        self.archipelagoRewardDisplay.hide()
+        #self.archipelagoLog = ArchipelagoOnscreenLog()
+        #self.archipelagoRewardDisplay = ArchipelagoRewardDisplay(
+        #    frameColor=(0.1, 0.1, 0.1, .9),
+        #    frameSize=(0, .9, 0, .2),
+        #    pos=(-1, 0, -.4),
+        #    text='',
+        #    text_scale=.035,
+        #    text_align=TextNode.ACenter,
+        #    text_fg=(1, 1, 1, 1),
+        #    text_pos=(.55, 0.138)
+        #)
+        #self.archipelagoRewardDisplay.reparentTo(base.a2dTopLeft)
+        #self.archipelagoRewardDisplay.set_default_options()
+        #self.archipelagoRewardDisplay.hide()
 
         controls = base.controls
         self.accept(controls.SECONDARY_ACTION, self.__zeroPowerToss)
@@ -2094,8 +2091,9 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
 
     # Prints a message to the AP log
     def sendArchipelagoMessages(self, messages: List[str]) -> None:
-        for msg in messages:
-            self.archipelagoLog.addToLog(msg)
+        #for msg in messages:
+            #self.archipelagoLog.addToLog(msg)
+        pass
 
     # Tells the server what our death reason should be.
     # We need this because in some circumstances the server is unaware why we are taking damage.

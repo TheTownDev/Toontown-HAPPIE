@@ -54,6 +54,7 @@ class BattleCalculatorAI:
         self.tutorialFlag = tutorialFlag
         self.trainTrapTriggered = False
         self.supervisorCutscenePlayed = False
+        self.supervisorPhased = False
 
     def setSkillCreditMultiplier(self, mult):
         self.__skillCreditMultiplier = mult
@@ -865,7 +866,9 @@ class BattleCalculatorAI:
                     toon = self.battle.getToon(attackerId)
                     attack = self.battle.toonAttacks[attackerId]
                     if hp:
-                        attack[TOON_HPBONUS_COL] = math.ceil(totalDmgs * (self.DamageBonuses[numDmgs - 1] * 0.01))
+                        suit = self.battle.activeSuits[tgtPos]
+                        attack[TOON_HPBONUS_COL] = math.ceil(suit.getActualLevel() * numDmgs)
+                        #attack[TOON_HPBONUS_COL] = math.ceil(totalDmgs * (self.DamageBonuses[numDmgs - 1] * 0.01))
                         if self.notify.getDebug():
                             self.notify.debug('Applying hp bonus to track ' + str(attack[TOON_TRACK_COL]) + ' of ' + str(attack[TOON_HPBONUS_COL]))
                     elif len(attack[TOON_KBBONUS_COL]) > tgtPos:
@@ -1567,28 +1570,65 @@ class BattleCalculatorAI:
                 self.battle.dots.append([2, suit.doId, [DOT_Eff.children['value']], [], died])
                 self.makeSuitDead(suit)
         """
+        
+        for suit in self.battle.activeSuits:
+            if suit.dna.name == 'trf' and not self.supervisorPhased and suit.currHP <= round(suit.maxHP * 0.4):
+                self.battle.suitsCheatFirst.append([3, suit.doId, [0,], [], 0])
+                self.supervisorPhased = True
 
         for suit in self.battle.activeSuits:
             if suit.dna.name == 'trf':
-                if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
-                    toonList = []
-                    toonIdList = self.battle.activeToons[:]
-                    for toonId in toonIdList:
-                        toon = simbase.air.doId2do.get(toonId)
-                        if toon.hp >= 1:
-                            toonList.append(toon)
-                    
-                    rand_toon = random.choice(toonList)
-                    
-                    suitAttackMovie = [suit.doId, SuitAttackType.COMPANY_RESTRICTION, self.battle.activeToons.index(rand_toon.doId), [10,], 0, 0, 0]
-                    
-                    rand_toon.hp -= 10
-                    
-                    if rand_toon.hp < 1:
-                        suitAttackMovie[4] == 1
-                    self.battle.suitAttacks.append(suitAttackMovie)
+                if self.supervisorPhased:
+                    for i in range(2):
+                        if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
+                            toonList = []
+                            toonIdList = self.battle.activeToons[:]
+                            for toonId in toonIdList:
+                                toon = simbase.air.doId2do.get(toonId)
+                                if toon.hp >= 1:
+                                    toonList.append(toon)
+                            
+                            rand_toon = random.choice(toonList)
+                            
+                            toonsDmg = [0, 0, 0, 0]
+                            randToonIndex = self.battle.activeToons.index(rand_toon.doId)
+                            
+                            toonsDmg[randToonIndex] += 8
+                            
+                            if self.supervisorPhased:
+                                toonsDmg[randToonIndex] += 8
+                            suitAttackMovie = [suit.doId, SuitAttackType.COMPANY_RESTRICTION, self.battle.activeToons.index(rand_toon.doId), toonsDmg, 0, 0, 0]
+                            
+                            rand_toon.hp -= toonsDmg[randToonIndex]
+                            
+                            if rand_toon.hp < 1:
+                                suitAttackMovie[4] == 1
+                            self.battle.suitAttacks.append(suitAttackMovie)
+                else:
+                    if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
+                        toonList = []
+                        toonIdList = self.battle.activeToons[:]
+                        for toonId in toonIdList:
+                            toon = simbase.air.doId2do.get(toonId)
+                            if toon.hp >= 1:
+                                toonList.append(toon)
                         
-                    
+                        rand_toon = random.choice(toonList)
+                        
+                        toonsDmg = [0, 0, 0, 0]
+                        randToonIndex = self.battle.activeToons.index(rand_toon.doId)
+                        
+                        toonsDmg[randToonIndex] += 8
+                        
+                        if self.supervisorPhased:
+                            toonsDmg[randToonIndex] += 8
+                        suitAttackMovie = [suit.doId, SuitAttackType.COMPANY_RESTRICTION, self.battle.activeToons.index(rand_toon.doId), toonsDmg, 0, 0, 0]
+                        
+                        rand_toon.hp -= toonsDmg[randToonIndex]
+                        
+                        if rand_toon.hp < 1:
+                            suitAttackMovie[4] == 1
+                        self.battle.suitAttacks.append(suitAttackMovie)
         
         for suit in self.battle.activeSuits:
             if suit.dna.name == 'trf':
@@ -1604,6 +1644,22 @@ class BattleCalculatorAI:
                                 dmg_eff = tgt_suit.effectHandler.children['damageBonus']    
                                 dmg_eff.children['value'] = 10
                                 self.battle.suitsCheatSecond.append([2, suit.doId, [dmg_eff.children['value']], [tgt_suit.doId], 0])
+                                continue
+        
+        for suit in self.battle.activeSuits:
+            if suit.dna.name == 'bgh':
+                if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
+                    activeSuitList = self.battle.activeSuits[:]
+                    activeSuitList.remove(suit)
+                    
+                    if len(activeSuitList) >= 1:
+                        for tgt_suit in activeSuitList:
+                            DMG_Eff = tgt_suit.effectHandler.children.get('damageBonus', None)
+                            if DMG_Eff is None:
+                                tgt_suit.effectHandler.addEffect('BattleEffectExtraDamageAI')
+                                dmg_eff = tgt_suit.effectHandler.children['damageBonus']    
+                                dmg_eff.children['value'] = 22
+                                self.battle.suitsCheatSecond.append([4, suit.doId, [dmg_eff.children['value']], [tgt_suit.doId], 0])
                                 continue
                 
         for suit in self.battle.activeSuits:

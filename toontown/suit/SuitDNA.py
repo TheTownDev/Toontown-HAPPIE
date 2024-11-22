@@ -66,6 +66,39 @@ supervisors = [
     'def',
     'bgh']
 
+mainTypes = ['f',
+    'p',
+    'ym',
+    'mm',
+    'ds',
+    'hh',
+    'cr',
+    'tbc',
+    'bf',
+    'b',
+    'dt',
+    'ac',
+    'bs',
+    'sd',
+    'le',
+    'bw',
+    'sc',
+    'pp',
+    'tw',
+    'bc',
+    'nc',
+    'mb',
+    'ls',
+    'rb',
+    'cc',
+    'tm',
+    'nd',
+    'gh',
+    'ms',
+    'tf',
+    'm',
+    'mh']
+
 notMainTypes = [
     'trf',
     'ski',
@@ -352,7 +385,9 @@ __GENERAL_SUIT_ANIMATIONS: Set[SuitAnimation] = {
     SuitAnimation(key='speak', suit='A', path='speak', phase='5'),
     SuitAnimation(key='speak', suit='B', path='speak', phase='5'),
     SuitAnimation(key='speak', suit='C', path='speak', phase='5'),
+    SuitAnimation(key='livid', suit='B', path='livid', phase='5'),
     SuitAnimation(key='chop-chop', suit='B', path='chop-chop', phase='5'),
+    SuitAnimation(key='chop-chop', suit='A', path='chop-chop', phase='5'),
     SuitAnimation(key='golf-club-swing', suit='A', path='golf-club-swing', phase='5'),
     SuitAnimation(key='glower', suit='A', path='glower', phase='5'),
     SuitAnimation(key='glower', suit='B', path='glower', phase='5'),
@@ -665,8 +700,8 @@ def getSuitDept(name):
     elif name in customSuit2Dept:
         return customSuit2Dept[name]
     else:
-        print('Unknown dept for suit name: ', name)
-        return None
+        print('Unknown dept for suit name, switching to bossbot: ', name)
+        return 'c'
 
 
 def getDeptFullname(dept):

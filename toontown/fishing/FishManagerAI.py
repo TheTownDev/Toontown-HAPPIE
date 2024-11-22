@@ -141,14 +141,18 @@ class FishManagerAI:
 
             # Route species logic for pity
             if self.shouldForceNewSpecies(av):
+                
+                fish = self.attemptForceNewSpecies(av, zoneId, fish)
+                
                 for index, quest in enumerate(self.air.questManager.toonQuestsList2Quests(av.quests)):
                     if isinstance(quest, Quests.FishQuest):
                         if quest.getCompletionStatus(av, av.quests[index]) != Quests.COMPLETE:
                             if quest.isLocationMatch(zoneId):
-                                if quest.getFish():
-                                    genus = quest.getFish()
-                                    fish = FishBase(genus, species, weight)
-                fish = self.attemptForceNewSpecies(av, zoneId, fish)
+                                if quest.getFish() > -1:
+                                    if quest.getFish() == genus:
+                                        fish = FishBase(quest.getFish(), species, weight)
+                                        genus = quest.getFish()
+
 
             # Catch the fish
             fishType = av.fishCollection.collectFish(fish)
@@ -159,7 +163,7 @@ class FishManagerAI:
                 if isinstance(quest, Quests.FishQuest):
                     if quest.getCompletionStatus(av, av.quests[index]) != Quests.COMPLETE:
                         if quest.isLocationMatch(zoneId):
-                            if quest.getFish():
+                            if quest.getFish() > -1:
                                 if quest.getFish() == genus:
                                     self.air.questManager.incrementQuestProgressCustom(av.quests[index], av, zoneId)
                             else:

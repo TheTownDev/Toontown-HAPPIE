@@ -265,6 +265,7 @@ class Suit(Avatar.Avatar):
 
     def generateSuit(self):
         dna = self.style
+        
         self.headParts = []
         self.headColor = None
         self.headTexture = None

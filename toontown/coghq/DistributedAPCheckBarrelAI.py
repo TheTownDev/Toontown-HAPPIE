@@ -71,7 +71,7 @@ class DistributedAPCheckBarrelAI(DistributedBarrelBaseAI.DistributedBarrelBaseAI
 
     def __init__(self, level, entId):
         DistributedBarrelBaseAI.DistributedBarrelBaseAI.__init__(self, level, entId)
-        self.locationCheckId = util.ap_location_name_to_id(self.getAPLocationMapping())
+        self.locationCheckId = 0
         # Debug statement, use for when making new barrels
         # print(f"ap barrel: entid={entId} - level is a {type(level)} FactoryID/Floor: {self.getFacilityIdAndFloor()}, apBarrelIndex?: {self.getAPRewardIndex()}")
 

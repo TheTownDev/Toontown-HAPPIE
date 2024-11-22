@@ -16,11 +16,13 @@ from . import SuitBase
 from . import DistributedSuitPlanner
 from direct.directnotify import DirectNotifyGlobal
 from . import SuitDialog
-from toontown.battle import BattleProps
+from toontown.battle import BattleProps, SuitBattleGlobals
 from toontown.distributed.DelayDeletable import DelayDeletable
 import math
 import copy
-from . import DistributedSuitBase
+from . import DistributedSuitBase, SuitDNA
+from toontown.toontowngui import TTDialog
+from toontown.distributed import DelayDelete
 from otp.otpbase import OTPLocalizer
 import random
 STAND_OUTSIDE_DOOR = 2.5

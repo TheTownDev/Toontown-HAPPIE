@@ -38,7 +38,7 @@ class CountryClubManagerAI(DirectObject.DirectObject):
         for avId in players:
             if bboard.has('countryClubRoom-%s' % avId):
                 roomId = bboard.get('countryClubRoom-%s' % avId)
-                for i in range(numFloors):
+                for i in range(2):
                     layout = CountryClubLayout.CountryClubLayout(countryClubId, i)
                     if roomId in layout.getRoomIds():
                         floor = i

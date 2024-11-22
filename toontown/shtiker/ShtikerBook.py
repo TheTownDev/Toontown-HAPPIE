@@ -45,7 +45,8 @@ class ShtikerBook(DirectFrame, StateData.StateData):
          TTLocalizer.GolfPageTitle,
          TTLocalizer.EventsPageName,
          TTLocalizer.NewsPageName,
-         TTLocalizer.SpellbookPageTitle]
+         TTLocalizer.SpellbookPageTitle,
+         "Toonspace"]
         return
 
     def setSafeMode(self, setting):
@@ -288,6 +289,10 @@ class ShtikerBook(DirectFrame, StateData.StateData):
             buttonPressedCommand = self.goToNewsPage
             extraArgs = [page]
         elif pageName == TTLocalizer.SpellbookPageTitle:
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconGeom = iconModels.find('**/spellbookIcon')
+            iconModels.detachNode()
+        elif pageName == "Toonspace":
             iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
             iconGeom = iconModels.find('**/spellbookIcon')
             iconModels.detachNode()

@@ -228,10 +228,10 @@ AvPropAccuracy = (
     (100, 100, 100, 100, 100, 100, 100),   # Sound
     (100, 100, 100, 100, 100, 100, 100),   # Throw
     (100, 100, 100, 100, 100, 100, 100),   # Squirt
-    (75, 75, 75, 75, 75, 75, 75)    # Drop
+    (85, 85, 85, 85, 85, 85, 85)    # Drop
 )
 
-AvLureBonusAccuracy = (80, 80, 80, 80, 80, 80, 100)
+AvLureBonusAccuracy = (100, 100, 100, 100, 100, 100, 100)
 
 
 # Util method to show a clean percentage accuracy (base) string for a specific gag utilizing AvPropAccuracy defined here
@@ -295,13 +295,13 @@ AvPropDamage = (
         ((92, 110), (Levels[5][6], regMaxSkill))
     ),
     (   # Drop
-        ((10, 20), (Levels[6][0], Levels[6][1])),
-        ((32, 44), (Levels[6][1], Levels[6][2])),
-        ((60, 72), (Levels[6][2], Levels[6][3])),
-        ((76, 90), (Levels[6][3], Levels[6][4])),
-        ((110, 120), (Levels[6][4], Levels[6][5])),
-        ((160, 190), (Levels[6][5], Levels[6][6])),
-        ((240, 240), (Levels[6][6], regMaxSkill)),
+        ((20, 30), (Levels[6][0], Levels[6][1])),
+        ((44, 56), (Levels[6][1], Levels[6][2])),
+        ((72, 90), (Levels[6][2], Levels[6][3])),
+        ((110, 132), (Levels[6][3], Levels[6][4])),
+        ((156, 180), (Levels[6][4], Levels[6][5])),
+        ((240, 260), (Levels[6][5], Levels[6][6])),
+        ((300, 300), (Levels[6][6], regMaxSkill)),
     )
 )
 ATK_SINGLE_TARGET = 0

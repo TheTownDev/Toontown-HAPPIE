@@ -426,28 +426,22 @@ __registerSuitAttributes(__MICROMANAGER)
 
 __DOWNSIZER_ATTACKS = set()
 __DOWNSIZER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.CANNED,
-    damage={5: 5, 6: 6, 7: 8, 8: 10, 9: 12},
-    accuracy=60,
-    weight=25,
-))
-__DOWNSIZER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.DOWNSIZE,
     damage={5: 8, 6: 9, 7: 11, 8: 13, 9: 15},
     accuracy=50,
-    weight=35,
+    weight=25,
 ))
 __DOWNSIZER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.PINK_SLIP,
     damage={5: 4, 6: 5, 7: 6, 8: 7, 9: 8},
     accuracy=60,
-    weight=25,
+    weight=40,
 ))
 __DOWNSIZER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.SACKED,
+    attack=SuitAttackType.TEE_OFF,
     damage={5: 5, 6: 6, 7: 7, 8: 8, 9: 9},
     accuracy=50,
-    weight=15,
+    weight=35,
 ))
 __DOWNSIZER: SuitAttributes = SuitAttributes(key='ds', name=TTLocalizer.SuitDownsizer, singular=TTLocalizer.SuitDownsizerS, plural=TTLocalizer.SuitDownsizerP, tier=4, attacks=__DOWNSIZER_ATTACKS)
 __registerSuitAttributes(__DOWNSIZER)
@@ -552,19 +546,19 @@ __registerSuitAttributes(__THE_BIG_CHEESE)
 __CLUB_PRESIDENT_ATTACKS = set()
 __CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.EVIL_EYE,
-    damage={8: 8, 35: 32},
+    damage={8: 8, 50: 32},
     accuracy=75,
     weight=50,
 ))
 __CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.TEE_OFF,
-    damage={8: 10, 35: 29},
+    damage={8: 10, 50: 29},
     accuracy=50,
     weight=30,
 ))
 __CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.QUAKE,
-    damage={8: 7, 35: 26},
+    damage={8: 7, 50: 26},
     accuracy=75,
     weight=20,
 ))
@@ -792,31 +786,31 @@ __registerSuitAttributes(__MR_HOLLYWOOD)
 __TRAFFIC_MANAGER_ATTACKS = set()
 __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.FIRED,
-    damage={8: 4},
+    damage={35: 21},
     accuracy=60,
     weight=30,
 ))
 __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.POWER_TRIP,
-    damage={8: 1},
+    damage={35: 15},
     accuracy=50,
     weight=15,
 ))
 __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.PLAY_HARDBALL,
-    damage={8: 8,},
+    damage={35: 15,},
     accuracy=60,
     weight=30,
 ))
 __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.RED_TAPE,
-    damage={6: 8, 7: 10, 8: 11, 9: 13, 10: 15},
+    damage={35: 14, 7: 10, 8: 11, 9: 13, 10: 15},
     accuracy=60,
     weight=25,
 ))
 __TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.COMPANY_RESTRICTION,
-    damage={6: 8,},
+    damage={35: 12,},
     accuracy=100,
     weight=0,
 ))

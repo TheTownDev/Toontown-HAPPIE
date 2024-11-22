@@ -66,6 +66,7 @@ class QuestPage(ShtikerPage.ShtikerPage):
             frame = QuestBookPoster.QuestBookPoster(reverse=i in (2, 3, 5), mapIndex=i + 1)
             frame.reparentTo(self)
             frame.setPosHpr(*questFramePlaceList[i])
+            frame.mapIndex.show()
             if base.localAvatar.getQuestCarryLimit() <= 4:
                 frame.setScale(1.06)
             else:

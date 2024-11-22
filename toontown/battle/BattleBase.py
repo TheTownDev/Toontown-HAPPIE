@@ -45,8 +45,8 @@ THROW = THROW_TRACK
 SQUIRT = SQUIRT_TRACK
 DROP = DROP_TRACK
 #change both to 200 so movie does not stop after certain time :3c
-TOON_ATTACK_TIME = 200.0
-SUIT_ATTACK_TIME = 200.0
+TOON_ATTACK_TIME = 10000.0
+SUIT_ATTACK_TIME = 10000.0
 #----------------------------------------
 TOON_TRAP_DELAY = 0.8
 TOON_SOUND_DELAY = 1.0
