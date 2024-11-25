@@ -46,7 +46,8 @@ class DistributedRaceAI(DistributedObjectAI.DistributedObjectAI):
         DistributedObjectAI.DistributedObjectAI.generate(self)
         self.notify.debug('generate %s, id=%s, ' % (self.doId, self.trackId))
         trackFilepath = RaceGlobals.TrackDict[self.trackId][0]
-        taskMgr.doMethodLater(0.5, self.enableEntryBarrier, 'enableWaitingBarrier')
+        #taskMgr.doMethodLater(0.5, self.enableEntryBarrier, 'enableWaitingBarrier')
+        self.b_racersJoined(self.getAvatars())
 
     def enableEntryBarrier(self, task):
         self.enterRaceBarrier = self.beginBarrier('waitingForJoin', self.avIds, 60, self.b_racersJoined)
@@ -207,7 +208,7 @@ class DistributedRaceAI(DistributedObjectAI.DistributedObjectAI):
                     av.b_setTickets(avTickets - raceFee)
 
         self.avIds = avIds
-        self.readRulesBarrier = self.beginBarrier('readRules', self.avIds, 10, self.b_startRace)
+        self.readRulesBarrier = self.beginBarrier('readRules', self.avIds, 0.001, self.b_startRace)
         self.sendUpdate('startTutorial', [])
         return
 

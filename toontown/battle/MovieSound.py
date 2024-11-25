@@ -95,9 +95,9 @@ def __getSuitTrack(sound, lastSoundThatHit, delay, hitCount, targets, totalDamag
                 suitTrack.append(showDamage)
                 suitTrack.append(updateHealthBar)
             if hitCount == 1:
-                suitTrack.append(Parallel(ActorInterval(suit, 'squirt-small-react'), MovieUtil.createSuitStunInterval(suit, 0.5, 1.8)))
+                suitTrack.append(Parallel(ActorInterval(suit, 'soundhit'), MovieUtil.createSuitStunInterval(suit, 0.5, 1.8)))
             else:
-                suitTrack.append(ActorInterval(suit, 'squirt-small-react'))
+                suitTrack.append(ActorInterval(suit, 'soundhit'))
             if kbbonus == 0:
                 suitTrack.append(__createSuitResetPosTrack(suit, battle))
                 suitTrack.append(Func(battle.unlureSuit, suit))

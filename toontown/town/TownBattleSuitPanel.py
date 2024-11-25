@@ -38,6 +38,13 @@ class TownBattleSuitPanel(DirectFrame):
         self.cogSelectButton.setX(0.23)
         self.cogSelectButton.setZ(-0.1)
         self.cogSelectButton.setBin("gui-popup", 50)
+        cogStatusIcon = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect').find('**/ttr_t_gui_bat_statusEffect_icon_overtime')
+        self.cogStatusButton = DirectButton(parent=self, relief=None, geom=cogStatusIcon, pos=(0, 0, 0), text_scale=0.0, text_pos=(0, 0, 0), text='', command=self.handleCogSelect)
+        self.cogStatusButton.setScale(0.025)
+        self.cogStatusButton.setX(0.0)
+        self.cogStatusButton.setZ(-0.0)
+        self.cogStatusButton.setBin("gui-popup", 50)
+        self.cogStatusButton.setX(0.22)
         self.cog = None
         self.isLoaded = 0
         self.notify.info("Loading Suit Battle Panel!")
@@ -144,6 +151,7 @@ class TownBattleSuitPanel(DirectFrame):
         self.healthNode.show()
         self.button.show()
         self.glow.show()
+        #self.cogStatusButton.place()
         DirectFrame.show(self)
 
     def __handleToggle(self):

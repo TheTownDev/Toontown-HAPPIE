@@ -92,6 +92,8 @@ class LevelSuitPlannerAI(DirectObject.DirectObject):
             suit.setSkelecog(1)
         suit.generateWithRequired(suitDict['zoneId'])
         suit.boss = suitDict['boss']
+        if 'gold' in suitDict:
+            suit.b_setGoldSkelecog(suitDict['gold'])
         return suit
 
     def genSuits(self):

@@ -66,7 +66,15 @@ class SuitBase:
                 self.setDisplayName(nameWLevel)
         attributes: SuitAttributes = SuitBattleGlobals.getSuitAttributes(self.dna.name)
 
-        self.maxHP = attributes.getBaseMaxHp(self.getActualLevel())
+        if self.isGoldSkelecog:
+            self.maxHP = attributes.getBaseMaxHp(self.getActualLevel() + 2)
+        else:
+            self.maxHP = attributes.getBaseMaxHp(self.getActualLevel())
+        self.currHP = self.maxHP
+
+    def setGoldAttributes(self):
+        attributes: SuitAttributes = SuitBattleGlobals.getSuitAttributes(self.dna.name)
+        self.maxHP = attributes.getBaseMaxHp(self.getActualLevel() + 2)
         self.currHP = self.maxHP
 
     def getSkelecog(self):
@@ -80,6 +88,8 @@ class SuitBase:
 
     def setGoldSkelecog(self, flag):
         self.isGoldSkelecog = flag
+        if self.isGoldSkelecog:
+            self.setGoldAttributes()
 
     def setImmuneStatus(self, num):
         if num == None:

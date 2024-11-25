@@ -44,6 +44,11 @@ from toontown.coghq import CashbotMintLobby_Battle01
 from toontown.coghq import CashbotMintPaintMixerReward_Battle00
 from toontown.coghq import CashbotMintPipeRoom_Battle01
 
+from toontown.coghq.facility.cashbot.coin import tt_f_ara_mer_action00, tt_f_ara_bcr_action00, tt_f_ara_mmz_action00, tt_f_ara_mlr_action00, tt_f_ara_mgr_action00, tt_f_ara_mgr_action01
+from toontown.coghq.facility.cashbot.coin import tt_f_ara_bcr_action00Cogs
+from toontown.coghq.facility.cashbot.coin import tt_f_ara_mvr_action00, tt_f_ara_mvr_action00Cogs
+from toontown.coghq.facility.cashbot.coin import tt_f_ara_mlr_action01, tt_f_ara_mlr_action01Cogs
+
 def getMintRoomSpecModule(roomId):
     return CashbotMintSpecModules[roomId]
 
@@ -57,7 +62,7 @@ def getNumBattles(roomId):
     return roomId2numBattles[roomId]
 
 CashbotMintSpecModules = {
-    0: CashbotMintEntrance_Action00,
+    0: tt_f_ara_mer_action00,
     1: CashbotMintBoilerRoom_Action00,
     2: CashbotMintBoilerRoom_Battle00,
     3: CashbotMintDuctRoom_Action00,
@@ -83,6 +88,13 @@ CashbotMintSpecModules = {
     23: CashbotMintLobby_Battle01,
     24: CashbotMintPaintMixerReward_Battle00,
     25: CashbotMintPipeRoom_Battle01,
+    100: tt_f_ara_bcr_action00,
+    101: tt_f_ara_mvr_action00,
+    102: tt_f_ara_mmz_action00,
+    103: tt_f_ara_mlr_action00,
+    104: tt_f_ara_mgr_action00,
+    105: tt_f_ara_mlr_action01,
+    106: tt_f_ara_mgr_action01,
 }
 
 # Ok don't freak out. What we are doing here is grabbing the name of the module that we imported.
@@ -112,7 +124,10 @@ CogSpecModules = {
     'CashbotMintOilRoom_Battle00': CashbotMintOilRoom_Battle00_Cogs,
     'CashbotMintPaintMixerReward_Battle00': CashbotMintPaintMixerReward_Battle00_Cogs,
     'CashbotMintPipeRoom_Battle00': CashbotMintPipeRoom_Battle00_Cogs,
-    'CashbotMintPipeRoom_Battle01': CashbotMintPipeRoom_Battle01_Cogs
+    'CashbotMintPipeRoom_Battle01': CashbotMintPipeRoom_Battle01_Cogs,
+    'tt_f_ara_bcr_action00': tt_f_ara_bcr_action00Cogs,
+    'tt_f_ara_mvr_action00': tt_f_ara_mvr_action00Cogs,
+    'tt_f_ara_mlr_action01': tt_f_ara_mlr_action01Cogs
 }
 
 roomId2numBattles = {}

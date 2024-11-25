@@ -1832,7 +1832,7 @@ def doGlowerPower(attack):
     battle = attack['battle']
     leftKnives = []
     rightKnives = []
-    for i in range(0, 3):
+    for i in range(0, 6):
         leftKnives.append(globalPropPool.getProp('dagger'))
         rightKnives.append(globalPropPool.getProp('dagger'))
 
@@ -1849,7 +1849,7 @@ def doGlowerPower(attack):
         rightPosPoints = [Point3(-0.4, 3.8, 3.7), MovieUtil.PNT3_ZERO]
     leftKnifeTracks = Parallel()
     rightKnifeTracks = Parallel()
-    for i in range(0, 3):
+    for i in range(0, 6):
         knifeDelay = 0.11
         leftTrack = Sequence()
         leftTrack.append(Wait(1.1))
@@ -1858,7 +1858,7 @@ def doGlowerPower(attack):
         leftTrack.append(getPropThrowTrack(attack, leftKnives[i], hitPointNames=['face'], missPointNames=['miss'], hitDuration=0.3, missDuration=0.3))
         leftKnifeTracks.append(leftTrack)
         rightTrack = Sequence()
-        rightTrack.append(Wait(1.1))
+        rightTrack.append(Wait(1.22))
         rightTrack.append(Wait(i * knifeDelay))
         rightTrack.append(getPropAppearTrack(rightKnives[i], suit, rightPosPoints, 1e-06, Point3(0.4, 0.4, 0.4), scaleUpTime=0.1))
         rightTrack.append(getPropThrowTrack(attack, rightKnives[i], hitPointNames=['face'], missPointNames=['miss'], hitDuration=0.3, missDuration=0.3))
@@ -1867,7 +1867,9 @@ def doGlowerPower(attack):
     damageAnims = [['slip-backward', 0.01, 0.35]]
     toonTrack = getToonTrack(attack, damageDelay=1.6, splicedDamageAnims=damageAnims, dodgeDelay=0.7, dodgeAnimNames=['sidestep'])
     soundTrack = getSoundTrack('SA_glower_power.ogg', delay=1.1, node=suit)
-    return Parallel(suitTrack, toonTrack, soundTrack, leftKnifeTracks, rightKnifeTracks)
+    newTrack = Parallel(suitTrack, toonTrack, soundTrack, leftKnifeTracks, rightKnifeTracks)
+    newTrack.setPlayRate(1.32)
+    return newTrack
 
 
 def doHalfWindsor(attack):
@@ -2706,8 +2708,14 @@ def doParadigmShift(attack):
     toonTracks = getToonTracks(attack, damageDelay=damageDelay, splicedDamageAnims=damageAnims, dodgeDelay=dodgeDelay, splicedDodgeAnims=dodgeAnims, showDamageExtraTime=2.7)
     if hitAtleastOneToon == 1:
         soundTrack = getSoundTrack('SA_paradigm_shift.ogg', delay=2.1, node=suit)
+        liftTracks.setPlayRate(1.4)
+        toonRiseTracks.setPlayRate(1.3)
+        toonTracks.setPlayRate(1.25)
         return Parallel(suitTrack, sprayTrack, soundTrack, liftTracks, toonTracks, toonRiseTracks)
     else:
+        liftTracks.setPlayRate(1.38)
+        toonRiseTracks.setPlayRate(1.28)
+        toonTracks.setPlayRate(1.24)
         return Parallel(suitTrack, sprayTrack, liftTracks, toonTracks, toonRiseTracks)
 
 
@@ -2739,14 +2747,16 @@ def doPowerTrip(attack):
     suitTrack = getSuitAnimTrack(attack)
 
     def getPowerTrack(effect, suit = suit, battle = battle):
-        partTrack = Sequence(Wait(1.0), Func(battle.movie.needRestoreParticleEffect, effect), Func(effect.start, suit), Wait(0.4), LerpPosInterval(effect, 1.0, Point3(0, 15, 0.4)), LerpFunctionInterval(effect.setAlphaScale, fromData=1, toData=0, duration=0.4), Func(effect.cleanup), Func(battle.movie.clearRestoreParticleEffect, effect))
+        partTrack = Sequence(Wait(1.0), Func(battle.movie.needRestoreParticleEffect, effect), Func(effect.start, suit), Wait(0.4), LerpPosInterval(effect, 1.0, Point3(0, 15, 0.4), blendType='easeInOut'), LerpFunctionInterval(effect.setAlphaScale, fromData=1, toData=0, duration=0.4), Func(effect.cleanup), Func(battle.movie.clearRestoreParticleEffect, effect))
         return partTrack
 
     partTrack1 = getPowerTrack(powerBar1)
     partTrack2 = getPowerTrack(powerBar2)
     waterfallTrack = getPartTrack(waterfallEffect, 0.6, 1.3, [waterfallEffect, suit, 0])
     toonTracks = getToonTracks(attack, 1.8, ['slip-forward'], 1.29, ['jump'])
-    return Parallel(suitTrack, partTrack1, partTrack2, waterfallTrack, toonTracks)
+    track = Parallel(suitTrack, partTrack1, partTrack2, waterfallTrack, toonTracks)
+    track.setPlayRate(1.3)
+    return 
 
 
 def doSongAndDance(attack):

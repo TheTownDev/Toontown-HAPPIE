@@ -75,7 +75,7 @@ class MintInterior(BattlePlace.BattlePlace):
             if (str(self.zoneId) + '_battle') in self.musicJson['global_music']:
                 self.loader.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(self.zoneId) + '_battle')])
         else:
-            self.music = base.loader.loadMusic('phase_9/audio/bgm/CHQ_FACT_bg.ogg')
+            self.music = base.loader.loadMusic('phase_10/audio/bgm/CHQ_MINT_bg.ogg')
 
     def unload(self):
         self.parentFSM.getStateNamed('mintInterior').removeChild(self.fsm)

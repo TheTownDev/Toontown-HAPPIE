@@ -112,8 +112,8 @@ class DistributedVehicle(DistributedSmoothNode.DistributedSmoothNode, Kart.Kart,
         self.wallCollideTrack = None
         self.wheelMaxTurn = 1.0
         self.wheelMinTurn = 0.15
-        self.speedMaxTurn = 90
-        self.speedMinTurn = 300
+        self.speedMaxTurn = 170
+        self.speedMinTurn = 460
         self.wheelTurnTime = 0.6
         self.wheelReturnTime = 0.3
         self.wheelFightTime = 0.2
@@ -126,7 +126,7 @@ class DistributedVehicle(DistributedSmoothNode.DistributedSmoothNode, Kart.Kart,
         self.armSwingSpeedPara = 0.7
         self.cameraTightener = 3.0
         self.cameraArmBase = 0
-        self.cameraArmExtend = 20
+        self.cameraArmExtend = 25
         self.pieCount = 0
         self.numPieChunks = 6
         self.pieSlideSpeed = []
@@ -261,7 +261,7 @@ class DistributedVehicle(DistributedSmoothNode.DistributedSmoothNode, Kart.Kart,
         self.collisionNode = CollisionNode(self.uniqueName('vehicle'))
         self.collisionNode.setFromCollideMask(OTPGlobals.WallBitmask)
         self.collisionNode.setIntoCollideMask(ToontownGlobals.PieBitmask)
-        cs = CollisionSphere(0, 0, 4, 4)
+        cs = CollisionSphere(0, 0, 3, 3)
         self.collisionNode.addSolid(cs)
         self.collisionNodePath = NodePath(self.collisionNode)
         self.wallHandler = PhysicsCollisionHandler()
@@ -871,8 +871,9 @@ class DistributedVehicle(DistributedSmoothNode.DistributedSmoothNode, Kart.Kart,
         pitch += accelBase
         pitch = clampScalar(pitch, accelBase - 5, accelBase + 5)
         self.accelerationMult = pitch * 2
-        if self.groundType == 'ice':
-            self.accelerationMult *= iceAccelFactor
+        
+        self.accelerationMult *= iceAccelFactor
+        self.acceleration += self.accelerationMult * 1.6
         if self.stopped:
             self.acceleration = 0
         else:
@@ -881,7 +882,8 @@ class DistributedVehicle(DistributedSmoothNode.DistributedSmoothNode, Kart.Kart,
                 if self.skidding:
                     self.acceleration = self.arrowVert * self.accelerationMult * self.cheatFactor * 0.5
             if self.turbo:
-                self.acceleration += self.accelerationMult * 1.5
+                self.acceleration += self.accelerationMult * 1.25
+        self.acceleration += self.accelerationMult * 1.25
         self.engine.setVector(Vec3(0, self.acceleration, 0))
         if self.groundType == 'ice':
             rotMat = Mat3.rotateMatNormaxis(newHForTurning, Vec3.up())
