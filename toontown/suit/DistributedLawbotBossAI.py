@@ -20,6 +20,7 @@ from apworld.toontown import locations
 from ..archipelago.definitions.death_reason import DeathReason
 
 from ..archipelago.definitions.util import ap_location_name_to_id
+from .SuitDNAGlobals import *
 
 
 class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
@@ -30,7 +31,7 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
     maxToonLevels = 77
 
     def __init__(self, air):
-        DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, 'l')
+        DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, LAWBOT)
         FSM.FSM.__init__(self, 'DistributedLawbotBossAI')
         self.lawyers = []
         self.cannons = None

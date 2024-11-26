@@ -22,6 +22,7 @@ from toontown.battle import DistributedBattleWaitersAI
 from toontown.battle import DistributedBattleDinersAI
 from toontown.battle import BattleExperienceAI
 from direct.distributed.ClockDelta import globalClockDelta
+from .SuitDNAGlobals import *
 
 class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedBossbotBossAI')
@@ -36,7 +37,7 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     STUN_HIT_LIMIT = 5
 
     def __init__(self, air):
-        DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, 'c')
+        DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, BOSSBOT)
         FSM.FSM.__init__(self, 'DistributedBossbotBossAI')
         self.battleOneBattlesMade = False
         self.battleThreeBattlesMade = False

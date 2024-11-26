@@ -11,54 +11,13 @@ from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from otp.avatar import AvatarDNA
 from toontown.toonbase import TTLocalizer
 
+from .SuitDNAGlobals import *
+
 if typing.TYPE_CHECKING:
     from toontown.toonbase.ToonBaseGlobals import *
 
 
 notify = directNotify.newCategory('SuitDNA')
-suitHeadTypes = [
-    'f',
-    'p',
-    'ym',
-    'mm',
-    'ds',
-    'hh',
-    'cr',
-    'tbc',
-    'bf',
-    'b',
-    'dt',
-    'ac',
-    'bs',
-    'sd',
-    'le',
-    'bw',
-    'sc',
-    'pp',
-    'tw',
-    'bc',
-    'nc',
-    'mb',
-    'ls',
-    'rb',
-    'cc',
-    'tm',
-    'nd',
-    'gh',
-    'ms',
-    'tf',
-    'm',
-    'mh',
-    'bar',
-    'inv',
-    'cfn',
-    'trf',
-    'ski',
-    'def',
-    'bgh',
-    'barr',
-    'att',
-]
 
 supervisors = [
     'trf',
@@ -66,130 +25,130 @@ supervisors = [
     'def',
     'bgh']
 
-mainTypes = ['f',
-    'p',
-    'ym',
-    'mm',
-    'ds',
-    'hh',
-    'cr',
-    'tbc',
-    'bf',
-    'b',
-    'dt',
-    'ac',
-    'bs',
-    'sd',
-    'le',
-    'bw',
-    'sc',
-    'pp',
-    'tw',
-    'bc',
-    'nc',
-    'mb',
-    'ls',
-    'rb',
-    'cc',
-    'tm',
-    'nd',
-    'gh',
-    'ms',
-    'tf',
-    'm',
-    'mh']
+mainTypes = [FLUNKY,
+    PENCIL_PUSHER,
+    YESMAN,
+    MICROMANAGER,
+    DOWNSIZER,
+    HEAD_HUNTER,
+    CORPORATE_RAIDER,
+    THE_BIG_CHEESE,
+    BOTTOM_FEEDER,
+    BLOODSUCKER,
+    DOUBLE_TALKER,
+    AMBULANCE_CHASER,
+    BACK_STABBER,
+    SPIN_DOCTOR,
+    LEGAL_EAGLE,
+    BIG_WIG,
+    SHORT_CHANGE,
+    PENNY_PINCHER,
+    TIGHTWAD,
+    BEAN_COUNTER,
+    NUMBER_CRUNCHER,
+    MONEY_BAGS,
+    LOAN_SHARK,
+    ROBBER_BARON,
+    COLD_CALLER,
+    TELEMARKETER,
+    NAME_DROPPER,
+    GLAD_HANDER,
+    MOVER_AND_SHAKER,
+    TWO_FACE,
+    THE_MINGLER,
+    MR_HOLLYWOOD]
 
 notMainTypes = [
-    'trf',
-    'ski',
-    'def',
-    'bgh',
-    'bar',
-    'inv',
-    'cfn'
+    THE_FACTORY_FOREMAN,
+    THE_MINT_AUDITOR,
+    THE_OFFICE_CLERK,
+    THE_CLUB_PRESIDENT,
+    BARISTA,
+    INVESTIGATOR,
+    CONFISCATOR
 ]
 
 suitATypes = [
-    'ym',
-    'hh',
-    'tbc',
-    'bgh',
-    'dt',
-    'bs',
-    'le',
-    'barr',
-    'bw',
-    'pp',
-    'nc',
-    'rb',
-    'nd',
-    'tf',
-    'm',
-    'mh',
-    'cfn'
+    YESMAN,
+    HEAD_HUNTER,
+    THE_BIG_CHEESE,
+    THE_CLUB_PRESIDENT,
+    DOUBLE_TALKER,
+    BACK_STABBER,
+    LEGAL_EAGLE,
+    BARRISTER,
+    BIG_WIG,
+    PENNY_PINCHER,
+    NUMBER_CRUNCHER,
+    ROBBER_BARON,
+    NAME_DROPPER,
+    TWO_FACE,
+    THE_MINGLER,
+    MR_HOLLYWOOD,
+    CONFISCATOR
 ]
 
 suitBTypes = [
-    'p',
-    'ds',
-    'b',
-    'ac',
-    'def',
-    'sd',
-    'bc',
-    'ls',
-    'tm',
-    'ms',
-    'trf',
-    'inv',
-    'att'
+    PENCIL_PUSHER,
+    DOWNSIZER,
+    BLOODSUCKER,
+    AMBULANCE_CHASER,
+    ATTORNEY,
+    SPIN_DOCTOR,
+    THE_OFFICE_CLERK,
+    BEAN_COUNTER,
+    LOAN_SHARK,
+    TELEMARKETER,
+    MOVER_AND_SHAKER,
+    THE_FACTORY_FOREMAN,
+    INVESTIGATOR
 ]
 
 suitCTypes = [
-    'f',
-    'mm',
-    'cr',
-    'bf',
-    'sc',
-    'tw',
-    'mb',
-    'cc',
-    'gh',
-    'bar',
-    'ski'
+    FLUNKY,
+    MICROMANAGER,
+    CORPORATE_RAIDER,
+    BOTTOM_FEEDER,
+    SHORT_CHANGE,
+    TIGHTWAD,
+    MONEY_BAGS,
+    COLD_CALLER,
+    GLAD_HANDER,
+    BARISTA,
+    THE_MINT_AUDITOR
 ]
 
 suitDepts = [
-    'c',
-    'l',
-    'm',
-    's'
+    BOSSBOT,
+    LAWBOT,
+    CASHBOT,
+    SELLBOT
 ]
 
 suitDept2Icon = {
-    's': '**/SalesIcon',
-    'm': '**/MoneyIcon',
-    'l': '**/LegalIcon',
-    'c': '**/CorpIcon'
+    SELLBOT: '**/SalesIcon',
+    CASHBOT: '**/MoneyIcon',
+    LAWBOT: '**/LegalIcon',
+    BOSSBOT: '**/CorpIcon'
 }
 
-suitDeptToPhase = {'s': 9,
-                   'm': 10,
-                   'l': 11,
-                   'c': 12}
+suitDeptToPhase = {SELLBOT: 9,
+                   CASHBOT: 10,
+                   LAWBOT: 11,
+                   BOSSBOT: 12}
 
 suitDeptFullnames = {
-    'c': TTLocalizer.Bossbot,
-    'l': TTLocalizer.Lawbot,
-    'm': TTLocalizer.Cashbot,
-    's': TTLocalizer.Sellbot
+    BOSSBOT: TTLocalizer.Bossbot,
+    LAWBOT: TTLocalizer.Lawbot,
+    CASHBOT: TTLocalizer.Cashbot,
+    SELLBOT: TTLocalizer.Sellbot
 }
 
 suitDeptFullnamesP = {
-    'c': TTLocalizer.BossbotP,
-    'l': TTLocalizer.LawbotP,
-    'm': TTLocalizer.CashbotP,
-    's': TTLocalizer.SellbotP
+    BOSSBOT: TTLocalizer.BossbotP,
+    LAWBOT: TTLocalizer.LawbotP,
+    CASHBOT: TTLocalizer.CashbotP,
+    SELLBOT: TTLocalizer.SellbotP
 }
 
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
@@ -212,10 +171,10 @@ suitsPerDept = 8
 goonTypes = ['pg', 'sg']
 
 dept2SuitSupervisor = {
-    's': 'trf',
-    'm': 'ski',
-    'l': 'def',
-    'c': 'bgh'
+    SELLBOT: THE_FACTORY_FOREMAN,
+    CASHBOT: THE_MINT_AUDITOR,
+    LAWBOT: THE_OFFICE_CLERK,
+    BOSSBOT: THE_CLUB_PRESIDENT
 }
 
 ModelDict = {
@@ -578,49 +537,49 @@ cSize = 4.14
 
 #              suit,  scale,         handColor,                     headColor,                    headTextureOverride,    headType,              height
 GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
-    SuitVisual('f',   4.0 / cSize,   corpPolyColor,                 None,                         None,                   ['flunky', 'glasses'], 4.88),
-    SuitVisual('p',   3.35 / bSize,  corpPolyColor,                 None,                         None,                   'pencilpusher',        5.0),
-    SuitVisual('ym',  4.125 / aSize, corpPolyColor,                 None,                         None,                   'yesman',              5.28),
-    SuitVisual('mm',  2.5 / cSize,   corpPolyColor,                 None,                         None,                   'micromanager',        3.25),
-    SuitVisual('ds',  4.5 / bSize,   corpPolyColor,                 None,                         None,                   ['downsizer', 'downsizer_hat'],         6.08),
-    SuitVisual('hh',  6.5 / aSize,   corpPolyColor,                 None,                         None,                   'headhunter',          7.45),
-    SuitVisual('cr',  6.75 / cSize,  VBase4(0.85, 0.55, 0.55, 1.0), None,                         'corporate-raider.jpg', 'flunky',              8.23),
-    SuitVisual('tbc', 7.0 / aSize,   VBase4(0.75, 0.95, 0.75, 1.0), None,                         None,                   'bigcheese',           9.34),
-    SuitVisual('bf',  4.0 / cSize,   legalPolyColor,                None,                         'bottom-feeder.jpg',    'tightwad',            4.81),
-    SuitVisual('b',   4.375 / bSize, VBase4(0.95, 0.95, 1.0, 1.0),  None,                         'blood-sucker.jpg',     'movershaker',         6.17),
-    SuitVisual('dt',  4.25 / aSize,  legalPolyColor,                None,                         'double-talker.jpg',    'twoface',             5.63),
-    SuitVisual('ac',  4.35 / bSize,  legalPolyColor,                None,                         None,                   'ambulancechaser',     6.39),
-    SuitVisual('att',  4.5 / bSize,   corpPolyColor,                 None,                         'suit-heads_palette_3cmla_5.jpg',                   ['downsizer', 'downsizer_hat'],         6.08),
-    SuitVisual('bs',  4.5 / aSize,   legalPolyColor,                None,                         None,                   'backstabber',         6.71),
-    SuitVisual('sd',  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                         'spin-doctor.jpg',      'telemarketer',        7.9),
-    SuitVisual('le',  7.125 / aSize, VBase4(0.25, 0.25, 0.5, 1.0),  None,                         None,                   'legaleagle',          8.27),
-    SuitVisual('bw',  7.0 / aSize,   legalPolyColor,                None,                         None,                   'bigwig',              8.69),
-    SuitVisual('barr', 7.0 / aSize,   legalPolyColor,                None,                         None,                   ['barrister'],              8.75),
-    SuitVisual('sc',  3.6 / cSize,   moneyPolyColor,                None,                         None,                   'coldcaller',          4.77),
-    SuitVisual('pp',  3.55 / aSize,  VBase4(1.0, 0.5, 0.6, 1.0),    None,                         None,                   'pennypincher',        5.26),
-    SuitVisual('tw',  4.5 / cSize,   moneyPolyColor,                None,                         None,                   'tightwad',            5.41),
-    SuitVisual('bc',  4.4 / bSize,   moneyPolyColor,                None,                         None,                   'beancounter',         5.95),
-    SuitVisual('nc',  5.25 / aSize,  moneyPolyColor,                None,                         None,                   'numbercruncher',      7.22),
-    SuitVisual('mb',  5.3 / cSize,   moneyPolyColor,                None,                         None,                   'moneybags',           6.97),
-    SuitVisual('ls',  6.5 / bSize,   VBase4(0.5, 0.85, 0.75, 1.0),  None,                         None,                   'loanshark',           8.58),
-    SuitVisual('rb',  7.0 / aSize,   moneyPolyColor,                None,                         'robber-baron.jpg',     'yesman',              8.95),
-    SuitVisual('cc',  3.5 / cSize,   VBase4(0.55, 0.65, 1.0, 1.0),  None,                         'tutorial_suits_palette_3cmla_2.jpg',                   'coldcaller',          4.63),
-    SuitVisual('tm',  3.75 / bSize,  salesPolyColor,                None,                         None,                   'telemarketer',        5.24),
-    SuitVisual('nd',  4.35 / aSize,  salesPolyColor,                None,                         'name-dropper.jpg',     'numbercruncher',      5.98),
-    SuitVisual('gh',  4.75 / cSize,  salesPolyColor,                None,                         None,                   'gladhander',          6.4),
-    SuitVisual('ms',  4.75 / bSize,  salesPolyColor,                None,                         None,                   'movershaker',         6.7),
-    SuitVisual('tf',  5.25 / aSize,  salesPolyColor,                None,                         None,                   'twoface',             6.95),
-    SuitVisual('m',   5.75 / aSize,  salesPolyColor,                None,                         'mingler.jpg',          'twoface',             7.61),
-    SuitVisual('mh',  7.0 / aSize,   salesPolyColor,                None,                         None,                   'yesman',              8.95),
+    SuitVisual(FLUNKY,   4.0 / cSize,   corpPolyColor,                 None,                         None,                   ['flunky', 'glasses'], 4.88),
+    SuitVisual(PENCIL_PUSHER,   3.35 / bSize,  corpPolyColor,                 None,                         None,                   'pencilpusher',        5.0),
+    SuitVisual(YESMAN,  4.125 / aSize, corpPolyColor,                 None,                         None,                   'yesman',              5.28),
+    SuitVisual(MICROMANAGER,  2.5 / cSize,   corpPolyColor,                 None,                         None,                   'micromanager',        3.25),
+    SuitVisual(DOWNSIZER,  4.5 / bSize,   corpPolyColor,                 None,                         None,                   ['downsizer', 'downsizer_hat'],         6.08),
+    SuitVisual(HEAD_HUNTER,  6.5 / aSize,   corpPolyColor,                 None,                         None,                   'headhunter',          7.45),
+    SuitVisual(CORPORATE_RAIDER,  6.75 / cSize,  VBase4(0.85, 0.55, 0.55, 1.0), None,                         'corporate-raider.jpg', 'flunky',              8.23),
+    SuitVisual(THE_BIG_CHEESE, 7.0 / aSize,   VBase4(0.75, 0.95, 0.75, 1.0), None,                         None,                   'bigcheese',           9.34),
+    SuitVisual(BOTTOM_FEEDER,  4.0 / cSize,   legalPolyColor,                None,                         'bottom-feeder.jpg',    'tightwad',            4.81),
+    SuitVisual(BLOODSUCKER,   4.375 / bSize, VBase4(0.95, 0.95, 1.0, 1.0),  None,                         'blood-sucker.jpg',     'movershaker',         6.17),
+    SuitVisual(DOUBLE_TALKER,  4.25 / aSize,  legalPolyColor,                None,                         'double-talker.jpg',    'twoface',             5.63),
+    SuitVisual(AMBULANCE_CHASER,  4.35 / bSize,  legalPolyColor,                None,                         None,                   'ambulancechaser',     6.39),
+    SuitVisual(ATTORNEY,  4.5 / bSize,   corpPolyColor,                 None,                         'suit-heads_palette_3cmla_5.jpg',                   ['downsizer', 'downsizer_hat'],         6.08),
+    SuitVisual(BACK_STABBER,  4.5 / aSize,   legalPolyColor,                None,                         None,                   'backstabber',         6.71),
+    SuitVisual(SPIN_DOCTOR,  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                         'spin-doctor.jpg',      'telemarketer',        7.9),
+    SuitVisual(LEGAL_EAGLE,  7.125 / aSize, VBase4(0.25, 0.25, 0.5, 1.0),  None,                         None,                   'legaleagle',          8.27),
+SuitVisual(BARRISTER, 7.0 / aSize,   legalPolyColor,                None,                         None,                   ['barrister'],              8.75),
+    SuitVisual(BIG_WIG,  7.0 / aSize,   legalPolyColor,                None,                         None,                   'bigwig',              8.69),
+    SuitVisual(SHORT_CHANGE,  3.6 / cSize,   moneyPolyColor,                None,                         None,                   'coldcaller',          4.77),
+    SuitVisual(PENNY_PINCHER,  3.55 / aSize,  VBase4(1.0, 0.5, 0.6, 1.0),    None,                         None,                   'pennypincher',        5.26),
+    SuitVisual(TIGHTWAD,  4.5 / cSize,   moneyPolyColor,                None,                         None,                   'tightwad',            5.41),
+    SuitVisual(BEAN_COUNTER,  4.4 / bSize,   moneyPolyColor,                None,                         None,                   'beancounter',         5.95),
+    SuitVisual(NUMBER_CRUNCHER,  5.25 / aSize,  moneyPolyColor,                None,                         None,                   'numbercruncher',      7.22),
+    SuitVisual(MONEY_BAGS,  5.3 / cSize,   moneyPolyColor,                None,                         None,                   'moneybags',           6.97),
+    SuitVisual(LOAN_SHARK,  6.5 / bSize,   VBase4(0.5, 0.85, 0.75, 1.0),  None,                         None,                   'loanshark',           8.58),
+    SuitVisual(ROBBER_BARON,  7.0 / aSize,   moneyPolyColor,                None,                         'robber-baron.jpg',     'yesman',              8.95),
+    SuitVisual(COLD_CALLER,  3.5 / cSize,   VBase4(0.55, 0.65, 1.0, 1.0),  None,                         'tutorial_suits_palette_3cmla_2.jpg',                   'coldcaller',          4.63),
+    SuitVisual(TELEMARKETER,  3.75 / bSize,  salesPolyColor,                None,                         None,                   'telemarketer',        5.24),
+    SuitVisual(NAME_DROPPER,  4.35 / aSize,  salesPolyColor,                None,                         'name-dropper.jpg',     'numbercruncher',      5.98),
+    SuitVisual(GLAD_HANDER,  4.75 / cSize,  salesPolyColor,                None,                         None,                   'gladhander',          6.4),
+    SuitVisual(MOVER_AND_SHAKER,  4.75 / bSize,  salesPolyColor,                None,                         None,                   'movershaker',         6.7),
+    SuitVisual(TWO_FACE,  5.25 / aSize,  salesPolyColor,                None,                         None,                   'twoface',             6.95),
+    SuitVisual(THE_MINGLER,   5.75 / aSize,  salesPolyColor,                None,                         'mingler.jpg',          'twoface',             7.61),
+    SuitVisual(MR_HOLLYWOOD,  7.0 / aSize,   salesPolyColor,                None,                         None,                   'yesman',              8.95),
     
-    SuitVisual('bar',   4.0 / cSize,   corpPolyColor,                 None,                         None,                   ['barista'], 4.88),
-    SuitVisual('inv',  6.5 / bSize,   VBase4(0.5, 0.85, 0.75, 1.0),  None,                         None,                   ['investigator'],           8.58),
-    SuitVisual('cfn',  7.0 / aSize,   salesPolyColor,                None,                         None,                   ['confinscator'],              8.95),
+    SuitVisual(BARISTA,   4.0 / cSize,   corpPolyColor,                 None,                         None,                   ['barista'], 4.88),
+    SuitVisual(INVESTIGATOR,  6.5 / bSize,   VBase4(0.5, 0.85, 0.75, 1.0),  None,                         None,                   ['investigator'],           8.58),
+    SuitVisual(CONFISCATOR,  7.0 / aSize,   salesPolyColor,                None,                         None,                   ['confinscator'],              8.95),
 
-    SuitVisual('trf',  7.6 / aSize,  VBase4(0.886, 0.737, 0.784, 1.0),                None,                         None,                   'factoryforeman',             8.80),
-    SuitVisual('ski',  5.7 / cSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        None,      'mintauditor',        6.8),
-    SuitVisual('def',  7.0 / bSize,   moneyPolyColor,                None,                        None,                   'officeclerk',         10.0),
-    SuitVisual('bgh',   4.65 / aSize,   corpPolyColor,                 None,                         None,                   'clubpresident', 6.3),
+    SuitVisual(THE_FACTORY_FOREMAN,  7.6 / aSize,  VBase4(0.886, 0.737, 0.784, 1.0),                None,                         None,                   'factoryforeman',             8.80),
+    SuitVisual(THE_MINT_AUDITOR,  5.7 / cSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        None,      'mintauditor',        6.8),
+    SuitVisual(THE_OFFICE_CLERK,  7.0 / bSize,   moneyPolyColor,                None,                        None,                   'officeclerk',         10.0),
+    SuitVisual(THE_CLUB_PRESIDENT,   4.65 / aSize,   corpPolyColor,                 None,                         None,                   'clubpresident', 6.3),
 }
 
 SuitClotheParts = ['blazer', 'leg', 'sleeve']
@@ -679,16 +638,11 @@ def getWaiterClotheTexture():
 CUSTOM_SUIT_CLOTHES: Set[CustomSuitClothes] = set()
 
 customSuit2Dept = {
-    'trf': 's',
-    'ski': 'm',
-    'def': 'l',
-    'barr': 'l',
-    'bgh': 'c',
-    'bar': 'c',
-    'inv': 'c',
-    'att': 'l',
-    'cfn': 'c'
 }
+
+for DEPT in EXTRA_COGS:
+    for COG in DEPT:
+        customSuit2Dept[COG] = DEPT
 
 def getSuitDept(name):
     index = suitHeadTypes.index(name)

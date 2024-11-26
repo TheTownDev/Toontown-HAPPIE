@@ -7,6 +7,7 @@ from . import SuitBattleGlobals, BattleExperienceAI
 from toontown.toon import NPCToons
 from toontown.pets import PetTricks, DistributedPetProxyAI
 from direct.showbase.PythonUtil import lerp
+from toontown.suit.SuitDNAGlobals import *
 
 class BattleCalculatorAI:
     AccuracyBonuses = [
@@ -1572,12 +1573,12 @@ class BattleCalculatorAI:
         """
         
         for suit in self.battle.activeSuits:
-            if suit.dna.name == 'trf' and not self.supervisorPhased and suit.currHP <= round(suit.maxHP * 0.4):
+            if suit.dna.name == THE_FACTORY_FOREMAN and not self.supervisorPhased and suit.currHP <= round(suit.maxHP * 0.4):
                 self.battle.suitsCheatFirst.append([3, suit.doId, [0,], [], 0])
                 self.supervisorPhased = True
 
         for suit in self.battle.activeSuits:
-            if suit.dna.name == 'trf':
+            if suit.dna.name == THE_FACTORY_FOREMAN:
                 if self.supervisorPhased:
                     for i in range(2):
                         if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
@@ -1631,7 +1632,7 @@ class BattleCalculatorAI:
                         self.battle.suitAttacks.append(suitAttackMovie)
         
         for suit in self.battle.activeSuits:
-            if suit.dna.name == 'trf':
+            if suit.dna.name == THE_FACTORY_FOREMAN:
                 if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
                     activeSuitList = self.battle.activeSuits[:]
                     activeSuitList.remove(suit)
@@ -1647,7 +1648,7 @@ class BattleCalculatorAI:
                                 continue
         
         for suit in self.battle.activeSuits:
-            if suit.dna.name == 'bgh':
+            if suit.dna.name == THE_CLUB_PRESIDENT:
                 if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
                     activeSuitList = self.battle.activeSuits[:]
                     activeSuitList.remove(suit)
@@ -1663,7 +1664,7 @@ class BattleCalculatorAI:
                                 continue
                 
         for suit in self.battle.activeSuits:
-            if suit.dna.name == 'def':
+            if suit.dna.name == THE_OFFICE_CLERK:
                 if suit.currHP >= 1 and self.__suitCanAttack(suit.doId):
                     activeSuitList = self.battle.activeSuits[:]
                     activeSuitList.remove(suit)

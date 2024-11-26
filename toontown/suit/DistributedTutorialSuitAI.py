@@ -3,6 +3,7 @@ from panda3d.core import *
 
 from toontown.suit.DistributedSuitBaseAI import DistributedSuitBaseAI
 from toontown.suit.SuitDNA import SuitDNA
+from toontown.suit.SuitDNAGlobals import *
 from toontown.tutorial.DistributedBattleTutorialAI import DistributedBattleTutorialAI
 
 
@@ -26,7 +27,7 @@ class DistributedTutorialSuitAI(DistributedSuitBaseAI):
     def __init__(self, air):
         DistributedSuitBaseAI.__init__(self, air, None)
         suitDNA = SuitDNA()
-        suitDNA.newSuit('f')
+        suitDNA.newSuit(FLUNKY)
         self.dna = suitDNA
         self.setLevel(1)
         self.confrontPosHpr = (0, 0, 0, 0, 0, 0)

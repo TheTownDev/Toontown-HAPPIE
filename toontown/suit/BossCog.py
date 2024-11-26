@@ -12,16 +12,17 @@ from toontown.battle import BattleParticles
 from . import Suit
 from direct.task.Task import Task
 from . import SuitDNA
+from .SuitDNAGlobals import *
 from toontown.battle import BattleProps
 from direct.showbase.PythonUtil import Functor
 import string
 import types
 from direct.gui.DirectGui import *
 GenericModel = 'phase_9/models/char/bossCog'
-ModelDict = {'s': 'phase_9/models/char/sellbotBoss',
- 'm': 'phase_10/models/char/cashbotBoss',
- 'l': 'phase_11/models/char/lawbotBoss',
- 'c': 'phase_12/models/char/bossbotBoss'}
+ModelDict = {SELLBOT: 'phase_9/models/char/sellbotBoss',
+ CASHBOT: 'phase_10/models/char/cashbotBoss',
+ LAWBOT: 'phase_11/models/char/lawbotBoss',
+ BOSSBOT: 'phase_12/models/char/bossbotBoss'}
 AnimList = ('Ff_speech', 'ltTurn2Wave', 'wave', 'Ff_lookRt', 'turn2Fb', 'Ff_neutral', 'Bb_neutral', 'Ff2Bb_spin', 'Bb2Ff_spin', 'Fb_neutral', 'Bf_neutral', 'Fb_firstHit', 'Fb_downNeutral', 'Fb_downHit', 'Fb_fall', 'Fb_down2Up', 'Fb_downLtSwing', 'Fb_downRtSwing', 'Fb_DownThrow', 'Fb_UpThrow', 'Fb_jump', 'golf_swing')
 
 class BossCog(Avatar.Avatar):

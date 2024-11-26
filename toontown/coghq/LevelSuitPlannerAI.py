@@ -3,6 +3,7 @@ import functools
 from panda3d.core import *
 from direct.showbase import DirectObject
 from toontown.suit import SuitDNA
+from toontown.suit.SuitDNAGlobals import *
 from direct.directnotify import DirectNotifyGlobal
 from . import LevelBattleManagerAI
 import types

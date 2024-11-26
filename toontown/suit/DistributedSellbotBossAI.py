@@ -12,6 +12,7 @@ from toontown.toonbase import TTLocalizer
 from toontown.battle import BattleBase, DistributedBattleVicePresidentAI
 from toontown.toon import NPCToons
 from toontown.suit import SellbotBossGlobals
+from .SuitDNAGlobals import *
 import random
 
 from apworld.toontown import locations
@@ -26,7 +27,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     numPies = ToontownGlobals.FullPies
 
     def __init__(self, air):
-        DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, 's')
+        DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, SELLBOT)
         FSM.FSM.__init__(self, 'DistributedSellbotBossAI')
         self.doobers = []
         self.nerfed = ToontownGlobals.SELLBOT_NERF_HOLIDAY in self.air.holidayManager.currentHolidays

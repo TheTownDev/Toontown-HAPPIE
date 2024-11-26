@@ -3,6 +3,7 @@ from enum import auto, IntEnum
 from typing import Set, Dict, Tuple, Union, Any, List
 
 import random
+from toontown.suit.SuitDNAGlobals import *
 from direct.directnotify import DirectNotifyGlobal
 from otp.otpbase import OTPLocalizer
 from toontown.toonbase import TTLocalizer
@@ -325,7 +326,7 @@ __FLUNKY_ATTACKS.add(SuitAttackAttribute(
     accuracy=75,
     weight=20,
 ))
-__FLUNKY: SuitAttributes = T1SuitAttributes(key='f', name=TTLocalizer.SuitFlunky, singular=TTLocalizer.SuitFlunkyS, plural=TTLocalizer.SuitFlunkyP, tier=0, attacks=__FLUNKY_ATTACKS)
+__FLUNKY: SuitAttributes = T1SuitAttributes(key=FLUNKY, name=TTLocalizer.SuitFlunky, singular=TTLocalizer.SuitFlunkyS, plural=TTLocalizer.SuitFlunkyP, tier=0, attacks=__FLUNKY_ATTACKS)
 __registerSuitAttributes(__FLUNKY)
 
 __PENCIL_PUSHER_ATTACKS = set()
@@ -359,7 +360,7 @@ __PENCIL_PUSHER_ATTACKS.add(SuitAttackAttribute(
     accuracy=75,
     weight=20,
 ))
-__PENCIL_PUSHER: SuitAttributes = SuitAttributes(key='p', name=TTLocalizer.SuitPencilPusher, singular=TTLocalizer.SuitPencilPusherS, plural=TTLocalizer.SuitPencilPusherP, tier=1, attacks=__PENCIL_PUSHER_ATTACKS)
+__PENCIL_PUSHER: SuitAttributes = SuitAttributes(key=PENCIL_PUSHER, name=TTLocalizer.SuitPencilPusher, singular=TTLocalizer.SuitPencilPusherS, plural=TTLocalizer.SuitPencilPusherP, tier=1, attacks=__PENCIL_PUSHER_ATTACKS)
 __registerSuitAttributes(__PENCIL_PUSHER)
 
 __YESMAN_ATTACKS = set()
@@ -387,7 +388,7 @@ __YESMAN_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=35,
 ))
-__YESMAN: SuitAttributes = SuitAttributes(key='ym', name=TTLocalizer.SuitYesman, singular=TTLocalizer.SuitYesmanS, plural=TTLocalizer.SuitYesmanP, tier=2, attacks=__YESMAN_ATTACKS)
+__YESMAN: SuitAttributes = SuitAttributes(key=YESMAN, name=TTLocalizer.SuitYesman, singular=TTLocalizer.SuitYesmanS, plural=TTLocalizer.SuitYesmanP, tier=2, attacks=__YESMAN_ATTACKS)
 __registerSuitAttributes(__YESMAN)
 
 __MICROMANAGER_ATTACKS = set()
@@ -421,7 +422,7 @@ __MICROMANAGER_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=20,
 ))
-__MICROMANAGER: SuitAttributes = SuitAttributes(key='mm', name=TTLocalizer.SuitMicromanager, singular=TTLocalizer.SuitMicromanagerS, plural=TTLocalizer.SuitMicromanagerP, tier=3, attacks=__MICROMANAGER_ATTACKS)
+__MICROMANAGER: SuitAttributes = SuitAttributes(key=MICROMANAGER, name=TTLocalizer.SuitMicromanager, singular=TTLocalizer.SuitMicromanagerS, plural=TTLocalizer.SuitMicromanagerP, tier=3, attacks=__MICROMANAGER_ATTACKS)
 __registerSuitAttributes(__MICROMANAGER)
 
 __DOWNSIZER_ATTACKS = set()
@@ -443,7 +444,7 @@ __DOWNSIZER_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=35,
 ))
-__DOWNSIZER: SuitAttributes = SuitAttributes(key='ds', name=TTLocalizer.SuitDownsizer, singular=TTLocalizer.SuitDownsizerS, plural=TTLocalizer.SuitDownsizerP, tier=4, attacks=__DOWNSIZER_ATTACKS)
+__DOWNSIZER: SuitAttributes = SuitAttributes(key=DOWNSIZER, name=TTLocalizer.SuitDownsizer, singular=TTLocalizer.SuitDownsizerS, plural=TTLocalizer.SuitDownsizerP, tier=4, attacks=__DOWNSIZER_ATTACKS)
 __registerSuitAttributes(__DOWNSIZER)
 
 __HEAD_HUNTER_ATTACKS = set()
@@ -483,7 +484,7 @@ __HEAD_HUNTER_ATTACKS.add(SuitAttackAttribute(
     accuracy=60,
     weight=10,
 ))
-__HEAD_HUNTER: SuitAttributes = SuitAttributes(key='hh', name=TTLocalizer.SuitHeadHunter, singular=TTLocalizer.SuitHeadHunterS, plural=TTLocalizer.SuitHeadHunterP, tier=5, attacks=__HEAD_HUNTER_ATTACKS)
+__HEAD_HUNTER: SuitAttributes = SuitAttributes(key=HEAD_HUNTER, name=TTLocalizer.SuitHeadHunter, singular=TTLocalizer.SuitHeadHunterS, plural=TTLocalizer.SuitHeadHunterP, tier=5, attacks=__HEAD_HUNTER_ATTACKS)
 __registerSuitAttributes(__HEAD_HUNTER)
 
 __CORPORATE_RAIDER_ATTACKS = set()
@@ -511,7 +512,7 @@ __CORPORATE_RAIDER_ATTACKS.add(SuitAttackAttribute(
     accuracy=65,
     weight=15,
 ))
-__CORPORATE_RAIDER: SuitAttributes = SuitAttributes(key='cr', name=TTLocalizer.SuitCorporateRaider, singular=TTLocalizer.SuitCorporateRaiderS, plural=TTLocalizer.SuitCorporateRaiderP, tier=6, attacks=__CORPORATE_RAIDER_ATTACKS)
+__CORPORATE_RAIDER: SuitAttributes = SuitAttributes(key=CORPORATE_RAIDER, name=TTLocalizer.SuitCorporateRaider, singular=TTLocalizer.SuitCorporateRaiderS, plural=TTLocalizer.SuitCorporateRaiderP, tier=6, attacks=__CORPORATE_RAIDER_ATTACKS)
 __registerSuitAttributes(__CORPORATE_RAIDER)
 
 __THE_BIG_CHEESE_ATTACKS = set()
@@ -539,7 +540,7 @@ __THE_BIG_CHEESE_ATTACKS.add(SuitAttackAttribute(
     accuracy=70,
     weight=20,
 ))
-__THE_BIG_CHEESE: SuitAttributes = SuitAttributes(key='tbc', name=TTLocalizer.SuitTheBigCheese, singular=TTLocalizer.SuitTheBigCheeseS, plural=TTLocalizer.SuitTheBigCheeseP, tier=7, attacks=__THE_BIG_CHEESE_ATTACKS)
+__THE_BIG_CHEESE: SuitAttributes = SuitAttributes(key=THE_BIG_CHEESE, name=TTLocalizer.SuitTheBigCheese, singular=TTLocalizer.SuitTheBigCheeseS, plural=TTLocalizer.SuitTheBigCheeseP, tier=7, attacks=__THE_BIG_CHEESE_ATTACKS)
 __registerSuitAttributes(__THE_BIG_CHEESE)
 
 # Begin defining suit attributes for every cog in the game.
@@ -562,7 +563,7 @@ __CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
     accuracy=75,
     weight=20,
 ))
-__CLUB_PRESIDENT: SuitAttributes = T1SuitAttributes(key='bgh', name=TTLocalizer.SuitBagHolder, singular=TTLocalizer.SuitBagHolderS, plural=TTLocalizer.SuitBagHolderP, tier=7, attacks=__CLUB_PRESIDENT_ATTACKS)
+__CLUB_PRESIDENT: SuitAttributes = T1SuitAttributes(key=THE_CLUB_PRESIDENT, name=TTLocalizer.SuitBagHolder, singular=TTLocalizer.SuitBagHolderS, plural=TTLocalizer.SuitBagHolderP, tier=7, attacks=__CLUB_PRESIDENT_ATTACKS)
 __registerSuitAttributes(__CLUB_PRESIDENT)
 
 __COLD_CALLER_ATTACKS = set()
@@ -590,7 +591,7 @@ __COLD_CALLER_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=25,
 ))
-__COLD_CALLER: SuitAttributes = T1SuitAttributes(key='cc', name=TTLocalizer.SuitColdCaller, singular=TTLocalizer.SuitColdCallerS, plural=TTLocalizer.SuitColdCallerP, tier=0, attacks=__COLD_CALLER_ATTACKS)
+__COLD_CALLER: SuitAttributes = T1SuitAttributes(key=COLD_CALLER, name=TTLocalizer.SuitColdCaller, singular=TTLocalizer.SuitColdCallerS, plural=TTLocalizer.SuitColdCallerP, tier=0, attacks=__COLD_CALLER_ATTACKS)
 __registerSuitAttributes(__COLD_CALLER)
 
 __TELEMARKETER_ATTACKS = set()
@@ -618,7 +619,7 @@ __TELEMARKETER_ATTACKS.add(SuitAttackAttribute(
     accuracy=75,
     weight=40,
 ))
-__TELEMARKETER: SuitAttributes = SuitAttributes(key='tm', name=TTLocalizer.SuitTelemarketer, singular=TTLocalizer.SuitTelemarketerS, plural=TTLocalizer.SuitTelemarketerP, tier=1, attacks=__TELEMARKETER_ATTACKS)
+__TELEMARKETER: SuitAttributes = SuitAttributes(key=TELEMARKETER, name=TTLocalizer.SuitTelemarketer, singular=TTLocalizer.SuitTelemarketerS, plural=TTLocalizer.SuitTelemarketerP, tier=1, attacks=__TELEMARKETER_ATTACKS)
 __registerSuitAttributes(__TELEMARKETER)
 
 __NAME_DROPPER_ATTACKS = set()
@@ -646,7 +647,7 @@ __NAME_DROPPER_ATTACKS.add(SuitAttackAttribute(
     accuracy=95,
     weight=15,
 ))
-__NAME_DROPPER: SuitAttributes = SuitAttributes(key='nd', name=TTLocalizer.SuitNameDropper, singular=TTLocalizer.SuitNameDropperS, plural=TTLocalizer.SuitNameDropperP, tier=2, attacks=__NAME_DROPPER_ATTACKS)
+__NAME_DROPPER: SuitAttributes = SuitAttributes(key=NAME_DROPPER, name=TTLocalizer.SuitNameDropper, singular=TTLocalizer.SuitNameDropperS, plural=TTLocalizer.SuitNameDropperP, tier=2, attacks=__NAME_DROPPER_ATTACKS)
 __registerSuitAttributes(__NAME_DROPPER)
 
 __GLAD_HANDER_ATTACKS = set()
@@ -674,7 +675,7 @@ __GLAD_HANDER_ATTACKS.add(SuitAttackAttribute(
     accuracy=55,
     weight=45,
 ))
-__GLAD_HANDER: SuitAttributes = SuitAttributes(key='gh', name=TTLocalizer.SuitGladHander, singular=TTLocalizer.SuitGladHanderS, plural=TTLocalizer.SuitGladHanderP, tier=3, attacks=__GLAD_HANDER_ATTACKS)
+__GLAD_HANDER: SuitAttributes = SuitAttributes(key=GLAD_HANDER, name=TTLocalizer.SuitGladHander, singular=TTLocalizer.SuitGladHanderS, plural=TTLocalizer.SuitGladHanderP, tier=3, attacks=__GLAD_HANDER_ATTACKS)
 __registerSuitAttributes(__GLAD_HANDER)
 
 __MOVER__SHAKER_ATTACKS = set()
@@ -708,7 +709,7 @@ __MOVER__SHAKER_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=20,
 ))
-__MOVER__SHAKER: SuitAttributes = SuitAttributes(key='ms', name=TTLocalizer.SuitMoverShaker, singular=TTLocalizer.SuitMoverShakerS, plural=TTLocalizer.SuitMoverShakerP, tier=4, attacks=__MOVER__SHAKER_ATTACKS)
+__MOVER__SHAKER: SuitAttributes = SuitAttributes(key=MOVER_AND_SHAKER, name=TTLocalizer.SuitMoverShaker, singular=TTLocalizer.SuitMoverShakerS, plural=TTLocalizer.SuitMoverShakerP, tier=4, attacks=__MOVER__SHAKER_ATTACKS)
 __registerSuitAttributes(__MOVER__SHAKER)
 
 __TWOFACE_ATTACKS = set()
@@ -736,7 +737,7 @@ __TWOFACE_ATTACKS.add(SuitAttackAttribute(
     accuracy=60,
     weight=25,
 ))
-__TWOFACE: SuitAttributes = SuitAttributes(key='tf', name=TTLocalizer.SuitTwoFace, singular=TTLocalizer.SuitTwoFaceS, plural=TTLocalizer.SuitTwoFaceP, tier=5, attacks=__TWOFACE_ATTACKS)
+__TWOFACE: SuitAttributes = SuitAttributes(key=TWO_FACE, name=TTLocalizer.SuitTwoFace, singular=TTLocalizer.SuitTwoFaceS, plural=TTLocalizer.SuitTwoFaceP, tier=5, attacks=__TWOFACE_ATTACKS)
 __registerSuitAttributes(__TWOFACE)
 
 __THE_MINGLER_ATTACKS = set()
@@ -764,7 +765,7 @@ __THE_MINGLER_ATTACKS.add(SuitAttackAttribute(
     accuracy=70,
     weight=15,
 ))
-__THE_MINGLER: SuitAttributes = SuitAttributes(key='m', name=TTLocalizer.SuitTheMingler, singular=TTLocalizer.SuitTheMinglerS, plural=TTLocalizer.SuitTheMinglerP, tier=6, attacks=__THE_MINGLER_ATTACKS)
+__THE_MINGLER: SuitAttributes = SuitAttributes(key=THE_MINGLER, name=TTLocalizer.SuitTheMingler, singular=TTLocalizer.SuitTheMinglerS, plural=TTLocalizer.SuitTheMinglerP, tier=6, attacks=__THE_MINGLER_ATTACKS)
 __registerSuitAttributes(__THE_MINGLER)
 
 __MR_HOLLYWOOD_ATTACKS = set()
@@ -780,41 +781,41 @@ __MR_HOLLYWOOD_ATTACKS.add(SuitAttackAttribute(
     accuracy=75,
     weight=50,
 ))
-__MR_HOLLYWOOD: SuitAttributes = SuitAttributes(key='mh', name=TTLocalizer.SuitMrHollywood, singular=TTLocalizer.SuitMrHollywoodS, plural=TTLocalizer.SuitMrHollywoodP, tier=7, attacks=__MR_HOLLYWOOD_ATTACKS)
+__MR_HOLLYWOOD: SuitAttributes = SuitAttributes(key=MR_HOLLYWOOD, name=TTLocalizer.SuitMrHollywood, singular=TTLocalizer.SuitMrHollywoodS, plural=TTLocalizer.SuitMrHollywoodP, tier=7, attacks=__MR_HOLLYWOOD_ATTACKS)
 __registerSuitAttributes(__MR_HOLLYWOOD)
 
-__TRAFFIC_MANAGER_ATTACKS = set()
-__TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
+__FACTORY_FOREMANATTACKS = set()
+__FACTORY_FOREMANATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.FIRED,
     damage={35: 21},
     accuracy=60,
     weight=30,
 ))
-__TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
+__FACTORY_FOREMANATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.POWER_TRIP,
     damage={35: 15},
     accuracy=50,
     weight=15,
 ))
-__TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
+__FACTORY_FOREMANATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.PLAY_HARDBALL,
     damage={35: 15,},
     accuracy=60,
     weight=30,
 ))
-__TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
+__FACTORY_FOREMANATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.RED_TAPE,
     damage={35: 14, 7: 10, 8: 11, 9: 13, 10: 15},
     accuracy=60,
     weight=25,
 ))
-__TRAFFIC_MANAGER_ATTACKS.add(SuitAttackAttribute(
+__FACTORY_FOREMANATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.COMPANY_RESTRICTION,
     damage={35: 12,},
     accuracy=100,
     weight=0,
 ))
-__TRAFFIC_MANAGER: SuitAttributes = SuitAttributes(key='trf', name=TTLocalizer.SuitTrafficManager, singular=TTLocalizer.SuitTrafficManagerS, plural=TTLocalizer.SuitTrafficManagerP, tier=7, attacks=__TRAFFIC_MANAGER_ATTACKS)
+__TRAFFIC_MANAGER: SuitAttributes = SuitAttributes(key=THE_FACTORY_FOREMAN, name=TTLocalizer.SuitTrafficManager, singular=TTLocalizer.SuitTrafficManagerS, plural=TTLocalizer.SuitTrafficManagerP, tier=7, attacks=__FACTORY_FOREMANATTACKS)
 __registerSuitAttributes(__TRAFFIC_MANAGER)
 
 __SHORT_CHANGE_ATTACKS = set()
@@ -842,7 +843,7 @@ __SHORT_CHANGE_ATTACKS.add(SuitAttackAttribute(
     accuracy=95,
     weight=40,
 ))
-__SHORT_CHANGE: SuitAttributes = T1SuitAttributes(key='sc', name=TTLocalizer.SuitShortChange, singular=TTLocalizer.SuitShortChangeS, plural=TTLocalizer.SuitShortChangeP, tier=0, attacks=__SHORT_CHANGE_ATTACKS)
+__SHORT_CHANGE: SuitAttributes = T1SuitAttributes(key=SHORT_CHANGE, name=TTLocalizer.SuitShortChange, singular=TTLocalizer.SuitShortChangeS, plural=TTLocalizer.SuitShortChangeP, tier=0, attacks=__SHORT_CHANGE_ATTACKS)
 __registerSuitAttributes(__SHORT_CHANGE)
 
 __PENNY_PINCHER_ATTACKS = set()
@@ -864,7 +865,7 @@ __PENNY_PINCHER_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=50,
 ))
-__PENNY_PINCHER: SuitAttributes = SuitAttributes(key='pp', name=TTLocalizer.SuitPennyPincher, singular=TTLocalizer.SuitPennyPincherS, plural=TTLocalizer.SuitPennyPincherP, tier=1, attacks=__PENNY_PINCHER_ATTACKS)
+__PENNY_PINCHER: SuitAttributes = SuitAttributes(key=PENNY_PINCHER, name=TTLocalizer.SuitPennyPincher, singular=TTLocalizer.SuitPennyPincherS, plural=TTLocalizer.SuitPennyPincherP, tier=1, attacks=__PENNY_PINCHER_ATTACKS)
 __registerSuitAttributes(__PENNY_PINCHER)
 
 __TIGHTWAD_ATTACKS = set()
@@ -898,7 +899,7 @@ __TIGHTWAD_ATTACKS.add(SuitAttackAttribute(
     accuracy=75,
     weight=30,
 ))
-__TIGHTWAD: SuitAttributes = SuitAttributes(key='tw', name=TTLocalizer.SuitTightwad, singular=TTLocalizer.SuitTightwadS, plural=TTLocalizer.SuitTightwadP, tier=2, attacks=__TIGHTWAD_ATTACKS)
+__TIGHTWAD: SuitAttributes = SuitAttributes(key=TIGHTWAD, name=TTLocalizer.SuitTightwad, singular=TTLocalizer.SuitTightwadS, plural=TTLocalizer.SuitTightwadP, tier=2, attacks=__TIGHTWAD_ATTACKS)
 __registerSuitAttributes(__TIGHTWAD)
 
 __BEAN_COUNTER_ATTACKS = set()
@@ -926,7 +927,7 @@ __BEAN_COUNTER_ATTACKS.add(SuitAttackAttribute(
     accuracy=95,
     weight=30,
 ))
-__BEAN_COUNTER: SuitAttributes = SuitAttributes(key='bc', name=TTLocalizer.SuitBeanCounter, singular=TTLocalizer.SuitBeanCounterS, plural=TTLocalizer.SuitBeanCounterP, tier=3, attacks=__BEAN_COUNTER_ATTACKS)
+__BEAN_COUNTER: SuitAttributes = SuitAttributes(key=BEAN_COUNTER, name=TTLocalizer.SuitBeanCounter, singular=TTLocalizer.SuitBeanCounterS, plural=TTLocalizer.SuitBeanCounterP, tier=3, attacks=__BEAN_COUNTER_ATTACKS)
 __registerSuitAttributes(__BEAN_COUNTER)
 
 __NUMBER_CRUNCHER_ATTACKS = set()
@@ -960,7 +961,7 @@ __NUMBER_CRUNCHER_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=15,
 ))
-__NUMBER_CRUNCHER: SuitAttributes = SuitAttributes(key='nc', name=TTLocalizer.SuitNumberCruncher, singular=TTLocalizer.SuitNumberCruncherS, plural=TTLocalizer.SuitNumberCruncherP, tier=4, attacks=__NUMBER_CRUNCHER_ATTACKS)
+__NUMBER_CRUNCHER: SuitAttributes = SuitAttributes(key=NUMBER_CRUNCHER, name=TTLocalizer.SuitNumberCruncher, singular=TTLocalizer.SuitNumberCruncherS, plural=TTLocalizer.SuitNumberCruncherP, tier=4, attacks=__NUMBER_CRUNCHER_ATTACKS)
 __registerSuitAttributes(__NUMBER_CRUNCHER)
 
 __MONEY_BAGS_ATTACKS = set()
@@ -982,7 +983,7 @@ __MONEY_BAGS_ATTACKS.add(SuitAttackAttribute(
     accuracy=60,
     weight=25,
 ))
-__MONEY_BAGS: SuitAttributes = SuitAttributes(key='mb', name=TTLocalizer.SuitMoneyBags, singular=TTLocalizer.SuitMoneyBagsS, plural=TTLocalizer.SuitMoneyBagsP, tier=5, attacks=__MONEY_BAGS_ATTACKS)
+__MONEY_BAGS: SuitAttributes = SuitAttributes(key=MONEY_BAGS, name=TTLocalizer.SuitMoneyBags, singular=TTLocalizer.SuitMoneyBagsS, plural=TTLocalizer.SuitMoneyBagsP, tier=5, attacks=__MONEY_BAGS_ATTACKS)
 __registerSuitAttributes(__MONEY_BAGS)
 
 __LOAN_SHARK_ATTACKS = set()
@@ -1010,7 +1011,7 @@ __LOAN_SHARK_ATTACKS.add(SuitAttackAttribute(
     accuracy=70,
     weight=15,
 ))
-__LOAN_SHARK: SuitAttributes = SuitAttributes(key='ls', name=TTLocalizer.SuitLoanShark, singular=TTLocalizer.SuitLoanSharkS, plural=TTLocalizer.SuitLoanSharkP, tier=6, attacks=__LOAN_SHARK_ATTACKS)
+__LOAN_SHARK: SuitAttributes = SuitAttributes(key=LOAN_SHARK, name=TTLocalizer.SuitLoanShark, singular=TTLocalizer.SuitLoanSharkS, plural=TTLocalizer.SuitLoanSharkP, tier=6, attacks=__LOAN_SHARK_ATTACKS)
 __registerSuitAttributes(__LOAN_SHARK)
 
 __ROBBER_BARON_ATTACKS = set()
@@ -1026,30 +1027,30 @@ __ROBBER_BARON_ATTACKS.add(SuitAttackAttribute(
     accuracy=60,
     weight=50,
 ))
-__ROBBER_BARON: SuitAttributes = SuitAttributes(key='rb', name=TTLocalizer.SuitRobberBaron, singular=TTLocalizer.SuitRobberBaronS, plural=TTLocalizer.SuitRobberBaronP, tier=7, attacks=__ROBBER_BARON_ATTACKS)
+__ROBBER_BARON: SuitAttributes = SuitAttributes(key=ROBBER_BARON, name=TTLocalizer.SuitRobberBaron, singular=TTLocalizer.SuitRobberBaronS, plural=TTLocalizer.SuitRobberBaronP, tier=7, attacks=__ROBBER_BARON_ATTACKS)
 __registerSuitAttributes(__ROBBER_BARON)
 
-__SKIN_FLINT_ATTACKS = set()
-__SKIN_FLINT_ATTACKS.add(SuitAttackAttribute(
+__MINT_AUDITOR_ATTACKS = set()
+__MINT_AUDITOR_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.CALCULATE,
     damage={6: 11, 7: 13, 8: 15, 9: 17, 10: 19},
     accuracy=60,
     weight=30,
 ))
-__SKIN_FLINT_ATTACKS.add(SuitAttackAttribute(
+__MINT_AUDITOR_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.MARKET_CRASH,
     damage={6: 8, 7: 10, 8: 12, 9: 14, 10: 16},
     accuracy=60,
     weight=45,
 ))
-__SKIN_FLINT_ATTACKS.add(SuitAttackAttribute(
+__MINT_AUDITOR_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.POWER_TIE,
     damage={6: 6, 7: 8, 8: 9, 9: 11, 10: 12},
     accuracy=60,
     weight=25,
 ))
-__SKIN_FLINT: SuitAttributes = SuitAttributes(key='ski', name=TTLocalizer.SuitSkinflint, singular=TTLocalizer.SuitSkinflintS, plural=TTLocalizer.SuitSkinflintP, tier=5, attacks=__SKIN_FLINT_ATTACKS)
-__registerSuitAttributes(__SKIN_FLINT)
+__MINT_AUDITOR: SuitAttributes = SuitAttributes(key=THE_MINT_AUDITOR, name=TTLocalizer.SuitSkinflint, singular=TTLocalizer.SuitSkinflintS, plural=TTLocalizer.SuitSkinflintP, tier=5, attacks=__MINT_AUDITOR_ATTACKS)
+__registerSuitAttributes(__MINT_AUDITOR)
 
 __BOTTOM_FEEDER_ATTACKS = set()
 __BOTTOM_FEEDER_ATTACKS.add(SuitAttackAttribute(
@@ -1076,7 +1077,7 @@ __BOTTOM_FEEDER_ATTACKS.add(SuitAttackAttribute(
     accuracy=25,
     weight=50,
 ))
-__BOTTOM_FEEDER: SuitAttributes = T1SuitAttributes(key='bf', name=TTLocalizer.SuitBottomFeeder, singular=TTLocalizer.SuitBottomFeederS, plural=TTLocalizer.SuitBottomFeederP, tier=0, attacks=__BOTTOM_FEEDER_ATTACKS)
+__BOTTOM_FEEDER: SuitAttributes = T1SuitAttributes(key=BOTTOM_FEEDER, name=TTLocalizer.SuitBottomFeeder, singular=TTLocalizer.SuitBottomFeederS, plural=TTLocalizer.SuitBottomFeederP, tier=0, attacks=__BOTTOM_FEEDER_ATTACKS)
 __registerSuitAttributes(__BOTTOM_FEEDER)
 
 __BLOODSUCKER_ATTACKS = set()
@@ -1104,7 +1105,7 @@ __BLOODSUCKER_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=50,
 ))
-__BLOODSUCKER: SuitAttributes = SuitAttributes(key='b', name=TTLocalizer.SuitBloodsucker, singular=TTLocalizer.SuitBloodsuckerS, plural=TTLocalizer.SuitBloodsuckerP, tier=1, attacks=__BLOODSUCKER_ATTACKS)
+__BLOODSUCKER: SuitAttributes = SuitAttributes(key=BLOODSUCKER, name=TTLocalizer.SuitBloodsucker, singular=TTLocalizer.SuitBloodsuckerS, plural=TTLocalizer.SuitBloodsuckerP, tier=1, attacks=__BLOODSUCKER_ATTACKS)
 __registerSuitAttributes(__BLOODSUCKER)
 
 __DOUBLE_TALKER_ATTACKS = set()
@@ -1144,7 +1145,7 @@ __DOUBLE_TALKER_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=20,
 ))
-__DOUBLE_TALKER: SuitAttributes = SuitAttributes(key='dt', name=TTLocalizer.SuitDoubleTalker, singular=TTLocalizer.SuitDoubleTalkerS, plural=TTLocalizer.SuitDoubleTalkerP, tier=2, attacks=__DOUBLE_TALKER_ATTACKS)
+__DOUBLE_TALKER: SuitAttributes = SuitAttributes(key=DOUBLE_TALKER, name=TTLocalizer.SuitDoubleTalker, singular=TTLocalizer.SuitDoubleTalkerS, plural=TTLocalizer.SuitDoubleTalkerP, tier=2, attacks=__DOUBLE_TALKER_ATTACKS)
 __registerSuitAttributes(__DOUBLE_TALKER)
 
 __AMBULANCE_CHASER_ATTACKS = set()
@@ -1172,7 +1173,7 @@ __AMBULANCE_CHASER_ATTACKS.add(SuitAttackAttribute(
     accuracy=75,
     weight=35,
 ))
-__AMBULANCE_CHASER: SuitAttributes = SuitAttributes(key='ac', name=TTLocalizer.SuitAmbulanceChaser, singular=TTLocalizer.SuitAmbulanceChaserS, plural=TTLocalizer.SuitAmbulanceChaserP, tier=3, attacks=__AMBULANCE_CHASER_ATTACKS)
+__AMBULANCE_CHASER: SuitAttributes = SuitAttributes(key=AMBULANCE_CHASER, name=TTLocalizer.SuitAmbulanceChaser, singular=TTLocalizer.SuitAmbulanceChaserS, plural=TTLocalizer.SuitAmbulanceChaserP, tier=3, attacks=__AMBULANCE_CHASER_ATTACKS)
 __registerSuitAttributes(__AMBULANCE_CHASER)
 
 __ATTORNEY_ATTACKS = set()
@@ -1200,7 +1201,7 @@ __ATTORNEY_ATTACKS.add(SuitAttackAttribute(
     accuracy=95,
     weight=30,
 ))
-__ATTORNEY: SuitAttributes = SuitAttributes(key='att', name=TTLocalizer.SuitAttorny, singular=TTLocalizer.SuitAttornyS, plural=TTLocalizer.SuitAttornyP, tier=3, attacks=__ATTORNEY_ATTACKS)
+__ATTORNEY: SuitAttributes = SuitAttributes(key=ATTORNEY, name=TTLocalizer.SuitAttorny, singular=TTLocalizer.SuitAttornyS, plural=TTLocalizer.SuitAttornyP, tier=3, attacks=__ATTORNEY_ATTACKS)
 __registerSuitAttributes(__ATTORNEY)
 
 __BACK_STABBER_ATTACKS = set()
@@ -1222,7 +1223,7 @@ __BACK_STABBER_ATTACKS.add(SuitAttackAttribute(
     accuracy=50,
     weight=35,
 ))
-__BACK_STABBER: SuitAttributes = SuitAttributes(key='bs', name=TTLocalizer.SuitBackStabber, singular=TTLocalizer.SuitBackStabberS, plural=TTLocalizer.SuitBackStabberP, tier=4, attacks=__BACK_STABBER_ATTACKS)
+__BACK_STABBER: SuitAttributes = SuitAttributes(key=BACK_STABBER, name=TTLocalizer.SuitBackStabber, singular=TTLocalizer.SuitBackStabberS, plural=TTLocalizer.SuitBackStabberP, tier=4, attacks=__BACK_STABBER_ATTACKS)
 __registerSuitAttributes(__BACK_STABBER)
 
 __SPIN_DOCTOR_ATTACKS = set()
@@ -1250,7 +1251,7 @@ __SPIN_DOCTOR_ATTACKS.add(SuitAttackAttribute(
     accuracy=60,
     weight=15,
 ))
-__SPIN_DOCTOR: SuitAttributes = SuitAttributes(key='sd', name=TTLocalizer.SuitSpinDoctor, singular=TTLocalizer.SuitSpinDoctorS, plural=TTLocalizer.SuitSpinDoctorP, tier=5, attacks=__SPIN_DOCTOR_ATTACKS)
+__SPIN_DOCTOR: SuitAttributes = SuitAttributes(key=SPIN_DOCTOR, name=TTLocalizer.SuitSpinDoctor, singular=TTLocalizer.SuitSpinDoctorS, plural=TTLocalizer.SuitSpinDoctorP, tier=5, attacks=__SPIN_DOCTOR_ATTACKS)
 __registerSuitAttributes(__SPIN_DOCTOR)
 
 __LEGAL_EAGLE_ATTACKS = set()
@@ -1278,7 +1279,7 @@ __LEGAL_EAGLE_ATTACKS.add(SuitAttackAttribute(
     accuracy=70,
     weight=30,
 ))
-__LEGAL_EAGLE: SuitAttributes = SuitAttributes(key='le', name=TTLocalizer.SuitLegalEagle, singular=TTLocalizer.SuitLegalEagleS, plural=TTLocalizer.SuitLegalEagleP, tier=6, attacks=__LEGAL_EAGLE_ATTACKS)
+__LEGAL_EAGLE: SuitAttributes = SuitAttributes(key=LEGAL_EAGLE, name=TTLocalizer.SuitLegalEagle, singular=TTLocalizer.SuitLegalEagleS, plural=TTLocalizer.SuitLegalEagleP, tier=6, attacks=__LEGAL_EAGLE_ATTACKS)
 __registerSuitAttributes(__LEGAL_EAGLE)
 
 __BARRISTER_ATTACKS = set()
@@ -1300,7 +1301,7 @@ __BARRISTER_ATTACKS.add(SuitAttackAttribute(
     accuracy=45,
     weight=40,
 ))
-__BARRISTER: SuitAttributes = SuitAttributes(key='barr', name=TTLocalizer.SuitBarrister, singular=TTLocalizer.SuitBarristerS, plural=TTLocalizer.SuitBarristerP, tier=6, attacks=__BARRISTER_ATTACKS)
+__BARRISTER: SuitAttributes = SuitAttributes(key=BARRISTER, name=TTLocalizer.SuitBarrister, singular=TTLocalizer.SuitBarristerS, plural=TTLocalizer.SuitBarristerP, tier=6, attacks=__BARRISTER_ATTACKS)
 __registerSuitAttributes(__BARRISTER)
 
 __BIG_WIG_ATTACKS = set()
@@ -1330,7 +1331,7 @@ __BARISTA_ATTACKS.add(SuitAttackAttribute(
     accuracy=75,
     weight=20,
 ))
-__BARISTA: SuitAttributes = T1SuitAttributes(key='bar', name=TTLocalizer.SuitBarista, singular=TTLocalizer.SuitBaristaS, plural=TTLocalizer.SuitBaristaP, tier=0, attacks=__BARISTA_ATTACKS)
+__BARISTA: SuitAttributes = T1SuitAttributes(key=BARISTA, name=TTLocalizer.SuitBarista, singular=TTLocalizer.SuitBaristaS, plural=TTLocalizer.SuitBaristaP, tier=0, attacks=__BARISTA_ATTACKS)
 __registerSuitAttributes(__BARISTA)
 
 __INVESTIGATOR_ATTACKS = set()
@@ -1358,7 +1359,7 @@ __INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
     accuracy=70,
     weight=15,
 ))
-__INVESTIGATOR: SuitAttributes = SuitAttributes(key='inv', name=TTLocalizer.SuitInvestigator, singular=TTLocalizer.SuitInvestigatorS, plural=TTLocalizer.SuitInvestigatorP, tier=6, attacks=__INVESTIGATOR_ATTACKS)
+__INVESTIGATOR: SuitAttributes = SuitAttributes(key=INVESTIGATOR, name=TTLocalizer.SuitInvestigator, singular=TTLocalizer.SuitInvestigatorS, plural=TTLocalizer.SuitInvestigatorP, tier=6, attacks=__INVESTIGATOR_ATTACKS)
 __registerSuitAttributes(__INVESTIGATOR)
 
 __CONFISCATOR_ATTACKS = set()
@@ -1386,7 +1387,7 @@ __CONFISCATOR_ATTACKS.add(SuitAttackAttribute(
     accuracy=75,
     weight=30,
 ))
-__CONFISCATOR: SuitAttributes = SuitAttributes(key='cfn', name=TTLocalizer.SuitConfiscator, singular=TTLocalizer.SuitConfiscatorS, plural=TTLocalizer.SuitConfiscatorP, tier=7, attacks=__CONFISCATOR_ATTACKS)
+__CONFISCATOR: SuitAttributes = SuitAttributes(key=CONFISCATOR, name=TTLocalizer.SuitConfiscator, singular=TTLocalizer.SuitConfiscatorS, plural=TTLocalizer.SuitConfiscatorP, tier=7, attacks=__CONFISCATOR_ATTACKS)
 __registerSuitAttributes(__CONFISCATOR)
 
 # todo code animation for this
@@ -1403,36 +1404,36 @@ __BIG_WIG_ATTACKS.add(SuitAttackAttribute(
     accuracy=80,
     weight=50,
 ))
-__BIG_WIG: SuitAttributes = SuitAttributes(key='bw', name=TTLocalizer.SuitBigWig, singular=TTLocalizer.SuitBigWigS, plural=TTLocalizer.SuitBigWigP, tier=7, attacks=__BIG_WIG_ATTACKS)
+__BIG_WIG: SuitAttributes = SuitAttributes(key=BIG_WIG, name=TTLocalizer.SuitBigWig, singular=TTLocalizer.SuitBigWigS, plural=TTLocalizer.SuitBigWigP, tier=7, attacks=__BIG_WIG_ATTACKS)
 __registerSuitAttributes(__BIG_WIG)
 
-__DEFENDENT_ATTACKS = set()
-__DEFENDENT_ATTACKS.add(SuitAttackAttribute(
+__OFFICE_CLERK_ATTACKS = set()
+__OFFICE_CLERK_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.MUMBO_JUMBO,
     damage={4: 5, 5: 7, 6: 10, 7: 12, 40: 21},
     accuracy=95,
     weight=20,
 ))
-__DEFENDENT_ATTACKS.add(SuitAttackAttribute(
+__OFFICE_CLERK_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.JARGON,
     damage={40: 26},
     accuracy=75,
     weight=25,
 ))
-__DEFENDENT_ATTACKS.add(SuitAttackAttribute(
+__OFFICE_CLERK_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.GUILT_TRIP,
     damage={4: 5, 5: 7, 6: 8, 7: 11, 40: 31},
     accuracy=75,
     weight=25,
 ))
-__DEFENDENT_ATTACKS.add(SuitAttackAttribute(
+__OFFICE_CLERK_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.LEGALESE,
     damage={4: 8, 5: 10, 6: 12, 7: 15, 40: 32},
     accuracy=95,
     weight=30,
 ))
-__DEFENDENT: SuitAttributes = SuitAttributes(key='def', name=TTLocalizer.SuitDefendent, singular=TTLocalizer.SuitDefendentS, plural=TTLocalizer.SuitDefendentP, tier=3, attacks=__DEFENDENT_ATTACKS)
-__registerSuitAttributes(__DEFENDENT)
+__OFFICE_CLERK: SuitAttributes = SuitAttributes(key=THE_OFFICE_CLERK, name=TTLocalizer.SuitDefendent, singular=TTLocalizer.SuitDefendentS, plural=TTLocalizer.SuitDefendentP, tier=3, attacks=__OFFICE_CLERK_ATTACKS)
+__registerSuitAttributes(__OFFICE_CLERK)
 
 
 """

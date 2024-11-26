@@ -15,6 +15,7 @@ from toontown.building import SuitBuildingGlobals
 from toontown.building.DistributedBuildingAI import DistributedBuildingAI
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.toonbase import ToontownGlobals
+from toontown.suit.SuitDNAGlobals import *
 import math, time, random
 
 class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlannerBase.SuitPlannerBase):
@@ -229,11 +230,11 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
     def generateWithRequired(self, zoneId):
         DistributedObjectAI.DistributedObjectAI.generateWithRequired(self, zoneId)
         if self.zoneId in [2100, 2200, 2300]:
-            self.spawnSupervisorCog('trf', 35)
-            taskMgr.doMethodLater(60*30, self.spawnSupervisorCog, 'foreman_spawner', extraArgs=['trf', 35])
+            self.spawnSupervisorCog(THE_FACTORY_FOREMAN, 35)
+            taskMgr.doMethodLater(60*30, self.spawnSupervisorCog, 'foreman_spawner', extraArgs=[THE_FACTORY_FOREMAN, 35])
         if self.zoneId in [9100, 9200, 9300]:
-            self.spawnSupervisorCog('bgh', 50)
-            taskMgr.doMethodLater(60*30, self.spawnSupervisorCog, 'president_spawner', extraArgs=['bgh', 50])
+            self.spawnSupervisorCog(THE_CLUB_PRESIDENT, 50)
+            taskMgr.doMethodLater(60*30, self.spawnSupervisorCog, 'president_spawner', extraArgs=[THE_CLUB_PRESIDENT, 50])
     
     def spawnSupervisorCog(self, name, level):
         hasTheCog = False

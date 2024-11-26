@@ -6,7 +6,7 @@ BattleCells = {BattleCellId: {'parentEntId': CogParent,
                 'pos': Point3(0, 0, 0)}}
 CogData = [{'parentEntId': CogParent,
   'boss': 1,
-  'suitName': 'bgh',
+  'suitName': THE_CLUB_PRESIDENT,
   'level': 20,
   'battleCell': BattleCellId,
   'pos': Point3(-6, 0, 0),
