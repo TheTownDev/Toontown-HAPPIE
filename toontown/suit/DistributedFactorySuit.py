@@ -37,6 +37,9 @@ class DistributedFactorySuit(DistributedSuitBase.DistributedSuitBase, DelayDelet
             self.velocity = 3
             self.facilitySuit = 1
             self.factoryRequest = None
+            self.lureLevel = 0
+            self.lureRounds = 0
+            self.lureKB = 0
 
         return
 

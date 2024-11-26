@@ -560,6 +560,7 @@ class Movie(DirectObject.DirectObject):
                 adict['toon'] = toon
                 adict['track'] = track
                 adict['level'] = level
+                adict['statInfo1'] = ta[TOON_STATUSONE_COL]
                 hps = ta[TOON_HP_COL]
                 kbbonuses = ta[TOON_KBBONUS_COL]
                 if track == NPCSOS:

@@ -60,6 +60,9 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         self.sillySurgeText = False
         self.facilitySuit = 0
         self.interactivePropTrackBonus = -1
+        self.lureLevel = 0
+        self.lureRounds = 0
+        self.lureKB = 0
         return
 
     def setVirtual(self, virtual):

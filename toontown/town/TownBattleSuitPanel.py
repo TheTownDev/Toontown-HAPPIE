@@ -39,7 +39,7 @@ class TownBattleSuitPanel(DirectFrame):
         self.cogSelectButton.setZ(-0.1)
         self.cogSelectButton.setBin("gui-popup", 50)
         cogStatusIcon = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect').find('**/ttr_t_gui_bat_statusEffect_icon_overtime')
-        self.cogStatusButton = DirectButton(parent=self, relief=None, geom=cogStatusIcon, pos=(0, 0, 0), text_scale=0.0, text_pos=(0, 0, 0), text='', command=self.handleCogSelect)
+        self.cogStatusButton = DirectButton(parent=self, relief=None, geom=cogStatusIcon, pos=(0, 0, 0), text_scale=0.0, text_pos=(0, 0, 0), text='', command=self.handleCogStatusSelect)
         self.cogStatusButton.setScale(0.025)
         self.cogStatusButton.setX(0.0)
         self.cogStatusButton.setZ(-0.0)
@@ -116,6 +116,17 @@ class TownBattleSuitPanel(DirectFrame):
         doneStatus = {'mode': 'Avatar',
          'avatar': self.panelId}
         messenger.send(self.chooseCogPanelDoneEvent, [doneStatus])
+
+    def handleCogStatusSelect(self):
+        statusString = self.cog._name + ':\n'
+
+        if self.cog.isGoldSkelecog:
+            statusString += 'GOLD: HP is equal to a cog two levels above.\n'
+
+        if self.cog.lureLevel:
+            statusString += 'LURED' + '(' + str(self.cog.lureRounds) + '): ' + "Can't attack. Will take " + str(self.cog.lureKB) + " knockback damage with THROW/SQUIRT."
+
+        base.localAvatar.setSystemMessage(0, statusString)
 
     def updateHealthBar(self):
 

@@ -454,6 +454,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             suit = self.suits[int(s)]
             if suit != None:
                 suit.loop('lured')
+                if suit.lureRounds:
+                    suit.lureRounds -= 1
                 self.luredSuits.append(suit)
                 if oldLuredSuits.count(suit) == 0:
                     self.needAdjustTownBattle = 1

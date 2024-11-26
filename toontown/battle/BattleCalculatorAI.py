@@ -1830,6 +1830,8 @@ class BattleCalculatorAI:
                 lureEff.children['value'] = getAvPropDamage(LURE, lureLvl, toon.experience, npc=True, toonDamageMultiplier=toon.getDamageMultiplier(), overflowMod=toon.getOverflowMod())
             else:
                 lureEff.children['value'] = getAvPropDamage(LURE, lureLvl, toon.experience, toonDamageMultiplier=toon.getDamageMultiplier(), overflowMod=toon.getOverflowMod())
+            toonAttack = self.battle.toonAttacks[toon.doId]
+            toonAttack[TOON_STATUSONE_COL] = lureEff.children['value']
             self.currentlyLuredSuits[suitId][6] = lureEff.children['value']
         self.notify.debug('__addLuredSuitInfo: currLuredSuits -> %s' % repr(self.currentlyLuredSuits))
         return availLureId

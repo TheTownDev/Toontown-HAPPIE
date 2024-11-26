@@ -81,6 +81,12 @@ def __createFishingPoleMultiTrack(lure, dollar, dollarName, dollarType):
     poles = [pole, pole2]
     hands = toon.getRightHands()
 
+    if sidestep == 0:
+        if not trapProp:
+            suit.lureLevel = lure['level']
+            suit.lureRounds = AvLureRounds[suit.lureLevel]
+            suit.lureKB = lure['statInfo1']
+
     def positionDollar(dollar, suit):
         dollar.reparentTo(suit)
         dollar.setPos(0, MovieUtil.SUIT_LURE_DOLLAR_DISTANCE, 0)
@@ -172,6 +178,11 @@ def __createMagnetMultiTrack(lure, magnet, pos, hpr, scale, isSmallMagnet = 1, n
         suit = target['suit']
         trapProp = suit.battleTrapProp
         if sidestep == 0:
+            if not trapProp:
+                suit.lureLevel = lure['level']
+                suit.lureRounds = AvLureRounds[suit.lureLevel]
+                suit.lureKB = lure['statInfo1']
+        if sidestep == 0:
             hp = target['hp']
             kbbonus = target['kbbonus']
             died = target['died']
@@ -251,6 +262,11 @@ def __createHypnoGogglesMultiTrack(lure, npcs = []):
     for target in targets:
         suit = target['suit']
         trapProp = suit.battleTrapProp
+        if sidestep == 0:
+            if not trapProp:
+                suit.lureLevel = lure['level']
+                suit.lureRounds = AvLureRounds[suit.lureLevel]
+                suit.lureKB = lure['statInfo1']
         if sidestep == 0:
             hp = target['hp']
             kbbonus = target['kbbonus']
@@ -638,6 +654,11 @@ def __createSlideshowMultiTrack(lure, npcs = []):
     for target in targets:
         suit = target['suit']
         trapProp = suit.battleTrapProp
+        if sidestep == 0:
+            if not trapProp:
+                suit.lureLevel = lure['level']
+                suit.lureRounds = AvLureRounds[suit.lureLevel]
+                suit.lureKB = lure['statInfo1']
         if sidestep == 0:
             hp = target['hp']
             kbbonus = target['kbbonus']

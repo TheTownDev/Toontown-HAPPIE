@@ -306,6 +306,11 @@ def doSuitAttack(attack):
 
 def getResetTrack(suit, battle):
     resetPos, resetHpr = battle.getActorPosHpr(suit)
+
+    suit.lureLevel = 0
+    suit.lureRounds = 0
+    suit.lureKB = 0
+
     moveDist = Vec3(suit.getPos(battle) - resetPos).length()
     moveDuration = 0.5
     walkTrack = Sequence(Func(suit.setHpr, battle, resetHpr), ActorInterval(suit, 'walk', startTime=1, duration=moveDuration, endTime=1e-05), Func(suit.loop, 'neutral'))
