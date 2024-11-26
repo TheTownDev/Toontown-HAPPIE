@@ -1818,7 +1818,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         lastActiveSuitDied = 0
         if len(self.activeSuits) == 0 and len(self.pendingSuits) == 0:
             lastActiveSuitDied = 1
-        for i in range(4):
+        for i in range(8):
             attack = self.suitAttacks[i][SUIT_ATK_COL]
             if attack != SuitAttackType.NO_ATTACK:
                 suitId = self.suitAttacks[i][SUIT_ID_COL]

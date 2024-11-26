@@ -1305,7 +1305,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             self.flashRed()
         elif pieCode == ToontownGlobals.PieCodeBossCog:
             if toon == localAvatar:
-                self.d_hitBoss(40)
+                self.d_hitBoss(45)
             if self.dizzy:
                 self.flashRed()
                 self.doAnimate('hit', now=1)

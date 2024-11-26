@@ -117,7 +117,7 @@ class CFORuleset:
         self.TIMER_MODE = False  # When true, the cfo is timed and ends when time is up, when false, acts as a stopwatch
         self.TIMER_MODE_TIME_LIMIT = 15 * 60  # How many seconds do we give the CFO crane round if TIMER_MODE is active?
 
-        self.CFO_MAX_HP = 400  # How much HP should the CFO have?
+        self.CFO_MAX_HP = 750  # How much HP should the CFO have?
         self.HP_PER_EXTRA = 150  # How much HP should the CFO increase by per toon?
         self.CFO_STUN_THRESHOLD = 15  # How much damage should a goon do to stun?
         self.SIDECRANE_IMPACT_STUN_THRESHOLD = 0.8  # How much impact should a side crane hit need to register a stun

@@ -1,6 +1,6 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import *
-from toontown.coghq.facility.cashbot.coin.tt_f_ara_mgr_action01 import GlobalEntities
+from toontown.coghq.facility.cashbot.coin.tt_f_ara_mmz_action00 port (GlobalEntities)
 from otp.level import LevelUtil
 
 if __debug__:
@@ -446,6 +446,9 @@ class MyApp(ShowBase):
                     self.room[entity]['scale'] = 1
                 elif self.room[entity]['type'] == 'goon':
                     self.room[entity]['scale'] = self.roomEntId2Model[entity].getSx()
+                elif self.room[entity]['type'] == 'gear':
+                    self.room[entity]['scale'] = 1.0
+                    self.room[entity]['gearScale'] = self.roomEntId2Model[entity].getSx()
                 else:
                     try:
                         self.room[entity]['scale'] = self.roomEntId2Model[entity].getScale()

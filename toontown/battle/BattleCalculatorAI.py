@@ -1454,7 +1454,7 @@ class BattleCalculatorAI:
         return (
          toonsHit, cogsMiss)
 
-    def buildASuitAttack(self, suit, attackIndex, attackType, targetIndex, damages):
+    def buildASuitAttack(self, suit, attackIndex, targetIndex, damages):
         attackMovie = [suit.doId, attackIndex, targetIndex, [], 0, 0, 0]
 
         attackMovie[SUIT_HP_COL] = damages
@@ -1549,7 +1549,7 @@ class BattleCalculatorAI:
             print(toonAttack)
         
         self.__calculateSuitAttacks()
-        
+
 
         # buildASuitAttack goes here! :)
         """

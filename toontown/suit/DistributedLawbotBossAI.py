@@ -26,7 +26,7 @@ from .SuitDNAGlobals import *
 class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedLawbotBossAI')
     limitHitCount = 6
-    hitCountDamage = 35
+    hitCountDamage = 50
     numPies = 10
     maxToonLevels = 77
 
@@ -849,7 +849,13 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
 
     def __makeLawyers(self):
         self.__resetLawyers()
-        lawCogChoices = ['b','dt', 'ac', 'bs', 'sd', 'le', 'bw']
+        lawCogChoices = [BLOODSUCKER,
+                         DOUBLE_TALKER,
+                         AMBULANCE_CHASER,
+                         BACK_STABBER,
+                         SPIN_DOCTOR,
+                         LEGAL_EAGLE,
+                         BIG_WIG]
         for i in range(self.numLawyers):
             suit = DistributedLawbotBossSuitAI.DistributedLawbotBossSuitAI(self.air, None)
             suit.dna = SuitDNA.SuitDNA()

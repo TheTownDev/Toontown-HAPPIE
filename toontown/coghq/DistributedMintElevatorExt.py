@@ -30,9 +30,8 @@ class DistributedMintElevatorExt(DistributedElevatorExt.DistributedElevatorExt):
 
     def setMintId(self, mintId):
         self.mintId = mintId
-        mintId2originId = {ToontownGlobals.CashbotMintIntA: 1,
-         ToontownGlobals.CashbotMintIntB: 2,
-         ToontownGlobals.CashbotMintIntC: 0}
+        mintId2originId = {ToontownGlobals.CashbotMintIntA: 0,
+         ToontownGlobals.CashbotMintIntC: 1}
         originId = mintId2originId[self.mintId]
         geom = self.cr.playGame.hood.loader.geom
         locator = geom.find('**/elevator_origin_%s' % originId)

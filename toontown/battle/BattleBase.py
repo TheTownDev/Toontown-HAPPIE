@@ -229,7 +229,7 @@ class BattleBase:
     notify = DirectNotifyGlobal.directNotify.newCategory('BattleBase')
     suitPoints = (((Point3(0, 5, 0), 179),),
      ((Point3(2, 5.3, 0), 170), (Point3(-2, 5.3, 0), 180)),
-     ((Point3(4, 5.2, 0), 170), (Point3(0, 6, 0), 179), (Point3(-4, 5.2, 0), 190)),
+     ((Point3(4, 5.2, 0), 155), (Point3(0, 6, 0), 179), (Point3(-4, 5.2, 0), 205)),
      ((Point3(6, 4.4, 0), 150),
       (Point3(2, 6.3, 0), 170),
       (Point3(-2, 6.3, 0), 190),
