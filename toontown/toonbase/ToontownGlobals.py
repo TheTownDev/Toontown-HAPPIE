@@ -176,6 +176,7 @@ LighthouseLane = 1300
 SillyStreet = 2100
 LoopyLane = 2200
 PunchlinePlace = 2300
+LafflyAlly = 2400
 WalrusWay = 3100
 SleetStreet = 3200
 PolarPlace = 3300
@@ -193,7 +194,7 @@ SandAvenue = 7100
 VacationAlly = 7200
 TanicalWay = 7300
 ToonHall = 2513
-HoodHierarchy = {ToontownCentral: (SillyStreet, LoopyLane, PunchlinePlace),
+HoodHierarchy = {ToontownCentral: (SillyStreet, LoopyLane, PunchlinePlace, LafflyAlly),
  DonaldsDock: (BarnacleBoulevard, SeaweedStreet, LighthouseLane),
  TheBrrrgh: (WalrusWay, SleetStreet, PolarPlace),
  MinniesMelodyland: (AltoAvenue, BaritoneBoulevard, TenorTerrace),

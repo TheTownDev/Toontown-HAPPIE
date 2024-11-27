@@ -471,105 +471,10 @@ group "toontownCentral" [
     pos [ -44.9999 -84.9999 0.529999 ]
     nhpr [ 8.75 0 0 ]
    ]
-   prop "linktunnel_tt_2401_DNARoot" [
+   prop "prop_safe_zone_entrance_tunnel_DNARoot" [
     code [ "prop_safe_zone_entrance_tunnel" ]
     pos [ -98.3546 -88.7896 1.06838 ]
     nhpr [ 150 0 -0 ]
-    sign [
-     code [ "tunnel_sign_orange" ]
-     scale [ 1.5 1 1.5 ]
-     baseline [
-      code [ "mickey" ]
-      color [ 0 0.501961 0 1 ]
-      pos [ 0 0 -0.84 ]
-      nhpr [ 0 0 2 ]
-      scale [ 1.5 1 1.5 ]
-      width [ 33.3333 ]
-      height [ 33.3333 ]
-      text [
-       letters [ "L" ]
-      ]
-      text [
-       letters [ "A" ]
-      ]
-      text [
-       letters [ "F" ]
-      ]
-      text [
-       letters [ "F" ]
-      ]
-      text [
-       letters [ "L" ]
-      ]
-      text [
-       letters [ "Y" ]
-      ]
-      text [
-       letters [ " " ]
-      ]
-      text [
-       letters [ "A" ]
-      ]
-      text [
-       letters [ "L" ]
-      ]
-      text [
-       letters [ "L" ]
-      ]
-      text [
-       letters [ "Y" ]
-      ]
-     ]
-     baseline [
-      code [ "mickey" ]
-      color [ 0 0.501961 0 1 ]
-      pos [ 0 0 -2 ]
-      nhpr [ 0 0 2 ]
-      scale [ 0.8 1 0.8 ]
-      width [ 50 ]
-      height [ 50 ]
-      text [
-       letters [ "L" ]
-      ]
-      text [
-       letters [ "A" ]
-      ]
-      text [
-       letters [ "F" ]
-      ]
-      text [
-       letters [ "F" ]
-      ]
-      text [
-       letters [ "L" ]
-      ]
-      text [
-       letters [ "Y" ]
-      ]
-      text [
-       letters [ " " ]
-      ]
-      text [
-       letters [ "A" ]
-      ]
-      text [
-       letters [ "L" ]
-      ]
-      text [
-       letters [ "L" ]
-      ]
-      text [
-       letters [ "Y" ]
-      ]
-     ]
-     baseline [
-      pos [ 0 0 1.77 ]
-      scale [ 2.5 1 2.5 ]
-      graphic [
-       code [ "mickeySZ" ]
-      ]
-     ]
-    ]
    ]
    flat_building "tb0:flat_DNARoot" [
     pos [ -144.843 -31.4162 -0.18 ]
@@ -590,11 +495,69 @@ group "toontownCentral" [
      ]
     ]
    ]
+   prop "prop_contructionSign_DNARoot" [
+    code [ "prop_contructionSign" ]
+    pos [ -115.176 -77.9232 18.0681 ]
+    nhpr [ 150 0 -0 ]
+    scale [ 1.5 1.5 1.5 ]
+   ]
+   prop "prop_contructionSignText_DNARoot" [
+    code [ "prop_contructionSignText" ]
+    pos [ -115.175 -77.9234 18.0682 ]
+    nhpr [ 150 0 -0 ]
+   ]
+   prop "prop_contructionSignBarricade_DNARoot" [
+    code [ "prop_contructionSignBarricade" ]
+    pos [ -116.675 -80.5216 0.572975 ]
+    nhpr [ 150 0 -0 ]
+   ]
+   prop "prop_contructionPaintBucket_DNARoot" [
+    code [ "prop_contructionPaintBucket" ]
+    pos [ -117.345 -91.6817 0.572975 ]
+    nhpr [ -165 0 0 ]
+   ]
+   prop "prop_contructionPaintBucket_DNARoot" [
+    code [ "prop_contructionPaintBucket" ]
+    pos [ -118.501 -95.0973 0.572975 ]
+    nhpr [ -165 0 -0 ]
+   ]
+   prop "prop_contructionPaintBucket_DNARoot" [
+    code [ "prop_contructionPaintBucket" ]
+    pos [ -121.917 -93.9419 0.572975 ]
+    nhpr [ -165 0 -0 ]
+   ]
+   prop "prop_contructionPaintBucketBrush_DNARoot" [
+    code [ "prop_contructionPaintBucketBrush" ]
+    pos [ -122.175 -87.3187 0.572975 ]
+    nhpr [ 105 0 0 ]
+   ]
+   prop "prop_contructionPaintBucketBrush_DNARoot" [
+    code [ "prop_contructionPaintBucketBrush" ]
+    pos [ -114.883 -92.6852 2.39202 ]
+    nhpr [ 150 0 0 ]
+   ]
+   prop "prop_contructionPaintBucketBrush_DNARoot" [
+    code [ "prop_contructionPaintBucketBrush" ]
+    pos [ -127.005 -88.6125 0.572975 ]
+    nhpr [ 165 0 0 ]
+   ]
+   prop "prop_contructionPaintBucketSplash01_DNARoot" [
+    code [ "prop_contructionPaintBucketSplash01" ]
+    pos [ -128.109 -86.2842 0.572975 ]
+    nhpr [ 195 0 -0 ]
+    scale [ 5 5 5 ]
+   ]
    prop "prop_contructionPaintBucketSplash01_DNARoot" [
     code [ "prop_contructionPaintBucketSplash01" ]
     pos [ -123.072 -97.3576 6.57293 ]
     nhpr [ 14 270 0 ]
     scale [ 4 4 4 ]
+   ]
+   prop "prop_contructionCone_DNARoot" [
+    code [ "prop_contructionCone" ]
+    pos [ -114.26 -87.7495 0.572975 ]
+    nhpr [ 195 0 0 ]
+    scale [ 3 3 3 ]
    ]
   ]
   node "buildings" [
@@ -1005,7 +968,7 @@ group "toontownCentral" [
   ]
   prop "toontown_central_DNARoot" [
    code [ "toontown_central" ]
-   pos [ -0.000915527 0 -1.15633e-05 ]
+   pos [ -0.00088501 7.62939e-06 -1.18017e-05 ]
    nhpr [ -90 0 -0 ]
   ]
   prop "prop_tree_large_ur_DNARoot" [

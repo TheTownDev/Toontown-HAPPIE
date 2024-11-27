@@ -18,6 +18,7 @@ from . import SuitTimings
 from . import SuitBase
 from . import DistributedSuitPlanner
 from . import SuitDNA
+from .SuitDNAGlobals import *
 from direct.directnotify import DirectNotifyGlobal
 from . import SuitDialog
 from toontown.toontowngui import TTDialog
@@ -192,25 +193,6 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         if self.notify.getDebug():
             self.notify.debug('Got level %d from server for suit %d' % (level, self.getDoId()))
         self.setLevel(level)
-        
-        if self.dna.name not in SuitDNA.customSuit2Dept:
-            if self.dna.name not in SuitDNA.mainTypes:
-                cogName = SuitBattleGlobals.getSuitAttributes(self.dna.name).name
-                message = "WARNING: The Cog %s has no assigned dept! Please check SuitDNA.py." % cogName
-                self.rejectDeptDialog = TTDialog.TTGlobalDialog(message=message, doneEvent='suitWarningDept', style=TTDialog.Acknowledge)
-                self.rejectDeptDialog.show()
-                self.rejectDeptDialog.delayDelete = DelayDelete.DelayDelete(self, '__suitWarningDeptEnter')
-                self.acceptOnce('suitWarningDept', self.__handleDeptRejectAck)
-
-    def __handleDeptRejectAck(self):
-        self.ignore('suitWarningDept')
-        doneStatus = self.rejectDeptDialog.doneStatus
-        if doneStatus != 'ok':
-            self.notify.error('Unrecognized doneStatus: ' + str(doneStatus))
-        self.cr.playGame.getPlace().setState('walk')
-        self.rejectDeptDialog.delayDelete.destroy()
-        self.rejectDeptDialog.cleanup()
-        del self.rejectDeptDialog
 
     def attachPropeller(self):
         if self.prop == None:
