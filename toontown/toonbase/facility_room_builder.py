@@ -1,6 +1,6 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import *
-from toontown.coghq.facility.cashbot.coin.tt_f_ara_mmz_action00 port (GlobalEntities)
+from toontown.coghq.LawbotOfficeLobby_Battle00 import GlobalEntities
 from otp.level import LevelUtil
 
 if __debug__:

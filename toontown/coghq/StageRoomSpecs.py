@@ -35,6 +35,7 @@ from toontown.coghq import LawbotOfficeDiamondRoom_Battle00
 from toontown.coghq import LawbotOfficeDiamondRoom_Battle01
 from toontown.coghq import LawbotOfficeGearRoom_Battle00
 from toontown.coghq import LawbotOfficeLavaRoomFoyer_Battle00
+from toontown.coghq import LawbotOfficeLobby_Battle00, LawbotOfficeLobby_Battle00_Cogs
 
 
 LawbotStageSpecModules = {
@@ -59,7 +60,8 @@ LawbotStageSpecModules = {
     105: LawbotOfficeGearRoom_Battle00,
     106: LawbotOfficeDiamondRoom_Battle01,
     107: LawbotOfficeBoilerRoom_Battle01,
-    108: LawbotOfficeLavaRoomFoyer_Battle00
+    108: LawbotOfficeLavaRoomFoyer_Battle00,
+    109: LawbotOfficeLobby_Battle00
 }
 
 # Ok don't freak out. What we are doing here is grabbing the name of the module that we imported.
@@ -79,7 +81,8 @@ CogSpecModules = {
     'LawbotOfficeGearRoom_Battle00': LawbotOfficeGearRoom_Battle00_Cogs,
     'LawbotOfficeDiamondRoom_Battle01': LawbotOfficeDiamondRoom_Battle01_Cogs,
     'LawbotOfficeBoilerRoom_Battle01': LawbotOfficeBoilerRoom_Battle01_Cogs,
-    'LawbotOfficeLavaRoomFoyer_Battle00': LawbotOfficeLavaRoomFoyer_Battle00_Cogs
+    'LawbotOfficeLavaRoomFoyer_Battle00': LawbotOfficeLavaRoomFoyer_Battle00_Cogs,
+    'LawbotOfficeLobby_Battle00': LawbotOfficeLobby_Battle00_Cogs
 }
 
 

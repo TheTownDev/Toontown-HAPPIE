@@ -20,10 +20,10 @@ if typing.TYPE_CHECKING:
 notify = directNotify.newCategory('SuitDNA')
 
 supervisors = [
-    'trf',
-    'ski',
-    'def',
-    'bgh']
+    THE_FACTORY_FOREMAN,
+    THE_MINT_AUDITOR,
+    THE_OFFICE_CLERK,
+    THE_CLUB_PRESIDENT]
 
 mainTypes = [FLUNKY,
     PENCIL_PUSHER,
@@ -638,11 +638,13 @@ def getWaiterClotheTexture():
 CUSTOM_SUIT_CLOTHES: Set[CustomSuitClothes] = set()
 
 customSuit2Dept = {
+    THE_FACTORY_FOREMAN: 's',
+    THE_MINT_AUDITOR: 'm',
+    THE_OFFICE_CLERK: 'l',
+    THE_CLUB_PRESIDENT: 'c',
+    BARISTA: 'l',
+    ATTORNEY: 'l'
 }
-
-for DEPT in EXTRA_COGS:
-    for COG in DEPT:
-        customSuit2Dept[COG] = DEPT
 
 def getSuitDept(name):
     index = suitHeadTypes.index(name)
@@ -875,7 +877,7 @@ class SuitDNA(AvatarDNA.AvatarDNA):
             alternateSuitChance = 0.4
             # if the rng is less than the chance, we set the suit to the alternate suit
             if random.random() < alternateSuitChance:
-                self.name = 'trf'
+                self.name = 'ffor'
 
         self.body = getSuitBodyType(self.name)
         return

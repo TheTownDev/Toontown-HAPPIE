@@ -45,7 +45,7 @@ GlobalEntities[16000] = {'type': 'model',
          'collisionsOnly': 0,
          'flattenType': 'light',
          'loadType': 'loadModelCopy',
-         'modelPath': 'phase_11/models/lawbotHQ/LB_couchA.bam'}
+         'modelPath': 'phase_11/models/lawbotHQ/ttr_m_ara_lhq_couchA.bam'}
 
 GlobalEntities[16001] = {'type': 'model',
          'name': 'middle',
@@ -57,7 +57,7 @@ GlobalEntities[16001] = {'type': 'model',
          'collisionsOnly': 0,
          'flattenType': 'light',
          'loadType': 'loadModelCopy',
-         'modelPath': 'phase_11/models/lawbotHQ/LB_couchA.bam'}
+         'modelPath': 'phase_11/models/lawbotHQ/ttr_m_ara_lhq_couchA.bam'}
 
 GlobalEntities[16002] = {'type': 'model',
          'name': 'middle',

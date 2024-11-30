@@ -346,19 +346,19 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
     def setMembers(self, suits, suitsJoining, suitsPending, suitsActive, suitsLured, suitTraps, toons, toonsJoining, toonsPending, toonsActive, toonsRunning, suitsImmune, timestamp):
         if not self.supervisorMusicIn:
             for suit in self.suits:
-                if suit.dna.name == 'trf':
+                if suit.dna.name == 'ffor':
                     foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
                     foremanMusic.setLoop(1)
                     foremanMusic.play()
             
             for suit in self.pendingSuits:
-                if suit.dna.name == 'trf':
+                if suit.dna.name == 'ffor':
                     foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
                     foremanMusic.setLoop(1)
                     foremanMusic.play()
             
             for suit in self.joiningSuits:
-                if suit.dna.name == 'trf':
+                if suit.dna.name == 'ffor':
                     foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
                     foremanMusic.setLoop(1)
                     foremanMusic.play()

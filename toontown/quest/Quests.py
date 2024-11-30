@@ -4122,7 +4122,7 @@ RequiredRewardTrackDict = {
              100,
              100,
              100),
- TT_TIER + 1: (100,)}
+ TT_TIER + 1: (100, 100)}
 OptionalRewardTrackDict = {TT_TIER: (),
                            TT_TIER + 1: (),}
 

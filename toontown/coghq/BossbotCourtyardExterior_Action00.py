@@ -33,7 +33,7 @@ GlobalEntities = {1000: {'type': 'levelMgr',
           'collisionsOnly': 0,
           'flattenType': 'light',
           'loadType': 'loadModelCopy',
-          'modelPath': 'phase_11/models/lawbotHQ/LB_couchA'}}
+          'modelPath': 'phase_11/models/lawbotHQ/ttr_m_ara_lhq_couchA'}}
 Scenario0 = {}
 levelSpec = {'globalEntities': GlobalEntities,
  'scenarios': [Scenario0],

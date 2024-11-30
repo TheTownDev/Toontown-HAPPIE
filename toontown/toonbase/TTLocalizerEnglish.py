@@ -722,6 +722,9 @@ QuestDialogDict = {145: {QUEST: 'Well look who it is!\x07Remember Flippy? Of cou
        INCOMPLETE_WRONG_NPC: 'Good job defeating those Cogs. Now go to the Toon Headquarters for your next step!',
        COMPLETE: QuestsDefaultComplete,
        LEAVING: QuestsDefaultLeaving},
+ 16300: {QUEST: 'Loony Louis has been down about losing his pet Clown Fish!\x07Go see, maybe you can help him._where_'},
+ 16301: {QUEST: 'Are you here to help!?\x07Im so glad your here, I- I, lost my Bowie!\x07The last time I remember him with me was by that fishing pound on this stre-\x07THATS IT!\x07Please find him!'},
+ 16302: {QUEST: 'BOWEY!\x07You know, he is coughing a bit...\x07WOWZA!!\x07Is that Baker Bridgets RECIPE!?\x07Well, you should probably bring this back to Toon HQ!\x07My Bowie will remember you!'},
  164: {QUEST: 'You look like you could use some new gags.\x07Go see %s, maybe he can help you out._where_' % Flippy},
  165: {QUEST: 'Hi there.\x07Looks like you need to practice training your gags.\x07Every time you hit a Cog with one of your gags, your experience increases.\x07When you get enough experience, you will be able to use an even better gag.\x07Go practice your gags by defeating 4 Cogs.'},
  166: {QUEST: 'Nice work defeating those Cogs.\x07You know, the Cogs come in five different types.\x07They are Lawbots, Cashbots, Sellbots, Resourcebots and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat a Flunky.'},
@@ -5093,7 +5096,7 @@ EmoteAnnoyed = 'Annoyed'
 EmoteSleep = 'Sleepy'
 TIPPageTitle = 'TIP'
 SupervisorDeathPhrases = {
-       'trf': ["We should have neglected safety protocols.",
+       'ffor': ["We should have neglected safety protocols.",
                "A minor setback for production."],
        'ski': ["I did not account for this.",
                "I'll write this off as a loss."],

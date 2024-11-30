@@ -452,14 +452,18 @@ class Movie(DirectObject.DirectObject):
             if ival:
                 track.append(ival)
                 camTrack.append(camIval)
+            trapAndLureTrack = Parallel()
+            trapAndLureTrackCam = Parallel()
             ival, camIval = MovieTrap.doTraps(self.__findToonAttack(TRAP))
             if ival:
-                track.append(ival)
-                camTrack.append(camIval)
+                trapAndLureTrack.append(ival)
+                trapAndLureTrackCam.append(camIval)
             ival, camIval = MovieLure.doLures(self.__findToonAttack(LURE))
             if ival:
-                track.append(ival)
-                camTrack.append(camIval)
+                trapAndLureTrack.append(ival)
+                trapAndLureTrackCam.append(camIval)
+            track.append(trapAndLureTrack)
+            camTrack.append(trapAndLureTrackCam)
             ival, camIval = MovieSound.doSounds(self.__findToonAttack(SOUND))
             if ival:
                 track.append(ival)

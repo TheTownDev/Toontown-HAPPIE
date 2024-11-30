@@ -33,7 +33,7 @@ class DistributedVehicle(DistributedSmoothNode.DistributedSmoothNode, Kart.Kart,
     maxPhysicsDt = 1.0
     physicsDt = 1.0 / float(physicsCalculationsPerSecond)
     maxPhysicsFrames = maxPhysicsDt * physicsCalculationsPerSecond
-    maxSpeed = 200 * cheatFactor
+    maxSpeed = 100 * cheatFactor
     turnRatio = 1.8 / 0.025 * math.sqrt(cheatFactor)
     accelerationMult = 35
     accelerationBase = 30
@@ -231,7 +231,7 @@ class DistributedVehicle(DistributedSmoothNode.DistributedSmoothNode, Kart.Kart,
         return self.actorNode.getPhysicsObject().getVelocity()
 
     def __updateWallCollision(self, entry = None):
-        vol = self.curSpeed / 160
+        vol = self.curSpeed / 80
         for wallHit in self.wallHitsSfx:
             wallHit.setVolume(vol)
 

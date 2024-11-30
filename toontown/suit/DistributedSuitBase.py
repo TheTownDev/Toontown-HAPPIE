@@ -377,7 +377,7 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
             foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
             foremanMusic.setLoop(1)
             foremanMusic.play()
-        if self.dna.name == 'trf':
+        if self.dna.name == 'ffor':
             foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
             foremanMusic.setLoop(1)
             foremanMusic.play()

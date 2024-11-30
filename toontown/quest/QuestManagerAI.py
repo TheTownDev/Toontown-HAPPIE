@@ -179,6 +179,12 @@ class QuestManagerAI:
                 return
 
         tier = av.getRewardHistory()[0]
+
+        if av.hp == 40:
+            if tier == 0:
+                tier =+ 1
+                av.b_setRewardHistory(tier, [])
+
         if Quests.avatarHasAllRequiredRewards(av, tier):
             if not Quests.avatarWorkingOnRequiredRewards(av):
                 if tier != Quests.LOOPING_FINAL_TIER:

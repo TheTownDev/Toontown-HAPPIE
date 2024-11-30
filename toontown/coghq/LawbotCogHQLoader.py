@@ -34,7 +34,7 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.musicJson = json.loads(fileSystem.readFile(ToontownGlobals.musicJsonFilePath, True))
         self.musicFile = 'phase_11/audio/bgm/LB_courtyard.ogg'
         self.cogHQExteriorModelPath = 'phase_11/models/lawbotHQ/LawbotPlaza'
-        self.factoryExteriorModelPath = 'phase_11/models/lawbotHQ/ttr_m_ara_lhq_daLobby'
+        self.factoryExteriorModelPath = 'phase_11/models/lawbotHQ/ttr_m_ara_lhq_daLobby.egg'
         self.cogHQLobbyModelPath = 'phase_11/models/lawbotHQ/LB_CH_Lobby'
         self.officeExtModels = []
         self.room = GlobalEntities
