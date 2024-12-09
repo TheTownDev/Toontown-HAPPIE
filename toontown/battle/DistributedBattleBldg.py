@@ -36,9 +36,13 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
 
     def setBossBattle(self, value):
         self.bossBattle = value
-        if self.bossBattle:    
-            self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/encntr_suit_winning_indoor.ogg')
-            base.playMusic(self.battleMusic, looping=1, volume=0.9)
+        if self.bossBattle:
+            if self.suits[0].dna.dept == 'c':  # tt_s_ara_sui_interiorCorp
+                self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/tt_s_ara_sui_interiorCorpBoss.ogg')
+                base.playMusic(self.battleMusic, looping=1, volume=1.3)
+            else:
+                self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/encntr_suit_winning_indoor.ogg')
+                base.playMusic(self.battleMusic, looping=1, volume=0.9)
         else:
             if self.suits[0].dna.dept == 'c' and self.suits[0].dna.name not in SuitDNA.Resourcebots: #tt_s_ara_sui_interiorCorp
                 self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/tt_s_ara_sui_interiorCorp.ogg')

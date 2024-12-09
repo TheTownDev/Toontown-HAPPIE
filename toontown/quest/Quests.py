@@ -4096,8 +4096,6 @@ RequiredRewardTrackDict = {
              100,
              100,
              100,
-             101,
-             101,
              100,
              100,
              100,
@@ -4189,53 +4187,17 @@ def avatarWorkingOnRequiredRewards(av):
 
     return 0
 
+def findQuestsInTier(tier):
+    return [questId for questId in QuestDict if QuestDict[questId][0] == tier]
 
 def avatarHasAllRequiredRewards(av, tier):
-    rewardHistory = list(av.getRewardHistory()[1])
-    rewardList = getRewardsInTier(tier)
-    notify.debug('checking avatarHasAllRequiredRewards: history: %s, tier: %s' % (rewardHistory, rewardList))
-    for rewardId in rewardList:
-        if rewardId == 900:
-            found = 0
-            for actualRewardId in (901, 902, 903, 904, 905, 906, 907):
-                if actualRewardId in rewardHistory:
-                    found = 1
-                    rewardHistory.remove(actualRewardId)
-                    if notify.getDebug():
-                        notify.debug('avatarHasAllRequiredRewards: rewardId 900 found as: %s' % actualRewardId)
-                    break
+    avQuests = findQuestsInTier(tier)
+    rewardHistory = av.getRewardHistory()[1]
 
-            if not found:
-                if notify.getDebug():
-                    notify.debug('avatarHasAllRequiredRewards: rewardId 900 not found')
-                return 0
-        else:
-            actualRewardId = transformReward(rewardId, av)
-            if actualRewardId in rewardHistory:
-                rewardHistory.remove(actualRewardId)
-            elif getRewardClass(rewardId) == CogSuitPartReward:
-                deptStr = RewardDict.get(rewardId)[1]
-                cogPart = RewardDict.get(rewardId)[2]
-                dept = ToontownGlobals.cogDept2index[deptStr]
-                if av.hasCogPart(cogPart, dept):
-                    if notify.getDebug():
-                        notify.debug('avatarHasAllRequiredRewards: rewardId: %s counts, avatar has cog part: %s dept: %s' % (actualRewardId, cogPart, dept))
-                else:
-                    if notify.getDebug():
-                        notify.debug('avatarHasAllRequiredRewards: CogSuitPartReward: %s not found' % actualRewardId)
-                    return 0
-            else:
-                if notify.getDebug():
-                    notify.debug('avatarHasAllRequiredRewards: rewardId %s not found' % actualRewardId)
-                return 0
-
-    if notify.getDebug():
-        notify.debug('avatarHasAllRequiredRewards: remaining rewards: %s' % rewardHistory)
-        for rewardId in rewardHistory:
-            if not isRewardOptional(tier, rewardId):
-                notify.warning('required reward found, expected only optional: %s' % rewardId)
-
-    return 1
+    # if all the quest Ids in the tier have been completed, return 1
+    if len(rewardHistory) == len(avQuests):
+        return 1
+    return 0
 
 
 def nextQuestList(nextQuest):

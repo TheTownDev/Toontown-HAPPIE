@@ -144,7 +144,7 @@ group "toontownCentral" [
    texture [ "street_curb_TT_tex" ]
   ]
   flat_building "tb0:flat_DNARoot" [
-   pos [ 39.4892 0.131516 0 ]
+   pos [ 29.4892 0.131516 0 ]
    nhpr [ -0 0 -0 ]
    width [ 25 ]
    wall [
@@ -163,7 +163,7 @@ group "toontownCentral" [
    ]
   ]
   flat_building "tb0:flat_DNARoot" [
-   pos [ 64.4886 0.13176 0 ]
+   pos [ 74.4886 0.13176 0 ]
    nhpr [ -0 0 -0 ]
    width [ 25 ]
    wall [
@@ -1701,7 +1701,7 @@ group "toontownCentral" [
   ]
  ]
  visgroup "2405" [
-  vis [   "2401"   "2402"   "2403"   "2404"   "2405"   "2406"   "2407"   "2408"   "2412"   "2413"]
+  vis [   "2401"   "2402"   "2403"   "2404"   "2405"   "2406"   "2407"   "2408"   "2412"   "2413"   ]
   suit_edge [ 20 21 ]
   suit_edge [ 21 22 ]
   suit_edge [ 22 23 ]
@@ -4325,7 +4325,7 @@ group "toontownCentral" [
   ]
  ]
  visgroup "2412" [
-  vis [   "2401"   "2402"   "2403"   "2404"   "2405"   "2406"   "2407"   "2412"  ]
+  vis [   "2401"   "2402"   "2403"   "2404"   "2405"   "2406"   "2407"   "2412"   ]
   battle_cell [ 20 20 -20.0246 -142.102 0 ]
   street "str.40x40_DNARoot" [
    code [ "street_40x40" ]
@@ -4345,7 +4345,7 @@ group "toontownCentral" [
   ]
  ]
  visgroup "2413" [
-  vis [   "2401"   "2402"   "2403"   "2404"   "2405"   "2406"   "2407"   "2412"   "2413"  ]
+  vis [   "2401"   "2402"   "2403"   "2404"   "2405"   "2406"   "2407"   "2412"   "2413"   ]
   battle_cell [ 20 20 -148.137 -55.0847 0 ]
   street "str.curved_corner_DNARoot" [
    code [ "street_curved_corner" ]

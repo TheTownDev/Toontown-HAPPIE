@@ -45,6 +45,7 @@ from toontown.coghq.facility.lawbot.junior import tt_f_ara_delr_action00
 from toontown.coghq.facility.lawbot.junior import tt_f_ara_dlr_action00, tt_f_ara_dlr_action01
 from toontown.coghq.facility.lawbot.junior import tt_f_ara_dtr_action00, tt_f_ara_dtr_action01
 from toontown.coghq.facility.lawbot.junior import tt_f_ara_dgr_action00, tt_f_ara_dgr_action01, tt_f_ara_dgr_action02, tt_f_ara_dgr_action04, tt_f_ara_dgr_action05
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dler_action00
 
 from toontown.coghq.facility.lawbot.junior import tt_f_ara_dbr_action00Cogs
 from toontown.coghq.facility.lawbot.junior import tt_f_ara_der_action01Cogs, tt_f_ara_der_action02Cogs
@@ -52,6 +53,7 @@ from toontown.coghq.facility.lawbot.junior import tt_f_ara_ddr_action02Cogs, tt_
 from toontown.coghq.facility.lawbot.junior import tt_f_ara_dlr_action00Cogs
 from toontown.coghq.facility.lawbot.junior import tt_f_ara_dtr_action00Cogs, tt_f_ara_dtr_action01Cogs
 from toontown.coghq.facility.lawbot.junior import tt_f_ara_dgr_action04Cogs, tt_f_ara_dgr_action05Cogs
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dler_action00Cogs
 #JUNIOR WING ROOMS
 JUNIOR_BOOK_ROOM = 200 # tt_f_ara_dbr_action00
 JUNIOR_EVIDENCE_GOON_ROOM = 201 # tt_f_ara_der_action00
@@ -71,6 +73,7 @@ JUNIOR_BOX_PLATFORM_ROOM = 214 # tt_f_ara_dgr_action01
 JUNIOR_BOX_SECURITY_ROOM = 215 # tt_f_ara_dgr_action02
 JUNIOR_BOX_SINGLE_ROOM = 216 # tt_f_ara_dgr_action04
 JUNIOR_BOX_DOOM_ROOM = 217 # tt_f_ara_dgr_action05
+JUNIOR_LEGAL_ROOM = 218 # tt_f_ara_dler_action00
 
 LawbotStageSpecModules = {
     0: LawbotOfficeEntrance_Action00,
@@ -115,7 +118,8 @@ LawbotStageSpecModules = {
     214: tt_f_ara_dgr_action01,
     215: tt_f_ara_dgr_action02,
     216: tt_f_ara_dgr_action04,
-    217: tt_f_ara_dgr_action05
+    217: tt_f_ara_dgr_action05,
+    218: tt_f_ara_dler_action00
 
 }
 
@@ -147,7 +151,8 @@ CogSpecModules = {
     'tt_f_ara_dtr_action00': tt_f_ara_dtr_action00Cogs,
     'tt_f_ara_dtr_action01': tt_f_ara_dtr_action01Cogs,
     'tt_f_ara_dgr_action04': tt_f_ara_dgr_action04Cogs,
-    'tt_f_ara_dgr_action05': tt_f_ara_dgr_action05Cogs
+    'tt_f_ara_dgr_action05': tt_f_ara_dgr_action05Cogs,
+    'tt_f_ara_dler_action00': tt_f_ara_dler_action00Cogs
 
 }
 
