@@ -100,3 +100,31 @@ place_model "phase_5/models/props/billboard_ads" [
 place_model "phase_8/models/modules/DL_pond" [
 	store_node [ "street" "street_DL_pond" "" ]
 	]
+
+hood_model "phase_8/models/props/ttr_m_prp_ddl_propFlats" [
+    store_node ["prop" "prop_DL_flat_owl" "owl" ]
+]
+
+hood_model "phase_8/models/props/DL_hydrant" [
+    store_node ["prop" "prop_DL_hydrant" "" ]
+]
+
+hood_model "phase_8/models/props/ttr_m_prp_ddl_piers" [
+    store_node ["prop" "fishing_spot_DL" ""]
+    store_node ["prop" "fishing_spot_extra_DL" ""]
+]
+
+model "phase_8/models/modules/ttr_m_ara_ddl_walls" [
+    store_node ["wall_collide" "wall_camera_barrier" "wall_camera_barrier" ]
+
+    store_node ["wall" "wall_bricks_ur_DL" "wall_bricks" ]
+    store_node ["wall" "wall_md_bricks_ur_DL" "wall_md_bricks" ]
+    store_node ["wall" "wall_lg_brick_ur_DL" "wall_lg_brick" ]
+
+    store_node ["wall" "wall_md_dental_ur_DL" "wall_md_dental" ]
+
+    store_node ["wall" "wall_fence_wood_ur_DL" "wall_fence_wood" ]
+
+    store_node ["wall" "wall_md_blank_ur_DL" "wall_md_blank_ur" ]
+    store_node ["wall" "wall_md_blank_dr_DL" "wall_md_blank_dr" ]
+]

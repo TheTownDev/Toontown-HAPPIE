@@ -5,11 +5,12 @@ from . import ZoneUtil
 from toontown.building import DistributedBuildingMgrAI
 from toontown.suit import DistributedSuitPlannerAI
 from toontown.safezone import ButterflyGlobals
-from toontown.safezone import DistributedButterflyAI
+from toontown.safezone import DistributedButterflyAI, DistributedDummyCogAI
 from panda3d.core import *
 from panda3d.toontown import *
 from toontown.toon import NPCToons
 from toontown.toonbase import ToontownGlobals, TTLocalizer
+from toontown.safezone.PlaygroundAction import GlobalEntities
 
 class HoodDataAI:
     notify = DirectNotifyGlobal.directNotify.newCategory('HoodDataAI')
@@ -26,6 +27,7 @@ class HoodDataAI:
         self.redirectingToMe = []
         self.hoodPopulation = 0
         self.pgPopulation = 0
+        self.room = GlobalEntities
         return
 
     # Returns a list of Zone IDs where clerk NPCs reside for this hood.
@@ -44,6 +46,12 @@ class HoodDataAI:
         self.createStreetClerks()
         self.createBuildingManagers()
         self.createSuitPlanners()
+        self.cogDummies = []
+        self.cogDummyIndexNewest = 0
+        for entity in self.room: # battleBlocker
+            if self.room[entity]['type'] == 'cogDummy':
+                if self.room[entity]['zoneId'] == self.zoneId:
+                    self.addCogDummy(self.room[entity]['pos'], self.room[entity]['hpr'])
 
     def shutdown(self):
         self.setRedirect(None)
@@ -201,3 +209,12 @@ class HoodDataAI:
             locationName = locationName + ' (' + TTLocalizer.WelcomeValley[2] + ')'
 
         return locationName
+
+    def addCogDummy(self, pos, hpr):
+        cogDummy = DistributedDummyCogAI.DistributedDummyCogAI(self.air)
+        cogDummy.position = (pos[0], pos[1], pos[2])
+        cogDummy.cogid = self.cogDummyIndexNewest + 1
+        self.cogDummyIndexNewest += 1
+        cogDummy.generateWithRequired(self.zoneId)
+        self.cogDummies.append(cogDummy)
+        cogDummy.d_setHpr(hpr[0], hpr[1], hpr[2])

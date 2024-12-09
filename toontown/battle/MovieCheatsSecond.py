@@ -87,13 +87,13 @@ def doScold(scene, battle):
     
     fire_sfx = loader.loadSfx("phase_5/audio/sfx/SA_hot_air.ogg")
     
-    promotion_movie = Parallel(Sequence(Wait(1), Parallel(Func(fire_sfx.play), ActorInterval(lucky_suit, 'powered-up'), Func(doFireEffect, lucky_suit), Func(lucky_suit.getGeomNode().setColorScale, Vec4(0.9, 0.65, 0.65, 1.0))), Func(lucky_suit.loop, 'neutral'), Func(lucky_suit.getGeomNode().setColorScale, Vec4(1.0, 1.0, 1.0, 1.0))))
+    promotion_movie = Parallel(Sequence(Wait(0.8), Parallel(Func(fire_sfx.play), ActorInterval(lucky_suit, 'slip-forward'), Func(doFireEffect, lucky_suit), Func(lucky_suit.getGeomNode().setColorScale, Vec4(0.9, 0.65, 0.65, 1.0))), Func(lucky_suit.loop, 'neutral'), Func(lucky_suit.getGeomNode().setColorScale, Vec4(1.0, 1.0, 1.0, 1.0))))
     
     movie = Sequence()
     
-    promotion_sfx = loader.loadSfx("phase_4/audio/sfx/ttr_s_ene_cgb_sellbotForeman_firedUp.ogg")
+    promotion_sfx = loader.loadSfx("phase_4/audio/sfx/ttr_s_ene_cga_bossbotClubPresident_pedalTheFoot.ogg")
     
-    promotionalGiven = Parallel(ActorInterval(foreman, 'chop-chop'), Func(promotion_sfx.play), promotion_movie)
+    promotionalGiven = Parallel(ActorInterval(foreman, 'pedal-the-foot'), Func(promotion_sfx.play), promotion_movie)
     
     movie.append(promotionalGiven)
     
@@ -128,7 +128,7 @@ def doBookSmart(scene, battle):
     
     promotion_sfx = loader.loadSfx("phase_4/audio/sfx/ttr_s_ene_cgb_sellbotForeman_firedUp.ogg")
     
-    promotionalGiven = Parallel(ActorInterval(foreman, 'chop-chop'), Func(promotion_sfx.play), promotion_movie)
+    promotionalGiven = Parallel(ActorInterval(foreman, 'pedal-the-foot'), Func(promotion_sfx.play), promotion_movie)
     
     movie.append(promotionalGiven)
     

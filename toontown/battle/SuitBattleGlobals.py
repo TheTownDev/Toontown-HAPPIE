@@ -1033,19 +1033,19 @@ __registerSuitAttributes(__ROBBER_BARON)
 __MINT_AUDITOR_ATTACKS = set()
 __MINT_AUDITOR_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.CALCULATE,
-    damage={6: 11, 7: 13, 8: 15, 9: 17, 10: 19},
+    damage={40: 26,},
     accuracy=60,
     weight=30,
 ))
 __MINT_AUDITOR_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.MARKET_CRASH,
-    damage={6: 8, 7: 10, 8: 12, 9: 14, 10: 16},
+    damage={40: 28,},
     accuracy=60,
     weight=45,
 ))
 __MINT_AUDITOR_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.POWER_TIE,
-    damage={6: 6, 7: 8, 8: 9, 9: 11, 10: 12},
+    damage={40: 21},
     accuracy=60,
     weight=25,
 ))

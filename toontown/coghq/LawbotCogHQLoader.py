@@ -12,6 +12,7 @@ from . import LawbotHQBossBattle
 from . import LawbotOfficeExterior
 from panda3d.core import Fog, VirtualFileSystem
 from .LawbotOfficeExterior_Action00 import GlobalEntities
+from toontown.content_pack import MusicManagerGlobals
 import json
 aspectSF = 0.7227
 
@@ -32,7 +33,6 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
 
         fileSystem = VirtualFileSystem.getGlobalPtr()
         self.musicJson = json.loads(fileSystem.readFile(ToontownGlobals.musicJsonFilePath, True))
-        self.musicFile = 'phase_11/audio/bgm/LB_courtyard.ogg'
         self.cogHQExteriorModelPath = 'phase_11/models/lawbotHQ/LawbotPlaza'
         self.factoryExteriorModelPath = 'phase_11/models/lawbotHQ/ttr_m_ara_lhq_daLobby.egg'
         self.cogHQLobbyModelPath = 'phase_11/models/lawbotHQ/LB_CH_Lobby'
@@ -44,11 +44,6 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
     def load(self, zoneId):
         CogHQLoader.CogHQLoader.load(self, zoneId)
         Toon.loadSellbotHQAnims()
-
-        if str(zoneId) in self.musicJson['global_music']:
-            self.music = base.loader.loadMusic(self.musicJson['global_music'][str(zoneId)])
-        if (str(zoneId) + '_battle') in self.musicJson['global_music']:
-            self.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(zoneId) + '_battle')])
 
     def unloadPlaceGeom(self):
         if self.geom:
@@ -65,6 +60,10 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.geom = loader.loadModel(self.cogHQExteriorModelPath)
             self.geom.setY(0)
             self.geom.setX(0)
+
+            self.musicCode = MusicManagerGlobals.GLOBALS[zoneId]['music']
+            self.battleMusicCode = MusicManagerGlobals.GLOBALS[zoneId]['battleMusic']
+
             ug = self.geom.find('**/underground')
             ug.setBin('ground', -10)
             brLinkTunnel = self.geom.find('**/TunnelEntrance1')
@@ -75,6 +74,10 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.geom = loader.loadModel(self.factoryExteriorModelPath)
             self.geom.setY(0)
             self.geom.setX(0)
+
+            self.musicCode = MusicManagerGlobals.GLOBALS[zoneId]['music']
+            self.battleMusicCode = MusicManagerGlobals.GLOBALS[zoneId]['battleMusic']
+
             ug = self.geom.find('**/underground')
             ug.setBin('ground', -10)
             self.makeOfficeProps()
@@ -85,6 +88,9 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
             self.geom = loader.loadModel(self.cogHQLobbyModelPath)
             self.geom.setY(0)
             self.geom.setX(0)
+
+            self.musicCode = MusicManagerGlobals.GLOBALS[zoneId]['music']
+            self.battleMusicCode = MusicManagerGlobals.GLOBALS[zoneId]['battleMusic']
 
             buildings = self.geom.findAllMatches('**/CH_BGBuildings*')
             sky = self.geom.findAllMatches('**/CH_Sky*')

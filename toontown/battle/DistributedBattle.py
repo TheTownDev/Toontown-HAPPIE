@@ -87,6 +87,18 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
                 foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
                 foremanMusic.setLoop(1)
                 foremanMusic.play()
+
+        for suit in self.suits:
+            if suit.dna.name == 'maud':
+                foremanMusic = base.loader.loadMusic('phase_10/audio/bgm/ttr_s_ara_chq_facilityBossBear.ogg')
+                foremanMusic.setLoop(1)
+                foremanMusic.play()
+
+        for suit in self.pendingSuits:
+            if suit.dna.name == 'maud':
+                foremanMusic = base.loader.loadMusic('phase_10/audio/bgm/ttr_s_ara_chq_facilityBossBear.ogg')
+                foremanMusic.setLoop(1)
+                foremanMusic.play()
         
         for suit in self.suits:
             if suit.dna.name == 'bgh':
@@ -189,7 +201,7 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
         self.__faceOff(ts, self.faceOffName, self.__handleFaceOffDone)
         if self.interactiveProp:
             self.interactiveProp.gotoFaceoff()
-        
+        self.suits[0].enterBattle()
         for suit in self.suits:
             if suit.dna.name == 'ffor':
                 foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')

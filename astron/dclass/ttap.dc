@@ -282,6 +282,7 @@ from toontown.uberdog import TTSpeedchatRelay/UD
 from toontown.safezone import DistributedGolfKart/AI
 from toontown.safezone import DistributedPicnicBasket/AI
 from toontown.safezone import DistributedBench/AI
+from toontown.safezone import DistributedDummyCog/AI
 from toontown.distributed import DistributedTimer/AI
 from toontown.suit import DistributedBossbotBoss/AI
 from toontown.coghq import DistributedCogKart/AI
@@ -3831,6 +3832,19 @@ dclass DistributedGolfSpot : DistributedObject {
   setGolfSpotPos(uint8, uint16%360/100, int16) broadcast clsend;
   clearSmoothing(int8) broadcast clsend;
   setSwingInfo(uint8, int16/10, uint8) broadcast clsend;
+};
+
+dclass DistributedDummyCog : DistributedObject {
+  generateRequest() clsend airecv;
+  toggleCog(string) broadcast;
+  setProperties() clsend airecv;
+  setCogPosId(int16, int16, int16, int16) broadcast;
+  setCogId(int16) broadcast;
+  setCogPos(int16, int16, int16) broadcast;
+  enterDown() clsend airecv;
+  enterUp() clsend airecv;
+  updateTower(string, uint32, uint32) clsend airecv;
+  setHpr(int16/10 h, int16/10 p, int16/10 r) broadcast ram;
 };
 
 struct TireInput {

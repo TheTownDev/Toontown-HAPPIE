@@ -373,12 +373,16 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         self.disableBattleDetect()
         self.corpMedallion.hide()
         self.healthBar.show()
-        if self.dna.name == 'bgh':
+        if self.dna.name == 'clmp':
             foremanMusic = base.loader.loadMusic('phase_12/audio/bgm/ttr_s_ara_bhq_facilityBoss.ogg')
             foremanMusic.setLoop(1)
             foremanMusic.play()
         if self.dna.name == 'ffor':
             foremanMusic = base.loader.loadMusic('phase_9/audio/bgm/ttr_s_ara_shq_facilityBoss.ogg')
+            foremanMusic.setLoop(1)
+            foremanMusic.play()
+        if self.dna.name == 'maud':
+            foremanMusic = base.loader.loadMusic('phase_10/audio/bgm/ttr_s_ara_chq_facilityBossBear.ogg')
             foremanMusic.setLoop(1)
             foremanMusic.play()
         if self.dna.name == 'def':

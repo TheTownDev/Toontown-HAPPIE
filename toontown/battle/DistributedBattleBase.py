@@ -956,6 +956,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             currStateName = self.fsm.getCurrentState().getName()
 
     def __makeAvsActive(self, suits, toons):
+        self.activeSuits = self.activeSuits[:4]
         self.notify.debug('__makeAvsActive()')
         self.__stopAdjusting()
         for s in suits:

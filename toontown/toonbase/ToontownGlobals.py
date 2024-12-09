@@ -202,6 +202,14 @@ HoodHierarchy = {ToontownCentral: (SillyStreet, LoopyLane, PunchlinePlace, Laffl
  DonaldsDreamland: (LullabyLane, PajamaPlace, SnoozeSquare),
  ClearCoasts: (SandAvenue, VacationAlly, TanicalWay),
  GoofySpeedway: ()}
+HoodHierarchyMusicManager = {ToontownCentral: [SillyStreet, LoopyLane, PunchlinePlace, LafflyAlly],
+ DonaldsDock: [BarnacleBoulevard, SeaweedStreet, LighthouseLane],
+ TheBrrrgh: [WalrusWay, SleetStreet, PolarPlace],
+ MinniesMelodyland: [AltoAvenue, BaritoneBoulevard, TenorTerrace],
+ DaisyGardens: [ElmStreet, MapleStreet, OakStreet],
+ DonaldsDreamland: [LullabyLane, PajamaPlace, SnoozeSquare],
+ ClearCoasts: [SandAvenue, VacationAlly, TanicalWay],
+ GoofySpeedway: []}
 WelcomeValleyToken = 0
 BossbotHQ = 10000
 BossbotLobby = 10100
@@ -628,6 +636,7 @@ PieCodeBossInsides = 4
 PieCodeDefensePan = 5
 PieCodeProsecutionPan = 6
 PieCodeLawyer = 7
+PieCodeToonfestCog = 9
 PieCodeColors = {PieCodeBossCog: None,
  PieCodeNotBossCog: (0.8,
                      0.8,

@@ -3,6 +3,7 @@ from direct.interval.IntervalGlobal import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.directnotify import DirectNotifyGlobal
 from . import DistributedBarrelBase
+from toontown.toontowngui.ButtonContainer import JellybeansGainButton
 
 class DistributedBeanBarrel(DistributedBarrelBase.DistributedBarrelBase):
 
@@ -30,3 +31,5 @@ class DistributedBeanBarrel(DistributedBarrelBase.DistributedBarrelBase):
 
     def setGrab(self, avId):
         DistributedBarrelBase.DistributedBarrelBase.setGrab(self, avId)
+        av = base.cr.doId2do[avId]
+        #av.testContainer.addButton(JellybeansGainButton, ["+" + str(self.rewardPerGrab) + " jellybeans"])

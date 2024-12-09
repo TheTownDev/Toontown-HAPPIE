@@ -3,7 +3,9 @@ from direct.distributed.ClockDelta import *
 from direct.distributed import DistributedObject
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase import BulletinBoardWatcher
+from direct.interval.IntervalGlobal import *
 from otp.otpbase import OTPGlobals
+from direct.gui import OnscreenText
 from toontown.toonbase.ToontownGlobals import *
 from toontown.toonbase import TTLocalizer
 from toontown.coghq import DistributedMintRoom, MintLayout, MintRoom
@@ -15,6 +17,11 @@ class DistributedMint(DistributedObject.DistributedObject):
 
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
+        self.titleColor = (1, 1, 1, 1)
+        self.titleText = OnscreenText.OnscreenText('', fg=self.titleColor, shadow=(0, 0, 0, 1),
+                                                   font=getSuitFont(), pos=(0, -0.5), scale=0.1,
+                                                   drawOrder=0, mayChange=1)
+        self.titleSequence = None
 
     def generate(self):
         self.notify.debug('generate: %s' % self.doId)
@@ -140,6 +147,29 @@ class DistributedMint(DistributedObject.DistributedObject):
             self.allRooms[roomNum].localToonFSM.request('present')
             self.curToonRoomNum = roomNum
         return
+
+    def showInfoText(self, text = 'hello world'):
+        description = text
+        if description and description != '':
+            self.titleText.setText(description)
+            self.titleText.setColor(Vec4(*self.titleColor))
+            self.titleText.setColorScale(1, 1, 1, 1)
+            self.titleText.setFg(self.titleColor)
+            if self.titleSequence:
+                self.titleSequence.finish()
+            self.titleSequence = None
+            self.titleSequence = Sequence(Func(self.showTitleText), Wait(3.1), LerpColorScaleInterval(self.titleText, duration=0.5, colorScale=Vec4(1, 1, 1, 0.0)), Func(self.hideTitleText))
+            self.titleSequence.start()
+        return
+
+    def showTitleText(self):
+        if self.titleText:
+            self.titleText.show()
+
+    def hideTitleText(self):
+        if self.titleText or 1:
+            self.titleText.hide()
+            self.titleText.setText('')
 
     def camEnterRoom(self, roomNum):
         self.notify.debug('camEnterRoom: %s' % roomNum)

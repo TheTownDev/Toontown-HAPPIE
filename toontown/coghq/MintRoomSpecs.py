@@ -48,6 +48,11 @@ from toontown.coghq.facility.cashbot.coin import tt_f_ara_mer_action00, tt_f_ara
 from toontown.coghq.facility.cashbot.coin import tt_f_ara_bcr_action00Cogs
 from toontown.coghq.facility.cashbot.coin import tt_f_ara_mvr_action00, tt_f_ara_mvr_action00Cogs
 from toontown.coghq.facility.cashbot.coin import tt_f_ara_mlr_action01, tt_f_ara_mlr_action01Cogs
+from toontown.coghq.facility.cashbot.coin import tt_f_ara_mpr_action01, tt_f_ara_mpr_action00Cogs, tt_f_ara_mpr_action01Cogs
+from toontown.coghq.facility.cashbot.coin import ttr_f_ara_mllr_action00, ttr_f_ara_mllr_action01, ttr_f_ara_mllr_action02
+
+from toontown.coghq.facility.cashbot.coin.auditor_rooms import tt_fb_ara_mvr_action00
+from toontown.coghq.facility.cashbot.coin.auditor_rooms import tt_fb_ara_mvr_action00Cogs
 
 def getMintRoomSpecModule(roomId):
     return CashbotMintSpecModules[roomId]
@@ -95,6 +100,11 @@ CashbotMintSpecModules = {
     104: tt_f_ara_mgr_action00,
     105: tt_f_ara_mlr_action01,
     106: tt_f_ara_mgr_action01,
+    107: tt_f_ara_mpr_action01,
+    108: tt_fb_ara_mvr_action00,
+    109: ttr_f_ara_mllr_action00,
+    110: ttr_f_ara_mllr_action01,
+    111: ttr_f_ara_mllr_action02
 }
 
 # Ok don't freak out. What we are doing here is grabbing the name of the module that we imported.
@@ -127,7 +137,9 @@ CogSpecModules = {
     'CashbotMintPipeRoom_Battle01': CashbotMintPipeRoom_Battle01_Cogs,
     'tt_f_ara_bcr_action00': tt_f_ara_bcr_action00Cogs,
     'tt_f_ara_mvr_action00': tt_f_ara_mvr_action00Cogs,
-    'tt_f_ara_mlr_action01': tt_f_ara_mlr_action01Cogs
+    'tt_f_ara_mlr_action01': tt_f_ara_mlr_action01Cogs,
+    'tt_f_ara_mpr_action01': tt_f_ara_mpr_action01Cogs,
+    'tt_fb_ara_mvr_action00': tt_fb_ara_mvr_action00Cogs
 }
 
 roomId2numBattles = {}

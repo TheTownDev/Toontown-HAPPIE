@@ -14,7 +14,7 @@ from toontown.battle import BattleParticles
 from panda3d.core import *
 from direct.interval.LerpInterval import LerpHprInterval
 from direct.interval.IntervalGlobal import *
-import json
+from toontown.content_pack import MusicManagerGlobals
 import random
 aspectSF = 0.7227
 
@@ -32,11 +32,9 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
             state = self.fsm.getStateNamed(stateName)
             state.addTransition('countryClubInterior')
         
-        fileSystem = VirtualFileSystem.getGlobalPtr()
         self.cogHQExteriorModelPath = 'phase_12/models/bossbotHQ/ttr_m_ara_bhq_bossbotCourtyard'
         self.cogHQLobbyModelPath = 'phase_12/models/bossbotHQ/ttr_m_ara_bhq_bossbotCountryClubLobby'
         self.musicFile = random.choice(['phase_12/audio/bgm/Bossbot_Entry_v1.ogg', 'phase_12/audio/bgm/Bossbot_Entry_v2.ogg', 'phase_12/audio/bgm/Bossbot_Entry_v3.ogg'])
-        self.musicJson = json.loads(fileSystem.readFile(ToontownGlobals.musicJsonFilePath, True))
         self.geom = None
         self.rain = None 
         self.rainRender = None
@@ -49,10 +47,6 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
     def load(self, zoneId):
         CogHQLoader.CogHQLoader.load(self, zoneId)
         Toon.loadBossbotHQAnims()
-        if str(zoneId) in self.musicJson['global_music']:
-            self.music = base.loader.loadMusic(self.musicJson['global_music'][str(zoneId)])
-        if (str(zoneId) + '_battle') in self.musicJson['global_music']:
-            self.battleMusic = base.loader.loadMusic(self.musicJson['global_music'][(str(zoneId) + '_battle')])
 
     def stopRain(self):
         if self.rain:
@@ -102,6 +96,10 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
         self.notify.debug('zoneId = %d ToontownGlobals.BossbotHQ=%d' % (zoneId, ToontownGlobals.BossbotHQ))
         if zoneId == ToontownGlobals.BossbotHQ:
             self.geom = loader.loadModel(self.cogHQExteriorModelPath)
+
+            self.musicCode = MusicManagerGlobals.GLOBALS[zoneId]['music']
+            self.battleMusicCode = MusicManagerGlobals.GLOBALS[zoneId]['battleMusic']
+
             gzLinkTunnel = self.geom.find('**/LinkTunnel1')
             gzLinkTunnel.setName('linktunnel_gz_17000_DNARoot')
             self.makeSigns()
@@ -115,6 +113,10 @@ class BossbotCogHQLoader(CogHQLoader.CogHQLoader):
                 self.notify.info('QA-REGRESSION: COGHQ: Visit BossbotLobby')
             self.notify.debug('cogHQLobbyModelPath = %s' % self.cogHQLobbyModelPath)
             self.geom = loader.loadModel(self.cogHQLobbyModelPath)
+
+            self.musicCode = MusicManagerGlobals.GLOBALS[zoneId]['music']
+            self.battleMusicCode = MusicManagerGlobals.GLOBALS[zoneId]['music']
+
             self.makeGeysers()
 
         else:

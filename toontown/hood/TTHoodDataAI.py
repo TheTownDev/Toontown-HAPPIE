@@ -8,7 +8,8 @@ from toontown.safezone import TTTreasurePlannerAI
 from toontown.safezone import ArchipelagoTreasurePlannerAI
 from toontown.safezone import DistributedArchiTreasureAI
 from toontown.safezone import ButterflyGlobals
-from toontown.safezone import DistributedBenchAI
+from toontown.safezone import DistributedBenchAI, DistributedDummyCogAI
+from toontown.safezone.ToontownCentralAction import GlobalEntities
 from panda3d.core import *
 from panda3d.toontown import *
 from direct.task import Task
@@ -21,6 +22,7 @@ class TTHoodDataAI(HoodDataAI.HoodDataAI):
         if zoneId == None:
             zoneId = hoodId
         HoodDataAI.HoodDataAI.__init__(self, air, zoneId, hoodId)
+        self.room = GlobalEntities
         return
 
     def startup(self):
@@ -40,6 +42,7 @@ class TTHoodDataAI(HoodDataAI.HoodDataAI):
             taskMgr.doMethodLater(0.5, self._deleteTrolley, 'deleteTrolley')
         messenger.send('TTHoodSpawned', [self])
         self.createBenches()
+
     
     def findAndCreateBenches(self, dnaGroup, zoneId, area, overrideDNAZone = 0, type = 'bench'):
         picnicTables = []

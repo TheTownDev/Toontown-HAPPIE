@@ -24,6 +24,7 @@ class SuitBase:
         self.isSkelecog = 0
         self.isGoldSkelecog = 0
         self.isImmune = 0
+        self.tenure = 0
         return
 
     def delete(self):
@@ -71,6 +72,9 @@ class SuitBase:
         else:
             self.maxHP = attributes.getBaseMaxHp(self.getActualLevel())
         self.currHP = self.maxHP
+
+        if self.dna.name in SuitDNA.supervisors:
+            self.tenure = 1
 
     def setGoldAttributes(self):
         attributes: SuitAttributes = SuitBattleGlobals.getSuitAttributes(self.dna.name)

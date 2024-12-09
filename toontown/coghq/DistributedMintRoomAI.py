@@ -19,6 +19,7 @@ class DistributedMintRoomAI(DistributedLevelAI.DistributedLevelAI, MintRoomBase.
         self.setRoomId(roomId)
         self.roomNum = roomNum
         self.mintDoId = mintDoId
+        self.stageDoId = mintDoId
         self.battleExpAggreg = battleExpAggreg
 
     def createEntityCreator(self):

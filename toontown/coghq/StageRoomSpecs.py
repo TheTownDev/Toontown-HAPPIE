@@ -36,7 +36,41 @@ from toontown.coghq import LawbotOfficeDiamondRoom_Battle01
 from toontown.coghq import LawbotOfficeGearRoom_Battle00
 from toontown.coghq import LawbotOfficeLavaRoomFoyer_Battle00
 from toontown.coghq import LawbotOfficeLobby_Battle00, LawbotOfficeLobby_Battle00_Cogs
+from toontown.coghq import LawbotOfficeBookRoom_Battle00, LawbotOfficeBookRoom_Battle00_Cogs
 
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dbr_action00
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_der_action00, tt_f_ara_der_action01, tt_f_ara_der_action02
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_ddr_action00, tt_f_ara_ddr_action01, tt_f_ara_ddr_action02, tt_f_ara_ddr_action04
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_delr_action00
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dlr_action00, tt_f_ara_dlr_action01
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dtr_action00, tt_f_ara_dtr_action01
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dgr_action00, tt_f_ara_dgr_action01, tt_f_ara_dgr_action02, tt_f_ara_dgr_action04, tt_f_ara_dgr_action05
+
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dbr_action00Cogs
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_der_action01Cogs, tt_f_ara_der_action02Cogs
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_ddr_action02Cogs, tt_f_ara_ddr_action04Cogs
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dlr_action00Cogs
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dtr_action00Cogs, tt_f_ara_dtr_action01Cogs
+from toontown.coghq.facility.lawbot.junior import tt_f_ara_dgr_action04Cogs, tt_f_ara_dgr_action05Cogs
+#JUNIOR WING ROOMS
+JUNIOR_BOOK_ROOM = 200 # tt_f_ara_dbr_action00
+JUNIOR_EVIDENCE_GOON_ROOM = 201 # tt_f_ara_der_action00
+JUNIOR_EVIDENCE_DOOM_ROOM = 202 # tt_f_ara_der_action01
+JUNIOR_EVIDENCE_SINGLE_ROOM = 203 # tt_f_ara_der_action02
+JUNIOR_DIAMOND_STOMPER_ROOM = 204 # tt_f_ara_ddr_action00
+JUNIOR_DIAMOND_GOON_ROOM = 205 # tt_f_ara_ddr_action01
+JUNIOR_DIAMOND_SINGLE_ROOM = 206 # tt_f_ara_ddr_action02
+JUNIOR_DIAMOND_DOOM_ROOM = 207 # tt_f_ara_ddr_action04
+JUNIOR_ENTRANCE_ROOM = 208 # tt_f_ara_delr_action00
+JUNIOR_TRAP_LOBBY_ROOM = 209 # tt_f_ara_dtr_action00
+JUNIOR_TRAP_DIAMOND_ROOM = 210 # tt_f_ara_dtr_action01
+JUNIOR_LOBBY_COGS = 211 # tt_f_ara_dlr_action00
+JUNIOR_LOBBY_CAMERAS = 212 # tt_f_ara_dlr_action01
+JUNIOR_BOX_GOON_ROOM = 213 # tt_f_ara_dgr_action00
+JUNIOR_BOX_PLATFORM_ROOM = 214 # tt_f_ara_dgr_action01
+JUNIOR_BOX_SECURITY_ROOM = 215 # tt_f_ara_dgr_action02
+JUNIOR_BOX_SINGLE_ROOM = 216 # tt_f_ara_dgr_action04
+JUNIOR_BOX_DOOM_ROOM = 217 # tt_f_ara_dgr_action05
 
 LawbotStageSpecModules = {
     0: LawbotOfficeEntrance_Action00,
@@ -61,7 +95,28 @@ LawbotStageSpecModules = {
     106: LawbotOfficeDiamondRoom_Battle01,
     107: LawbotOfficeBoilerRoom_Battle01,
     108: LawbotOfficeLavaRoomFoyer_Battle00,
-    109: LawbotOfficeLobby_Battle00
+    109: LawbotOfficeLobby_Battle00,
+    110: LawbotOfficeBookRoom_Battle00,
+
+    200: tt_f_ara_dbr_action00,
+    201: tt_f_ara_der_action00,
+    202: tt_f_ara_der_action01,
+    203: tt_f_ara_der_action02,
+    204: tt_f_ara_ddr_action00,
+    205: tt_f_ara_ddr_action01,
+    206: tt_f_ara_ddr_action02,
+    207: tt_f_ara_ddr_action04,
+    208: tt_f_ara_delr_action00,
+    209: tt_f_ara_dtr_action00,
+    210: tt_f_ara_dtr_action01,
+    211: tt_f_ara_dlr_action00,
+    212: tt_f_ara_dlr_action01,
+    213: tt_f_ara_dgr_action00,
+    214: tt_f_ara_dgr_action01,
+    215: tt_f_ara_dgr_action02,
+    216: tt_f_ara_dgr_action04,
+    217: tt_f_ara_dgr_action05
+
 }
 
 # Ok don't freak out. What we are doing here is grabbing the name of the module that we imported.
@@ -82,7 +137,18 @@ CogSpecModules = {
     'LawbotOfficeDiamondRoom_Battle01': LawbotOfficeDiamondRoom_Battle01_Cogs,
     'LawbotOfficeBoilerRoom_Battle01': LawbotOfficeBoilerRoom_Battle01_Cogs,
     'LawbotOfficeLavaRoomFoyer_Battle00': LawbotOfficeLavaRoomFoyer_Battle00_Cogs,
-    'LawbotOfficeLobby_Battle00': LawbotOfficeLobby_Battle00_Cogs
+    'LawbotOfficeLobby_Battle00': LawbotOfficeLobby_Battle00_Cogs,
+    'LawbotOfficeBookRoom_Battle00': LawbotOfficeBookRoom_Battle00_Cogs,
+    'tt_f_ara_dbr_action00': tt_f_ara_dbr_action00Cogs,
+    'tt_f_ara_der_action01': tt_f_ara_der_action01Cogs,
+    'tt_f_ara_der_action02': tt_f_ara_der_action02Cogs,
+    'tt_f_ara_ddr_action02': tt_f_ara_ddr_action02Cogs,
+    'tt_f_ara_ddr_action04': tt_f_ara_ddr_action04Cogs,
+    'tt_f_ara_dtr_action00': tt_f_ara_dtr_action00Cogs,
+    'tt_f_ara_dtr_action01': tt_f_ara_dtr_action01Cogs,
+    'tt_f_ara_dgr_action04': tt_f_ara_dgr_action04Cogs,
+    'tt_f_ara_dgr_action05': tt_f_ara_dgr_action05Cogs
+
 }
 
 

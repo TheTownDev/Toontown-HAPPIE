@@ -265,33 +265,23 @@ class BattleCalculatorAI:
         ret = []
         return ret
 
-    def __createToonTargetList(self, attackIndex):
-        attack = self.battle.toonAttacks[attackIndex]
-        atkTrack, atkLevel = self.__getActualTrackLevel(attack)
-        atkOwner = attack[TOON_ID_COL]
+    def __createToonTargetList(self, attack_index):
+        attack_details = self.battle.toonAttacks[attack_index]
+        track, level = self.__getActualTrackLevel(attack_details)
+        owner_id = attack_details[TOON_ID_COL]
 
-        if atkTrack == NPCSOS:
+        if track == NPCSOS:
             return []
 
-        # If this attack is a group attack figure out if we are affecting all suits or all toons
-        if attackAffectsGroup(atkTrack, atkLevel, attack[TOON_TRACK_COL]):
-            # Heal gags target all the toons as long as they are not enemies
-            if atkTrack in (HEAL, PETSOS):
+        if attackAffectsGroup(track, level, attack_details[TOON_TRACK_COL]):
+            if track in (HEAL, PETSOS):
                 return self.battle.activeToons
-
-            # Everything else targets all the suits
             return self.battle.activeSuits
 
-        # At this point we have a specific target
-        if atkTrack == HEAL:
-            target = attack[TOON_TGT_COL]
-        else:
-            target = self.battle.findSuit(attack[TOON_TGT_COL])
+        target_id = attack_details[TOON_TGT_COL]
+        target = target_id if track == HEAL else self.battle.findSuit(target_id)
 
-        if target is not None:
-            return [target]
-
-        return []
+        return [target] if target is not None else []
 
     def __prevAtkTrack(self, attackerId, toon=1):
         if toon:
@@ -539,7 +529,10 @@ class BattleCalculatorAI:
                             print('Not enough PinkSlips to fire cog - print a warning here')
                         else:
                             suit.skeleRevives = 0
-                            attackDamage = suit.getHP()
+                            if suit.dna.name in SuitDNA.supervisors:
+                                attackDamage = 0
+                            else:
+                                attackDamage = suit.getHP()
                     else:
                         attackDamage = 0
                     bonus = 0
@@ -664,65 +657,45 @@ class BattleCalculatorAI:
             self.notify.debug('ACC BONUS: toon attack received accuracy ' + 'bonus of ' + str(self.AccuracyBonuses[numPrevHits]) + ' from previous attack by (' + str(attack[TOON_ID_COL]) + ') which hit')
         return self.AccuracyBonuses[numPrevHits]
 
-    def __applyToonAttackDamages(self, toonId, hpbonus = 0, kbbonus = 0):
+    def __applyToonAttackDamages(self, toonId, hpBonus=False, kbBonus=False):
         totalDamages = 0
         if not self.APPLY_HEALTH_ADJUSTMENTS:
             return totalDamages
         attack = self.battle.toonAttacks[toonId]
         track = self.__getActualTrack(attack)
-        if track != NO_ATTACK and track != SOS and track != TRAP and track != NPCSOS:
+        if track not in (NO_ATTACK, SOS, TRAP, NPCSOS):
             targets = self.__getToonTargets(attack)
             for position in range(len(targets)):
-                if hpbonus:
-                    if targets[position] in self.__createToonTargetList(toonId):
-                        damageDone = attack[TOON_HPBONUS_COL]
-                    else:
-                        damageDone = 0
-                elif kbbonus:
-                    if targets[position] in self.__createToonTargetList(toonId):
-                        damageDone = attack[TOON_KBBONUS_COL][position]
-                    else:
-                        damageDone = 0
+                if hpBonus:
+                    damageDone = attack[TOON_HPBONUS_COL] if targets[position] in self.__createToonTargetList(toonId) else 0
+                elif kbBonus:
+                    damageDone = attack[TOON_KBBONUS_COL][position] if targets[position] in self.__createToonTargetList(toonId) else 0
                 else:
                     damageDone = attack[TOON_HP_COL][position]
                 if damageDone <= 0 or self.immortalSuits:
                     continue
                 if track == HEAL or track == PETSOS:
-                    currTarget = targets[position]
                     if self.CAP_HEALS:
-                        toonHp = self.__getToonHp(currTarget)
-                        toonMaxHp = self.__getToonMaxHp(currTarget)
+                        toonHp = self.__getToonHp(targets[position])
+                        toonMaxHp = self.__getToonMaxHp(targets[position])
                         if toonHp + damageDone > toonMaxHp:
                             damageDone = toonMaxHp - toonHp
                             attack[TOON_HP_COL][position] = damageDone
-                    self.toonHPAdjusts[currTarget] += damageDone
-                    totalDamages = totalDamages + damageDone
+                    self.toonHPAdjusts[targets[position]] += damageDone
+                    totalDamages += damageDone
                     continue
                 currTarget = targets[position]
-                currentlyImmuneSuits = self.getImmuneSuits()
-                if currTarget.getImmuneStatus() == 1:
+                if currTarget.getImmuneStatus():
                     currTarget.setHP(currTarget.getHP())
                 else:
                     currTarget.setHP(currTarget.getHP() - damageDone)
-                targetId = currTarget.getDoId()
-                if self.notify.getDebug():
-                    if hpbonus:
-                        self.notify.debug(str(targetId) + ': suit takes ' + str(damageDone) + ' damage from HP-Bonus')
-                    elif kbbonus:
-                        self.notify.debug(str(targetId) + ': suit takes ' + str(damageDone) + ' damage from KB-Bonus')
-                    else:
-                        self.notify.debug(str(targetId) + ': suit takes ' + str(damageDone) + ' damage')
-                totalDamages = totalDamages + damageDone
                 if currTarget.getHP() <= 0:
                     if currTarget.getSkeleRevives() >= 1:
                         currTarget.useSkeleRevive()
-                        attack[SUIT_REVIVE_COL] = attack[SUIT_REVIVE_COL] | 1 << position
+                        attack[SUIT_REVIVE_COL] |= 1 << position
                     else:
-                        self.suitLeftBattle(targetId)
-                        attack[SUIT_DIED_COL] = attack[SUIT_DIED_COL] | 1 << position
-                        if self.notify.getDebug():
-                            self.notify.debug('Suit' + str(targetId) + 'bravely expired in combat')
-
+                        self.suitLeftBattle(currTarget.getDoId())
+                        attack[SUIT_DIED_COL] |= 1 << position
         return totalDamages
 
     def __combatantDead(self, avId, toon):
@@ -846,50 +819,33 @@ class BattleCalculatorAI:
             return 1
         return 0
 
-    def __processBonuses(self, hp=1):
-        if hp:
-            bonusList = self.hpBonuses
-            self.notify.debug('Processing hpBonuses: ' + repr(self.hpBonuses))
-        else:
-            bonusList = self.kbBonuses
-            self.notify.debug('Processing kbBonuses: ' + repr(self.kbBonuses))
-        tgtPos = 0
-        for currTgt in bonusList:
-            for currAtkType in list(currTgt.keys()):
-                if len(currTgt[currAtkType]) > 1 or not hp and len(currTgt[currAtkType]) > 0:
-                    totalDmgs = 0
-                    for currDmg in currTgt[currAtkType]:
-                        totalDmgs += currDmg[1]
+    def __processBonuses(self, hp=True):
+        bonuses = self.hpBonuses if hp else self.kbBonuses
+        targetPosition = 0
 
-                    numDmgs = len(currTgt[currAtkType])
-                    attackIdx = currTgt[currAtkType][numDmgs - 1][0]
-                    attackerId = self.toonAtkOrder[attackIdx]
-                    toon = self.battle.getToon(attackerId)
+        for targetBonuses in bonuses:
+            for attackType, attacks in targetBonuses.items():
+                if len(attacks) > 1 or (not hp and len(attacks) > 0):
+                    totalDamage = sum(attack[1] for attack in attacks)
+                    numAttacks = len(attacks)
+                    lastAttackIndex = attacks[-1][0]
+                    attackerId = self.toonAtkOrder[lastAttackIndex]
                     attack = self.battle.toonAttacks[attackerId]
+
                     if hp:
-                        suit = self.battle.activeSuits[tgtPos]
-                        attack[TOON_HPBONUS_COL] = math.ceil(suit.getActualLevel() * numDmgs)
-                        #attack[TOON_HPBONUS_COL] = math.ceil(totalDmgs * (self.DamageBonuses[numDmgs - 1] * 0.01))
-                        if self.notify.getDebug():
-                            self.notify.debug('Applying hp bonus to track ' + str(attack[TOON_TRACK_COL]) + ' of ' + str(attack[TOON_HPBONUS_COL]))
-                    elif len(attack[TOON_KBBONUS_COL]) > tgtPos:
-                        luredSuit = self.battle.activeSuits[tgtPos]
-                        luredLevelInfo = self.currentlyLuredSuits[luredSuit.doId][4]
-                        luredLevelToon = self.currentlyLuredSuits[luredSuit.doId][5]
-                        luredLevelDamage = self.currentlyLuredSuits[luredSuit.doId][6]
-                        lurerToon = self.battle.getToon(luredLevelToon)
-                        attack[TOON_KBBONUS_COL][tgtPos] = math.ceil(luredLevelDamage * numDmgs)
-                        if self.notify.getDebug():
-                            self.notify.debug('Applying kb bonus to track ' + str(attack[TOON_TRACK_COL]) + ' of ' + str(attack[TOON_KBBONUS_COL][tgtPos]) + ' to target ' + str(tgtPos))
+                        suit = self.battle.activeSuits[targetPosition]
+                        attack[TOON_HPBONUS_COL] = math.ceil(suit.getActualLevel() * numAttacks)
+                    elif len(attack[TOON_KBBONUS_COL]) > targetPosition:
+                        luredSuit = self.battle.activeSuits[targetPosition]
+                        luredData = self.currentlyLuredSuits[luredSuit.doId]
+                        luredLevelDamage = luredData[6]
+                        attack[TOON_KBBONUS_COL][targetPosition] = math.ceil(luredLevelDamage * numAttacks)
                     else:
-                        self.notify.warning('invalid tgtPos for knock back bonus: %d' % tgtPos)
+                        self.notify.warning('Invalid target position for knockback bonus: %d' % targetPosition)
 
-            tgtPos += 1
+            targetPosition += 1
 
-        if hp:
-            self.__clearBonuses()
-        else:
-            self.__clearBonuses(hp=0)
+        self.__clearBonuses(hp=hp)
 
     def __handleBonus(self, attackIdx, hp=1):
         attackerId = self.toonAtkOrder[attackIdx]
@@ -1003,9 +959,9 @@ class BattleCalculatorAI:
                         attack = self.battle.toonAttacks[currToonAttack]
                         atkTrack, atkLevel = self.__getActualTrackLevel(attack)
                 damagesDone = self.__applyToonAttackDamages(currToonAttack)
-                self.__applyToonAttackDamages(currToonAttack, hpbonus=1)
+                self.__applyToonAttackDamages(currToonAttack, hpBonus=1)
                 if atkTrack != LURE and atkTrack != DROP and atkTrack != SOUND:
-                    self.__applyToonAttackDamages(currToonAttack, kbbonus=1)
+                    self.__applyToonAttackDamages(currToonAttack, kbBonus=1)
                 if lastTrack != atkTrack:
                     lastAttacks = []
                     lastTrack = atkTrack
@@ -1320,52 +1276,32 @@ class BattleCalculatorAI:
         self.notify.debug('\n')
 
     def __calculateSuitAttacks(self):
-        for i in range(len(self.battle.suitAttacks)):
-            if i < len(self.battle.activeSuits):
-                suitId = self.battle.activeSuits[i].doId
-                self.battle.suitAttacks[i][SUIT_ID_COL] = suitId
-                if not self.__suitCanAttack(suitId):
-                    if self.notify.getDebug():
-                        self.notify.debug("Suit %d can't attack" % suitId)
-                    continue
-                if self.battle.pendingSuits.count(self.battle.activeSuits[i]) > 0 or self.battle.joiningSuits.count(self.battle.activeSuits[i]) > 0:
-                    continue
+        for i, suit in enumerate(self.battle.activeSuits):
+            if self.battle.pendingSuits.count(suit) > 0 or self.battle.joiningSuits.count(suit) > 0:
+                continue
+            attack = self.battle.suitAttacks[i]
+            attack[SUIT_ID_COL] = suit.doId
+            if not self.__suitCanAttack(suit.doId):
+                self.battle.suitAttacks[i] = getDefaultSuitAttack()
                 attack = self.battle.suitAttacks[i]
-                attack[SUIT_ID_COL] = self.battle.activeSuits[i].doId
-                attack[SUIT_ATK_COL] = self.__calcSuitAtkType(i)
-                attack[SUIT_TGT_COL] = self.__calcSuitTarget(i)
-                if attack[SUIT_TGT_COL] == -1:
-                    self.battle.suitAttacks[i] = getDefaultSuitAttack()
-                    attack = self.battle.suitAttacks[i]
-                    self.notify.debug('clearing suit attack, no avail targets')
-                self.__calcSuitAtkHp(i)
-                if attack[SUIT_ATK_COL] != SuitAttackType.NO_ATTACK:
-                    if self.__suitAtkAffectsGroup(attack):
-                        for currTgt in self.battle.activeToons:
-                            self.__updateSuitAtkStat(currTgt)
-
-                    else:
-                        tgtId = self.battle.activeToons[attack[SUIT_TGT_COL]]
-                        self.__updateSuitAtkStat(tgtId)
-                targets = self.__createSuitTargetList(i)
-                allTargetsDead = 1
-                for currTgt in targets:
-                    if self.__getToonHp(currTgt) > 0:
-                        allTargetsDead = 0
-                        break
-
-                if allTargetsDead:
-                    self.battle.suitAttacks[i] = getDefaultSuitAttack()
-                    if self.notify.getDebug():
-                        self.notify.debug('clearing suit attack, targets dead')
-                        self.notify.debug('suit attack is now ' + repr(self.battle.suitAttacks[i]))
-                        self.notify.debug('all attacks: ' + repr(self.battle.suitAttacks))
-                    attack = self.battle.suitAttacks[i]
-                if self.__attackHasHit(attack, suit=1):
-                    self.__applySuitAttackDamages(i)
-                if self.notify.getDebug():
-                    self.notify.debug('Suit attack: ' + str(self.battle.suitAttacks[i]))
-                attack[SUIT_BEFORE_TOONS_COL] = 0
+                self.notify.debug('clearing suit attack, can\'t attack')
+                continue
+            attack[SUIT_ATK_COL] = self.__calcSuitAtkType(i)
+            attack[SUIT_TGT_COL] = self.__calcSuitTarget(i)
+            if attack[SUIT_TGT_COL] == -1:
+                self.battle.suitAttacks[i] = getDefaultSuitAttack()
+                attack = self.battle.suitAttacks[i]
+                self.notify.debug('clearing suit attack, no avail targets')
+                continue
+            self.__calcSuitAtkHp(i)
+            if attack[SUIT_ATK_COL] != SuitAttackType.NO_ATTACK:
+                if self.__suitAtkAffectsGroup(attack):
+                    for currTgt in self.battle.activeToons:
+                        self.__updateSuitAtkStat(currTgt)
+                else:
+                    self.__updateSuitAtkStat(self.battle.activeToons[attack[SUIT_TGT_COL]])
+            if self.__attackHasHit(attack, suit=1):
+                self.__applySuitAttackDamages(i)
 
     def __updateLureTimeouts(self):
         if self.notify.getDebug():
@@ -1550,6 +1486,10 @@ class BattleCalculatorAI:
         
         self.__calculateSuitAttacks()
 
+        for suit in self.battle.activeSuits:
+            if suit.dna.name == THE_MINT_AUDITOR and not self.supervisorCutscenePlayed:
+                self.battle.cutscenesFirst.append([3, suit.doId, [0,], [], 0])
+                self.supervisorCutscenePlayed = True
 
         # buildASuitAttack goes here! :)
         """

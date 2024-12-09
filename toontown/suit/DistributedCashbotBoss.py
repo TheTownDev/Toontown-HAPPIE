@@ -27,7 +27,6 @@ from panda3d.core import *
 from panda3d.physics import *
 from panda3d.direct import *
 from libotp import *
-from direct.actor.Actor import Actor
 import random
 import math
 import json
@@ -74,8 +73,6 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         
         self.latency = 0.5 #default latency for updating object posHpr
         self.toonSpawnpointOrder = [i for i in range(8)]
-        fileSystem = VirtualFileSystem.getGlobalPtr()
-        self.musicJson = json.loads(fileSystem.readFile(ToontownGlobals.musicJsonFilePath, True))
         return
 
     def setToonSpawnpoints(self, order):
@@ -234,8 +231,6 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.__cleanupResistanceToon()
         self.fnp.removeNode()
         self.physicsMgr.clearLinearForces()
-        self.battleThreeMusic.stop()
-        self.epilogueMusic.stop()
         localAvatar.chatMgr.chatInputSpeedChat.removeCFOMenu()
         self.heatDisplay.cleanup()
         if OneBossCog == self:
@@ -345,8 +340,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
 
     def loadEnvironment(self):
         DistributedBossCog.DistributedBossCog.loadEnvironment(self)
-        self.midVault = loader.loadModel('phase_10/models/cashbotHQ/ttr_m_ara_chq_bossMidVault.bam')
-        self.endVault = loader.loadModel('phase_10/models/cashbotHQ/ttr_m_ara_chq_bossEndVault.bam')
+        self.midVault = loader.loadModel('phase_10/models/cogHQ/MidVault.bam')
+        self.endVault = loader.loadModel('phase_10/models/cogHQ/EndVault.bam')
         self.lightning = loader.loadModel('phase_10/models/cogHQ/CBLightning.bam')
         self.magnet = loader.loadModel('phase_10/models/cogHQ/CBMagnet.bam')
         self.craneArm = loader.loadModel('phase_10/models/cogHQ/CBCraneArm.bam')
@@ -355,28 +350,11 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.safe = loader.loadModel('phase_10/models/cogHQ/CBSafe.bam')
         self.eyes = loader.loadModel('phase_10/models/cogHQ/CashBotBossEyes.bam')
         self.cableTex = self.craneArm.findTexture('MagnetControl')
-        
-        self.battleThreeMusic = loader.loadMusic('phase_10/audio/bgm/ttr_s_ara_chq_crane.ogg')
-        
-        self.neck.hide()
-        
-        self.bossHead = Actor('phase_10/models/cashbotHQ/cashbotBoss-head-zero.bam', {'grunt': 'phase_10/models/cashbotHQ/cashbotBoss-head-grunt.bam',
-                                                                                      'neutral': 'phase_10/models/cashbotHQ/cashbotBoss-head-neutral.bam',
-                                                                                      'murmur': 'phase_10/models/cashbotHQ/cashbotBoss-head-murmur.bam',
-                                                                                      'stun-into': 'phase_10/models/cashbotHQ/cashbotBoss-head-stun-into.bam',
-                                                                                      'stun-out': 'phase_10/models/cashbotHQ/cashbotBoss-head-stun-out.bam',
-                                                                                      'stun-loop': 'phase_10/models/cashbotHQ/cashbotBoss-head-stun-loop.bam'})
-        self.bossHead.reparentTo(self.find('**/joint34'))
-        self.bossHead.loop('neutral')
-        self.bossHead.setBlend(frameBlend=True)
-        self.bossHead.setX(-0.54)
-        self.pelvis.setSx(0.8)
-        self.getGeomNode().setTwoSided(1)
-        self.neck = self.bossHead
+
         # Get the eyes ready for putting outside the helmet.
-        #self.eyes.setPosHprScale(4.5, 0, -2.5, 90, 90, 0, 0.4, 0.4, 0.4)
-        #self.eyes.reparentTo(self.neck)
-        #self.eyes.hide()
+        self.eyes.setPosHprScale(4.5, 0, -2.5, 90, 90, 0, 0.4, 0.4, 0.4)
+        self.eyes.reparentTo(self.neck)
+        self.eyes.hide()
 
         # Position the two rooms relative to each other, and so that
         # the floor is at z == 0
@@ -611,12 +589,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                             
                             #Close-up of the CFO...
                             Func(self.setChatAbsolute, TTL.CashbotBossDiscoverToons1, CFSpeech),
-                            ActorInterval(self.bossHead, 'question'),
-                            Func(self.bossHead.loop, 'neutral'),
                             camera.posHprInterval(1.5, Point3(93.3, -230, 0.7), VBase3(-92.9, 39.7, 8.3)),
                             Func(self.setChatAbsolute, TTL.CashbotBossDiscoverToons2, CFSpeech),
-                            ActorInterval(self.bossHead, 'grunt'),
-                            Func(self.bossHead.loop, 'neutral'),
                             Wait(4),
                             
                             # Cut to toons losing their cog suits.
@@ -649,8 +623,6 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                                     Func(rToon.clearChat),
                                     Func(camera.setPosHpr, 93.3, -230, 0.7, -92.9, 39.7, 8.3),
                                     Func(self.setChatAbsolute, attackToons, CFSpeech),
-                                    ActorInterval(self.bossHead, 'grunt'),
-                                    Func(self.bossHead.loop, 'neutral'),
                                     Wait(2),
                                     Func(self.clearChat))
 		
@@ -1112,13 +1084,10 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.midVault.unstash()
         self.__showResistanceToon(True)
         
-        base.playMusic(self.stingMusic, looping=1, volume=0.9)
-        
         DistributedBossCog.DistributedBossCog.enterIntroduction(self)
 
     def exitIntroduction(self):
         DistributedBossCog.DistributedBossCog.exitIntroduction(self)
-        self.stingMusic.stop()
 
     ##### BattleOne state #####
     def enterBattleOne(self):
@@ -1169,6 +1138,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.__showResistanceToon(False)
         
         taskMgr.add(self.__doPhysics, self.uniqueName('physics'), priority=25)
+        self.playBossMusic('battle-pre-three')
 
     def __beginBattleThree(self):
         intervalName = 'PrepareBattleThreeMovie'
@@ -1234,8 +1204,6 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.generateHealthBar()
         self.updateHealthBar()
         
-        base.playMusic(self.battleThreeMusic, looping=1, volume=0.9)
-        
         # It is important to make sure this task runs immediately
         # before the collisionLoop of ShowBase.  That will fix up the
         # z value of the safes, etc., before their position is
@@ -1260,6 +1228,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
 
         # Setup the scoreboard
         self.resetAndShowScoreboard()
+
+        self.playBossMusic('battle-three')
 
     def saySomething(self, chatString):
         intervalName = 'CFOTaunt'
@@ -1288,8 +1258,6 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.setDizzy(0)
         self.removeHealthBar()
         localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
-        if self.newState != 'Victory':
-            self.battleThreeMusic.stop()
         taskMgr.remove(self.uniqueName('physics'))
 
     ##### Victory state #####
@@ -1331,10 +1299,11 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         seq.setPlayRate(3.0)
         self.storeInterval(seq, intervalName)
         self.bossHealthBar.deinitialize()
-        if self.oldState != 'BattleThree':
-            base.playMusic(self.battleThreeMusic, looping=1, volume=0.9)
+
         self.bossSpeedrunTimer.stop_updating()
         self.__showSpectators()
+
+        self.playBossMusic('defeated')
 
     def __continueVictory(self):
         # Ok, he's gone!  We all move to the reward movie.
@@ -1352,9 +1321,6 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.__showToons()
         
         self.door3.setPos(0, 0, 0)
-        
-        if self.newState != 'Reward':
-            self.battleThreeMusic.stop()
 
     ##### Reward state #####
     def enterReward(self):
@@ -1383,8 +1349,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         ival.delayDeletes = delayDeletes
         ival.start()
         self.storeInterval(ival, intervalName)
-        if self.oldState != 'Victory':
-            base.playMusic(self.battleThreeMusic, looping=1, volume=0.9)
+        self.playBossMusic('dance')
 
     def __doneReward(self):
         self.doneBarrier('Reward')
@@ -1398,8 +1363,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.unstash()
         self.rewardPanel.destroy()
         del self.rewardPanel
-        self.battleThreeMusic.stop()
-        
+
     ##### Epilogue state #####
     def enterEpilogue(self):
         assert self.notify.debug('enterEpilogue()')
@@ -1461,7 +1425,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.accept("nextChatPage", self.__epilogueChatNext)
         self.accept("doneChatPage", self.__epilogueChatDone)
 
-        base.playMusic(self.epilogueMusic, looping=1, volume=0.9)
+        self.playBossMusic('victory')
+
 
     def __epilogueChatNext(self, pageNumber, elapsed):
         if pageNumber == 1:
@@ -1504,7 +1469,6 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
     def exitEpilogue(self):
         self.clearInterval('EpilogueMovieToonAnim')
         self.unstash()
-        self.epilogueMusic.stop()
         
 
     ##### Frolic state #####

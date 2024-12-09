@@ -16,11 +16,11 @@ place_model "phase_8/models/modules/trolley_station_DL" [
 place_model "phase_8/models/modules/ttr_m_ara_ddl_gagShop" [
 	store_node [ "toon_landmark" "toon_landmark_DL_gag_shop" "" ]
         ]
-place_model "phase_8/models/modules/PetShopExterior_DL" [
+place_model "phase_8/models/modules/ttr_m_ara_ddl_petShop" [
 	store_node [ "toon_landmark" "toon_landmark_DL_pet_shop" "" ]
         ]
 
-place_model "phase_8/models/modules/clothshopDL" [
+place_model "phase_8/models/modules/ttr_m_ara_ddl_clothesShop" [
 	store_node [ "toon_landmark" "toon_landmark_DL_clothes_shop" "" ]
         ]
 

@@ -241,6 +241,8 @@ def __throwPie(throw, delay, hitCount, showCannon = 1):
      died))
     pieName = pieNames[0]
     hitSuit = hp > 0
+    if not hitSuit:
+        showCannon = 0
     button = globalPropPool.getProp('button')
     buttonType = globalPropPool.getPropType('button')
     button2 = MovieUtil.copyProp(button)

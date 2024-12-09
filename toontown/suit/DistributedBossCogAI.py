@@ -656,7 +656,7 @@ class DistributedBossCogAI(DistributedAvatarAI.DistributedAvatarAI):
                 if skelecog == 2:
                     suit.b_setVirtual(1)
                 elif skelecog == 3:
-                    suit.b_setGoldSkelecog(1)
+                    suit.b_setSkelecog(1)
                 else:
                     suit.b_setSkelecog(1)
 
@@ -665,7 +665,7 @@ class DistributedBossCogAI(DistributedAvatarAI.DistributedAvatarAI):
                 if skelecog == 2:
                     suit.b_setVirtual(1)
                 elif skelecog == 3:
-                    suit.b_setGoldSkelecog(1)
+                    suit.b_setSkelecog(1)
                 else:
                     suit.b_setSkelecog(1)
         if reviveChance != 0:

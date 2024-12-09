@@ -10,6 +10,7 @@ from toontown.battle.SuitBattleGlobals import *
 from toontown.toonbase.ToontownBattleGlobals import *
 from direct.gui.DirectGui import *
 from direct.showbase.MessengerGlobal import messenger
+from toontown.toontowngui.ButtonContainer import ButtonContainer, GoldSkelecogButton, LureStatusButton
 
 
 class TownBattleSuitPanel(DirectFrame):
@@ -22,6 +23,17 @@ class TownBattleSuitPanel(DirectFrame):
         self.hpText = DirectLabel(parent=self, text='', pos=(-0.06, 0, -0.0325), text_scale=0.045)
         self.setScale(0.8)
         self.initialiseoptions(TownBattleSuitPanel)
+
+        self.testContainer = ButtonContainer()
+        self.testContainer.containerNode.reparentTo(self)
+        self.testContainer.containerNode.setX(0.33)
+        self.testContainer.containerNode.setZ(-.11)
+        self.testContainer.containerNode.hide()
+        self.testContainer.containerNode.setScale(0.6)
+
+        self.statusIconsIn = {
+            'gold_skelecog': 0,
+        }
 
         if not base.colorBlindMode:
             self.healthColors = Suit.healthColors
@@ -75,6 +87,7 @@ class TownBattleSuitPanel(DirectFrame):
         self.head = None
         self.chooseCogPanelDoneEvent = 'choose-cog-panel-done'
         self.hide()
+
         healthGui.removeNode()
         gui.removeNode()
 
@@ -98,6 +111,20 @@ class TownBattleSuitPanel(DirectFrame):
         self.head.setPosHprScale(0.1, 0, 0.01, 180, 0, 0, s, s, s)
         self.setLevelText(cog)
 
+        self.resetStatusEffectVisuals()
+
+    def resetStatusEffectVisuals(self):
+        for button in self.testContainer.buttonList:
+            button.cleanup()
+        self.testContainer.buttonList = []
+
+        if self.cog.isGoldSkelecog:
+            self.testContainer.addButton(GoldSkelecogButton)
+
+        if self.cog.lureLevel:
+            statusString = '(' + str(self.cog.lureRounds) + '): ' + "Can't attack. Will take " + str(self.cog.lureKB) + " knockback damage with THROW/SQUIRT."
+            self.testContainer.addButton(LureStatusButton, [statusString])
+
     def setLevelText(self, cog):
         if cog.getSkeleRevives() > 0:
             self.healthText['text'] = TTLocalizer.TownBattleSuitLevelAndRevive % {
@@ -118,15 +145,7 @@ class TownBattleSuitPanel(DirectFrame):
         messenger.send(self.chooseCogPanelDoneEvent, [doneStatus])
 
     def handleCogStatusSelect(self):
-        statusString = self.cog._name + ':\n'
-
-        if self.cog.isGoldSkelecog:
-            statusString += 'GOLD: HP is equal to a cog two levels above.\n'
-
-        if self.cog.lureLevel:
-            statusString += 'LURED' + '(' + str(self.cog.lureRounds) + '): ' + "Can't attack. Will take " + str(self.cog.lureKB) + " knockback damage with THROW/SQUIRT."
-
-        base.localAvatar.setSystemMessage(0, statusString)
+        self.resetStatusEffectVisuals()
 
     def updateHealthBar(self):
 
@@ -162,6 +181,7 @@ class TownBattleSuitPanel(DirectFrame):
         self.healthNode.show()
         self.button.show()
         self.glow.show()
+        self.testContainer.containerNode.show()
         #self.cogStatusButton.place()
         DirectFrame.show(self)
 
@@ -197,6 +217,7 @@ class TownBattleSuitPanel(DirectFrame):
         self.healthNode.hide()
         self.button.hide()
         self.glow.hide()
+        self.testContainer.containerNode.hide()
         DirectFrame.hide(self)
 
     def unload(self):
@@ -208,6 +229,10 @@ class TownBattleSuitPanel(DirectFrame):
         del self.cog
         del self.button
         del self.hpText
+
+        if self.testContainer:
+            del self.testContainer
+
         DirectFrame.destroy(self)
 
     def cleanup(self):
@@ -215,6 +240,8 @@ class TownBattleSuitPanel(DirectFrame):
         if self.head:
             self.head.removeNode()
             del self.head
+
+        self.testContainer.cleanup()
 
         taskMgr.remove(self.uniqueName('blink-task'))
 

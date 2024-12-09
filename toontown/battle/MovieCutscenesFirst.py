@@ -25,6 +25,8 @@ def doScene(scene, battle):
         return doNothing(scene, battle)
     if scene[0] == 2:
         return doForemanIntro(scene, battle)
+    if scene[0] == 3:
+        return doAuditorCutscene(scene, battle)
 
 def doNothing(scene, battle):
     return ("InsertSuitTrack", "InsertCamTrack")
@@ -54,4 +56,49 @@ def doForemanIntro(scene, battle):
     
     cameraTrack = Sequence(Wait(movie.duration))
     
+    return (movie, cameraTrack)
+
+
+def doAuditorCutscene(scene, battle):
+    foreman = battle.findSuit(scene[1])
+
+    camera.setPos(0, 0, 10)
+    camera.setHpr(0, 0, 0)
+    base.camLens.setFov(BattleCamDefaultFov - 17)
+
+
+    mintAuditorCameraPos = Point3(6.57, -18.26, 6.44)
+    mintAuditorCameraHpr = Vec3(20.56, 0, 0.00)
+
+    regularCogs = []
+    regularCogWalking = Parallel()
+    for suit in battle.activeSuits:
+        if suit != foreman:
+            regularCogs.append(suit)
+            destPos, destHpr = battle.getActorPosHpr(suit, battle.suits)
+            suit.setH(suit.getH() + 180)
+            cogHprLerp = LerpHprInterval(suit, 3, destHpr,
+                                             blendType='easeOut',
+                                             other=battle, name='hprCamera')
+            cogWaling = Parallel(Wait(0.25), Func(suit.loop, 'walk'), cogHprLerp, Sequence(Wait(3.25), Func(suit.loop, 'neutral')))
+            regularCogWalking.append(cogWaling)
+        else:
+            destPos, destHpr = battle.getActorPosHpr(suit, battle.suits)
+            foreman.setY(destPos[1] + -0.1)
+
+    cameraLerp1 = LerpPosHprInterval(camera, 6, Point3(0, -27.48, 7.88), Vec3(0, 0, 0.00), blendType='easeInOut',
+                                     other=battle, name='poshprCamera')
+
+    cameraTrack = Sequence(Func(camera.reparentTo, battle), Wait(1.0), cameraLerp1, Wait(2.0), Func(base.camLens.setFov, BattleCamDefaultFov),Func(camera.setPos, mintAuditorCameraPos),  Func(camera.setHpr, mintAuditorCameraHpr), Wait(14.5))
+
+    auditorSpeaking = Sequence(Func(foreman.setChatAbsolute, "Excuse me, we have company...", CFSpeech | CFTimeout), Wait(5.2), Func(foreman.clearChat), Func(foreman.setChatAbsolute, "And it seems like the market will also have new company.", CFSpeech | CFTimeout), Wait(4.4), Func(foreman.clearChat), Func(foreman.setChatAbsolute, "Time is money. I'm expecting all of you to make your paychecks worth it.", CFSpeech | CFTimeout), Wait(8), Func(foreman.clearChat))
+
+    promotion_sfx = loader.loadSfx("phase_4/audio/sfx/ttr_s_ene_cgc_cashbotAuditor_promoting.ogg")
+    foremanMusic = base.loader.loadMusic('phase_10/audio/bgm/ttr_s_ara_chq_facilityBossBear.ogg')
+    foremanIntroMusic = base.loader.loadMusic('phase_10/audio/bgm/ttr_s_ara_chq_facilityBossCutscene.ogg')
+
+    auditorVisuals = Sequence(Wait(11.0), Parallel(ActorInterval(foreman, 'promoting'), Func(promotion_sfx.play)), Func(foreman.loop, 'neutral'))
+
+    movie = Sequence(Parallel(Func(foremanIntroMusic.play), regularCogWalking, auditorSpeaking, auditorVisuals), Wait(7), Func(base.camLens.setFov, BattleCamDefaultFov), Func(foremanMusic.play))
+
     return (movie, cameraTrack)

@@ -22,6 +22,7 @@ from toontown.toonbase import ToontownAccess
 from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.launcher import ToontownDownloadWatcher
+from toontown.content_pack import MusicManager
 import tempfile
 import atexit
 import shutil
@@ -44,6 +45,8 @@ class ToonBase(OTPBase.OTPBase):
         self.errorReportingService: ErrorTrackingService = SentryErrorTrackingService(ServiceType.CLIENT, version)
 
         self.global_text_properties = global_text_properties
+
+        self.contentPackMusicManager = MusicManager.MusicManager()
 
         self.settings = Settings()
         self.setMultiThreading()

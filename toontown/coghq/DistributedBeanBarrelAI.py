@@ -13,4 +13,4 @@ class DistributedBeanBarrelAI(DistributedBarrelBaseAI.DistributedBarrelBaseAI):
         self.sendUpdate('setGrab', [avId])
         av = self.air.doId2do.get(avId)
         if av:
-            av.addMoney(self.rewardPerGrab)
+            av.b_setMoney(av.getMoney() + self.rewardPerGrab)

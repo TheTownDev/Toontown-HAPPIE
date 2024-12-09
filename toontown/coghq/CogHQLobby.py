@@ -6,13 +6,14 @@ from toontown.building import Elevator
 from toontown.toonbase import ToontownGlobals
 from panda3d.core import *
 from libotp import *
+from toontown.battle import BattlePlace
 from otp.distributed.TelemetryLimiter import RotationLimitToH, TLGatherAllAvs
 
-class CogHQLobby(Place.Place):
+class CogHQLobby(BattlePlace.BattlePlace):
     notify = DirectNotifyGlobal.directNotify.newCategory('CogHQLobby')
 
     def __init__(self, hood, parentFSM, doneEvent):
-        Place.Place.__init__(self, hood, doneEvent)
+        BattlePlace.BattlePlace.__init__(self, hood, doneEvent)
         self.parentFSM = parentFSM
         self.elevatorDoneEvent = 'elevatorDone'
         self.fsm = ClassicFSM.ClassicFSM('CogHQLobby', [State.State('start', self.enterStart, self.exitStart, ['walk',
@@ -34,18 +35,18 @@ class CogHQLobby(Place.Place):
 
     def load(self):
         self.parentFSM.getStateNamed('cogHQLobby').addChild(self.fsm)
-        Place.Place.load(self)
+        BattlePlace.BattlePlace.load(self)
 
     def unload(self):
         self.parentFSM.getStateNamed('cogHQLobby').removeChild(self.fsm)
-        Place.Place.unload(self)
+        BattlePlace.BattlePlace.unload(self)
         self.fsm = None
         return
 
     def enter(self, requestStatus):
         self.zoneId = requestStatus['zoneId']
         base.discord.setZone(self.zoneId)
-        Place.Place.enter(self)
+        BattlePlace.BattlePlace.enter(self)
         self.fsm.enterInitialState()
         base.playMusic(self.loader.music, looping=1, volume=0.8)
         self.loader.geom.reparentTo(render)
@@ -64,11 +65,11 @@ class CogHQLobby(Place.Place):
         self.loader.music.stop()
         if self.loader.geom != None:
             self.loader.geom.reparentTo(hidden)
-        Place.Place.exit(self)
+        BattlePlace.BattlePlace.exit(self)
         return
 
     def enterWalk(self, teleportIn = 0):
-        Place.Place.enterWalk(self, teleportIn)
+        BattlePlace.BattlePlace.enterWalk(self, teleportIn)
         self.ignore('teleportQuery')
         base.localAvatar.setTeleportAvailable(0)
 
@@ -108,4 +109,4 @@ class CogHQLobby(Place.Place):
 
     def enterTeleportIn(self, requestStatus):
         base.localAvatar.setPosHpr(render, 0, 0, 0, 0, 0, 0)
-        Place.Place.enterTeleportIn(self, requestStatus)
+        BattlePlace.BattlePlace.enterTeleportIn(self, requestStatus)

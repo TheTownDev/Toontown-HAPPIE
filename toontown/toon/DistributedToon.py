@@ -61,6 +61,7 @@ from toontown.distributed import DelayDelete
 from otp.otpbase import OTPLocalizer
 from toontown.toontowngui import TeleportGUI
 from direct.showbase.InputStateGlobal import inputState
+from toontown.toontowngui.ButtonContainer import JellybeansGainButton
 import random
 import copy
 
@@ -1471,6 +1472,8 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
 
     def setMoney(self, money):
         if money != self.money:
+            addedMoney = money - self.money
+            self.testContainer.addButton(JellybeansGainButton, ["+" + str(addedMoney) + " jellybeans"])
             self.money = money
             messenger.send(self.uniqueName('moneyChange'), [self.money])
 

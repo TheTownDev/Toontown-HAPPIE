@@ -884,7 +884,7 @@ class InventoryNew(InventoryBase.InventoryBase, DirectFrame):
         if self.battleFrame == None:
             self.loadBattleFrame()
         self.battleFrame.show()
-        self.battleFrame.setScale(0.9)
+        self.battleFrame.setScale(1.0)
         self.invFrame.reparentTo(self.battleFrame)
         self.invFrame.setPos(-0.26, 0, 0.35)
         self.invFrame.setScale(1)

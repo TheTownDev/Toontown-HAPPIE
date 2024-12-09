@@ -486,11 +486,12 @@ class Suit(Avatar.Avatar):
         parts = ()
         for thingIndex in range(0, actorCollection.getNumPaths()):
             thing = actorCollection[thingIndex]
-            if thing.getName() not in ('joint_attachMeter', 'joint_nameTag', 'def_nameTag'):
+            if thing.getName() not in ('jnt_M_attachMeter_01', 'jnt_M_nameTag_01', 'def_nameTag'):
                 thing.setColor(self.healthBarColors[condition])
                 thing.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
                 thing.setDepthWrite(False)
                 thing.setBin('fixed', 1)
+        #self.nametag3d.setColorOff()
 
     def updateHealthBar(self, hp, forceUpdate = 0):
 

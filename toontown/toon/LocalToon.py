@@ -64,6 +64,8 @@ from ..shtiker.ShtikerPage import ShtikerPage
 
 WantNewsPage = base.config.GetBool('want-news-page', ToontownGlobals.DefaultWantNewsPageSetting)
 from toontown.toontowngui import NewsPageButtonManager
+from toontown.toontowngui.ButtonContainer import ButtonContainer, GagExpButton, DisguisePartButton, MeritButton, QuestProgressButton
+from toontown.toontowngui import DynamicMenu, DynamicMenuGlobals
 if WantNewsPage:
     from toontown.shtiker import NewsPage
 AdjustmentForNewsButton = -0.275
@@ -183,6 +185,13 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             self.camPoints = []
             self.camera = camera
 
+            self.quickMenu = DynamicMenu.DynamicMenu(menuType=DynamicMenuGlobals.TYPE_QUICK_MENU)
+            self.testContainer = ButtonContainer()
+            self.testContainer.containerNode.reparentTo(base.a2dBottomLeft)
+            self.testContainer.containerNode.setPos(0.133, 0.0, 0.32)
+            btnOptions = [GagExpButton, DisguisePartButton, MeritButton, QuestProgressButton]
+            self.accept('b', lambda: self.testContainer.addButton(random.choice(btnOptions), [0]))
+
             self.archipelagoRewardDisplay: ArchipelagoRewardDisplay = None
             self.locationScoutsCache: LocationScoutsCache = LocationScoutsCache()
             self.currentlyInHQ = False
@@ -295,6 +304,9 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         taskMgr.removeTasksMatching('*ioorrd234*')
         self.archipelagoRewardDisplay.destroy()
         del self.archipelagoRewardDisplay
+
+        self.quickMenu.destroy()
+        del self.quickMenu
         self.ignoreAll()
         DistributedToon.DistributedToon.disable(self)
 

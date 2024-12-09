@@ -67,6 +67,7 @@ merge-lod-bundles false
 early-event-sphere true
 server-data-folder backups/
 model-cache-dir
+texture-compression 0
 texture-anisotropic-degree 16
 # Harfbuzz is good for handling non-latin text.
 # However, this causes odd spacing on Cog nametags, so let's disable it.

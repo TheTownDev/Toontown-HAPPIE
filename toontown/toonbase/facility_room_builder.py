@@ -1,6 +1,6 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import *
-from toontown.coghq.LawbotOfficeLobby_Battle00 import GlobalEntities
+from toontown.coghq.facility.lawbot.junior.tt_f_ara_dgr_action05 import GlobalEntities
 from otp.level import LevelUtil
 
 if __debug__:
@@ -49,6 +49,24 @@ class MyApp(ShowBase):
                 model.setPos(self.room[entity]['pos'])
                 model.setHpr(self.room[entity]['hpr'])
                 model.setScale(self.room[entity]['scale'])
+                self.roomEntId2Model[entity] = model
+
+        for entity in self.room:
+            if self.room[entity]['type'] == 'locator':
+                model = NodePath('locator')
+                model.reparentTo(self.roomModel)
+                self.roomEntId2Model[entity] = model
+
+        for entity in self.room:
+            if self.room[entity]['type'] == 'pathMaster':
+                model = NodePath('pathMaster')
+                model.reparentTo(self.roomModel)
+                self.roomEntId2Model[entity] = model
+
+        for entity in self.room:
+            if self.room[entity]['type'] == 'rendering':
+                model = NodePath('rendering')
+                model.reparentTo(self.roomModel)
                 self.roomEntId2Model[entity] = model
         
         for entity in self.room:
@@ -128,6 +146,13 @@ class MyApp(ShowBase):
                 model.setHpr(self.room[entity]['hpr'])
                 model.setScale(self.room[entity]['scale'])
                 self.roomEntId2Model[entity] = model
+            if self.room[entity]['type'] == 'sinkingPlatform':
+                model = loader.loadModel('phase_10/models/cashbotHQ/ttr_m_ara_chq_mintPlatform.bam')
+                model.reparentTo(self.roomModel)
+                model.setPos(self.room[entity]['pos'])
+                model.setHpr(self.room[entity]['hpr'])
+                model.setScale(self.room[entity]['scale'])
+                self.roomEntId2Model[entity] = model
             if self.room[entity]['type'] == 'stomper':
                 model = loader.loadModel('phase_9/models/cogHQ/square_stomper.bam')
                 head = model.find('**/head')
@@ -164,6 +189,9 @@ class MyApp(ShowBase):
                 model.setPos(self.room[entity]['pos'])
                 model.setHpr(self.room[entity]['hpr'])
                 model.setScale(self.room[entity]['scale'])
+                model2 = loader.loadModel("phase_3.5/models/char/ttr_r_ene_cgb_suit.bam")
+                model2.reparentTo(model)
+                model2.setH(180)
                 self.roomEntId2Model[entity] = model
             if self.room[entity]['type'] == 'securityCamera':
                 model = loader.loadModel("phase_3/models/misc/sphere.bam")
@@ -177,6 +205,17 @@ class MyApp(ShowBase):
                     model.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
                 else:
                     model.reparentTo(self.roomModel)
+                model.setPos(self.room[entity]['pos'])
+                model.setHpr(self.room[entity]['hpr'])
+                model.setScale(self.room[entity]['scale'])
+                self.roomEntId2Model[entity] = model
+            if self.room[entity]['type'] == 'cogDummy':
+                model = loader.loadModel("phase_13/models/parties/cogPinata_actor.bam")
+                model2 = loader.loadModel('phase_13/models/parties/cogPinataHole.bam')
+                model2.reparentTo(model)
+                model2.setP(-90.0)
+                model2.setScale(3)
+                model2.setBin('ground', 3)
                 model.setPos(self.room[entity]['pos'])
                 model.setHpr(self.room[entity]['hpr'])
                 model.setScale(self.room[entity]['scale'])
@@ -269,6 +308,30 @@ class MyApp(ShowBase):
                     entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
                 else:
                     entityModel.reparentTo(self.roomModel)
+
+        for entity in self.room:
+            if self.room[entity]['type'] == 'locator':
+                entityModel = self.roomEntId2Model[entity]
+                if self.room[entity]['parentEntId'] != 0:
+                    entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
+                else:
+                    entityModel.reparentTo(self.roomModel)
+
+        for entity in self.room:
+            if self.room[entity]['type'] == 'pathMaster':
+                entityModel = self.roomEntId2Model[entity]
+                if self.room[entity]['parentEntId'] != 0:
+                    entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
+                else:
+                    entityModel.reparentTo(self.roomModel)
+
+        for entity in self.room:
+            if self.room[entity]['type'] == 'rendering':
+                entityModel = self.roomEntId2Model[entity]
+                if self.room[entity]['parentEntId'] != 0:
+                    entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
+                else:
+                    entityModel.reparentTo(self.roomModel)
         
         for entity in self.room:
             if self.room[entity]['type'] == 'entrancePoint':
@@ -317,6 +380,8 @@ class MyApp(ShowBase):
                     entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
                 else:
                     entityModel.reparentTo(self.roomModel)
+
+
         
         for entity in self.room:
             if self.room[entity]['type'] == 'mintProduct':
@@ -349,7 +414,14 @@ class MyApp(ShowBase):
                     entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
                 else:
                     entityModel.reparentTo(self.roomModel)
-                
+
+        for entity in self.room:
+            if self.room[entity]['type'] == 'cogDummy':
+                entityModel = self.roomEntId2Model[entity]
+                if self.room[entity]['parentEntId'] != 0:
+                    entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
+                else:
+                    entityModel.reparentTo(self.roomModel)
 
         for entity in self.room:
             if self.room[entity]['type'] == 'gagBarrel':
@@ -410,7 +482,13 @@ class MyApp(ShowBase):
                 for attrib in dict:
                     self.assignAttributeToModel(entity, entityModel, attrib)
 
-        
+        for entity in self.room:
+            if self.room[entity]['type'] == 'sinkingPlatform':
+                entityModel = self.roomEntId2Model[entity]
+                if self.room[entity]['parentEntId'] != 0:
+                    entityModel.reparentTo(self.roomEntId2Model[self.room[entity]['parentEntId']])
+                else:
+                    entityModel.reparentTo(self.roomModel)
 
         
         self.accept('p', self.printRoom)

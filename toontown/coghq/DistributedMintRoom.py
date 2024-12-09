@@ -33,6 +33,7 @@ class DistributedMintRoom(DistributedLevel.DistributedLevel, MintRoomBase.MintRo
         self.suitsInitialized = 0
         self.goonClipPlanes = {}
         self.mint = None
+        self.stage = None
         return
 
     def createEntityCreator(self):
@@ -90,6 +91,7 @@ class DistributedMintRoom(DistributedLevel.DistributedLevel, MintRoomBase.MintRo
 
     def setMint(self, mint):
         self.mint = mint
+        self.stage = mint
 
     def setBossConfronted(self, avId):
         self.mint.setBossConfronted(avId)

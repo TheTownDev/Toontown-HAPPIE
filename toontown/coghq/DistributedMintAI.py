@@ -11,9 +11,11 @@ class DistributedMintAI(DistributedObjectAI.DistributedObjectAI):
     def __init__(self, air, mintId, zoneId, floorNum, avIds):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         self.mintId = mintId
+        self.stageId = mintId
         self.zoneId = zoneId
         self.floorNum = floorNum
         self.avIds = avIds
+        self.puzzelReward = 5
 
     def generate(self):
         DistributedObjectAI.DistributedObjectAI.generate(self)
@@ -36,6 +38,7 @@ class DistributedMintAI(DistributedObjectAI.DistributedObjectAI):
         description = '%s|%s|%s' % (self.mintId, self.floorNum, self.avIds)
         for avId in self.avIds:
             self.air.writeServerEvent('mintEntered', avId, description)
+
 
     def requestDelete(self):
         self.notify.info('requestDelete: %s' % self.doId)
@@ -67,5 +70,19 @@ class DistributedMintAI(DistributedObjectAI.DistributedObjectAI):
     def getMintId(self):
         return self.mintId
 
+    def getStageId(self):
+        return self.stageId
+
     def getFloorNum(self):
         return self.floorNum
+
+    def increasePuzzelReward(self):
+        self.puzzelReward += 5
+        if self.puzzelReward > 10:
+            self.puzzelReward = 10
+
+    def resetPuzzelReward(self):
+        self.puzzelReward = 5
+
+    def getPuzzelReward(self):
+        return self.puzzelReward

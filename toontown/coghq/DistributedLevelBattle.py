@@ -122,6 +122,8 @@ class DistributedLevelBattle(DistributedBattle.DistributedBattle):
         suitLeader = None
         for suit in self.suits:
             suit.setState('Battle')
+            if suit.dna.name in SuitDNA.supervisors:
+                suit.enterBattle()
             suitIsLeader = 0
             oneSuitTrack = Sequence()
             oneSuitTrack.append(Func(suit.loop, 'neutral'))
