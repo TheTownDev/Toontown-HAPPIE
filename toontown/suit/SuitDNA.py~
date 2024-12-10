@@ -595,7 +595,7 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     
     SuitVisual(BARISTA,   4.0 / cSize,   corpPolyColor,                 None,                         None,                   ['barista'], 4.88),
     SuitVisual(DESK_JOCKY,   4.2 / cSize,   corpPolyColor,                 None,                         None,                   ['flunky', 'glasses'], 4.98),
-    SuitVisual(RULE_BENDER,  4.25 / aSize,  legalPolyColor,                None,                         'rule-bender.png',    'twoface',             5.63),
+    SuitVisual(RULE_BENDER,  4.25 / aSize,  legalPolyColor,                None,                         'double-talker.jpg',    'twoface',             5.63),
     SuitVisual(ADVENTURE_COACH,  4.5 / aSize,   legalPolyColor,                None,                         None,                   'backstabber',         6.71),
     SuitVisual(REPRESENTATIVE,  4.1 / cSize,   moneyPolyColor,                None,                         None,                   'micromanager',            5.41),
     SuitVisual(CROWD_CONTROL,  6.5 / aSize,   corpPolyColor,                 None,                         None,                   'headhunter',          7.45),

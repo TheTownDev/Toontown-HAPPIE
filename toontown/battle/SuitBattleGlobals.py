@@ -1336,20 +1336,20 @@ __registerSuitAttributes(__BARISTA)
 
 __DESK_JOCKEY_ATTACKS = set()
 __DESK_JOCKEY_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.SCHMOOZE,
-    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    attack=SuitAttackType.FOUNTAIN_PEN,
+    damage={1: 4,},
     accuracy=75,
     weight=50,
 ))
 __DESK_JOCKEY_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.WATERCOOLER,
-    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    damage={1: 3,},
     accuracy=50,
     weight=30,
 ))
 __DESK_JOCKEY_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.CLIPON_TIE,
-    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    damage={1: 2,},
     accuracy=75,
     weight=20,
 ))
@@ -1358,20 +1358,20 @@ __registerSuitAttributes(__DESK_JOCKEY)
 
 __RULE_BENDER_ATTACKS = set()
 __RULE_BENDER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.SCHMOOZE,
-    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    attack=SuitAttackType.DOUBLE_TALK,
+    damage={3: 6,},
     accuracy=75,
     weight=50,
 ))
 __RULE_BENDER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.WATERCOOLER,
-    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    attack=SuitAttackType.MUMBO_JUMBO,
+    damage={3: 4,},
     accuracy=50,
     weight=30,
 ))
 __RULE_BENDER_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.CLIPON_TIE,
-    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    attack=SuitAttackType.FINGER_WAG,
+    damage={3: 2,},
     accuracy=75,
     weight=20,
 ))
@@ -1380,20 +1380,20 @@ __registerSuitAttributes(__RULE_BENDER)
 
 __ADVENTURE_COACH_ATTACKS = set()
 __ADVENTURE_COACH_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.SCHMOOZE,
-    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    attack=SuitAttackType.BRAIN_STORM,
+    damage={4: 8,},
     accuracy=75,
     weight=50,
 ))
 __ADVENTURE_COACH_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.WATERCOOLER,
-    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    attack=SuitAttackType.MUMBO_JUMBO,
+    damage={4: 6,},
     accuracy=50,
     weight=30,
 ))
 __ADVENTURE_COACH_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.CLIPON_TIE,
-    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    attack=SuitAttackType.SCHMOOZE,
+    damage={4: 6,},
     accuracy=75,
     weight=20,
 ))
@@ -1403,19 +1403,19 @@ __registerSuitAttributes(__ADVENTURE_COACH)
 __REPRESENTATIVE_ATTACKS = set()
 __REPRESENTATIVE_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.SCHMOOZE,
-    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    damage={5: 7,},
     accuracy=75,
     weight=50,
 ))
 __REPRESENTATIVE_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.WATERCOOLER,
-    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    attack=SuitAttackType.MUMBO_JUMBO,
+    damage={5: 9,},
     accuracy=50,
     weight=30,
 ))
 __REPRESENTATIVE_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.CLIPON_TIE,
-    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    attack=SuitAttackType.LEGALESE,
+    damage={1: 7,},
     accuracy=75,
     weight=20,
 ))
@@ -1424,20 +1424,20 @@ __registerSuitAttributes(__REPRESENTATIVE)
 
 __CROWD_CONTROL_ATTACKS = set()
 __CROWD_CONTROL_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.SCHMOOZE,
-    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    attack=SuitAttackType.CONFISCATE,
+    damage={6: 11,},
     accuracy=75,
     weight=50,
 ))
 __CROWD_CONTROL_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.WATERCOOLER,
-    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    attack=SuitAttackType.POWER_TIE,
+    damage={6: 10,},
     accuracy=50,
     weight=30,
 ))
 __CROWD_CONTROL_ATTACKS.add(SuitAttackAttribute(
-    attack=SuitAttackType.CLIPON_TIE,
-    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    attack=SuitAttackType.RE_ORG,
+    damage={6: 13,},
     accuracy=75,
     weight=20,
 ))
