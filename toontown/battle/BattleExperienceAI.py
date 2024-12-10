@@ -74,9 +74,11 @@ def getBattleExperience(numToons, activeToons, toonExp, toonSkillPtsGained, toon
             merits = toonMerits.get(toonId, [0,
              0,
              0,
+             0,
              0])
             p.append(merits)
             parts = toonParts.get(toonId, [0,
+             0,
              0,
              0,
              0])

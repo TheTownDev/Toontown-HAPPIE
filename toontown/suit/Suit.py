@@ -181,7 +181,8 @@ class Suit(Avatar.Avatar):
         'c': Vec4(0.863, 0.776, 0.769, 1.0),
         's': Vec4(0.843, 0.745, 0.745, 1.0),
         'l': Vec4(0.749, 0.776, 0.824, 1.0),
-        'm': Vec4(0.749, 0.769, 0.749, 1.0)
+        'm': Vec4(0.749, 0.769, 0.749, 1.0),
+        'r': Vec4(0.863, 0.776, 0.769, 1.0),
     }
 
     def __init__(self):
@@ -416,8 +417,11 @@ class Suit(Avatar.Avatar):
                 headPart.setColor(self.headColor)
         
         # Hands
-        handTexture = loader.loadTexture('phase_' + str(suitDeptToPhase[self.style.dept]) + '/maps/tt_t_ene_suitHand_' + self.style.name + '.png')
-        self.find('**/hands').setTexture(handTexture, 1)
+        try:
+            handTexture = loader.loadTexture('phase_' + str(suitDeptToPhase[self.style.dept]) + '/maps/tt_t_ene_suitHand_' + self.style.name + '.png')
+            self.find('**/hands').setTexture(handTexture, 1)
+        except:
+            pass
 
     def generateCorporateTie(self, modelPath = None):
         if not modelPath:
@@ -430,6 +434,8 @@ class Suit(Avatar.Avatar):
         if dept == 'c':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_boss.jpg')
         elif dept == 's':
+            tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_sales.jpg')
+        elif dept == 'r':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_sales.jpg')
         elif dept == 'l':
             tieTex = loader.loadTexture('phase_5/maps/cog_robot_tie_legal.jpg')
@@ -444,6 +450,8 @@ class Suit(Avatar.Avatar):
         dept = self.style.dept
         chestNull = self.find('**/jnt_M_attachMeter_01')
         if dept == 'c':
+            self.corpMedallion = icons.find('**/CorpIcon').copyTo(chestNull)
+        elif dept == 'r':
             self.corpMedallion = icons.find('**/CorpIcon').copyTo(chestNull)
         elif dept == 's':
             self.corpMedallion = icons.find('**/SalesIcon').copyTo(chestNull)

@@ -1334,6 +1334,116 @@ __BARISTA_ATTACKS.add(SuitAttackAttribute(
 __BARISTA: SuitAttributes = T1SuitAttributes(key=BARISTA, name=TTLocalizer.SuitBarista, singular=TTLocalizer.SuitBaristaS, plural=TTLocalizer.SuitBaristaP, tier=0, attacks=__BARISTA_ATTACKS)
 __registerSuitAttributes(__BARISTA)
 
+__DESK_JOCKEY_ATTACKS = set()
+__DESK_JOCKEY_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.SCHMOOZE,
+    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    accuracy=75,
+    weight=50,
+))
+__DESK_JOCKEY_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.WATERCOOLER,
+    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    accuracy=50,
+    weight=30,
+))
+__DESK_JOCKEY_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.CLIPON_TIE,
+    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    accuracy=75,
+    weight=20,
+))
+__DESK_JOCKEY: SuitAttributes = SuitAttributes(key=DESK_JOCKY, name=TTLocalizer.SuitDeskJockey, singular=TTLocalizer.SuitDeskJockeyS, plural=TTLocalizer.SuitDeskJockeyP, tier=1, attacks=__DESK_JOCKEY_ATTACKS)
+__registerSuitAttributes(__DESK_JOCKEY)
+
+__RULE_BENDER_ATTACKS = set()
+__RULE_BENDER_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.SCHMOOZE,
+    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    accuracy=75,
+    weight=50,
+))
+__RULE_BENDER_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.WATERCOOLER,
+    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    accuracy=50,
+    weight=30,
+))
+__RULE_BENDER_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.CLIPON_TIE,
+    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    accuracy=75,
+    weight=20,
+))
+__RULE_BENDER: SuitAttributes = SuitAttributes(key=RULE_BENDER, name=TTLocalizer.SuitRuleBender, singular=TTLocalizer.SuitRuleBenderS, plural=TTLocalizer.SuitRuleBenderP, tier=2, attacks=__RULE_BENDER_ATTACKS)
+__registerSuitAttributes(__RULE_BENDER)
+
+__ADVENTURE_COACH_ATTACKS = set()
+__ADVENTURE_COACH_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.SCHMOOZE,
+    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    accuracy=75,
+    weight=50,
+))
+__ADVENTURE_COACH_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.WATERCOOLER,
+    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    accuracy=50,
+    weight=30,
+))
+__ADVENTURE_COACH_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.CLIPON_TIE,
+    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    accuracy=75,
+    weight=20,
+))
+__ADVENTURE_COACH: SuitAttributes = SuitAttributes(key=ADVENTURE_COACH, name=TTLocalizer.SuitAdventureCoach, singular=TTLocalizer.SuitAdventureCoachS, plural=TTLocalizer.SuitAdventureCoachP, tier=3, attacks=__ADVENTURE_COACH_ATTACKS)
+__registerSuitAttributes(__ADVENTURE_COACH)
+
+__REPRESENTATIVE_ATTACKS = set()
+__REPRESENTATIVE_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.SCHMOOZE,
+    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    accuracy=75,
+    weight=50,
+))
+__REPRESENTATIVE_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.WATERCOOLER,
+    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    accuracy=50,
+    weight=30,
+))
+__REPRESENTATIVE_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.CLIPON_TIE,
+    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    accuracy=75,
+    weight=20,
+))
+__REPRESENTATIVE: SuitAttributes = SuitAttributes(key=REPRESENTATIVE, name=TTLocalizer.SuitRepresentative, singular=TTLocalizer.SuitRepresentativeS, plural=TTLocalizer.SuitRepresentativeP, tier=4, attacks=__REPRESENTATIVE_ATTACKS)
+__registerSuitAttributes(__REPRESENTATIVE)
+
+__CROWD_CONTROL_ATTACKS = set()
+__CROWD_CONTROL_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.SCHMOOZE,
+    damage={1: 2, 2: 2, 3: 3, 4: 4, 5: 6},
+    accuracy=75,
+    weight=50,
+))
+__CROWD_CONTROL_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.WATERCOOLER,
+    damage={1: 3, 2: 4, 3: 5, 4: 6, 5: 7},
+    accuracy=50,
+    weight=30,
+))
+__CROWD_CONTROL_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.CLIPON_TIE,
+    damage={1: 1, 2: 1, 3: 2, 4: 2, 5: 3},
+    accuracy=75,
+    weight=20,
+))
+__CROWD_CONTROL: SuitAttributes = SuitAttributes(key=CROWD_CONTROL, name=TTLocalizer.SuitCrowdControl, singular=TTLocalizer.SuitCrowdControlS, plural=TTLocalizer.SuitCrowdControlP, tier=5, attacks=__CROWD_CONTROL_ATTACKS)
+__registerSuitAttributes(__CROWD_CONTROL)
+
 __INVESTIGATOR_ATTACKS = set()
 __INVESTIGATOR_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.EVIL_EYE,

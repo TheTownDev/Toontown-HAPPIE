@@ -326,6 +326,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             dept = chr(self.track)
             if dept == 'c':
                 corpIcon = cogIcons.find('**/CorpIcon').copyTo(self.cab)
+            elif dept == 'r':
+                corpIcon = cogIcons.find('**/CorpIcon').copyTo(self.cab)
             elif dept == 's':
                 corpIcon = cogIcons.find('**/SalesIcon').copyTo(self.cab)
             elif dept == 'l':

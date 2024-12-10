@@ -56,19 +56,29 @@ mainTypes = [FLUNKY,
     MOVER_AND_SHAKER,
     TWO_FACE,
     THE_MINGLER,
-    MR_HOLLYWOOD]
+    MR_HOLLYWOOD,
+    BARISTA,
+    DESK_JOCKY,
+    RULE_BENDER,
+    ADVENTURE_COACH,
+    REPRESENTATIVE,
+    CROWD_CONTROL,
+    INVESTIGATOR,
+    CONFISCATOR,
+]
 
 notMainTypes = [
     THE_FACTORY_FOREMAN,
     THE_MINT_AUDITOR,
     THE_OFFICE_CLERK,
     THE_CLUB_PRESIDENT,
-    BARISTA,
-    INVESTIGATOR,
-    CONFISCATOR
 ]
 
 suitATypes = [
+    RULE_BENDER,
+    ADVENTURE_COACH,
+    CONFISCATOR,
+    CROWD_CONTROL,
     YESMAN,
     HEAD_HUNTER,
     THE_BIG_CHEESE,
@@ -84,8 +94,7 @@ suitATypes = [
     NAME_DROPPER,
     TWO_FACE,
     THE_MINGLER,
-    MR_HOLLYWOOD,
-    CONFISCATOR
+    MR_HOLLYWOOD
 ]
 
 suitBTypes = [
@@ -115,6 +124,8 @@ suitCTypes = [
     COLD_CALLER,
     GLAD_HANDER,
     BARISTA,
+    DESK_JOCKY,
+    REPRESENTATIVE,
     THE_MINT_AUDITOR
 ]
 
@@ -122,33 +133,38 @@ suitDepts = [
     BOSSBOT,
     LAWBOT,
     CASHBOT,
-    SELLBOT
+    SELLBOT,
+    RESOURCEBOT
 ]
 
 suitDept2Icon = {
     SELLBOT: '**/SalesIcon',
     CASHBOT: '**/MoneyIcon',
     LAWBOT: '**/LegalIcon',
-    BOSSBOT: '**/CorpIcon'
+    BOSSBOT: '**/CorpIcon',
+    RESOURCEBOT: '**/ResourceIcon'
 }
 
 suitDeptToPhase = {SELLBOT: 9,
                    CASHBOT: 10,
                    LAWBOT: 11,
-                   BOSSBOT: 12}
+                   BOSSBOT: 12,
+                   RESOURCEBOT: 15}
 
 suitDeptFullnames = {
     BOSSBOT: TTLocalizer.Bossbot,
     LAWBOT: TTLocalizer.Lawbot,
     CASHBOT: TTLocalizer.Cashbot,
-    SELLBOT: TTLocalizer.Sellbot
+    SELLBOT: TTLocalizer.Sellbot,
+    RESOURCEBOT: TTLocalizer.Resourcebot
 }
 
 suitDeptFullnamesP = {
     BOSSBOT: TTLocalizer.BossbotP,
     LAWBOT: TTLocalizer.LawbotP,
     CASHBOT: TTLocalizer.CashbotP,
-    SELLBOT: TTLocalizer.SellbotP
+    SELLBOT: TTLocalizer.SellbotP,
+    RESOURCEBOT: TTLocalizer.ResourcebotP
 }
 
 corpPolyColor = VBase4(0.95, 0.75, 0.75, 1.0)
@@ -174,7 +190,8 @@ dept2SuitSupervisor = {
     SELLBOT: THE_FACTORY_FOREMAN,
     CASHBOT: THE_MINT_AUDITOR,
     LAWBOT: THE_OFFICE_CLERK,
-    BOSSBOT: THE_CLUB_PRESIDENT
+    BOSSBOT: THE_CLUB_PRESIDENT,
+    RESOURCEBOT: THE_HEAD_REPRESENTATIVE,
 }
 
 ModelDict = {
@@ -557,7 +574,7 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual(BACK_STABBER,  4.5 / aSize,   legalPolyColor,                None,                         None,                   'backstabber',         6.71),
     SuitVisual(SPIN_DOCTOR,  5.65 / bSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                         'spin-doctor.jpg',      'telemarketer',        7.9),
     SuitVisual(LEGAL_EAGLE,  7.125 / aSize, VBase4(0.25, 0.25, 0.5, 1.0),  None,                         None,                   'legaleagle',          8.27),
-SuitVisual(BARRISTER, 7.0 / aSize,   legalPolyColor,                None,                         None,                   ['barrister'],              8.75),
+    SuitVisual(BARRISTER, 7.0 / aSize,   legalPolyColor,                None,                         None,                   ['barrister'],              8.75),
     SuitVisual(BIG_WIG,  7.0 / aSize,   legalPolyColor,                None,                         None,                   'bigwig',              8.69),
     SuitVisual(SHORT_CHANGE,  3.6 / cSize,   moneyPolyColor,                None,                         None,                   'coldcaller',          4.77),
     SuitVisual(PENNY_PINCHER,  3.55 / aSize,  VBase4(1.0, 0.5, 0.6, 1.0),    None,                         None,                   'pennypincher',        5.26),
@@ -577,6 +594,11 @@ SuitVisual(BARRISTER, 7.0 / aSize,   legalPolyColor,                None,       
     SuitVisual(MR_HOLLYWOOD,  7.0 / aSize,   salesPolyColor,                None,                         None,                   'yesman',              8.95),
     
     SuitVisual(BARISTA,   4.0 / cSize,   corpPolyColor,                 None,                         None,                   ['barista'], 4.88),
+    SuitVisual(DESK_JOCKY,   4.2 / cSize,   corpPolyColor,                 None,                         None,                   ['flunky', 'glasses'], 4.98),
+    SuitVisual(RULE_BENDER,  4.25 / aSize,  legalPolyColor,                None,                         'double-talker.jpg',    'twoface',             5.63),
+    SuitVisual(ADVENTURE_COACH,  4.5 / aSize,   legalPolyColor,                None,                         None,                   'backstabber',         6.71),
+    SuitVisual(REPRESENTATIVE,  4.1 / cSize,   moneyPolyColor,                None,                         None,                   'micromanager',            5.41),
+    SuitVisual(CROWD_CONTROL,  6.5 / aSize,   corpPolyColor,                 None,                         None,                   'headhunter',          7.45),
     SuitVisual(INVESTIGATOR,  6.5 / bSize,   VBase4(0.5, 0.85, 0.75, 1.0),  None,                         None,                   ['investigator'],           8.58),
     SuitVisual(CONFISCATOR,  7.0 / aSize,   salesPolyColor,                None,                         None,                   ['confinscator'],              8.95),
 
@@ -585,6 +607,19 @@ SuitVisual(BARRISTER, 7.0 / aSize,   legalPolyColor,                None,       
     SuitVisual(THE_OFFICE_CLERK,  7.0 / bSize,   moneyPolyColor,                None,                        None,                   'officeclerk',         10.0),
     SuitVisual(THE_CLUB_PRESIDENT,   4.65 / aSize,   corpPolyColor,                 None,                         None,                   'clubpresident', 6.3),
 }
+
+"""
+#A
+    RULE_BENDER,
+    ADVENTURE_COACH,
+    CONFISCATOR,
+    #B
+    INVESTIGATOR,
+    #C
+    BARISTA,
+    DESK_JOCKY,
+    REPRESENTATIVE,
+"""
 
 SuitClotheParts = ['blazer', 'leg', 'sleeve']
 
@@ -646,7 +681,7 @@ customSuit2Dept = {
     THE_MINT_AUDITOR: 'm',
     THE_OFFICE_CLERK: 'l',
     THE_CLUB_PRESIDENT: 'c',
-    BARISTA: 'l',
+    BARRISTER: 'l',
     ATTORNEY: 'l'
 }
 
@@ -660,6 +695,8 @@ def getSuitDept(name):
         return suitDepts[2]
     elif index < suitsPerDept * 4:
         return suitDepts[3]
+    elif index < suitsPerDept * 5:
+        return suitDepts[4]
     elif name in customSuit2Dept:
         return customSuit2Dept[name]
     else:

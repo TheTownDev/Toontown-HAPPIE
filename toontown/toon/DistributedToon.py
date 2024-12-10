@@ -117,16 +117,20 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         self.cogTypes = [0,
          0,
          0,
+         0,
          0]
         self.cogLevels = [0,
+         0,
          0,
          0,
          0]
         self.cogParts = [0,
          0,
          0,
+         0,
          0]
         self.cogMerits = [0,
+         0,
          0,
          0,
          0]

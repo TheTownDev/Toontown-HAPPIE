@@ -14,9 +14,9 @@ class PromotionManagerAI:
 
     def recoverMerits(self, av, cogList, zoneId, multiplier = 1, extraMerits = None):
         avId = av.getDoId()
-        meritsRecovered = [0, 0, 0, 0]
+        meritsRecovered = [0, 0, 0, 0, 0]
         if extraMerits is None:
-            extraMerits = [0, 0, 0, 0]
+            extraMerits = [0, 0, 0, 0, 0]
 
         for i in range(len(extraMerits)):
             if CogDisguiseGlobals.isSuitComplete(av.getCogParts(), i):
@@ -56,7 +56,7 @@ class PromotionManagerAI:
         if sum(meritsRecovered) <= 0:
             return meritsRecovered
 
-        actualCounted = [0, 0, 0, 0]
+        actualCounted = [0, 0, 0, 0, 0]
         merits = av.getCogMerits()
         for i in range(len(meritsRecovered)):
             max = CogDisguiseGlobals.getTotalMerits(av, i)

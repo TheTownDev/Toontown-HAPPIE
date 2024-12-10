@@ -90,7 +90,7 @@ class ToonBase(OTPBase.OTPBase):
         self.addCullBins()
         
         # For debugging
-        #aspect2d.place()
+        aspect2d.place()
         
         base.debugRunningMultiplier /= OTPGlobals.ToonSpeedFactor
         self.toonChatSounds = self.config.GetBool('toon-chat-sounds', 1)

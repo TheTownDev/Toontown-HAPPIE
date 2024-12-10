@@ -14,5 +14,6 @@ BOSSDEPT_2_PACK_ALISIS = {
     's': 'sellbot-boss-',
     'm': 'cashbot-boss-',
     'l': 'lawbot-boss-',
-    'c': 'bossbot-boss-'
+    'c': 'bossbot-boss-',
+    'r': 'resourcebot-boss-'
 }

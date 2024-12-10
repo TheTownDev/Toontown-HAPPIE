@@ -37,20 +37,16 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
     def setBossBattle(self, value):
         self.bossBattle = value
         if self.bossBattle:
-            if self.suits[0].dna.dept == 'c':  # tt_s_ara_sui_interiorCorp
-                self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/tt_s_ara_sui_interiorCorpBoss.ogg')
-                base.playMusic(self.battleMusic, looping=1, volume=1.3)
-            else:
-                self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/encntr_suit_winning_indoor.ogg')
-                base.playMusic(self.battleMusic, looping=1, volume=0.9)
+            self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/encntr_suit_winning_indoor.ogg')
+            base.playMusic(self.battleMusic, looping=1, volume=0.9)
         else:
-            if self.suits[0].dna.dept == 'c' and self.suits[0].dna.name not in SuitDNA.Resourcebots: #tt_s_ara_sui_interiorCorp
+            if self.suits[0].dna.dept == 'c': #tt_s_ara_sui_interiorCorp
                 self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/tt_s_ara_sui_interiorCorp.ogg')
                 base.playMusic(self.battleMusic, looping=1, volume=1.3)
             elif self.suits[0].dna.dept == 'm': #tt_s_ara_sui_interiorMoney
                 self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/tt_s_ara_sui_interiorMoney.ogg')
                 base.playMusic(self.battleMusic, looping=1, volume=2.4)
-            elif self.suits[0].dna.name in SuitDNA.Resourcebots:
+            elif self.suits[0].dna.dept == 'r':
                 self.battleMusic = base.loader.loadMusic('phase_7/audio/bgm/tt_s_ara_sui_interiorResource.ogg')
                 base.playMusic(self.battleMusic, looping=1, volume=1.3)
             else:

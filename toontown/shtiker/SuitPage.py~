@@ -275,7 +275,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
         self.accept(localAvatar.uniqueName('emblemsChange'), self.__emblemChange)
         self.guiTop.setZ(0.625)
         self.setScale(0.86)
-        self.setZ(0.15)
+        self.setZ(0.3)
         return
 
     def unload(self):

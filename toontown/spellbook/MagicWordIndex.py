@@ -364,15 +364,16 @@ class MaxToon(MagicWord):
             CogDisguiseGlobals.PartsPerSuitBitmasks[1],
             CogDisguiseGlobals.PartsPerSuitBitmasks[2],
             CogDisguiseGlobals.PartsPerSuitBitmasks[3],
+            CogDisguiseGlobals.PartsPerSuitBitmasks[4],
         ])
-        toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 4)
-        toon.b_setCogTypes([7] * 4)
+        toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 5)
+        toon.b_setCogTypes([7] * 5)
 
-        toon.b_setCogCount([CogPageGlobals.get_max_cog_quota(toon)] * 8 * 4)
+        toon.b_setCogCount([CogPageGlobals.get_max_cog_quota(toon)] * 8 * 5)
         cogStatus = [CogPageGlobals.COG_COMPLETE2] * SuitDNA.suitsPerDept
-        toon.b_setCogStatus(cogStatus * 4)
-        toon.b_setCogRadar([1] * 4)
-        toon.b_setBuildingRadar([1] * 4)
+        toon.b_setCogStatus(cogStatus * 5)
+        toon.b_setCogRadar([1] * 5)
+        toon.b_setBuildingRadar([1] * 5)
 
         for id in toon.getQuests():
             toon.removeQuest(id)
