@@ -1301,7 +1301,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     def setCogRadar(self, radar):
         if not radar:
             self.notify.warning('cogRadar set to bad value: %s. Resetting to [0,0,0,0]' % radar)
-            self.cogRadar = [0, 0, 0, 0]
+            self.cogRadar = [0, 0, 0, 0, 0]
             return
 
         self.cogRadar = radar
@@ -1319,7 +1319,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     def setBuildingRadar(self, radar):
         if not radar:
             self.notify.warning('buildingRadar set to bad value: %s. Resetting to [0,0,0,0]' % radar)
-            self.buildingRadar = [0, 0, 0, 0]
+            self.buildingRadar = [0, 0, 0, 0, 0]
             return
 
         self.buildingRadar = radar
@@ -1337,7 +1337,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     def setCogTypes(self, types):
         if not types:
             self.notify.warning('cogTypes set to bad value: %s. Resetting to [0,0,0,0]' % types)
-            self.cogTypes = [0, 0, 0, 0]
+            self.cogTypes = [0, 0, 0, 0, 0]
             return
 
         self.cogTypes = types
@@ -1355,7 +1355,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     def setCogLevels(self, levels):
         if not levels:
             self.notify.warning('cogLevels set to bad value: %s. Resetting to [0,0,0,0]' % levels)
-            self.cogLevels = [0, 0, 0, 0]
+            self.cogLevels = [0, 0, 0, 0, 0]
             return
 
         self.cogLevels = levels
@@ -1412,7 +1412,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
     def setCogParts(self, parts):
         if not parts:
             self.notify.warning('cogParts set to bad value: %s. Resetting to [0,0,0,0]' % parts)
-            self.cogParts = [0, 0, 0, 0]
+            self.cogParts = [0, 0, 0, 0, 0]
             return
 
         self.cogParts = parts
@@ -1483,6 +1483,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         if not merits:
             self.notify.warning('cogMerits set to bad value: %s. Resetting to [0,0,0,0]' % merits)
             self.cogMerits = [0,
+                              0,
                               0,
                               0,
                               0]
@@ -4612,9 +4613,9 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         self.b_setTeleportAccess([])
 
         # Disguise stuff, revoke their disguises
-        self.b_setCogParts([0, 0, 0, 0])
-        self.b_setCogTypes([0, 0, 0, 0])
-        self.b_setCogLevels([0, 0, 0, 0])
+        self.b_setCogParts([0, 0, 0, 0, 0])
+        self.b_setCogTypes([0, 0, 0, 0, 0])
+        self.b_setCogLevels([0, 0, 0, 0, 0])
         self.b_setCogMerits([30000, 30000, 30000, 30000])
 
         # Revoke rewards

@@ -233,18 +233,35 @@ class SuitPage(ShtikerPage.ShtikerPage):
         for i, iconName in enumerate(("corp_icon", "legal_icon", "money_icon", "sales_icon", "corp_icon")):
             icon = icons.find(f"**/{iconName}")
 
-            button = DirectButton(
-                parent=self.iconNode,
-                relief=None,
-                state=DGG.DISABLED,
-                image=icon,
-                image_scale=(0.03375, 1, 0.045),
-                # stand in for rollover art
-                image2_color=Vec4(1.0, 1.0, 1.0, 0.75),
-                pos=(-0.2, 10, -0.575),
-                command=self.toggleRadar,
-                extraArgs=[i],
-            )
+
+            if i == 4:
+                button = DirectButton(
+                    parent=self.iconNode,
+                    relief=None,
+                    state=DGG.DISABLED,
+                    image=icon,
+                    image_scale=(0.03375, 1, 0.045),
+                    image_color=(0.863, 0.676, 0.759, 1.0),
+                    # stand in for rollover art
+                    image2_color=Vec4(1.0, 1.0, 1.0, 0.75),
+                    pos=(-0.2, 10, -0.575),
+                    command=self.toggleRadar,
+                    extraArgs=[i],
+                )
+                button.setZ(-1.7)
+            else:
+                button = DirectButton(
+                    parent=self.iconNode,
+                    relief=None,
+                    state=DGG.DISABLED,
+                    image=icon,
+                    image_scale=(0.03375, 1, 0.045),
+                    # stand in for rollover art
+                    image2_color=Vec4(1.0, 1.0, 1.0, 0.75),
+                    pos=(-0.2, 10, -0.575),
+                    command=self.toggleRadar,
+                    extraArgs=[i],
+                )
             self.radarButtons.append(button)
 
             button.building = 0
@@ -615,6 +632,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
             buildingList = base.cr.currSuitPlanner.buildingList
         else:
             buildingList = [0,
+             0,
              0,
              0,
              0]

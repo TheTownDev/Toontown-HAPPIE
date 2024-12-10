@@ -209,8 +209,8 @@ suit2headTexturePaths = {
 #ttr_r_ene_cgc_heads
 
 suitBody2HeadPath = {
-    'a': 'phase_3.5/models/char/ttr_r_ene_cga_heads',
-    'b': 'phase_3.5/models/char/ttr_r_ene_cgb_heads',
+    'a': 'phase_4/models/char/ttr_r_ene_cga_heads',
+    'b': 'phase_4/models/char/ttr_r_ene_cgb_heads',
     'c': 'phase_3.5/models/char/ttr_r_ene_cgc_heads'
 }
 
@@ -528,6 +528,10 @@ class SuitVisual:
                     headPath = self.headModelPath(suit.style.body, 'phase_15/models/char/ttr_r_ene_cgr_heads')
                 if self.key == 'barr':
                     headPath = self.headModelPath(suit.style.body, 'phase_11/models/char/ttr_r_ene_lawbotBarrister')
+                if self.key in [ADVENTURE_COACH, CROWD_CONTROL]:
+                    headPath = self.headModelPath(suit.style.body, 'phase_4/models/char/ttr_r_ene_cga_heads2')
+                if self.key in [REPRESENTATIVE, DESK_JOCKY]:
+                    headPath = self.headModelPath(suit.style.body, 'phase_3.5/models/char/ttr_r_ene_cgc_heads2')
                 headModel = loader.loadModel(headPath)
                 head = headModel.find('**/' + head)
                 head.reparentTo(suit.find(attachPoint))
@@ -537,6 +541,7 @@ class SuitVisual:
         else:
             headModel = loader.loadModel(self.headModelPath(suit.style.body))
             head = headModel.find('**/' + self.head_type)
+            print(self.key)
             head.reparentTo(suit.find(attachPoint))
             head.setTwoSided(True)
             suit.headParts.append(head)
@@ -594,11 +599,11 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual(MR_HOLLYWOOD,  7.0 / aSize,   salesPolyColor,                None,                         None,                   'yesman',              8.95),
     
     SuitVisual(BARISTA,   4.0 / cSize,   corpPolyColor,                 None,                         None,                   ['barista'], 4.88),
-    SuitVisual(DESK_JOCKY,   4.2 / cSize,   corpPolyColor,                 None,                         None,                   ['flunky', 'glasses'], 4.98),
-    SuitVisual(RULE_BENDER,  4.25 / aSize,  legalPolyColor,                None,                         'rule-bender.png',    'twoface',             5.63),
-    SuitVisual(ADVENTURE_COACH,  4.5 / aSize,   legalPolyColor,                None,                         None,                   'backstabber',         6.71),
-    SuitVisual(REPRESENTATIVE,  4.1 / cSize,   moneyPolyColor,                None,                         None,                   'micromanager',            5.41),
-    SuitVisual(CROWD_CONTROL,  6.5 / aSize,   corpPolyColor,                 None,                         None,                   'headhunter',          7.45),
+    SuitVisual(DESK_JOCKY,   4.2 / cSize,   corpPolyColor,                 None,                         None,                   ['flunky', 'jock_glasses'], 4.98),
+    SuitVisual(RULE_BENDER,  4.25 / aSize,  legalPolyColor,                None,                         'rule-bender.png',    ['twoface'],             5.63),
+    SuitVisual(ADVENTURE_COACH,  4.5 / aSize,   legalPolyColor,                None,                         None,                   ['adventure_coach'],         6.93),
+    SuitVisual(REPRESENTATIVE,  4.1 / cSize,   moneyPolyColor,                None,                         None,                   ['representative'],            5.72),
+    SuitVisual(CROWD_CONTROL,  6.5 / aSize,   corpPolyColor,                 None,                         None,                   ['crowd_control'],          7.45),
     SuitVisual(INVESTIGATOR,  6.5 / bSize,   VBase4(0.5, 0.85, 0.75, 1.0),  None,                         None,                   ['investigator'],           8.58),
     SuitVisual(CONFISCATOR,  7.0 / aSize,   salesPolyColor,                None,                         None,                   ['confinscator'],              8.95),
 
