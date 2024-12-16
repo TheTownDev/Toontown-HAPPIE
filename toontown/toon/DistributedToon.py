@@ -1477,7 +1477,10 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
     def setMoney(self, money):
         if money != self.money:
             addedMoney = money - self.money
-            self.testContainer.addButton(JellybeansGainButton, ["+" + str(addedMoney) + " jellybeans"])
+            try:
+                self.testContainer.addButton(JellybeansGainButton, ["+" + str(addedMoney) + " jellybeans"])
+            except:
+                pass
             self.money = money
             messenger.send(self.uniqueName('moneyChange'), [self.money])
 

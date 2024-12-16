@@ -18,7 +18,7 @@ from toontown.toonbase import ToontownGlobals
 import random
 from toontown.toon import NPCToons
 from toontown.pets import DistributedPetProxyAI
-from toontown.battle import BattleEffectHandlersAI
+from toontown.battle import BattleEffectHandlersAI, BattleEye
 from ..archipelago.definitions.death_reason import DeathReason
 from ..hood import ZoneUtil
 
@@ -53,6 +53,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         self.toonOrigMerits = {}
         self.toonMerits = {}
         self.toonParts = {}
+        self.battleEye= BattleEye.BattleEye(self)
         self.battleCalc = BattleCalculatorAI.BattleCalculatorAI(self, tutorialFlag)
         self.suitsCheatFirst, self.suitsCheatSecond, self.dots, self.cutscenesFirst, self.cutscenesSecond = [], [], [], [], []
 
@@ -590,6 +591,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
             self.toonMerits[avId] = [0,
              0,
              0,
+             0,
              0]
         if avId not in self.toonOrigQuests:
             flattenedQuests = []
@@ -720,15 +722,26 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
 
     def __removeSuit(self, suit):
         self.notify.debug('__removeSuit(%d)' % suit.doId)
-        self.suits.remove(suit)
-        self.activeSuits.remove(suit)
-        if self.luredSuits.count(suit) == 1:
-            self.luredSuits.remove(suit)
-        if self.immuneSuits.count(suit) == 1:
-            self.immuneSuits.remove(suit)
-        self.suitGone = 1
-        del suit.battleTrap
-
+        try:
+            self.suits.remove(suit)
+        except:
+            pass
+        try:
+            self.activeSuits.remove(suit)
+        except:
+            pass
+        try:
+            if self.luredSuits.count(suit) == 1:
+                self.luredSuits.remove(suit)
+            if self.immuneSuits.count(suit) == 1:
+                self.immuneSuits.remove(suit)
+        except:
+            pass
+        try:
+            self.joiningSuits.remove(suit)
+        except:
+            pass
+        
     def __removeToon(self, toonId, userAborted = 0):
         self.notify.debug('__removeToon(%d)' % toonId)
         if self.toons.count(toonId) == 0:
@@ -1410,6 +1423,7 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
         return False
 
     def enterWaitForInput(self):
+        print(self.activeSuits)
         self.notify.debug('enterWaitForInput()')
         self.joinableFsm.request('Joinable')
         self.runableFsm.request('Runable')

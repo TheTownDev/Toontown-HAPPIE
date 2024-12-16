@@ -310,6 +310,11 @@ def __doFlower(squirt, delay, fShowStun):
         tracks.append(__getSplashTrack(targetPoint, scale, tSprayStarts + dSprayScale, battle))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'squirt-small-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        for target in squirt['otherSuits']:
+            actual_target = base.cr.doId2do[target]
+            tracks.append(
+                __getSuitTrack(actual_target, tContact, tSuitDodges, hp, 0, 0, 'squirt-small-react', died,
+                               leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -374,6 +379,11 @@ def __doWaterGlass(squirt, delay, fShowStun):
         tracks.append(__getSplashTrack(targetPoint, scale, tSpray + dSprayScale, battle))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'squirt-small-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        for target in squirt['otherSuits']:
+            actual_target = base.cr.doId2do[target]
+            tracks.append(
+                __getSuitTrack(actual_target, tContact, tSuitDodges, hp, 0, 0, 'squirt-small-react', died,
+                               leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -435,6 +445,11 @@ def __doWaterGun(squirt, delay, fShowStun):
         tracks.append(__getSplashTrack(targetPoint, 0.3, tSpray + dSprayScale, battle))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'squirt-small-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        for target in squirt['otherSuits']:
+            actual_target = base.cr.doId2do[target]
+            tracks.append(
+                __getSuitTrack(actual_target, tContact, tSuitDodges, hp, 0, 0, 'squirt-small-react', died,
+                               leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -498,6 +513,11 @@ def __doSeltzerBottle(squirt, delay, fShowStun):
         tracks.append(__getSplashTrack(targetPoint, scale, tSpray + dSprayScale, battle))
     if (hp > 0 or delay <= 0) and suit:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'squirt-small-react', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        for target in squirt['otherSuits']:
+            actual_target = base.cr.doId2do[target]
+            tracks.append(
+                __getSuitTrack(actual_target, tContact, tSuitDodges, hp, 0, 0, 'squirt-small-react', died,
+                               leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -581,6 +601,11 @@ def __doFireHose(squirt, delay, fShowStun):
         tracks.append(__getSplashTrack(targetPoint, 0.4, 2.7, battle, splashHold=1.5))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'squirt-hose', died, leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
+        for target in squirt['otherSuits']:
+            actual_target = battle.findSuit(target)
+            tracks.append(
+                __getSuitTrack(actual_target, tContact, tSuitDodges, hp, 0, 0, 'squirt-small-react', died,
+                               leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 
@@ -660,6 +685,11 @@ def __doStormCloud(squirt, delay, fShowStun):
     tracks.append(getCloudTrack(cloud2, suit, cloudPosPoint, scaleUpPoint, rainEffects, rainDelay, effectDelay, cloudHold, useEffect=0))
     if hp > 0 or delay <= 0:
         tracks.append(__getSuitTrack(suit, tContact, tSuitDodges, hp, hpbonus, kbbonus, 'soak', died, leftSuits, rightSuits, battle, toon, fShowStun, beforeStun=2.6, afterStun=2.3, revived=revived))
+        for target in squirt['otherSuits']:
+            actual_target = base.cr.doId2do[target]
+            tracks.append(
+                __getSuitTrack(actual_target, tContact, tSuitDodges, hp, 0, 0, 'squirt-small-react', died,
+                               leftSuits, rightSuits, battle, toon, fShowStun, revived=revived))
     return tracks
 
 

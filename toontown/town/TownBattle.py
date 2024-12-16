@@ -485,13 +485,22 @@ class TownBattle(StateData.StateData):
         self.immuneIndices = immuneIndices
         self.toons = toonIds
         self.numToons = len(toons)
-        self.localNum = toons.index(base.localAvatar)
-        currStateName = self.fsm.getCurrentState().getName()
+        try:
+            self.localNum = toons.index(base.localAvatar)
+        except:
+            self.localNum = 0
+        try:
+            currStateName = self.fsm.getCurrentState().getName()
+        except:
+            currStateName = "None"
         if resetActivateMode:
-            self.__enterPanels(self.numToons, self.localNum)
-            for i in range(len(toons)):
-                self.toonPanels[i].setLaffMeter(toons[i])
-            
+            try:
+                self.__enterPanels(self.numToons, self.localNum)
+                for i in range(len(toons)):
+                    self.toonPanels[i].setLaffMeter(toons[i])
+            except:
+                pass
+
             self.__suitPanels(self.numCogs)
                 
             for i in range(self.numCogs):
@@ -506,8 +515,11 @@ class TownBattle(StateData.StateData):
                         self.immuneIndices.append(toon)
                 self.chooseToonPanel.adjustToons(self.numToons, self.localNum, invalidTargets=self.immuneIndices)
             canHeal, canTrap, canLure = self.checkHealTrapLure()
-            base.localAvatar.inventory.setBattleCreditMultiplier(self.creditMultiplier)
-            base.localAvatar.inventory.setActivateMode('battle', heal=canHeal, trap=canTrap, lure=canLure, bldg=self.bldg, creditLevel=self.creditLevel, tutorialFlag=self.tutorialFlag)
+            try:
+                base.localAvatar.inventory.setBattleCreditMultiplier(self.creditMultiplier)
+                base.localAvatar.inventory.setActivateMode('battle', heal=canHeal, trap=canTrap, lure=canLure, bldg=self.bldg, creditLevel=self.creditLevel, tutorialFlag=self.tutorialFlag)
+            except:
+                pass
 
     def enterChooseCog(self):
         self.cog = 0

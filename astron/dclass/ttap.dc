@@ -1557,6 +1557,7 @@ struct ToonAttack {
   int64 suitDied;
   int64 suitRevive;
   int64 statusInfoOne;
+  uint64[] otherTargets;
 };
 
 struct SuitCheatsFirst {

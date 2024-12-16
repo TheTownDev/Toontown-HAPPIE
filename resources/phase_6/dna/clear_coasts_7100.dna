@@ -630,7 +630,7 @@ group "clearCoasts" [
    code [ "toon_landmark_DD_D1" ]
    title [ "" ]
    pos [ -4.99768 -79.9975 0 ]
-   nhpr [ -180 0 0 ]
+   nhpr [ 180 0 -0 ]
    door [
     code [ "door_double_curved_ur" ]
     color [ 1 1 1 1 ]

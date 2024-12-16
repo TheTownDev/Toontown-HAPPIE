@@ -1144,9 +1144,12 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         if self.interactiveProp:
             self.interactiveProp.gotoBattleCheer()
         self.choseAttackAlready = 0
-        if self.localToonActive():
-            self.__enterLocalToonWaitForInput()
-            self.startTimer(ts)
+        try:
+            if self.localToonActive():
+                self.__enterLocalToonWaitForInput()
+                self.startTimer(ts)
+        except:
+            pass
         if self.needAdjustTownBattle == 1:
 
             self.__adjustTownBattle()
@@ -1155,8 +1158,11 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             if toon.hp <= 0:
                 toon.loop('sad-neutral')
 
-        if self.localToonActive():
-            self.resetStatusEffects()
+        try:
+            if self.localToonActive():
+                self.resetStatusEffects()
+        except:
+            pass
 
 
     def exitWaitForInput(self):
@@ -1476,6 +1482,32 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
     def __adjustTownBattle(self):
         self.notify.debug('__adjustTownBattle()')
         if self.localToonActive() and len(self.activeSuits) > 0:
+            self.notify.debug('__adjustTownBattle() - adjusting town battle')
+            luredSuits = []
+            for suit in self.luredSuits:
+                if suit not in self.activeSuits:
+                    self.notify.error('lured suit not in self.activeSuits')
+                luredSuits.append(self.activeSuits.index(suit))
+                suit.loop('lured')
+
+            trappedSuits = []
+            for suit in self.activeSuits:
+                if suit.battleTrap != NO_TRAP:
+                    trappedSuits.append(self.activeSuits.index(suit))
+
+            immuneSuits = []
+            for suit in self.activeSuits:
+                if suit.getImmuneStatus() == 1:
+                    immuneSuits.append(self.activeSuits.index(suit))
+
+            self.townBattle.adjustCogsAndToons(self.activeSuits, luredSuits, trappedSuits, self.activeToons, immuneSuits)
+            if hasattr(self, 'townBattleAttacks'):
+                self.townBattle.updateChosenAttacks(self.townBattleAttacks[0], self.townBattleAttacks[1], self.townBattleAttacks[2], self.townBattleAttacks[3])
+        self.needAdjustTownBattle = 0
+
+    def adjustTownBattle(self):
+        self.notify.debug('__adjustTownBattle()')
+        if len(self.activeSuits) > 0:
             self.notify.debug('__adjustTownBattle() - adjusting town battle')
             luredSuits = []
             for suit in self.luredSuits:

@@ -566,6 +566,29 @@ __CLUB_PRESIDENT_ATTACKS.add(SuitAttackAttribute(
 __CLUB_PRESIDENT: SuitAttributes = T1SuitAttributes(key=THE_CLUB_PRESIDENT, name=TTLocalizer.SuitBagHolder, singular=TTLocalizer.SuitBagHolderS, plural=TTLocalizer.SuitBagHolderP, tier=7, attacks=__CLUB_PRESIDENT_ATTACKS)
 __registerSuitAttributes(__CLUB_PRESIDENT)
 
+# Begin defining suit attributes for every cog in the game.
+__CLUB_PRESIDENT_HARD_ATTACKS = set()
+__CLUB_PRESIDENT_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.EVIL_EYE,
+    damage={8: 8, 50: 32},
+    accuracy=75,
+    weight=50,
+))
+__CLUB_PRESIDENT_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.TEE_OFF,
+    damage={8: 10, 50: 29},
+    accuracy=50,
+    weight=30,
+))
+__CLUB_PRESIDENT_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.QUAKE,
+    damage={8: 7, 50: 26},
+    accuracy=75,
+    weight=20,
+))
+__CLUB_PRESIDENT_HARD: SuitAttributes = T1SuitAttributes(key=THE_CLUB_PRESIDENT_HARD, name=TTLocalizer.SuitBagHolder, singular=TTLocalizer.SuitBagHolderS, plural=TTLocalizer.SuitBagHolderP, tier=7, attacks=__CLUB_PRESIDENT_HARD_ATTACKS)
+__registerSuitAttributes(__CLUB_PRESIDENT_HARD)
+
 __COLD_CALLER_ATTACKS = set()
 __COLD_CALLER_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.FREEZE_ASSETS,
@@ -818,6 +841,40 @@ __FACTORY_FOREMANATTACKS.add(SuitAttackAttribute(
 __TRAFFIC_MANAGER: SuitAttributes = SuitAttributes(key=THE_FACTORY_FOREMAN, name=TTLocalizer.SuitTrafficManager, singular=TTLocalizer.SuitTrafficManagerS, plural=TTLocalizer.SuitTrafficManagerP, tier=7, attacks=__FACTORY_FOREMANATTACKS)
 __registerSuitAttributes(__TRAFFIC_MANAGER)
 
+____FACTORY_FOREMANATTACKS_HARD = set()
+____FACTORY_FOREMANATTACKS_HARD.add(SuitAttackAttribute(
+    attack=SuitAttackType.FIRED,
+    damage={35: 21},
+    accuracy=60,
+    weight=30,
+))
+____FACTORY_FOREMANATTACKS_HARD.add(SuitAttackAttribute(
+    attack=SuitAttackType.POWER_TRIP,
+    damage={35: 15},
+    accuracy=50,
+    weight=15,
+))
+____FACTORY_FOREMANATTACKS_HARD.add(SuitAttackAttribute(
+    attack=SuitAttackType.PLAY_HARDBALL,
+    damage={35: 15,},
+    accuracy=60,
+    weight=30,
+))
+____FACTORY_FOREMANATTACKS_HARD.add(SuitAttackAttribute(
+    attack=SuitAttackType.RED_TAPE,
+    damage={35: 14, 7: 10, 8: 11, 9: 13, 10: 15},
+    accuracy=60,
+    weight=25,
+))
+____FACTORY_FOREMANATTACKS_HARD.add(SuitAttackAttribute(
+    attack=SuitAttackType.COMPANY_RESTRICTION,
+    damage={35: 12,},
+    accuracy=100,
+    weight=0,
+))
+__FACTORYFOREMAN_HARD: SuitAttributes = SuitAttributes(key=THE_FACTORY_FOREMAN_HARD, name=TTLocalizer.SuitTrafficManager, singular=TTLocalizer.SuitTrafficManagerS, plural=TTLocalizer.SuitTrafficManagerP, tier=7, attacks=____FACTORY_FOREMANATTACKS_HARD)
+__registerSuitAttributes(__FACTORYFOREMAN_HARD)
+
 __SHORT_CHANGE_ATTACKS = set()
 __SHORT_CHANGE_ATTACKS.add(SuitAttackAttribute(
     attack=SuitAttackType.WATERCOOLER,
@@ -1051,6 +1108,28 @@ __MINT_AUDITOR_ATTACKS.add(SuitAttackAttribute(
 ))
 __MINT_AUDITOR: SuitAttributes = SuitAttributes(key=THE_MINT_AUDITOR, name=TTLocalizer.SuitSkinflint, singular=TTLocalizer.SuitSkinflintS, plural=TTLocalizer.SuitSkinflintP, tier=5, attacks=__MINT_AUDITOR_ATTACKS)
 __registerSuitAttributes(__MINT_AUDITOR)
+
+__MINT_AUDITOR_HARD_ATTACKS = set()
+__MINT_AUDITOR_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.CALCULATE,
+    damage={40: 26,},
+    accuracy=60,
+    weight=30,
+))
+__MINT_AUDITOR_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.MARKET_CRASH,
+    damage={40: 28,},
+    accuracy=60,
+    weight=45,
+))
+__MINT_AUDITOR_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.POWER_TIE,
+    damage={40: 21},
+    accuracy=60,
+    weight=25,
+))
+__MINT_AUDITOR_HARD: SuitAttributes = SuitAttributes(key=THE_MINT_AUDITOR_HARD, name=TTLocalizer.SuitSkinflint, singular=TTLocalizer.SuitSkinflintS, plural=TTLocalizer.SuitSkinflintP, tier=5, attacks=__MINT_AUDITOR_HARD_ATTACKS)
+__registerSuitAttributes(__MINT_AUDITOR_HARD)
 
 __BOTTOM_FEEDER_ATTACKS = set()
 __BOTTOM_FEEDER_ATTACKS.add(SuitAttackAttribute(
@@ -1544,6 +1623,34 @@ __OFFICE_CLERK_ATTACKS.add(SuitAttackAttribute(
 ))
 __OFFICE_CLERK: SuitAttributes = SuitAttributes(key=THE_OFFICE_CLERK, name=TTLocalizer.SuitDefendent, singular=TTLocalizer.SuitDefendentS, plural=TTLocalizer.SuitDefendentP, tier=3, attacks=__OFFICE_CLERK_ATTACKS)
 __registerSuitAttributes(__OFFICE_CLERK)
+
+__OFFICE_CLERK_HARD_ATTACKS = set()
+__OFFICE_CLERK_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.MUMBO_JUMBO,
+    damage={4: 5, 5: 7, 6: 10, 7: 12, 40: 21},
+    accuracy=95,
+    weight=20,
+))
+__OFFICE_CLERK_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.JARGON,
+    damage={40: 26},
+    accuracy=75,
+    weight=25,
+))
+__OFFICE_CLERK_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.GUILT_TRIP,
+    damage={4: 5, 5: 7, 6: 8, 7: 11, 40: 31},
+    accuracy=75,
+    weight=25,
+))
+__OFFICE_CLERK_HARD_ATTACKS.add(SuitAttackAttribute(
+    attack=SuitAttackType.LEGALESE,
+    damage={4: 8, 5: 10, 6: 12, 7: 15, 40: 32},
+    accuracy=95,
+    weight=30,
+))
+__OFFICE_CLERK_HARD: SuitAttributes = SuitAttributes(key=THE_OFFICE_CLERK_HARD, name=TTLocalizer.SuitDefendent, singular=TTLocalizer.SuitDefendentS, plural=TTLocalizer.SuitDefendentP, tier=3, attacks=__OFFICE_CLERK_HARD_ATTACKS)
+__registerSuitAttributes(__OFFICE_CLERK_HARD)
 
 
 """

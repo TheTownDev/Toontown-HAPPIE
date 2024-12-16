@@ -161,11 +161,11 @@ class GagExpButton(ButtonContainerButton):
     BUTTON_TEXT = 'omg it is so happie'
 
     def __init__(self, container, extraArgs):
-        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
-        circle = model.find('**/minnieCircle')
+        model = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect')
+        circle = model.find('**/ttr_t_gui_bat_statusEffect_cog')
         invIcons = loader.loadModel('phase_3.5/models/gui/inventory_icons')
         pieIcon = invIcons.find('**/inventory_tart')
-        pieIcon.setScale(0.75)
+        pieIcon.setScale(4)
         pieIcon.setPos(-0.01, 0, 0.01)
         pieIcon.reparentTo(circle)
         model.removeNode()
@@ -177,7 +177,7 @@ class GagExpButton(ButtonContainerButton):
                                        container,
                                        extraArgs,
                                        image=circle,
-                                       image_scale=1.1)
+                                       image_scale=0.04)
 
     def hover(self, _):
         pass
@@ -203,18 +203,18 @@ class MeritButton(ButtonContainerButton):
                                        container,
                                        extraArgs,
                                        image=image,
-                                       image_scale=1.1)
+                                       image_scale=0.04)
         self.switchTaskName = self.uniqueName('merit-button-swap-icons')
         taskMgr.doMethodLater(self.SWITCH_TIME, self.updateImage, self.switchTaskName)
 
     def makeImage(self):
         # Backwards so that it starts with sellbot
         cogTypes = ['**/SalesIcon', '**/MoneyIcon', '**/LegalIcon', '**/CorpIcon']
-        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
-        circle = model.find('**/minnieCircle')
+        model = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect')
+        circle = model.find('**/ttr_t_gui_bat_statusEffect_cog')
         cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
         cogIcon = cogIcons.find(cogTypes[self.index])
-        cogIcon.setScale(0.135)
+        cogIcon.setScale(4.0)
         cogIcon.setPos(-0.006, 0, 0.01)
         cogIcon.reparentTo(circle)
         plusText = TextNode('plus')
@@ -260,11 +260,11 @@ class DisguisePartButton(ButtonContainerButton):
     BUTTON_TEXT = 'omg it is so happie'
 
     def __init__(self, container, extraArgs):
-        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
-        circle = model.find('**/minnieCircle')
+        model = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect')
+        circle = model.find('**/ttr_t_gui_bat_statusEffect_cog')
         bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
         cogArm = bookModel.find('**/CogArmIcon2')
-        cogArm.setScale(0.135)
+        cogArm.setScale(4.0)
         cogArm.setPos(-0.01, 0, 0.01)
         cogArm.reparentTo(circle)
         model.removeNode()
@@ -276,7 +276,7 @@ class DisguisePartButton(ButtonContainerButton):
                                        container,
                                        extraArgs,
                                        image=circle,
-                                       image_scale=1.1)
+                                       image_scale=0.04)
 
     def hover(self, _):
         pass
@@ -293,11 +293,11 @@ class JellybeansGainButton(ButtonContainerButton):
     BUTTON_TEXT = 'omg it is so happie'
 
     def __init__(self, container, extraArgs):
-        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
-        circle = model.find('**/minnieCircle')
+        model = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect')
+        circle = model.find('**/ttr_t_gui_bat_statusEffect_cog')
         bookModel = loader.loadModel('phase_3.5/models/gui/jar_gui')
         cogArm = bookModel
-        cogArm.setScale(0.135)
+        cogArm.setScale(4.0)
         cogArm.setPos(-0.01, 0, 0.01)
         cogArm.reparentTo(circle)
         model.removeNode()
@@ -308,7 +308,7 @@ class JellybeansGainButton(ButtonContainerButton):
                                        container,
                                        extraArgs,
                                        image=circle,
-                                       image_scale=1.1)
+                                       image_scale=0.04)
 
     def hover(self, _):
         pass
@@ -326,8 +326,8 @@ class QuestProgressButton(ButtonContainerButton):
     notify = DirectNotifyGlobal.directNotify.newCategory('QuestProgressButton')
 
     def __init__(self, container, extraArgs):
-        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
-        circle = model.find('**/minnieCircle')
+        model = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect')
+        circle = model.find('**/ttr_t_gui_bat_statusEffect_cog')
         bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
         questCard = bookModel.find('**/package')
         questCard.setScale(0.1)
@@ -341,7 +341,7 @@ class QuestProgressButton(ButtonContainerButton):
                                        container,
                                        extraArgs,
                                        image=circle,
-                                       image_scale=1.1)
+                                       image_scale=0.04)
 
     def hover(self, _):
         pass
@@ -365,17 +365,17 @@ class GoldSkelecogButton(ButtonContainerButton):
                                        container,
                                        extraArgs,
                                        image=image,
-                                       image_scale=1.1)
+                                       image_scale=0.04)
         self.switchTaskName = self.uniqueName('merit-button-swap-icons')
         taskMgr.doMethodLater(self.SWITCH_TIME, self.updateImage, self.switchTaskName)
 
     def makeImage(self):
         cogTypes = '**/MoneyIcon'
-        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
-        circle = model.find('**/minnieCircle')
+        model = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect')
+        circle = model.find('**/ttr_t_gui_bat_statusEffect_cog')
         cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
         cogIcon = cogIcons.find(cogTypes)
-        cogIcon.setScale(0.135)
+        cogIcon.setScale(4.0)
         cogIcon.setPos(-0.006, 0, 0.01)
         cogIcon.reparentTo(circle)
         plusText = TextNode('plus')
@@ -420,11 +420,11 @@ class LureStatusButton(ButtonContainerButton):
     BUTTON_TEXT = 'omg it is so happie'
 
     def __init__(self, container, extraArgs):
-        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
-        circle = model.find('**/minnieCircle')
+        model = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_bat_statusEffect')
+        circle = model.find('**/ttr_t_gui_bat_statusEffect_cog')
         invIcons = loader.loadModel('phase_3.5/models/gui/inventory_icons')
         pieIcon = invIcons.find('**/inventory_big_magnet')
-        pieIcon.setScale(0.75)
+        pieIcon.setScale(4)
         pieIcon.setPos(-0.01, 0, 0.01)
         pieIcon.reparentTo(circle)
         model.removeNode()
@@ -436,7 +436,7 @@ class LureStatusButton(ButtonContainerButton):
                                        container,
                                        extraArgs,
                                        image=circle,
-                                       image_scale=1.1)
+                                       image_scale=0.04)
 
     def hover(self, _):
         pass

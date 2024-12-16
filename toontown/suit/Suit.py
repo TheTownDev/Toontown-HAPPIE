@@ -446,7 +446,7 @@ class Suit(Avatar.Avatar):
         tie.setTexture(tieTex, 1)
 
     def generateCorporateMedallion(self):
-        icons = loader.loadModel('phase_3/models/gui/cog_icons')
+        icons = loader.loadModel('phase_3/models/gui/ttr_m_gui_gen_cogIcons')
         dept = self.style.dept
         chestNull = self.find('**/jnt_M_attachMeter_01')
         if dept == 'c':

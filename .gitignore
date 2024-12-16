@@ -17,6 +17,8 @@ backups/
 settings.json
 errorCode
 PPYTHON_PATH
+*.pdnBak
+*.py~
 
 toontown/archipelago/output/
 
@@ -24,6 +26,7 @@ toontown/archipelago/output/
 .idea
 .run/
 venv/
+__pycache__/
 
 # Build
 output/

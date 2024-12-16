@@ -494,71 +494,28 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
                     self.b_setAttackCode(ToontownGlobals.BossCogSwatLeft)
 
     def makeTreasure(self, goon):
-        # Places a treasure, as pooped out by the given goon.  We
-        # place the treasure at the goon's current position, or at
-        # least at the beginning of its current path.  Actually, we
-        # ignore Z, and always place the treasure at Z == 0,
-        # presumably the ground.
-
-        if self.state != 'BattleThree':
+        if self.state != 'BattleThree' or len(self.treasures) >= self.ruleset.MAX_TREASURE_AMOUNT or random.random() > self.ruleset.GOON_TREASURE_DROP_CHANCE:
             return
 
-        # Too many treasures on the field?
-        if len(self.treasures) >= self.ruleset.MAX_TREASURE_AMOUNT:
-            self.debug(doId=goon.doId, content='Not spawning treasure, already %s present' % self.ruleset.MAX_TREASURE_AMOUNT)
-            return
-
-        # Drop chance?
-        if self.ruleset.GOON_TREASURE_DROP_CHANCE < 1.0:
-            r = random.random()
-            self.debug(doId=goon.doId, content='Rolling for treasure drop, need > %s, got %s' % (self.ruleset.GOON_TREASURE_DROP_CHANCE, r))
-            if r > self.ruleset.GOON_TREASURE_DROP_CHANCE:
-                return
-
-        # The BossCog acts like a treasure planner as far as the
-        # treasure is concerned.
         pos = goon.getPos(self)
+        fpos = self.scene.getRelativePoint(self, Point3(pos[0] + random.uniform(-10, 10), pos[1] + random.uniform(-10, 10), 0))
 
-        # The treasure pops out and lands somewhere nearby.  Let's
-        # start by choosing a point on a ring around the boss, based
-        # on our current angle to the boss.
-        v = Vec3(pos[0], pos[1], 0.0)
-        if not v.normalize():
-            v = Vec3(1, 0, 0)
-        v = v * 27
-
-        # Then perterb that point by a distance in some random
-        # direction.
-        angle = random.uniform(0.0, 2.0 * math.pi)
-        radius = 10
-        dx = radius * math.cos(angle)
-        dy = radius * math.sin(angle)
-
-        fpos = self.scene.getRelativePoint(self, Point3(v[0] + dx, v[1] + dy, 0))
-
-        # Find an index based on the goon strength we should use
-        treasureHealIndex = 1.0*(goon.strength-self.ruleset.MIN_GOON_DAMAGE) / (self.ruleset.MAX_GOON_DAMAGE-self.ruleset.MIN_GOON_DAMAGE)
-        treasureHealIndex *= len(self.ruleset.GOON_HEALS)
-        treasureHealIndex = int(clamp(treasureHealIndex, 0, len(self.ruleset.GOON_HEALS)-1))
-        healAmount = self.ruleset.GOON_HEALS[treasureHealIndex]
-        availStyles = self.ruleset.TREASURE_STYLES[treasureHealIndex]
-        style = random.choice(availStyles)
+        healAmount = self.ruleset.GOON_HEALS[int((goon.strength-self.ruleset.MIN_GOON_DAMAGE)/(self.ruleset.MAX_GOON_DAMAGE-self.ruleset.MIN_GOON_DAMAGE)*(len(self.ruleset.GOON_HEALS)-1))]
+        style = random.choice(self.ruleset.TREASURE_STYLES[int((goon.strength-self.ruleset.MIN_GOON_DAMAGE)/(self.ruleset.MAX_GOON_DAMAGE-self.ruleset.MIN_GOON_DAMAGE)*(len(self.ruleset.TREASURE_STYLES)-1))])
 
         if self.recycledTreasures:
-            # Reuse a previous treasure object
             treasure = self.recycledTreasures.pop(0)
-            treasure.d_setGrab(0)
-            treasure.b_setGoonId(goon.doId)
-            treasure.b_setStyle(style)
-            treasure.b_setPosition(pos[0], pos[1], 0)
-            treasure.b_setFinalPosition(fpos[0], fpos[1], 0)
-            treasure.setResponsibleAv(goon.getStunnedByAvId())
         else:
-            # Create a new treasure object
-            treasure = DistributedCashbotBossTreasureAI.DistributedCashbotBossTreasureAI(self.air, self, goon, style, fpos[0], fpos[1], 0)
-            treasure.setResponsibleAv(goon.getStunnedByAvId())
+            treasure = DistributedCashbotBossTreasureAI.DistributedCashbotBossTreasureAI(self.air, self, goon, style, 0, 0, 0)
             treasure.generateWithRequired(self.zoneId)
+
+        treasure.setResponsibleAv(goon.getStunnedByAvId())
         treasure.healAmount = healAmount
+        treasure.d_setGrab(0)
+        treasure.b_setGoonId(goon.doId)
+        treasure.b_setStyle(style)
+        treasure.b_setPosition(pos[0], pos[1], 0)
+        treasure.b_setFinalPosition(fpos[0], fpos[1], 0)
         self.treasures[treasure.doId] = treasure
 
     # Called from treasures when they are picked up, tells us who should be credited for this healing
@@ -607,31 +564,26 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def makeGoon(self, side = None):
         self.goonMovementTime = globalClock.getFrameTime()
-        if side == None:
-            if not self.wantOpeningModifications:
-                side = random.choice(['EmergeA', 'EmergeB'])
-            else:
-                for t in self.involvedToons:
-                    avId = t
-                toon = self.air.doId2do.get(avId)
-                pos = toon.getPos()[1]
-                if pos < -315:
-                    side = 'EmergeB'
-                else:
-                    side = 'EmergeA'
 
-        # First, look to see if we have a goon we can recycle.
+        if side == None:
+            side = 'EmergeA' if not self.wantOpeningModifications else ('EmergeB' if self.involvedToons[0].getPos()[1] < -315 else 'EmergeA')
+
         goon = self.__chooseOldGoon()
+
         if goon == None:
-            # No, no old goon; is there room for a new one?
             if len(self.goons) >= self.getMaxGoons():
                 return
-            # make a new one.
             goon = DistributedCashbotBossGoonAI.DistributedCashbotBossGoonAI(self.air, self)
             goon.generateWithRequired(self.zoneId)
             self.goons.append(goon)
 
-        # Attributes for desperation mode goons
+        goon.b_setupGoon(**self.__getGoonAttributes())
+
+        goon.request(side)
+
+        self.debug(doId=goon.doId, content='Spawning on %s, attributes=%s' % (side, self.__getGoonAttributes()))
+
+    def __getGoonAttributes(self):
         goon_stun_time = 4
         goon_velocity = 8
         goon_hfov = 90
@@ -639,7 +591,6 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         goon_strength = self.ruleset.MAX_GOON_DAMAGE
         goon_scale = 1.8
 
-        # If the battle isn't in desperation yet override the values to normal values
         if self.getBattleThreeTime() <= 1.0:
             goon_stun_time = self.progressValue(30, 8)
             goon_velocity = self.progressRandomValue(3, 7)
@@ -648,15 +599,16 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             goon_strength = int(self.progressRandomValue(self.ruleset.MIN_GOON_DAMAGE, self.ruleset.MAX_GOON_DAMAGE))
             goon_scale = self.progressRandomValue(self.goonMinScale, self.goonMaxScale, noRandom=self.wantMaxSizeGoons)
 
-        # Apply multipliers if necessary
         goon_velocity *= self.ruleset.GOON_SPEED_MULTIPLIER
 
-        # Apply attributes to the goon
-        goon.STUN_TIME = goon_stun_time
-        goon.b_setupGoon(velocity=goon_velocity, hFov=goon_hfov, attackRadius=goon_attack_radius, strength=goon_strength, scale=goon_scale)
-        goon.request(side)
-
-        self.debug(doId=goon.doId, content='Spawning on %s, stun=%.2f, vel=%.2f, hfov=%.2f, attRadius=%.2f, str=%s, scale=%.2f' % (side, goon_stun_time, goon_velocity, goon_hfov, goon_attack_radius, goon_strength, goon_scale))
+        return {
+            'stunTime': goon_stun_time,
+            'velocity': goon_velocity,
+            'hFov': goon_hfov,
+            'attackRadius': goon_attack_radius,
+            'strength': goon_strength,
+            'scale': goon_scale
+        }
 
     def __chooseOldGoon(self):
         # Walks through the list of goons managed by the boss to see

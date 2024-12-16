@@ -332,6 +332,7 @@ class Movie(DirectObject.DirectObject):
          0], [0,
          0,
          0,
+         0,
          0], noSkip=True))
         self.track += self.rewardPanel.getTrackIntervalList(base.localAvatar, THROW_TRACK, 0, 1, 0)
         self.track.append(Func(self.tutRewardDialog_1.show))
@@ -717,6 +718,7 @@ class Movie(DirectObject.DirectObject):
 
                         sdict['leftSuits'] = leftSuits
                         sdict['rightSuits'] = rightSuits
+
                         sdict['hp'] = hps[targetIndex]
                         sdict['kbbonus'] = kbbonuses[targetIndex]
                         sdict['died'] = ta[SUIT_DIED_COL] & 1 << targetIndex
@@ -731,6 +733,7 @@ class Movie(DirectObject.DirectObject):
                             adict['target'] = sdict
                 adict['hpbonus'] = ta[TOON_HPBONUS_COL]
                 adict['sidestep'] = ta[TOON_ACCBONUS_COL]
+                adict['otherSuits'] = ta[TOON_OTHERS_COL]
                 if 'npcId' in adict:
                     adict['sidestep'] = 0
                 adict['battle'] = self.battle

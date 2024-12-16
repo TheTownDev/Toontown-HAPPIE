@@ -88,7 +88,7 @@ class BattleCalculatorAI:
         debug = self.notify.getDebug()
         attack = self.battle.toonAttacks[attackIndex]
         atkTrack, atkLevel = self.__getActualTrackLevel(attack)
-        if atkTrack in [LURE, HEAL, SQUIRT, SOUND]:
+        if atkTrack in [LURE, HEAL, THROW, DROP, SQUIRT, SOUND]:
             attack[TOON_ACCBONUS_COL] = 0
             return (1, 100)
         if atkTrack == NPCSOS:
@@ -554,7 +554,7 @@ class BattleCalculatorAI:
                     for target in targetList:
                         if target.getHP() > targetSuit.getHP():
                             targetSuit = target
-                    attackDamage = targetSuit.getHP()
+                    attackDamage = 9999
                 result = attackDamage
                 if atkTrack == HEAL:
                     if not self.__attackHasHit(attack, suit=0):
@@ -1056,6 +1056,8 @@ class BattleCalculatorAI:
                 continue
             attack = self.battle.toonAttacks[toonId]
             atkTrack = self.__getActualTrack(attack)
+            atkTrackLevel = self.__getActualTrackLevel(attack)
+
             if atkTrack != NO_ATTACK and atkTrack != SOS and atkTrack != NPCSOS:
                 if self.notify.getDebug():
                     self.notify.debug('Calculating attack for toon: %d' % toonId)
@@ -1407,12 +1409,14 @@ class BattleCalculatorAI:
         longest = max(len(self.battle.activeToons), len(self.battle.activeSuits))
         for t in self.battle.activeToons:
             for j in range(longest):
-                self.battle.toonAttacks[t][TOON_HP_COL].append(-1)
-                self.battle.toonAttacks[t][TOON_KBBONUS_COL].append(-1)
+                self.battle.toonAttacks[t][TOON_HP_COL].append(0)
+                self.battle.toonAttacks[t][TOON_KBBONUS_COL].append(0)
 
         for i in range(8):
             for j in range(len(self.battle.activeToons)):
-                self.battle.suitAttacks[i][SUIT_HP_COL].append(-1)
+                self.battle.suitAttacks[i][SUIT_HP_COL].append(0)
+
+        #self.battle.suitsCheatFirst.append([4, self.battle.activeSuits[1].doId, [0,], others, 0])
 
         toonsHit, cogsMiss = self.__initRound()
         for suit in self.battle.activeSuits:
@@ -1430,10 +1434,32 @@ class BattleCalculatorAI:
             pass
         
         self.__calculateToonAttacks()
+
+        #find any toon attacks that use the squirt track, then find the target's ajacent suits, add them to the TOON_OTHERS_COL of the toon attack
+        for toon in self.battle.activeToons:
+            toonAttack = self.battle.toonAttacks[toon]
+            if toonAttack[TOON_TRACK_COL] == SQUIRT and toonAttack[TOON_LVL_COL] != UBER_GAG_LEVEL_INDEX:
+                suit = self.battle.findSuit(toonAttack[TOON_TGT_COL])
+                toonAttack[TOON_OTHERS_COL] = self.battle.battleEye.getLeftRightSuitsAroundSuit(suit)
+
+                targetIndex = self.battle.activeSuits.index(suit)
+
+                #set a value for the toon's attack damage
+                atkHP = toonAttack[TOON_HP_COL][targetIndex]
+                for otherId in toonAttack[TOON_OTHERS_COL]:
+                    other = self.battle.findSuit(otherId)
+                    other.setHP(other.getHP() - atkHP)
+
+                    if other.currHP <= 0:
+                        if other not in self.battle.extraDeadSuits:
+                            self.battle.extraDeadSuits.append(other)
+                            self.__removeLured(other.doId)
+
+
+
         self.__processBonuses(hp=0)
         self.__processBonuses(hp=1)
-        
-        """
+
         for toon in self.battle.activeToons:
             toonAttack = self.battle.toonAttacks[toon]
             if toonAttack[TOON_TRACK_COL] in [THROW, SQUIRT]:
@@ -1469,7 +1495,7 @@ class BattleCalculatorAI:
                         self.__addLuredSuitsDelayed(toonId)
                 if lastAttack:
                     self.__clearLuredSuitsDelayed()
-        
+        """
         
         self.__postProcessToonAttacks()
         self.__updateLureTimeouts()
@@ -1490,27 +1516,6 @@ class BattleCalculatorAI:
             if suit.dna.name == THE_MINT_AUDITOR and not self.supervisorCutscenePlayed:
                 self.battle.cutscenesFirst.append([3, suit.doId, [0,], [], 0])
                 self.supervisorCutscenePlayed = True
-
-        # buildASuitAttack goes here! :)
-        """
-        for suit in self.battle.activeSuits:
-            DOT_Eff = suit.effectHandler.children.get('damageDOT', None)
-            print('DOT setup time!')
-            if DOT_Eff is None:
-                print('DOT assign time!')
-                suit.effectHandler.addEffect('BattleEffectDOTDamageAI')
-                lureEff = suit.effectHandler.children['damageDOT']    
-                lureEff.children['value'] = 40
-        
-        for suit in self.battle.activeSuits:
-            DOT_Eff = suit.effectHandler.children.get('damageDOT', None)
-            if DOT_Eff is not None:
-                print('DOT time!')
-                suit.currHP -= DOT_Eff.children['value']
-                died = self.checkIfSuitDied(suit)
-                self.battle.dots.append([2, suit.doId, [DOT_Eff.children['value']], [], died])
-                self.makeSuitDead(suit)
-        """
         
         for suit in self.battle.activeSuits:
             if suit.dna.name == THE_FACTORY_FOREMAN and not self.supervisorPhased and suit.currHP <= round(suit.maxHP * 0.4):
@@ -1617,12 +1622,7 @@ class BattleCalculatorAI:
                                 dmg_eff = tgt_suit.effectHandler.children['damageBonus']    
                                 dmg_eff.children['value'] = 10
                                 self.battle.suitsCheatSecond.append([3, suit.doId, [dmg_eff.children['value']], [tgt_suit.doId], 0])
-                                continue        
-        
-        if toonsHit == 1:
-            BattleCalculatorAI.toonsAlwaysHit = 0
-        if cogsMiss == 1:
-            BattleCalculatorAI.suitsAlwaysMiss = 0
+                                continue
         if self.notify.getDebug():
             self.notify.debug('Toon skills gained after this round: ' + repr(self.toonSkillPtsGained))
             self.__printSuitAtkStats()

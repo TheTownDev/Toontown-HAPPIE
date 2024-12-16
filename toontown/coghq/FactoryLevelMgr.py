@@ -20,6 +20,7 @@ class FactoryLevelMgr(LevelMgr.LevelMgr):
             self.toonLifter = FactoryUtil.ToonLifter('f3')
         self.callSetters('farPlaneDistance')
         self.geom.reparentTo(render)
+        self.geom.setTwoSided(True)
         oilRoomOil = self.geom.find('**/oilroom/room/geometry_oilroom/*oil')
         oilRoomFloor = self.geom.find('**/oilroom/room/geometry_oilroom/*platform')
         if oilRoomOil and not oilRoomOil.isEmpty() and oilRoomFloor and not oilRoomFloor.isEmpty():
@@ -33,7 +34,7 @@ class FactoryLevelMgr(LevelMgr.LevelMgr):
         LevelMgr.LevelMgr.destroy(self)
 
     def setFarPlaneDistance(self, farPlaneDistance):
-        base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear, farPlaneDistance)
+        base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear, 100000)
 
     if __dev__:
 

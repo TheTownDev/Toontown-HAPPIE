@@ -27,6 +27,8 @@ def doScene(scene, battle):
         return doFieldPromotion(scene, battle)
     elif scene[0] == 3:
         return doOvertime(scene, battle)
+    elif scene[0] == 4:
+        return doTesting(scene, battle)
 
 def doNothing(scene, battle):
     return ("InsertSuitTrack", "InsertCamTrack")
@@ -43,6 +45,27 @@ def getPartTrack(particleEffect, startDelay, durationDelay, partExtraArgs):
     else:
         worldRelative = 1
     return Sequence(Wait(startDelay), ParticleInterval(particleEffect, parent, worldRelative, duration=durationDelay, cleanup=True))
+
+def doTesting(scene, battle):
+    foreman = battle.findSuit(scene[1])
+    suits = []
+    try:
+        lucky_suit1 = battle.findSuit(scene[3][0])
+        suits.append(lucky_suit1)
+    except:
+        pass
+    try:
+        lucky_suit2 = battle.findSuit(scene[3][1])
+        suits.append(lucky_suit2)
+    except:
+        pass
+
+    movie = Parallel()
+
+    for suit in suits:
+        movie.append(ActorInterval(suit, 'squirt-small-react'))
+    cameraTrack = suitGroupShot(foreman, movie.duration)
+    return (movie, cameraTrack)
 
 
 def doFieldPromotion(scene, battle):

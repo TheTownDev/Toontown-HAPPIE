@@ -665,3 +665,26 @@ def calcAvgSuitPos(throw):
 
     avgSuitPos /= numTargets
     return avgSuitPos
+
+def getLeftRightSuitsAroundSuit(battle, suit):
+    leftSuits = []
+    suitIndex = battle.activeSuits.index(suit)
+    for si in range(0, suitIndex):
+        asuit = battle.activeSuits[si]
+        leftSuits.append(asuit)
+
+    lenSuits = len(battle.activeSuits)
+    rightSuits = []
+    if lenSuits > suitIndex + 1:
+        for si in range(suitIndex + 1, lenSuits):
+            asuit = battle.activeSuits[si]
+            rightSuits.append(asuit)
+
+    otherSuits = []
+    if len(leftSuits) > 0:
+        otherSuits.append(leftSuits[0].doId)
+
+    if len(rightSuits) > 0:
+        otherSuits.append(rightSuits[0].doId)
+
+    return otherSuits

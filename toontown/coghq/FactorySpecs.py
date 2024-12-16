@@ -1,5 +1,6 @@
 from toontown.toonbase import ToontownGlobals
-from . import SellbotLegFactorySpec
+from toontown.coghq.facility.sellbot.scrap import tt_f_ara_fac_layout00
+from toontown.coghq.facility.sellbot.scrap import tt_f_ara_fac_layout00Cogs
 from . import SellbotLegFactoryCogs
 from . import LawbotLegFactorySpec
 from . import LawbotLegFactoryCogs
@@ -14,14 +15,14 @@ def getCogSpecModule(factoryId):
 
 
 FactorySpecModules = {
-    ToontownGlobals.SellbotFactoryInt: SellbotLegFactorySpec,
-    ToontownGlobals.SellbotFactoryIntS: SellbotLegFactorySpec,
+    ToontownGlobals.SellbotFactoryInt: tt_f_ara_fac_layout00,
+    ToontownGlobals.SellbotFactoryIntS: tt_f_ara_fac_layout00,
     ToontownGlobals.LawbotOfficeInt: LawbotLegFactorySpec
 }
 
 CogSpecModules = {
-    ToontownGlobals.SellbotFactoryInt: SellbotLegFactoryCogs,
-    ToontownGlobals.SellbotFactoryIntS: SellbotLegFactoryCogs,
+    ToontownGlobals.SellbotFactoryInt: tt_f_ara_fac_layout00Cogs,
+    ToontownGlobals.SellbotFactoryIntS: tt_f_ara_fac_layout00Cogs,
     ToontownGlobals.LawbotOfficeInt: LawbotLegFactoryCogs
 }
 

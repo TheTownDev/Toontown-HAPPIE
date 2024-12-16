@@ -28,6 +28,7 @@ class DistributedSuitBaseAI(DistributedAvatarAI.DistributedAvatarAI, SuitBase.Su
         self.effectHandler = None
         self.facilitySuit = 0
         self.goldSkelecog = 0
+        self.cantAttack = 0
         self.statusEffectInfo = {}
         return
 

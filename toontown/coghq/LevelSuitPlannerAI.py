@@ -155,7 +155,10 @@ class LevelSuitPlannerAI(DirectObject.DirectObject):
             totalMaxHp += suit.maxHP
 
         for suit in deadSuits:
-            level.suits.remove(suit)
+            try:
+                level.suits.remove(suit)
+            except:
+                pass
 
         cellReserves = []
         for info in level.reserveSuits:

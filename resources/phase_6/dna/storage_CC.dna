@@ -12,17 +12,17 @@ hood_model "phase_5/models/modules/TT_A2" [
 hood_model "phase_5/models/modules/TT_A3" [
 	store_node [ "toon_landmark" "toon_landmark_DD_A2" "TT_A3"  ]
 	]
-hood_model "phase_5/models/modules/TT_B1" [
-	store_node [ "toon_landmark" "toon_landmark_DD_B1" "TT_B1"  ]
+hood_model "phase_6/models/modules/tt_m_ara_cc_landmarkB1" [
+	store_node [ "toon_landmark" "toon_landmark_DD_B1" "CC_B1"  ]
 	]
-hood_model "phase_5/models/modules/TT_B2" [
-	store_node [ "toon_landmark" "toon_landmark_DD_B2" "TT_B2"  ]
+hood_model "phase_6/models/modules/tt_m_ara_cc_landmarkB1" [
+	store_node [ "toon_landmark" "toon_landmark_DD_B2" "CC_B1"  ]
 	]
 hood_model "phase_5/models/modules/TT_C1" [
 	store_node [ "toon_landmark" "toon_landmark_DD_C1" "TT_C1"  ]
 	]
-hood_model "phase_6/models/modules/DD_D1" [
-	store_node [ "toon_landmark" "toon_landmark_DD_D1" "DD_D1"  ]
+hood_model "phase_6/models/modules/tt_m_ara_cc_landmarkC1" [
+	store_node [ "toon_landmark" "toon_landmark_DD_D1" "CC_C1"  ]
 	]
 
 hood_model "phase_6/models/props/palm_tree_topflat" [

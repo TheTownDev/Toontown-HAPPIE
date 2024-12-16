@@ -13,6 +13,7 @@ from toontown.toon import TTEmote
 from otp.avatar import Emote
 from . import SuitBattleGlobals
 from toontown.distributed import DelayDelete
+from toontown.town import TownBattle
 import random
 
 class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
@@ -22,7 +23,10 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
     PlayGameSetPlaceEvent = 'playGameSetPlace'
 
     def __init__(self, cr):
-        townBattle = cr.playGame.hood.loader.townBattle
+        try:
+            townBattle = cr.playGame.hood.loader.townBattle
+        except:
+            townBattle = TownBattle.TownBattle('battleDone')
         DistributedBattleBase.DistributedBattleBase.__init__(self, cr, townBattle)
         self.setupCollisions(self.uniqueBattleName('battle-collide'))
         self.supervisorMusicIn = 0

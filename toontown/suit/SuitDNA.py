@@ -23,7 +23,11 @@ supervisors = [
     THE_FACTORY_FOREMAN,
     THE_MINT_AUDITOR,
     THE_OFFICE_CLERK,
-    THE_CLUB_PRESIDENT]
+    THE_CLUB_PRESIDENT,
+    THE_FACTORY_FOREMAN_HARD,
+    THE_MINT_AUDITOR_HARD,
+    THE_OFFICE_CLERK_HARD,
+    THE_CLUB_PRESIDENT_HARD]
 
 mainTypes = [FLUNKY,
     PENCIL_PUSHER,
@@ -72,6 +76,10 @@ notMainTypes = [
     THE_MINT_AUDITOR,
     THE_OFFICE_CLERK,
     THE_CLUB_PRESIDENT,
+    THE_FACTORY_FOREMAN_HARD,
+    THE_MINT_AUDITOR_HARD,
+    THE_OFFICE_CLERK_HARD,
+    THE_CLUB_PRESIDENT_HARD
 ]
 
 suitATypes = [
@@ -83,6 +91,7 @@ suitATypes = [
     HEAD_HUNTER,
     THE_BIG_CHEESE,
     THE_CLUB_PRESIDENT,
+    THE_CLUB_PRESIDENT_HARD,
     DOUBLE_TALKER,
     BACK_STABBER,
     LEGAL_EAGLE,
@@ -105,11 +114,13 @@ suitBTypes = [
     ATTORNEY,
     SPIN_DOCTOR,
     THE_OFFICE_CLERK,
+    THE_OFFICE_CLERK_HARD,
     BEAN_COUNTER,
     LOAN_SHARK,
     TELEMARKETER,
     MOVER_AND_SHAKER,
     THE_FACTORY_FOREMAN,
+    THE_FACTORY_FOREMAN_HARD,
     INVESTIGATOR
 ]
 
@@ -126,7 +137,8 @@ suitCTypes = [
     BARISTA,
     DESK_JOCKY,
     REPRESENTATIVE,
-    THE_MINT_AUDITOR
+    THE_MINT_AUDITOR,
+    THE_MINT_AUDITOR_HARD
 ]
 
 suitDepts = [
@@ -528,7 +540,7 @@ class SuitVisual:
                     headPath = self.headModelPath(suit.style.body, 'phase_15/models/char/ttr_r_ene_cgr_heads')
                 if self.key == 'barr':
                     headPath = self.headModelPath(suit.style.body, 'phase_11/models/char/ttr_r_ene_lawbotBarrister')
-                if self.key in [ADVENTURE_COACH, CROWD_CONTROL]:
+                if self.key in [ADVENTURE_COACH]:
                     headPath = self.headModelPath(suit.style.body, 'phase_4/models/char/ttr_r_ene_cga_heads2')
                 if self.key in [REPRESENTATIVE, DESK_JOCKY]:
                     headPath = self.headModelPath(suit.style.body, 'phase_3.5/models/char/ttr_r_ene_cgc_heads2')
@@ -540,11 +552,21 @@ class SuitVisual:
                 headModel.removeNode()
         else:
             headModel = loader.loadModel(self.headModelPath(suit.style.body))
+            if self.key == THE_FACTORY_FOREMAN_HARD:
+                headModel = loader.loadModel('phase_9/models/char/ttr_r_ene_cga_sellbotSteelForeman.egg')
+            elif self.key == THE_MINT_AUDITOR_HARD:
+                headModel = loader.loadModel('phase_10/models/char/ttr_r_ene_cga_cashbotBullionMintAuditor.egg')
+            elif self.key == THE_OFFICE_CLERK_HARD:
+                headModel = loader.loadModel('phase_11/models/char/ttr_r_ene_cga_lawbotSeniorOfficeClerk.egg')
+            elif self.key == THE_CLUB_PRESIDENT_HARD:
+                headModel = loader.loadModel('phase_12/models/char/ttr_r_ene_cga_bossbotFringeClubPresident.egg')
             head = headModel.find('**/' + self.head_type)
             print(self.key)
             head.reparentTo(suit.find(attachPoint))
             head.setTwoSided(True)
             suit.headParts.append(head)
+            if self.key == THE_MINT_AUDITOR_HARD:
+                head.setScale(0.85)
             headModel.removeNode()
     
     def __hash__(self):
@@ -603,7 +625,7 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual(RULE_BENDER,  4.25 / aSize,  legalPolyColor,                None,                         'rule-bender.png',    ['twoface'],             5.63),
     SuitVisual(ADVENTURE_COACH,  4.5 / aSize,   legalPolyColor,                None,                         None,                   ['adventure_coach'],         6.93),
     SuitVisual(REPRESENTATIVE,  4.1 / cSize,   moneyPolyColor,                None,                         None,                   ['representative'],            5.72),
-    SuitVisual(CROWD_CONTROL,  6.5 / aSize,   corpPolyColor,                 None,                         None,                   ['crowd_control'],          7.45),
+    SuitVisual(CROWD_CONTROL,  6.5 / aSize,   corpPolyColor,                 None,                         'crowd_control.jpg',                   'headhunter',          7.45),
     SuitVisual(INVESTIGATOR,  6.5 / bSize,   VBase4(0.5, 0.85, 0.75, 1.0),  None,                         None,                   ['investigator'],           8.58),
     SuitVisual(CONFISCATOR,  7.0 / aSize,   salesPolyColor,                None,                         None,                   ['confinscator'],              8.95),
 
@@ -611,6 +633,10 @@ GENERAL_SUIT_VISUALS: Set[SuitVisual] = {
     SuitVisual(THE_MINT_AUDITOR,  5.7 / cSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        None,      'mintauditor',        6.8),
     SuitVisual(THE_OFFICE_CLERK,  7.0 / bSize,   moneyPolyColor,                None,                        None,                   'officeclerk',         10.0),
     SuitVisual(THE_CLUB_PRESIDENT,   4.65 / aSize,   corpPolyColor,                 None,                         None,                   'clubpresident', 6.3),
+    SuitVisual(THE_FACTORY_FOREMAN_HARD,  7.6 / aSize,  VBase4(0.886, 0.737, 0.784, 1.0),                None,                         None,                   'factoryforemanhard',             9.6),
+    SuitVisual(THE_MINT_AUDITOR_HARD,  5.7 / cSize,  VBase4(0.5, 0.8, 0.75, 1.0),   None,                        None,      'mintauditorhard',        7.5),
+    SuitVisual(THE_OFFICE_CLERK_HARD,  7.0 / bSize,   moneyPolyColor,                None,                        None,                   'officeclerkhard',         10.3),
+    SuitVisual(THE_CLUB_PRESIDENT_HARD,   4.65 / aSize,   corpPolyColor,                 None,                         None,                   'clubpresidenthard', 6.7),
 }
 
 """
@@ -686,6 +712,10 @@ customSuit2Dept = {
     THE_MINT_AUDITOR: 'm',
     THE_OFFICE_CLERK: 'l',
     THE_CLUB_PRESIDENT: 'c',
+    THE_FACTORY_FOREMAN_HARD: 's',
+    THE_MINT_AUDITOR_HARD: 'm',
+    THE_OFFICE_CLERK_HARD: 'l',
+    THE_CLUB_PRESIDENT_HARD: 'c',
     BARRISTER: 'l',
     ATTORNEY: 'l'
 }

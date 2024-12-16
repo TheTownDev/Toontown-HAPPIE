@@ -20,6 +20,7 @@ TOON_KBBONUS_COL = 7
 SUIT_DIED_COL = 8
 SUIT_REVIVE_COL = 9
 TOON_STATUSONE_COL = 10
+TOON_OTHERS_COL = 11
 SUIT_ID_COL = 0
 SUIT_ATK_COL = 1
 SUIT_TGT_COL = 2
@@ -102,7 +103,8 @@ def getToonAttack(id, track = NO_ATTACK, level = -1, target = -1):
      [],
      0,
      0,
-     0]
+     0,
+     []]
 
 
 def getDefaultSuitAttack():

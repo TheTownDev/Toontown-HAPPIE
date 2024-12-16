@@ -73,34 +73,23 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         return 0
 
     def setSkeleRevives(self, num):
-        if num == None:
-            num = 0
+        num = num or 0
         self.skeleRevives = num
-        if num > self.maxSkeleRevives:
-            self.maxSkeleRevives = num
-        if self.getSkeleRevives() > 0:
-            nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-             'dept': self.getStyleDept(),
-             'level': '%s%s' % (self.getActualLevel(), TTLocalizer.SkeleRevivePostFix)}
-            self.setDisplayName(nameInfo)
+        self.maxSkeleRevives = max(self.maxSkeleRevives, num)
+
+        if self.skeleRevives > 0:
+            level = f"{self.getActualLevel()}{TTLocalizer.SkeleRevivePostFix}"
+        elif self.dna.name in SuitDNA.Resourcebots:
+            level = self.getActualLevel()
+            dept = 'Resourcebot'
+        elif self.dna.name in SuitDNA.supervisors:
+            level = "Supervisor"
         else:
-            if self.dna.name in SuitDNA.Resourcebots:
-                nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-                'dept': 'Resourcebot',
-                'level': self.getActualLevel()}
-                self.setDisplayName(nameInfo)
-            else:
-                if self.dna.name in SuitDNA.supervisors:
-                    nameInfo = TTLocalizer.SupervisorBaseNameWithLevel % {'name': self._name,
-                    'dept': self.getStyleDept(),
-                    'level': "Supervisor"}
-                    self.setDisplayName(nameInfo)
-                else:
-                    nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name,
-                    'dept': self.getStyleDept(),
-                    'level': self.getActualLevel()}
-                    self.setDisplayName(nameInfo)
-        return
+            level = self.getActualLevel()
+
+        dept = getattr(self, 'dept', self.getStyleDept())
+        nameInfo = TTLocalizer.SuitBaseNameWithLevel % {'name': self._name, 'dept': dept, 'level': level}
+        self.setDisplayName(nameInfo)
 
     def setImmuneStatus(self, num):
         if num == None:
@@ -195,16 +184,14 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit, SuitBa
         self.setLevel(level)
 
     def attachPropeller(self):
-        if self.prop == None:
-            self.prop = BattleProps.globalPropPool.getProp('propeller')
-        if self.propInSound == None:
-            self.propInSound = base.loader.loadSfx('phase_5/audio/sfx/ENC_propeller_in.ogg')
-        if self.propOutSound == None:
-            self.propOutSound = base.loader.loadSfx('phase_5/audio/sfx/ENC_propeller_out.ogg')
-        
-        head = self.find('**/def_M_head_01')
-        self.prop.reparentTo(head)
-        return
+        if self.prop is None:
+            self.prop = globalPropPool.getProp('propeller')
+        if self.propInSound is None:
+            self.propInSound = loader.loadSfx('phase_5/audio/sfx/ENC_propeller_in.ogg')
+        if self.propOutSound is None:
+            self.propOutSound = loader.loadSfx('phase_5/audio/sfx/ENC_propeller_out.ogg')
+
+        self.prop.reparentTo(self.find('**/def_M_head_01'))
 
     def detachPropeller(self):
         if self.prop:

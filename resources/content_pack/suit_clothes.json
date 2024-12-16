@@ -3,9 +3,10 @@
       "suit_name": true,
       "ffor": true,
       "maud": true,
-      "bar": true,
-      "inv": true,
-      "cfn": true
+      "fforh": true,
+      "maudh": true,
+      "ofckh": true,
+      "clmph": true
     }
   }
   
