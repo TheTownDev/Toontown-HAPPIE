@@ -24,6 +24,46 @@ hood_model "phase_8/models/modules/ttr_m_ara_ddl_landmarkE1" [
 	]
 
 
+place_model "phase_4/models/props/ttr_m_ara_gen_constructionSigns" [
+	store_node [ "prop" "prop_contructionSignText" "grp_M_tunnelSignText_01" ]
+	]
+
+place_model "phase_4/models/props/ttr_m_ara_gen_constructionSigns" [
+	store_node [ "prop" "prop_contructionSign" "grp_M_constructionTunnelSign_01" ]
+	]
+
+place_model "phase_4/models/props/ttr_m_ara_gen_constructionSigns" [
+	store_node [ "prop" "prop_contructionSignBarricade" "grp_M_constructionSignBarricade_01" ]
+	]
+
+place_model "phase_4/models/props/ttr_m_ara_gen_paintBucket" [
+	store_node [ "prop" "prop_contructionPaintBucket" "grp_M_paintBucket_01" ]
+	]
+
+place_model "phase_4/models/props/ttr_m_ara_gen_paintBucket" [
+	store_node [ "prop" "prop_contructionPaintBucketSplash01" "geo_M_paintSplash_01" ]
+	]
+
+place_model "phase_4/models/props/ttr_m_ara_gen_paintBucket" [
+	store_node [ "prop" "prop_contructionPaintBucketSplash02" "geo_M_paintSplash_02" ]
+	]
+
+place_model "phase_4/models/props/ttr_m_ara_gen_paintBucket" [
+	store_node [ "prop" "prop_contructionPaintBucketSplash03" "geo_M_paintSplash_03" ]
+	]
+
+place_model "phase_4/models/props/ttr_m_ara_gen_paintBucket" [
+	store_node [ "prop" "prop_contructionPaintBucketSplash04" "geo_M_paintSplash_04" ]
+	]
+
+place_model "phase_4/models/props/ttr_m_ara_gen_paintBucket" [
+	store_node [ "prop" "prop_contructionPaintBucketBrush" "grp_M_paintBrush_01" ]
+	]
+
+place_model "phase_4/models/props/ttr_m_ara_gen_cone" [
+	store_node [ "prop" "prop_contructionCone" "" ]
+	]
+
 hood_model "phase_8/models/modules/DL_windows" [
 	store_node [ "window" "window_md_curvedDL_ur" 	]
 	store_node [ "window" "window_md_curvedDL_ul"	]
