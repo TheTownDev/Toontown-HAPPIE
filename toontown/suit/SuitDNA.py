@@ -72,6 +72,8 @@ mainTypes = [FLUNKY,
 ]
 
 notMainTypes = [
+    ATTORNEY,
+    BARRISTER,
     THE_FACTORY_FOREMAN,
     THE_MINT_AUDITOR,
     THE_OFFICE_CLERK,
@@ -875,14 +877,6 @@ class SuitDNA(AvatarDNA.AvatarDNA):
         bottom = _base + offset
         top = bottom + suitsPerLevel[level - 1]
         self.name = suitHeadTypes[random.choice(list(range(bottom, top)))]
-        
-         # we get it's parent suit
-        if self.name == 'f':
-            # we define it's rng
-            alternateSuitChance = 0.4
-            # if the rng is less than the chance, we set the suit to the alternate suit
-            if random.random() < alternateSuitChance:
-                self.name = 'bar'
         
         if self.name == 'le':
             # we define it's rng

@@ -59,7 +59,7 @@ def __runToHealSpot(heal):
     battle = heal['battle']
     level = heal['level']
     origPos, origHpr = battle.getActorPosHpr(toon)
-    runAnimI = ActorInterval(toon, 'run', duration=runHealTime)
+    runAnimI = ActorInterval(toon, 'walk', duration=runHealTime)
     a = Func(toon.headsUp, battle, healPos)
     b = Parallel(runAnimI, LerpPosInterval(toon, runHealTime, healPos, other=battle))
     if levelAffectsGroup(HEAL, level):
