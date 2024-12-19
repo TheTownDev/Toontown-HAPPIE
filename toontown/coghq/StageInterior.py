@@ -100,7 +100,7 @@ class StageInterior(BattlePlace.BattlePlace):
         def commence(self = self):
             NametagGlobals.setMasterArrowsOn(1)
             self.fsm.request(requestStatus['how'], [requestStatus])
-            base.playMusic(self.loader.music, looping=1, volume=0.8)
+            #base.playMusic(self.loader.music, looping=1, volume=0.8)
             base.transitions.irisIn()
             stage = bboard.get(DistributedStage.DistributedStage.ReadyPost)
             self.loader.hood.spawnTitleText(stage.stageId, stage.layoutIndex, stage.floorNum)

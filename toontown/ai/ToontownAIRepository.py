@@ -24,6 +24,7 @@ from toontown.coghq.CountryClubManagerAI import CountryClubManagerAI
 from toontown.coghq.FactoryManagerAI import FactoryManagerAI
 from toontown.coghq.LawOfficeManagerAI import LawOfficeManagerAI
 from toontown.coghq.MintManagerAI import MintManagerAI
+from toontown.coghq.resourcebot.BoardOfficeManagerAI import BoardOfficeManagerAI
 from toontown.coghq.PromotionManagerAI import PromotionManagerAI
 from toontown.distributed.ToontownDistrictAI import ToontownDistrictAI
 from toontown.distributed.ToontownDistrictStatsAI import ToontownDistrictStatsAI
@@ -41,6 +42,7 @@ from toontown.hood.DLHoodDataAI import DLHoodDataAI
 from toontown.hood.GSHoodDataAI import GSHoodDataAI
 from toontown.hood.GZHoodDataAI import GZHoodDataAI
 from toontown.hood.LawbotHQDataAI import LawbotHQDataAI
+from toontown.hood.ResourcebotHQDataAI import ResourcebotHQDataAI
 from toontown.hood.MMHoodDataAI import MMHoodDataAI
 from toontown.hood.OZHoodDataAI import OZHoodDataAI
 from toontown.hood.TTHoodDataAI import TTHoodDataAI
@@ -104,6 +106,7 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.factoryMgr = None
         self.mintMgr = None
         self.lawMgr = None
+        self.boardofficeMgr = None
         self.countryClubMgr = None
         self.promotionMgr = None
         self.cogSuitMgr = None
@@ -204,6 +207,8 @@ class ToontownAIRepository(ToontownInternalRepository):
 
         # Create our law office manager...
         self.lawMgr = LawOfficeManagerAI(self)
+
+        self.boardofficeMgr = BoardOfficeManagerAI(self)
 
         # Create our country club manager...
         self.countryClubMgr = CountryClubManagerAI(self)
@@ -394,6 +399,13 @@ class ToontownAIRepository(ToontownInternalRepository):
         )
         self.createHood(BossbotHQDataAI, ToontownGlobals.BossbotHQ)
         NPCToons.createNpcsInZone(self, ToontownGlobals.BossbotHQ)
+
+        # Lawbot HQ
+        self.zoneTable[ToontownGlobals.ResourcebotHQ] = (
+            (ToontownGlobals.ResourcebotHQ, 0, 1), (ToontownGlobals.ResourcebotFieldCenter, 0, 0),
+        )
+        self.createHood(ResourcebotHQDataAI, ToontownGlobals.ResourcebotHQ)
+        NPCToons.createNpcsInZone(self, ToontownGlobals.ResourcebotHQ)
 
         # Goofy Speedway
         self.zoneTable[ToontownGlobals.GoofySpeedway] = (

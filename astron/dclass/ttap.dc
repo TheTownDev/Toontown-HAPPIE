@@ -208,6 +208,10 @@ from toontown.ai import DistributedWinterCarolingTarget/AI
 from toontown.coghq import DistributedMint/AI
 from toontown.coghq import DistributedMintRoom/AI
 from toontown.coghq import DistributedMintBattle/AI
+from toontown.coghq.resourcebot import DistributedBoardOffice/AI
+from toontown.coghq.resourcebot import DistributedBoardOfficeRoom/AI
+from toontown.coghq.resourcebot import DistributedBoardOfficeBattle/AI
+from toontown.coghq.resourcebot import DistributedBoardOfficeElevatorExt/AI
 from toontown.coghq import DistributedStage/AI
 from toontown.coghq import DistributedStageRoom/AI
 from toontown.coghq import DistributedStageBattle/AI
@@ -2741,6 +2745,12 @@ dclass DistributedMintElevatorExt : DistributedElevatorExt {
   setMintInteriorZoneForce(uint32);
 };
 
+dclass DistributedBoardOfficeElevatorExt : DistributedElevatorExt {
+  setBoardOfficeId(uint16) required broadcast ram;
+  setBoardOfficeInteriorZone(uint32);
+  setBoardOfficeInteriorZoneForce(uint32);
+};
+
 dclass DistributedCogdoElevatorExt : DistributedElevatorExt {
 };
 
@@ -2964,6 +2974,25 @@ dclass DistributedMint : DistributedObject {
 
 dclass DistributedMintRoom : DistributedLevel {
   setMintId(uint16) required broadcast ram;
+  setRoomId(uint16) required broadcast ram;
+  setRoomNum(uint8) required broadcast ram;
+  setSuits(uint32[], uint32[]) broadcast ram;
+  setBossConfronted(uint32) broadcast ram;
+  setDefeated() broadcast ram;
+};
+
+dclass DistributedBoardOfficeBattle : DistributedLevelBattle {
+};
+
+dclass DistributedBoardOffice : DistributedObject {
+  setZoneId(uint32) required broadcast ram;
+  setBoardOfficeId(uint16) required broadcast ram;
+  setFloorNum(uint8) required broadcast ram;
+  setRoomDoIds(uint32[]) broadcast ram;
+};
+
+dclass DistributedBoardOfficeRoom : DistributedLevel {
+  setBoardOfficeId(uint16) required broadcast ram;
   setRoomId(uint16) required broadcast ram;
   setRoomNum(uint8) required broadcast ram;
   setSuits(uint32[], uint32[]) broadcast ram;

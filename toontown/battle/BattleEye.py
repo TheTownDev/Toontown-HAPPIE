@@ -139,11 +139,6 @@ class BattleEye(DirectObject):
                 except:
                     pass
 
-                try:
-                    others.append(self.battle.activeSuits[0].doId)
-                except:
-                    pass
-
             if suitIndex == 2:
                 try:
                     others.append(self.battle.activeSuits[3].doId)
@@ -181,7 +176,7 @@ class BattleEye(DirectObject):
 
             if suitIndex == 2:
                 try:
-                    others.append(self.battle.activeSuits[3].doId)
+                    others.append(self.battle.activeSuits[1].doId)
                 except:
                     pass
         else:

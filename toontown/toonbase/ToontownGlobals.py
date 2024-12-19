@@ -211,6 +211,13 @@ HoodHierarchyMusicManager = {ToontownCentral: [SillyStreet, LoopyLane, Punchline
  ClearCoasts: [SandAvenue, VacationAlly, TanicalWay],
  GoofySpeedway: []}
 WelcomeValleyToken = 0
+ResourcebotHQ = 14000
+ResourcebotFieldCenter = 14200
+ResourcebotGeneralField = 14500
+ResourcebotSpecialistField = 14600
+ResourcebotSpecialistField2 = 14700
+ResourcebotCapitalLobby = 14200
+ResourcebotCapitalOffice = 14800
 BossbotHQ = 10000
 BossbotLobby = 10100
 BossbotExecutiveLobby =  10300
@@ -232,8 +239,8 @@ LawbotLobby = 13100
 LawbotOfficeExt = 13200
 LawbotOfficeInt = 13300
 LawbotStageIntA = 13300
-LawbotStageIntB = 13400
-LawbotStageIntC = 13500
+LawbotStageIntB = 14400
+LawbotStageIntC = 14500
 LawbotStageIntD = 13600
 Tutorial = 15000
 MyEstate = 16000
@@ -247,23 +254,29 @@ DynamicZonesEnd = 1 << 20
 cogDept2index = {'c': 0,
  'l': 1,
  'm': 2,
- 's': 3}
+ 's': 3,
+ 'r': 4}
 cogIndex2dept = invertDict(cogDept2index)
 HQToSafezone = {SellbotHQ: SellbotHQ,
  CashbotHQ: CashbotHQ,
  LawbotHQ: LawbotHQ,
- BossbotHQ: BossbotHQ}
+ BossbotHQ: BossbotHQ,
+ ResourcebotHQ: ResourcebotHQ}
 CogDeptNames = [TTLocalizer.Bossbot,
  TTLocalizer.Lawbot,
  TTLocalizer.Cashbot,
- TTLocalizer.Sellbot]
+ TTLocalizer.Sellbot,
+ TTLocalizer.Resourcebot]
 Dept2Dept = {'c': TTLocalizer.Bossbot,
              'l': TTLocalizer.Lawbot,
              'm': TTLocalizer.Cashbot,
-             's': TTLocalizer.Sellbot}
+             's': TTLocalizer.Sellbot,
+             'r': TTLocalizer.Resourcebot}
 
 def cogHQZoneId2deptIndex(zone):
-    if zone >= 13000 and zone <= 13999:
+    if zone >= 14000:
+        return 4
+    elif zone >= 13000 and zone <= 13999:
         return 1
     elif zone >= 12000:
         return 2
@@ -281,14 +294,21 @@ def dept2cogHQ(dept):
     dept2hq = {'c': BossbotHQ,
      'l': LawbotHQ,
      'm': CashbotHQ,
-     's': SellbotHQ}
+     's': SellbotHQ,
+     'r': ResourcebotHQ}
     return dept2hq[dept]
 
 
+BoardOfficeCogLevel = 15
+BoardOfficeSkelecogLevel = 17
+BoardOfficeBossLevel = 18
 MockupFactoryId = 0
 MintNumFloors = {CashbotMintIntA: 20,
  CashbotMintIntB: 20,
  CashbotMintIntC: 20}
+BoardOfficeNumFloors = {ResourcebotGeneralField: 20,
+ ResourcebotSpecialistField: 20,
+ ResourcebotSpecialistField2: 20}
 CashbotMintCogLevel = 10
 CashbotMintSkelecogLevel = 11
 CashbotMintBossLevel = 12
@@ -301,6 +321,15 @@ MintCogBuckRewards = {CashbotMintIntA: 8,
 MintNumRooms = {CashbotMintIntA: 2 * (6,) + 5 * (7,) + 5 * (8,) + 5 * (9,) + 3 * (10,),
  CashbotMintIntB: 3 * (8,) + 6 * (9,) + 6 * (10,) + 5 * (11,),
  CashbotMintIntC: 4 * (10,) + 10 * (11,) + 6 * (12,)}
+BoardOfficeNumBattles = {ResourcebotGeneralField: 3,
+ ResourcebotSpecialistField: 4,
+ ResourcebotSpecialistField2: 5}
+BoardOfficeCogBuckRewards = {ResourcebotGeneralField: 8,
+ ResourcebotSpecialistField: 14,
+ ResourcebotSpecialistField2: 20}
+BoardOfficeNumRooms = {ResourcebotGeneralField: 2 * (6,) + 5 * (7,) + 5 * (8,) + 5 * (9,) + 3 * (10,),
+ ResourcebotSpecialistField: 3 * (8,) + 6 * (9,) + 6 * (10,) + 5 * (11,),
+ ResourcebotSpecialistField2: 4 * (10,) + 10 * (11,) + 6 * (12,)}
 BossbotCountryClubCogLevel = 11
 BossbotCountryClubSkelecogLevel = 12
 BossbotCountryClubBossLevel = 12
@@ -351,6 +380,7 @@ Hoods = (DonaldsDock,
  SellbotHQ,
  CashbotHQ,
  LawbotHQ,
+ ResourcebotHQ,
  GolfZone)
 HoodsForTeleportAll = (DonaldsDock,
  ToontownCentral,
@@ -364,6 +394,7 @@ HoodsForTeleportAll = (DonaldsDock,
  SellbotHQ,
  CashbotHQ,
  LawbotHQ,
+ ResourcebotHQ,
  GolfZone)
 NoPreviousGameId = 0
 RaceGameId = 1
@@ -504,6 +535,7 @@ phaseMap = {Tutorial: 4,
  SellbotHQ: 9,
  CashbotHQ: 10,
  LawbotHQ: 11,
+ ResourcebotHQ: 15,
  GolfZone: 8,
  PartyHood: 13}
 streetPhaseMap = {ToontownCentral: 5,
@@ -519,6 +551,7 @@ streetPhaseMap = {ToontownCentral: 5,
  SellbotHQ: 9,
  CashbotHQ: 10,
  LawbotHQ: 11,
+ ResourcebotHQ: 15,
  PartyHood: 13}
 dnaMap = {Tutorial: 'toontown_central',
  ToontownCentral: 'toontown_central',
@@ -534,6 +567,7 @@ dnaMap = {Tutorial: 'toontown_central',
  SellbotHQ: 'cog_hq_sellbot',
  CashbotHQ: 'cog_hq_cashbot',
  LawbotHQ: 'cog_hq_lawbot',
+ ResourcebotHQ: 'cog_hq_resourcebot',
  GolfZone: 'golf_zone'}
 dnaPGMap = {Tutorial: 'toontown_central',
  ToontownCentral: 'toontown_central',
@@ -556,6 +590,7 @@ hoodNameMap = {DonaldsDock: TTLocalizer.DonaldsDock,
  SellbotHQ: TTLocalizer.SellbotHQ,
  CashbotHQ: TTLocalizer.CashbotHQ,
  LawbotHQ: TTLocalizer.LawbotHQ,
+ ResourcebotHQ: TTLocalizer.ResourcebotHQ,
  Tutorial: TTLocalizer.Tutorial,
  MyEstate: TTLocalizer.MyEstate,
  GolfZone: TTLocalizer.GolfZone,
@@ -600,6 +635,7 @@ hoodCountMap = {MyEstate: 2,
  SellbotHQ: 43,
  CashbotHQ: 2,
  LawbotHQ: 2,
+ ResourcebotHQ: 2,
  GolfZone: 2,
  PartyHood: 2}
 TrophyStarLevels = (10,
@@ -1597,7 +1633,8 @@ NonSafePassiveHealingZones = (
     SellbotHQ,
     CashbotHQ,
     LawbotHQ,
-    BossbotHQ
+    BossbotHQ,
+    ResourcebotHQ
 )
 
 SuitLevels = []
@@ -1625,6 +1662,7 @@ hood2Id = [
     ('LBHQ', (LawbotHQ,)),
     ('CBHQ', (CashbotHQ,)),
     ('SBHQ', (SellbotHQ,)),
+    ('RBHQ', (ResourcebotHQ,)),
     ('FACTORY', (SellbotHQ, SellbotFactoryExt)),
     ('FRONTENTRY', (SellbotHQ, SellbotFactoryExt)),
     ('SIDEENTRY', (SellbotHQ, SellbotFactoryExt)),

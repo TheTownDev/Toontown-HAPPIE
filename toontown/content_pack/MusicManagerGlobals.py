@@ -68,6 +68,14 @@ GLOBALS = {
         'music': 'lawbot-office-d',
         'battleMusic': 'lawbot-office-d-battle',
     },
+    ResourcebotHQ: {
+        'music': 'resourcebot-courtyard',
+        'battleMusic': 'resourcebot-courtyard-battle',
+    },
+    ResourcebotFieldCenter: {
+        'music': 'resourcebot-field-lobby',
+        'battleMusic': 'resourcebot-field-lobby-battle',
+    },
     BossbotHQ: {
         'music': 'bossbot-courtyard',
         'battleMusic': 'bossbot-courtyard-battle',

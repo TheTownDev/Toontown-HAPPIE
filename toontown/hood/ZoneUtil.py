@@ -109,6 +109,8 @@ def getWhereName(zoneId, isToon):
                     where = 'factoryInterior'
                 elif getHoodId(zoneId) == CashbotHQ:
                     where = 'mintInterior'
+                elif getHoodId(zoneId) == BoardbotHQ:
+                    where = 'boardofficeInterior'
                 else:
                     zoneUtilNotify.error('unknown cogHQ interior for hood: ' + str(getHoodId(zoneId)))
             else:

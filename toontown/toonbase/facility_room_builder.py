@@ -1,6 +1,6 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import *
-from toontown.coghq.facility.sellbot.scrap.tt_f_ara_fac_layout00 import GlobalEntities
+from toontown.coghq.resourcebot.tt_f_ara_fler_action01 import GlobalEntities
 #from toontown.coghq.SellbotLegFactorySpec import GlobalEntities
 from otp.level import LevelUtil
 

@@ -229,6 +229,15 @@ stageLayouts = {
     ToontownGlobals.LawbotStageIntD: [LawOfficeLayout5_0,
     LawOfficeLayout5_1,
     LawOfficeLayout5_2,
+    LawOfficeLayout5_3],
+
+ ToontownGlobals.LawbotStageIntB: [LawOfficeLayout2_0,
+    LawOfficeLayout2_1,
+    LawOfficeLayout2_2,
+    LawOfficeLayout2_3],
+    ToontownGlobals.LawbotStageIntC: [LawOfficeLayout5_0,
+    LawOfficeLayout5_1,
+    LawOfficeLayout5_2,
     LawOfficeLayout5_3]
 }
 

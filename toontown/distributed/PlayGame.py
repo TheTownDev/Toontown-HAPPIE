@@ -18,7 +18,7 @@ from toontown.hood import GSHood
 from toontown.hood import OZHood
 from toontown.hood import GZHood
 from toontown.hood import CCHood
-from toontown.hood import SellbotHQ, CashbotHQ, LawbotHQ, BossbotHQ
+from toontown.hood import SellbotHQ, CashbotHQ, LawbotHQ, BossbotHQ, ResourcebotHQ
 from toontown.hood import TutorialHood
 from direct.task import TaskManagerGlobal
 from toontown.hood import QuietZoneState
@@ -45,6 +45,7 @@ class PlayGame(StateData.StateData):
      ToontownGlobals.SellbotHQ: SellbotHQ.SellbotHQ,
      ToontownGlobals.CashbotHQ: CashbotHQ.CashbotHQ,
      ToontownGlobals.LawbotHQ: LawbotHQ.LawbotHQ,
+     ToontownGlobals.ResourcebotHQ: ResourcebotHQ.ResourcebotHQ,
      ToontownGlobals.GolfZone: GZHood.GZHood,
      ToontownGlobals.PartyHood: PartyHood.PartyHood}
     Hood2StateDict = {ToontownGlobals.ToontownCentral: 'TTHood',
@@ -62,6 +63,7 @@ class PlayGame(StateData.StateData):
      ToontownGlobals.SellbotHQ: 'SellbotHQ',
      ToontownGlobals.CashbotHQ: 'CashbotHQ',
      ToontownGlobals.LawbotHQ: 'LawbotHQ',
+     ToontownGlobals.ResourcebotHQ: 'ResourcebotHQ',
      ToontownGlobals.GolfZone: 'GZHood',
      ToontownGlobals.PartyHood: 'PartyHood'}
 
@@ -83,6 +85,7 @@ class PlayGame(StateData.StateData):
           'CashbotHQ',
           'LawbotHQ',
           'BossbotHQ',
+          'ResourcebotHQ',
           'TutorialHood',
           'EstateHood',
           'PartyHood']),
@@ -100,6 +103,7 @@ class PlayGame(StateData.StateData):
          State.State('SellbotHQ', self.enterSellbotHQ, self.exitSellbotHQ, ['quietZone']),
          State.State('CashbotHQ', self.enterCashbotHQ, self.exitCashbotHQ, ['quietZone']),
          State.State('LawbotHQ', self.enterLawbotHQ, self.exitLawbotHQ, ['quietZone']),
+         State.State('ResourcebotHQ', self.enterResourcebotHQ, self.exitResourcebotHQ, ['quietZone']),
          State.State('TutorialHood', self.enterTutorialHood, self.exitTutorialHood, ['quietZone']),
          State.State('EstateHood', self.enterEstateHood, self.exitEstateHood, ['quietZone']),
          State.State('PartyHood', self.enterPartyHood, self.exitPartyHood, ['quietZone'])], 'start', 'start')
@@ -404,6 +408,13 @@ class PlayGame(StateData.StateData):
         self.hood.enter(requestStatus)
 
     def exitBossbotHQ(self):
+        self._destroyHood()
+
+    def enterResourcebotHQ(self, requestStatus):
+        self.accept(self.hoodDoneEvent, self.handleHoodDone)
+        self.hood.enter(requestStatus)
+
+    def exitResourcebotHQ(self):
         self._destroyHood()
 
     def enterTutorialHood(self, requestStatus):

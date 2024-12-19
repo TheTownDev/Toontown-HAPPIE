@@ -1,0 +1,349 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "bam2egg -o magnet.egg magnet.bam"
+}
+<Texture> battle_props_palette_3cmla_5 {
+  "/c/Toontown-HAPPIE/resources/phase_5/maps/battle_props_palette_3cmla_5.jpg"
+  <Scalar> format { rgb }
+  <Scalar> wrapu { repeat }
+  <Scalar> wrapv { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear }
+  <Scalar> envtype { modulate }
+}
+<VertexPool> magnet.egg {
+  <Vertex> 0 {
+    -0.25 1.24413001537323 0.485513001680374
+    <UV> { 0.880250453948975 0.467177599668503 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 1 {
+    -0.75 1.24413001537323 0.0042568501085043
+    <UV> { 0.914772987365723 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 2 {
+    -0.75 1.24413001537323 0.485513001680374
+    <UV> { 0.916944980621338 0.467177599668503 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 3 {
+    -0.25 0.494125008583069 0.485513001680374
+    <UV> { 0.878078043460846 0.511718511581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 4 {
+    -0.25 1.24413001537323 0.485513001680374
+    <UV> { 0.878078043460846 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 5 {
+    -0.75 1.24413001537323 0.485513001680374
+    <UV> { 0.914772987365723 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 6 {
+    0.25 -0.255874991416931 0.00425677979364991
+    <UV> { 0.84138298034668 0.566406011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 7 {
+    2.39499860915648e-11 0.244123995304108 0.00425679981708527
+    <UV> { 0.85973048210144 0.529947698116302 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 8 {
+    0.75 0.244123995304108 0.00425679981708527
+    <UV> { 0.804687976837158 0.529947698116302 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 9 {
+    0.25 0.494125008583069 0.00425679981708527
+    <UV> { 0.84138298034668 0.511718511581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 10 {
+    -0.75 0.244123995304108 0.00425679981708527
+    <UV> { 0.914772987365723 0.529947698116302 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 11 {
+    -0.25 1.24413001537323 0.0042568501085043
+    <UV> { 0.878078043460846 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 12 {
+    0.25 0.494125008583069 0.485513001680374
+    <UV> { 0.84138298034668 0.511718511581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 13 {
+    2.39499860915648e-11 0.244123995304108 0.485513001680374
+    <UV> { 0.85973048210144 0.529947698116302 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 14 {
+    -0.75 1.24413001537323 0.0042568501085043
+    <UV> { 0.804687976837158 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 15 {
+    -0.75 0.244123995304108 0.00425679981708527
+    <UV> { 0.804687976837158 0.529947698116302 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 16 {
+    -0.75 1.24413001537323 0.485513001680374
+    <UV> { 0.804687976837158 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 17 {
+    -0.75 0.244123995304108 0.485513001680374
+    <UV> { 0.804687976837158 0.529947698116302 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 18 {
+    -0.25 -0.255874991416931 0.00425677979364991
+    <UV> { 0.914772987365723 0.566406011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 19 {
+    0.25 -0.255874991416931 0.00425677979364991
+    <UV> { 0.85973048210144 0.566406011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 20 {
+    -0.25 -0.255874991416931 0.485513001680374
+    <UV> { 0.914772987365723 0.531314551830292 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 21 {
+    0.25 -0.255874991416931 0.485513001680374
+    <UV> { 0.85973048210144 0.531314551830292 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 22 {
+    0.25 -0.255874991416931 0.485513001680374
+    <UV> { 0.84138298034668 0.566406011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 23 {
+    0.75 0.244123995304108 0.485513001680374
+    <UV> { 0.804687976837158 0.529947698116302 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 24 {
+    0.75 1.24413001537323 0.0042568501085043
+    <UV> { 0.804687976837158 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 25 {
+    0.25 1.24413001537323 0.0042568501085043
+    <UV> { 0.84138298034668 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 26 {
+    0.75 1.24413001537323 0.485513001680374
+    <UV> { 0.806860387325287 0.467177599668503 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 27 {
+    0.25 1.24413001537323 0.485513001680374
+    <UV> { 0.843555390834808 0.467177599668503 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 28 {
+    -0.75 0.244123995304108 0.485513001680374
+    <UV> { 0.914772987365723 0.529947698116302 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 29 {
+    -0.25 0.494125008583069 0.00425679981708527
+    <UV> { 0.878078043460846 0.511718511581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 30 {
+    -0.25 -0.255874991416931 0.00425677979364991
+    <UV> { 0.878078043460846 0.566406011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 31 {
+    0.75 1.24413001537323 0.485513001680374
+    <UV> { 0.804687976837158 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 32 {
+    0.25 1.24413001537323 0.485513001680374
+    <UV> { 0.84138298034668 0.457031011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 33 {
+    -0.25 -0.255874991416931 0.485513001680374
+    <UV> { 0.878078043460846 0.566406011581421 }
+    <RGBA> { 1 1 1 1 }
+  }
+}
+<Group> magnet {
+  <Dart> { structured }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 0 1 2 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 3 4 5 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 6 7 8 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 8 7 9 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 10 1 11 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 11 1 0 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 9 7 12 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 12 7 13 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 14 15 16 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 16 15 17 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 18 19 20 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 20 19 21 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 6 8 22 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 22 8 23 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 24 25 26 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 26 25 27 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 5 28 3 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 3 28 13 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 3 13 29 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 29 13 7 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 29 7 30 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 30 7 6 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 31 23 24 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 24 23 8 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 24 8 25 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 25 8 9 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 25 9 32 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 32 9 12 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 32 12 31 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 31 12 23 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 4 3 11 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 11 3 29 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 11 29 10 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 10 29 30 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 10 30 28 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 28 30 33 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 28 33 13 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 13 33 22 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 13 22 12 <Ref> { magnet.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_5 }
+    <VertexRef> { 12 22 23 <Ref> { magnet.egg } }
+  }
+}

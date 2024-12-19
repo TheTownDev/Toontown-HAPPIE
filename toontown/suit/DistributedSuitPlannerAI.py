@@ -72,7 +72,11 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI, SuitPlan
                     [13200, 2, 6, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (0, 100, 0, 0, 0), (10, 11, 12, 13, 14), [], 7],
                     
                     # Bossbot Courtyard
-                    [10000, 10, 20, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (100, 0, 0, 0, 0), (9, 10, 11, 12, 13, 14, 15), [], 8]]
+                    [10000, 10, 20, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (100, 0, 0, 0, 0), (9, 10, 11, 12, 13, 14, 15), [], 8],
+
+                    # Resourcebot Courtyard
+                    [14000, 10, 20, 0, 0, 0, 4, (1, 5, 10, 40, 60, 80), (0, 0, 0, 0, 100), (10, 11, 12, 13, 14, 15, 16), [], 8]
+                ]
     SUIT_HOOD_INFO_ZONE = 0
     SUIT_HOOD_INFO_MIN = 1
     SUIT_HOOD_INFO_MAX = 2

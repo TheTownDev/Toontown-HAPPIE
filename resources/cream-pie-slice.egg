@@ -1,0 +1,121 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "bam2egg -o cream-pie-slice.egg cream-pie-slice.bam"
+}
+<Texture> battle_props_palette_3cmla_3 {
+  "/c/Toontown-HAPPIE/resources/phase_5/maps/battle_props_palette_3cmla_3.jpg"
+  <Scalar> format { rgb }
+  <Scalar> wrapu { repeat }
+  <Scalar> wrapv { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear }
+  <Scalar> envtype { modulate }
+}
+<VertexPool> cream-pie-slice.egg {
+  <Vertex> 0 {
+    -0.453189998865128 0.117458999156952 0.00242344988510013
+    <UV> { 0.90292489528656 0.223497033119202 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 1 {
+    0.616190016269684 0.286314994096756 0.00242344988510013
+    <UV> { 0.992187976837158 0.2421875 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 2 {
+    -0.208449006080627 -0.460124999284744 0.00242344988510013
+    <UV> { 0.856012403964996 0.242033988237381 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 3 {
+    -0.208449006080627 -0.460124999284744 0.402568012475967
+    <UV> { 0.856012403964996 0.00796608440577984 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 4 {
+    0.616190016269684 0.286314994096756 0.402568012475967
+    <UV> { 0.992187976837158 0.0078125 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 5 {
+    -0.453189998865128 0.117458999156952 0.402568012475967
+    <UV> { 0.90292489528656 0.0265030153095722 }
+    <RGBA> { 1 1 1 1 }
+  }
+  <Vertex> 6 {
+    0.616190016269684 0.286314994096756 0.00242344988510013
+    <UV> { 0.992187976837158 0.2421875 }
+    <RGBA> { 0.898039281368256 0.898039281368256 0.898039281368256 1 }
+  }
+  <Vertex> 7 {
+    -0.453189998865128 0.117458999156952 0.00242344988510013
+    <UV> { 0.90292489528656 0.223497033119202 }
+    <RGBA> { 0.898039281368256 0.898039281368256 0.898039281368256 1 }
+  }
+  <Vertex> 8 {
+    0.616190016269684 0.286314994096756 0.402568012475967
+    <UV> { 0.992187976837158 0.0078125 }
+    <RGBA> { 0.898039281368256 0.898039281368256 0.898039281368256 1 }
+  }
+  <Vertex> 9 {
+    -0.453189998865128 0.117458999156952 0.402568012475967
+    <UV> { 0.90292489528656 0.0265030153095722 }
+    <RGBA> { 0.898039281368256 0.898039281368256 0.898039281368256 1 }
+  }
+  <Vertex> 10 {
+    0.616190016269684 0.286314994096756 0.00242344988510013
+    <UV> { 0.757812976837158 0.2421875 }
+    <RGBA> { 0.898039281368256 0.898039281368256 0.898039281368256 1 }
+  }
+  <Vertex> 11 {
+    0.616190016269684 0.286314994096756 0.402568012475967
+    <UV> { 0.757812976837158 0.0078125 }
+    <RGBA> { 0.898039281368256 0.898039281368256 0.898039281368256 1 }
+  }
+  <Vertex> 12 {
+    -0.208449006080627 -0.460124999284744 0.00242344988510013
+    <UV> { 0.856012403964996 0.242033988237381 }
+    <RGBA> { 0.898039281368256 0.898039281368256 0.898039281368256 1 }
+  }
+  <Vertex> 13 {
+    -0.208449006080627 -0.460124999284744 0.402568012475967
+    <UV> { 0.856012403964996 0.00796608440577984 }
+    <RGBA> { 0.898039281368256 0.898039281368256 0.898039281368256 1 }
+  }
+}
+<Group> cream-pie-slice {
+  <Dart> { structured }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_3 }
+    <VertexRef> { 0 1 2 <Ref> { cream-pie-slice.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_3 }
+    <VertexRef> { 3 4 5 <Ref> { cream-pie-slice.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_3 }
+    <VertexRef> { 6 7 8 <Ref> { cream-pie-slice.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_3 }
+    <VertexRef> { 8 7 9 <Ref> { cream-pie-slice.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_3 }
+    <VertexRef> { 10 11 12 <Ref> { cream-pie-slice.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_3 }
+    <VertexRef> { 12 11 13 <Ref> { cream-pie-slice.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_3 }
+    <VertexRef> { 12 13 7 <Ref> { cream-pie-slice.egg } }
+  }
+  <Polygon> {
+    <TRef> { battle_props_palette_3cmla_3 }
+    <VertexRef> { 7 13 9 <Ref> { cream-pie-slice.egg } }
+  }
+}
