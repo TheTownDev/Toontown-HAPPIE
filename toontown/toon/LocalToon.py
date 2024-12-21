@@ -66,6 +66,7 @@ WantNewsPage = base.config.GetBool('want-news-page', ToontownGlobals.DefaultWant
 from toontown.toontowngui import NewsPageButtonManager
 from toontown.toontowngui.ButtonContainer import ButtonContainer, GagExpButton, DisguisePartButton, MeritButton, QuestProgressButton
 from toontown.toontowngui import DynamicMenu, DynamicMenuGlobals
+from toontown.toon import ExperienceBar
 if WantNewsPage:
     from toontown.shtiker import NewsPage
 AdjustmentForNewsButton = -0.275
@@ -296,6 +297,8 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         del self.gardenPage
         del self.wordPage
         del self.book
+        self.expBar.destroy()
+        del self.expBar
         if base.wantKarts:
             if hasattr(self, 'kartPage'):
                 del self.kartPage
@@ -409,11 +412,16 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         self.laffMeter.setAvatar(self)
         self.laffMeter.setScale(0.075)
         self.laffMeter.reparentTo(base.a2dBottomLeft)
+        self.expBar = ExperienceBar.ExperienceBar(self.exp, self.level, self.style)
+        self.expBar.setAvatar(self)
+        self.expBar.setScale(0.075)
+        self.expBar.reparentTo(base.a2dBottomLeft)
         if self.style.getAnimal() == 'monkey':
             self.laffMeter.setPos(0.153, 0.0, 0.13)
         else:
             self.laffMeter.setPos(0.133, 0.0, 0.13)
         self.laffMeter.stop()
+        self.expBar.start()
         self.questMap = QuestMap.QuestMap(self)
         self.questMap.stop()
         if not base.cr.isPaid():

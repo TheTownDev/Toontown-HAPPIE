@@ -10,6 +10,14 @@ class QuestManagerAI:
     def __init__(self, air):
         self.air = air
 
+    def toonProgressedQuest(self, toon, questClass, zoneId, requirements=[]):
+        for index, quest in enumerate(self.toonQuestsList2Quests(toon.quests)):
+            if isinstance(quest, questClass):
+                self.incrementQuestProgressCustom(toon.quests[index], toon, zoneId)
+
+        if toon.quests:
+            toon.d_setQuests(toon.getQuests())
+
     def toonPlayedMinigame(self, toon):
         for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):
             if isinstance(quest, Quests.TrolleyQuest):
@@ -64,7 +72,7 @@ class QuestManagerAI:
 
     def toonKilledCogdo(self, toon, difficulty, numFloors, zoneId, activeToons):
         pass
-    
+
     def toonKilledBuilding(self, toon, track, difficulty, floors, zoneId, activeToons):
         # Thank you difficulty, very cool!
         for index, quest in enumerate(self.__toonQuestsList2Quests(toon.quests)):
@@ -76,7 +84,7 @@ class QuestManagerAI:
                                 self.__incrementQuestProgress(toon.quests[index])
             elif isinstance(quest, Quests.BuildingFloorsQuest):
                 if quest.isLocationMatch(zoneId):
-                    if quest.getBuildingTrack() == Quests.Any or quest.getBuildingTrack() == track:        
+                    if quest.getBuildingTrack() == Quests.Any or quest.getBuildingTrack() == track:
                         for _ in range(quest.doesBuildingCount(toon.getDoId(), activeToons)):
                             self.__incrementQuestProgress(toon.quests[index], amt=floors)
 
@@ -200,7 +208,7 @@ class QuestManagerAI:
 
     def __toonQuestsList2Quests(self, quests):
         return [Quests.getQuest(x[0]) for x in quests]
-    
+
     def toonQuestsList2Quests(self, quests):
         return [Quests.getQuest(x[0]) for x in quests]
 
@@ -223,7 +231,7 @@ class QuestManagerAI:
 
     def __incrementQuestProgress(self, quest, amt=1):
         quest[4] += amt
-    
+
     def isLocationMatch(self, zoneId):
         loc = zoneId
         if loc is Quests.Anywhere:
@@ -239,17 +247,22 @@ class QuestManagerAI:
             return 1
         else:
             return 0
-    
+
     def incrementQuestProgressCustom(self, quest, toon, zoneId):
         if self.isLocationMatch(zoneId):
             quest[4] += 1
-            
+
             if toon.quests:
                 toon.d_setQuests(toon.getQuests())
 
     def completeQuest(self, toon, questId):
         toon.toonUp(toon.getMaxHp())
         toon.removeQuest(questId)
+
+        avQuests = toon.getQuests()
+
+        questExp = Quests.getQuestExp(questId)
+        toon.b_setToonExp(toon.getToonExp() + questExp)
 
     def toonRodeTrolleyFirstTime(self, toon):
         # For this, we just call toonPlayedMinigame with the toon.

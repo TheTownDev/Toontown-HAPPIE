@@ -23,6 +23,7 @@ class DistributedBattleAI(DistributedBattleBaseAI.DistributedBattleBaseAI):
             self.addToon(toonId)
         self.faceOffToon = toonId
         self.fsm.request('FaceOff')
+        self.hasDoneFacilityFaceOffDone = 0
 
     def generate(self):
         DistributedBattleBaseAI.DistributedBattleBaseAI.generate(self)
@@ -71,14 +72,22 @@ class DistributedBattleAI(DistributedBattleBaseAI.DistributedBattleBaseAI):
 
     def handleFaceOffDone(self):
         self.timer.stop()
-        if not self.suits[0].facilitySuit:
-            self.activeSuits.append(self.suits[0])
+        self.activeSuits.append(self.suits[0])
         if len(self.toons) == 0:
             self.b_setState('Resume')
         elif self.faceOffToon == self.toons[0]:
             self.activeToons.append(self.toons[0])
             self.sendEarnedExperience(self.toons[0])
-        self.d_setMembers()
+
+        if self.suits[0].facilitySuit:
+             if self.hasDoneFacilityFaceOffDone == 0:
+                self.activeSuits = []
+                for suit in self.suits:
+                    self.activeSuits.append(suit)
+                self.d_setMembers()
+                self.hasDoneFacilityFaceOffDone = 1
+        else:
+            self.d_setMembers()
         self.b_setState('WaitForInput')
 
     def enterReward(self):

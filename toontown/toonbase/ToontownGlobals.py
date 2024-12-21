@@ -116,6 +116,30 @@ CogSuitHPLevels = (15 - 1,
  18 - 1,
  19 - 1,
  20 - 1)
+MaxToonLevel = 70 - 1
+ExperienceTrainingPointLevels = (25,
+ 45)
+ExperienceGagLevels = (10 - 1,
+20 - 1,
+30 - 1,
+40 - 1,
+50 - 1,
+60 - 1,
+70 - 1)
+ExperienceMoneyLevels = (5 - 1,
+10 - 1,
+15 - 1,
+20 - 1,
+25 - 1,
+30 - 1,
+35 - 1,
+40 - 1,
+45 - 1,
+50 - 1,
+55 - 1,
+60 - 1,
+65 - 1,
+70 - 1)
 setInterfaceFont(TTLocalizer.InterfaceFont)
 setSignFont(TTLocalizer.SignFont)
 from toontown.toontowngui import TTDialog

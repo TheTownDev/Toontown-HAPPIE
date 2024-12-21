@@ -1,4 +1,5 @@
 from toontown.quest.Quests import *
+from toontown.suit import SuitDNAGlobals
 import random
 
 """
@@ -24,6 +25,27 @@ import random
 """
 
 QuestDict = {
+ 16163: (TT_TIER,
+         Start,
+         (TreasureQuest, ToontownGlobals.ToontownCentral, 5, 0),
+         Any,
+         ToonHQ,
+         NA,
+         16164,
+         DefaultDialog), #2020
+ 16164: (TT_TIER,
+         Start,
+         (RecoverItemQuest,
+          Anywhere,
+          1,
+          2020,
+          Easy,
+          SuitDNAGlobals.BARISTA),
+         Any,
+         ToonHQ,
+         102,
+         NA,
+         DefaultDialog),
   16104: (TT_TIER,
          Start,
          (CogQuest, Anywhere, 3, Any),
@@ -58,10 +80,7 @@ QuestDict = {
          DefaultDialog),
  16108: (TT_TIER,
          Start,
-         (TreasureQuest,
-          ToontownGlobals.SillyStreet,
-          1,
-          1),
+         (TreasureQuest, ToontownGlobals.ToontownCentral, 10, 0),
          Any,
          ToonHQ,
          100,
@@ -69,7 +88,7 @@ QuestDict = {
          DefaultDialog),
 16109: (TT_TIER,
          Start,
-         (CogQuest, Anywhere, 2, 'f'),
+         (CogQuest, Anywhere, 2, SuitDNAGlobals.FLUNKY),
          Any,
          ToonHQ,
          100,
@@ -77,7 +96,7 @@ QuestDict = {
          DefaultDialog),
 16110: (TT_TIER,
          Start,
-         (CogQuest, Anywhere, 2, 'bf'),
+         (CogQuest, Anywhere, 2, SuitDNAGlobals.BOTTOM_FEEDER),
          Any,
          ToonHQ,
          100,
@@ -85,7 +104,7 @@ QuestDict = {
          DefaultDialog),
 16111: (TT_TIER,
          Start,
-         (CogQuest, Anywhere, 2, 'cc'),
+         (CogQuest, Anywhere, 2, SuitDNAGlobals.COLD_CALLER),
          Any,
          ToonHQ,
          100,
@@ -93,7 +112,18 @@ QuestDict = {
          DefaultDialog),
  16112: (TT_TIER,
          Start,
-         (CogQuest, Anywhere, 2, 'cc'),
+         (CogQuest, Anywhere, 2, SuitDNAGlobals.SHORT_CHANGE),
+         Any,
+         ToonHQ,
+         100,
+         NA,
+         DefaultDialog),
+  16113: (TT_TIER,
+         Start,
+          (CogTrackQuest,
+           ToontownGlobals.ToontownCentral,
+           2,
+           'r'),
          Any,
          ToonHQ,
          100,
@@ -105,7 +135,9 @@ QuestDict = {
 
   16310: (TT_TIER + 1, Start, (VisitQuest,), ToonHQ, 2005, NA, 16311, DefaultDialog),
   16311: (TT_TIER + 1, Cont, (RecoverItemQuest, Anywhere, 1, 4, VeryEasy, Any), 2005, 2005, NA, 16312, DefaultDialog),
-  16312: (TT_TIER + 1, Cont, (TreasureQuest, ToontownGlobals.SillyStreet, 1, 1), 2005, 2005, 100, NA, DefaultDialog)
+  16312: (TT_TIER + 1, Cont, (TreasureQuest, ToontownGlobals.SillyStreet, 1, 1), 2005, 2005, 100, NA, DefaultDialog),
+
+  10313: (TEST_TIER, Start, (IndustryTitanQuest, Anywhere, 1), ToonHQ, ToonHQ, 100, NA, DefaultDialog)
 }
 
 #2005

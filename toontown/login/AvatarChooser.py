@@ -9,6 +9,7 @@ from direct.gui.DirectGui import *
 from toontown.toonbase import TTLocalizer
 from direct.directnotify import DirectNotifyGlobal
 from direct.interval.IntervalGlobal import *
+from toontown.suit import SuitDNA, DistributedSuitBase, SuitDNAGlobals
 import random
 MAX_AVATARS = 6
 POSITIONS = (Vec3(-0.840167, 0, 0.359333),
@@ -51,6 +52,12 @@ class AvatarChooser(StateData.StateData):
 #        self.shadow.reparentTo(aspect2d)
         self.pickAToonBG.setBin('background', 1)
         self.pickAToonBG.reparentTo(aspect2d)
+        self.mainMenuModel.reparentTo(render)
+        self.demotedCeo.reparentTo(render)
+        self.demotedCeo2.reparentTo(render)
+        self.demotedCeo3.reparentTo(render)
+        base.camera.setZ(base.camera.getZ() + 10)
+        base.camera.setY(base.camera.getY() - 20)
         base.setBackgroundColor(Vec4(0.145, 0.368, 0.78, 1))
         choice = base.config.GetInt('auto-avatar-choice', -1)
         for panel in self.panelList:
@@ -72,6 +79,10 @@ class AvatarChooser(StateData.StateData):
 #        self.shine.reparentTo(hidden)
 #        self.shadow.reparentTo(hidden)
         self.pickAToonBG.reparentTo(hidden)
+        self.demotedCeo.reparentTo(hidden)
+        self.demotedCeo2.reparentTo(hidden)
+        self.demotedCeo3.reparentTo(hidden)
+        self.mainMenuModel.reparentTo(hidden)
         base.setBackgroundColor(ToontownGlobals.DefaultBackgroundColor)
         return None
 
@@ -94,7 +105,47 @@ class AvatarChooser(StateData.StateData):
         self.pickAToonBG = newGui.find('**/tt_t_gui_pat_background')
         self.pickAToonBG.reparentTo(hidden)
         self.pickAToonBG.setPos(0.0, 2.73, 0.0)
-        self.pickAToonBG.setScale(1, 1, 1)
+        self.pickAToonBG.setScale(0, 0, 0)
+
+
+        self.demotedCeo = DistributedSuitBase.DistributedSuitBase(base.cr)
+        self.demotedCeo.doId = 1
+        self.demotedCeo.dna = SuitDNA.SuitDNA()
+        self.demotedCeo.dna.newSuit(SuitDNAGlobals.CONFISCATOR)
+        self.demotedCeo.setDNA(self.demotedCeo.dna)
+        self.demotedCeo.loop('neutral')
+        self.demotedCeo.setPos(-14, 17, 0)
+        self.demotedCeo.addActive()
+        self.demotedCeo.setDisplayName('Confiscator\nResourcebot\nLevel 15')
+        self.demotedCeo.setH(70)
+        self.demotedCeo.battleTrap = -1
+
+        self.demotedCeo2 = DistributedSuitBase.DistributedSuitBase(base.cr)
+        self.demotedCeo2.doId = 2
+        self.demotedCeo2.dna = SuitDNA.SuitDNA()
+        self.demotedCeo2.dna.newSuit(SuitDNAGlobals.ADVENTURE_COACH)
+        self.demotedCeo2.setDNA(self.demotedCeo2.dna)
+
+        self.demotedCeo2.loop('neutral')
+        self.demotedCeo2.setPos(-14, 29, 0)
+        self.demotedCeo2.addActive()
+        self.demotedCeo2.setDisplayName('Adventure Coach\nResourcebot\nLevel 12')
+        self.demotedCeo2.setH(57)
+        self.demotedCeo2.battleTrap = -1
+
+        self.demotedCeo3 = DistributedSuitBase.DistributedSuitBase(base.cr)
+        self.demotedCeo3.doId = 3
+        self.demotedCeo3.dna = SuitDNA.SuitDNA()
+        self.demotedCeo3.dna.newSuit(SuitDNAGlobals.INVESTIGATOR)
+        self.demotedCeo3.setDNA(self.demotedCeo3.dna)
+        self.demotedCeo3.loop('neutral')
+        self.demotedCeo3.setPos(-14, 21, 0)
+        self.demotedCeo3.addActive()
+        self.demotedCeo3.setDisplayName('Investigator\nResourcebot\nLevel 14')
+        self.demotedCeo3.setH(64)
+        self.demotedCeo3.battleTrap = -1
+        self.mainMenuModel = loader.loadModel('phase_15/models/resourcebotHQ/ttr_m_ara_rhq_bourgeoisieZone55a.bam')
+        self.mainMenuModel.reparentTo(hidden)
         self.title = OnscreenText(TTLocalizer.AvatarChooserPickAToon, scale=TTLocalizer.ACtitle, parent=hidden, font=ToontownGlobals.getSignFont(), fg=(1, 0.9, 0.1, 1), pos=(0.0, 0.82))
         quitHover = gui.find('**/QuitBtn_RLVR')
         self.quitButton = DirectButton(image=(quitHover, quitHover, quitHover), relief=None, text=TTLocalizer.AvatarChooserQuit, text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=TTLocalizer.ACquitButtonPos, text_scale=TTLocalizer.ACquitButton, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.05, parent=base.a2dBottomRight, pos=(-0.253333, 0, 0.093), command=self.__handleQuit)
@@ -225,10 +276,24 @@ class AvatarChooser(StateData.StateData):
 #        del self.shadow
         self.pickAToonBG.removeNode()
         del self.pickAToonBG
+        self.mainMenuModel.removeNode()
+        del self.mainMenuModel
         del self.avatarList
         self.parentFSM.getCurrentState().removeChild(self.fsm)
         del self.parentFSM
         del self.fsm
+        self.demotedCeo.removeActive()
+        self.demotedCeo.delete()
+        del self.demotedCeo
+        self.demotedCeo = None
+        self.demotedCeo2.removeActive()
+        self.demotedCeo2.delete()
+        del self.demotedCeo2
+        self.demotedCeo2 = None
+        self.demotedCeo3.removeActive()
+        self.demotedCeo3.delete()
+        del self.demotedCeo3
+        self.demotedCeo3 = None
         self.ignoreAll()
         self.isLoaded = 0
         ModelPool.garbageCollect()

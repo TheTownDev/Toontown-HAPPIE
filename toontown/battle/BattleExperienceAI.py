@@ -159,6 +159,7 @@ def assignRewards(activeToons, toonSkillPtsGained, suitsKilled, zoneId, helpfulT
 
         # New gags [(track, level), (track, level), ....]
         newGags: List[tuple[int, int]] = []
+        toonExp = 0
 
         for track in range(len(ToontownBattleGlobals.Tracks)):
             exp = getSkillGained(toonSkillPtsGained, toon.doId, track)
@@ -172,6 +173,13 @@ def assignRewards(activeToons, toonSkillPtsGained, suitsKilled, zoneId, helpfulT
                     toon.ap_addExperience(track, amount=exp)
                     for newGagLevel in newGagList:
                         newGags.append((track, newGagLevel))
+        for suit in suitsKilled:
+            if suit['level'] != None:
+                level = suit['level']
+                mult = 4
+                toonExp += int(level * mult)
+        currToonExp = toon.getToonExp()
+        toon.b_setToonExp(currToonExp + toonExp)
 
         # New gag
         if len(newGags) > 0:

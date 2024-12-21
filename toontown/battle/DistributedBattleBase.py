@@ -957,6 +957,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
 
     def __makeAvsActive(self, suits, toons):
         self.activeSuits = self.activeSuits[:4]
+        list(set(self.activeSuits))
         self.notify.debug('__makeAvsActive()')
         self.__stopAdjusting()
         for s in suits:

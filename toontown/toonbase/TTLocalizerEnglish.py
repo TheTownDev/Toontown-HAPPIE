@@ -238,6 +238,12 @@ AForeman = 'a Factory Foreman'
 CogVP = Cog + ' V.P.'
 CogVPs = "Cog V.P.'s"
 ACogVP = ACog + ' V.P.'
+IndustryTitan = 'Industry Titan'
+IndustryTitans = 'a Industry Titan'
+AIndustryTitan = 'a Industry Titan'
+CogDummy = "Cog Dummy"
+CogDummies = "Cog Dummies"
+ACogDummy = "a Cog Dummy"
 Supervisor = 'Mint Supervisor'
 SupervisorP = 'Mint Supervisors'
 ASupervisor = 'a Mint Supervisor'
@@ -247,6 +253,10 @@ ACogCFO = ACog + ' C.F.O.'
 TheFish = 'the Fish'
 AFish = 'a fish'
 Level = 'Level'
+ExpBarLevel = 'Level '
+ExpGagReward = 'Congratulations on reaching level %s! You can now carry 10 additional gags!'
+ExpTPReward = 'Congratulations on reaching level %s! You have gained a extra quest slot!'
+ExpMoneyReward = 'Congratulations on reaching level %s! You can now carry 500 additional jellybeans!'
 QuestsCompleteString = 'Complete'
 QuestsNotChosenString = 'Not chosen'
 Period = '.'
@@ -592,6 +602,7 @@ QuestsItemDict = {1: ['Pair of Glasses', 'Pairs of Glasses', 'a '],
  2010: ['Clean Clovis', 'Clean Clovi', 'a '],
  2011: ['Clock Spring', 'Clock Springs', 'a '],
  2012: ['Counter Weight', 'Counter Weights', 'a '],
+ 2020: ['Coffee Cup', 'Coffee Cups', 'a '],
  4001: ["Tina's Inventory", "Tina's Inventories", ''],
  4002: ["Yuki's Inventory", "Yuki's Inventories", ''],
  4003: ['Inventory Form', 'Inventory Forms', 'an '],
@@ -5910,13 +5921,13 @@ CashbotBossName = 'C. F. O.'
 LawbotBossName = 'Chief Justice'
 BossCogDoStunned = 'Stunned!'
 BossCogNameWithDept = '%(name)s\n%(dept)s'
-BossCogPromoteDoobers = 'I see more of my %s, have came for a promotion.'
-BossCogDoobersAway = {'s': "I'm expecting your promotions to make returns for me with the sale."}
-BossCogWelcomeToons = "Please hold though, the elevator will send you to the underground entrance while I direct your fellow employees."
-BossCogPromoteToons = "The Chairman will be plea--."
-CagedToonInterruptBoss = 'Toons! Toons, Quick!'
-CagedToonRescueQuery = "Once you get to the underground ledge, fly up with your suits to the edge! I'm over here!!"
-BossCogDiscoverToons = 'Those Sellbots were TOONS?!'
+BossCogPromoteDoobers = 'You are hereby promoted to full-fledged %s.  Congratulations!'
+BossCogDoobersAway = {'s': 'Go!  And make that sale!'}
+BossCogWelcomeToons = 'Welcome, new Cogs!'
+BossCogPromoteToons = 'You are hereby promoted to full-fledged %s.  Congratu--'
+CagedToonInterruptBoss = 'Hey! Hiya! Hey over there!'
+CagedToonRescueQuery = 'So, did you Toons come to rescue me?'
+BossCogDiscoverToons = 'Huh?  Toons!  In disguise!'
 BossCogAttackToons = 'Attack!!'
 CagedToonDrop = ["Great job!  You're wearing him down!",
  "Keep after him!  He's on the run!",

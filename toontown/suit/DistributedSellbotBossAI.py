@@ -6,13 +6,13 @@ from otp.avatar import DistributedAvatarAI
 from . import DistributedSuitAI
 from toontown.battle import BattleExperienceAI
 from direct.fsm import FSM
-from toontown.toonbase import ToontownGlobals, ToontownBattleGlobals
+from toontown.toonbase import ToontownGlobals
 from toontown.toon import InventoryBase
 from toontown.toonbase import TTLocalizer
-from toontown.battle import BattleBase, DistributedBattleVicePresidentAI
+from toontown.battle import BattleBase
 from toontown.toon import NPCToons
 from toontown.suit import SellbotBossGlobals
-from .SuitDNAGlobals import *
+from toontown.quest import Quests
 import random
 
 from apworld.toontown import locations
@@ -27,7 +27,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
     numPies = ToontownGlobals.FullPies
 
     def __init__(self, air):
-        DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, SELLBOT)
+        DistributedBossCogAI.DistributedBossCogAI.__init__(self, air, 's')
         FSM.FSM.__init__(self, 'DistributedSellbotBossAI')
         self.doobers = []
         self.nerfed = ToontownGlobals.SELLBOT_NERF_HOLIDAY in self.air.holidayManager.currentHolidays
@@ -249,29 +249,6 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
                 return self.invokeSuitPlanner(0, 0)
             else:
                 return self.invokeSuitPlanner(1, 1)
-    
-    def makeBattle(self, bossCogPosHpr, battlePosHpr, roundCallback, finishCallback, battleNumber, battleSide):
-        battle = DistributedBattleVicePresidentAI.DistributedBattleVicePresidentAI(self.air, self, roundCallback, finishCallback, battleSide)
-        self.setBattlePos(battle, bossCogPosHpr, battlePosHpr)
-        battle.suitsKilled = self.suitsKilled
-        battle.battleCalc.toonSkillPtsGained = self.toonSkillPtsGained
-        battle.toonExp = self.toonExp
-        battle.toonOrigQuests = self.toonOrigQuests
-        battle.toonItems = self.toonItems
-        battle.toonOrigMerits = self.toonOrigMerits
-        battle.toonMerits = self.toonMerits
-        battle.toonParts = self.toonParts
-        battle.helpfulToons = self.helpfulToons
-        mult = ToontownBattleGlobals.getBossBattleCreditMultiplier(battleNumber)
-        battle.battleCalc.setSkillCreditMultiplier(mult)
-        activeSuits = self.activeSuitsA
-        if battleSide:
-            activeSuits = self.activeSuitsB
-        for suit in activeSuits:
-            battle.addSuit(suit)
-
-        battle.generateWithRequired(self.zoneId)
-        return battle
 
     def removeToon(self, avId, died=False):
         toon = simbase.air.doId2do.get(avId)
@@ -456,15 +433,14 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         for toonId in self.involvedToons:
             toon = self.air.doId2do.get(toonId)
             if toon:
-                bundleCount = toon.slotData.get('checks_per_boss', 4)
-                bundle = [locations.ToontownLocationName.SELLBOT_PROOF_1.value,
-                          locations.ToontownLocationName.SELLBOT_PROOF_2.value,
-                          locations.ToontownLocationName.SELLBOT_PROOF_3.value,
-                          locations.ToontownLocationName.SELLBOT_PROOF_4.value,
-                          locations.ToontownLocationName.SELLBOT_PROOF_5.value]
-                if bundleCount:
-                    for checkNum in range(bundleCount):
-                        toon.addCheckedLocation(ap_location_name_to_id(bundle[checkNum]))
+                toon.addCheckedLocations([ap_location_name_to_id(location) for location in [
+                    locations.ToontownLocationName.SELLBOT_PROOF_1.value,
+                    locations.ToontownLocationName.SELLBOT_PROOF_2.value,
+                    locations.ToontownLocationName.SELLBOT_PROOF_3.value,
+                    locations.ToontownLocationName.SELLBOT_PROOF_4.value,
+                    locations.ToontownLocationName.SELLBOT_PROOF_5.value,
+                    locations.ToontownLocationName.FIGHT_VP.value
+                ]])
 
                 configMax = simbase.config.GetInt('max-sos-cards', 16)
                 if configMax == 8:
@@ -480,6 +456,7 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
                     self.sendUpdateToAvatarId(toonId, 'toonPromoted', [1])
                 else:
                     self.sendUpdateToAvatarId(toonId, 'toonPromoted', [0])
+                self.air.questManager.toonProgressedQuest(toon, Quests.IndustryTitanQuest, 1, requirements=[])
 
     def __shouldPromoteToon(self, toon):
         if not toon.readyForPromotion(self.deptIndex):

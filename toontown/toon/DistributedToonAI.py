@@ -24,6 +24,7 @@ from .NPCToons import npcFriends, isZoneProtected
 from toontown.coghq import CogDisguiseGlobals
 import random
 import re
+from toontown.toon import ToonExperience
 from toontown.chat import ResistanceChat
 from toontown.racing import RaceGlobals
 from toontown.hood import ZoneUtil
@@ -92,6 +93,8 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
         self.fishCollection = None
         self.fishTank = None
         self.experience = None
+        self.toonExp = 0
+        self.toonLevel = 0
         self.quests = []
         self.cogs = []
         self.cogCounts = []
@@ -2415,6 +2418,61 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI, DistributedSmoo
 
     def getMaxMoney(self):
         return self.maxMoney
+
+    def b_setToonExp(self, exp):
+        while True:
+            for level in range(len(ToonExperience.ToonExperience().ExpPerLevel)):
+                if exp >= ToonExperience.ToonExperience().getLevelMaxExp(self.toonLevel) and level > self.toonLevel:
+                    exp -= ToonExperience.ToonExperience().getLevelMaxExp(self.toonLevel)
+                    self.b_setToonLevel(self.toonLevel + 1)
+                elif level <= self.toonLevel:
+                    continue
+                else:
+                    break
+            break
+        if self.getToonLevel() == ToontownGlobals.MaxToonLevel:
+            exp = 0
+        self.setToonExp(exp)
+        self.d_setToonExp(exp)
+
+    def d_setToonExp(self, exp):
+        self.sendUpdate('setToonExp', [exp])
+
+    def setToonExp(self, exp):
+        self.toonExp = exp
+
+    def addToonExp(self, deltaExp):
+        self.b_setToonExp(self.toonExp + deltaExp)
+
+    def getToonExp(self):
+        return self.toonExp
+
+    def b_setToonLevel(self, level):
+        if level > ToontownGlobals.MaxToonLevel:
+            pass
+        else:
+            if level == ToontownGlobals.MaxToonLevel:
+                self.b_setToonExp(0)
+            self.setToonLevel(level)
+            self.d_setToonLevel(level)
+            self.b_setMaxHp(self.getMaxHp() + 1)
+            self.toonUp(self.getMaxHp() - self.hp)
+            simbase.air.experienceMgr.checkForLevelUpReward(self)
+            if level in ToontownGlobals.ExperienceTrainingPointLevels:
+                self.sendUpdate('notifyExpReward', [level, 0])
+            if level in ToontownGlobals.ExperienceGagLevels:
+                self.sendUpdate('notifyExpReward', [level, 1])
+            if level in ToontownGlobals.ExperienceMoneyLevels:
+                self.sendUpdate('notifyExpReward', [level, 2])
+
+    def d_setToonLevel(self, level):
+        self.sendUpdate('setToonLevel', [level])
+
+    def setToonLevel(self, level):
+        self.toonLevel = level
+
+    def getToonLevel(self):
+        return self.toonLevel
 
     def addMoney(self, deltaMoney):
         money = deltaMoney + self.money

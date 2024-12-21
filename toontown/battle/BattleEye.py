@@ -139,6 +139,11 @@ class BattleEye(DirectObject):
                 except:
                     pass
 
+                try:
+                    others.append(self.battle.activeSuits[0].doId)
+                except:
+                    pass
+
             if suitIndex == 2:
                 try:
                     others.append(self.battle.activeSuits[3].doId)
@@ -197,5 +202,8 @@ class BattleEye(DirectObject):
             otherSuit = self.battle.findSuit(otherSuitId)
             if otherSuit.currHP <= 0:
                 others.remove(otherSuitId)
+
+        others = list(set(others))
+
 
         return others

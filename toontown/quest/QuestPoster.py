@@ -395,8 +395,8 @@ class QuestPoster(DirectFrame):
                 holder = quest.getHolder()
                 holderType = quest.getHolderType()
                 if holder == Quests.Any:
-                    cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
-                    rIconGeom = cogIcons.find('**/cog')
+                    cogIcons = cogIcons = loader.loadModel('phase_3/models/gui/ttr_m_gui_qst_toontask_icons')
+                    rIconGeom = cogIcons.find('**/ttr_t_gui_qst_cogGears')
                     cogIcons.removeNode()
                     lPos.setX(-0.18)
                     auxText = TTLocalizer.QuestPosterAuxFrom
@@ -407,7 +407,7 @@ class QuestPoster(DirectFrame):
                     captions = captions[:1]
                 else:
                     if holderType == 'track':
-                        cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
+                        cogIcons = loader.loadModel('phase_3/models/gui/ttr_m_gui_gen_cogIcons')
                         if holder == 'c':
                             icon = cogIcons.find('**/CorpIcon')
                         elif holder == 's':
@@ -421,8 +421,8 @@ class QuestPoster(DirectFrame):
                         rIconGeomScale = 0.12
                         cogIcons.removeNode()
                     elif holderType == 'level':
-                        cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
-                        rIconGeom = cogIcons.find('**/cog')
+                        cogIcons = cogIcons = loader.loadModel('phase_3/models/gui/ttr_m_gui_qst_toontask_icons')
+                        rIconGeom = cogIcons.find('**/ttr_t_gui_qst_cogGears')
                         rIconGeomScale = IMAGE_SCALE_SMALL
                         cogIcons.removeNode()
                     else:
@@ -550,8 +550,8 @@ class QuestPoster(DirectFrame):
                 rIconGeomScale = 1
         elif quest.getType() == Quests.FactoryQuest:
             frameBgColor = 'blue'
-            bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
-            lIconGeom = bookModel.find('**/factoryIcon2')
+            bookModel = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_qst_toontask_icons')
+            lIconGeom = bookModel.find('**/ttr_t_gui_qst_sellbotFactory')
             bookModel.removeNode()
             lIconGeomScale = 0.13
             if not fComplete:
@@ -583,8 +583,8 @@ class QuestPoster(DirectFrame):
                 rIconGeomScale = 1
         elif quest.getType() == Quests.MintQuest:
             frameBgColor = 'blue'
-            bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
-            lIconGeom = bookModel.find('**/CashBotMint')
+            bookModel = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_qst_toontask_icons')
+            lIconGeom = bookModel.find('**/ttr_t_gui_qst_cashbotMint')
             bookModel.removeNode()
             lIconGeomScale = 0.13
             if not fComplete:
@@ -684,6 +684,16 @@ class QuestPoster(DirectFrame):
             frameBgColor = 'blue'
             bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
             lIconGeom = bookModel.find('**/BossHead3Icon')
+            bookModel.removeNode()
+            lIconGeomScale = 0.13
+            if not fComplete:
+                infoText = quest.getLocationName()
+                if infoText == '':
+                    infoText = TTLocalizer.QuestPosterAnywhere
+        elif quest.getType() == Quests.IndustryTitanQuest:
+            frameBgColor = 'red'
+            bookModel = loader.loadModel('phase_3.5/models/gui/ttr_m_gui_qst_toontask_icons')
+            lIconGeom = bookModel.find('**/ttr_t_gui_qst_cogBoss')
             bookModel.removeNode()
             lIconGeomScale = 0.13
             if not fComplete:
@@ -861,7 +871,9 @@ class QuestPoster(DirectFrame):
                 dept = quest.getCogTrack()
                 cogIcons = loader.loadModel('phase_3/models/gui/cog_icons')
                 lIconGeomScale = 0.13
-                if dept == 'c':
+                if dept == 'r':
+                    icon = cogIcons.find('**/CorpIcon')
+                elif dept == 'c':
                     icon = cogIcons.find('**/CorpIcon')
                 elif dept == 's':
                     icon = cogIcons.find('**/SalesIcon')

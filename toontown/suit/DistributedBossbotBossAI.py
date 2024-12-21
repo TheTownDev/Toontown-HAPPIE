@@ -22,6 +22,7 @@ from toontown.battle import DistributedBattleWaitersAI
 from toontown.battle import DistributedBattleDinersAI
 from toontown.battle import BattleExperienceAI
 from direct.distributed.ClockDelta import globalClockDelta
+from toontown.quest import Quests
 from .SuitDNAGlobals import *
 
 class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM):
@@ -655,6 +656,7 @@ class DistributedBossbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
                         toon.addCheckedLocation(ap_location_name_to_id(bundle[checkNum]))
                 self.givePinkSlipReward(toon)
                 toon.b_promote(self.deptIndex)
+                self.air.questManager.toonProgressedQuest(toon, Quests.IndustryTitanQuest, 1, requirements=[])
 
     def givePinkSlipReward(self, toon):
         self.notify.debug('TODO give pink slip to %s' % toon)

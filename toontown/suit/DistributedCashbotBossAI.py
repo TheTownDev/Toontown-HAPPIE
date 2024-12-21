@@ -13,6 +13,7 @@ from toontown.coghq import DistributedCashbotBossTreasureAI
 from toontown.coghq import CraneLeagueGlobals
 from toontown.battle import BattleExperienceAI
 from toontown.chat import ResistanceChat
+from toontown.quest import Quests
 from direct.fsm import FSM
 from . import DistributedBossCogAI
 from .SuitDNAGlobals import *
@@ -564,26 +565,31 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
     def makeGoon(self, side = None):
         self.goonMovementTime = globalClock.getFrameTime()
-
         if side == None:
-            side = 'EmergeA' if not self.wantOpeningModifications else ('EmergeB' if self.involvedToons[0].getPos()[1] < -315 else 'EmergeA')
+            if not self.wantOpeningModifications:
+                side = random.choice(['EmergeA', 'EmergeB'])
+            else:
+                for t in self.involvedToons:
+                    avId = t
+                toon = self.air.doId2do.get(avId)
+                pos = toon.getPos()[1]
+                if pos < -315:
+                    side = 'EmergeB'
+                else:
+                    side = 'EmergeA'
 
+        # First, look to see if we have a goon we can recycle.
         goon = self.__chooseOldGoon()
-
         if goon == None:
+            # No, no old goon; is there room for a new one?
             if len(self.goons) >= self.getMaxGoons():
                 return
+            # make a new one.
             goon = DistributedCashbotBossGoonAI.DistributedCashbotBossGoonAI(self.air, self)
             goon.generateWithRequired(self.zoneId)
             self.goons.append(goon)
 
-        goon.b_setupGoon(**self.__getGoonAttributes())
-
-        goon.request(side)
-
-        self.debug(doId=goon.doId, content='Spawning on %s, attributes=%s' % (side, self.__getGoonAttributes()))
-
-    def __getGoonAttributes(self):
+        # Attributes for desperation mode goons
         goon_stun_time = 4
         goon_velocity = 8
         goon_hfov = 90
@@ -591,6 +597,7 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
         goon_strength = self.ruleset.MAX_GOON_DAMAGE
         goon_scale = 1.8
 
+        # If the battle isn't in desperation yet override the values to normal values
         if self.getBattleThreeTime() <= 1.0:
             goon_stun_time = self.progressValue(30, 8)
             goon_velocity = self.progressRandomValue(3, 7)
@@ -599,16 +606,16 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
             goon_strength = int(self.progressRandomValue(self.ruleset.MIN_GOON_DAMAGE, self.ruleset.MAX_GOON_DAMAGE))
             goon_scale = self.progressRandomValue(self.goonMinScale, self.goonMaxScale, noRandom=self.wantMaxSizeGoons)
 
+        # Apply multipliers if necessary
         goon_velocity *= self.ruleset.GOON_SPEED_MULTIPLIER
 
-        return {
-            'stunTime': goon_stun_time,
-            'velocity': goon_velocity,
-            'hFov': goon_hfov,
-            'attackRadius': goon_attack_radius,
-            'strength': goon_strength,
-            'scale': goon_scale
-        }
+        # Apply attributes to the goon
+        goon.STUN_TIME = goon_stun_time
+        goon.b_setupGoon(velocity=goon_velocity, hFov=goon_hfov, attackRadius=goon_attack_radius, strength=goon_strength, scale=goon_scale)
+        goon.request(side)
+
+        self.debug(doId=goon.doId, content='Spawning on %s, stun=%.2f, vel=%.2f, hfov=%.2f, attRadius=%.2f, str=%s, scale=%.2f' % (side, goon_stun_time, goon_velocity, goon_hfov, goon_attack_radius, goon_strength, goon_scale))
+
 
     def __chooseOldGoon(self):
         # Walks through the list of goons managed by the boss to see
@@ -1091,6 +1098,7 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FS
 
                 for rewardId in rewards:
                     toon.addResistanceMessage(rewardId)
+                self.air.questManager.toonProgressedQuest(toon, Quests.IndustryTitanQuest, 1, requirements=[])
 
     def getRandomResistanceRewardId(self):
 

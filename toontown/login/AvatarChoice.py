@@ -68,7 +68,7 @@ class AvatarChoice(DirectButton):
         self.buttonBgs.append(self.pickAToonGui.find('**/tt_t_gui_pat_squarePink'))
         self.buttonBgs.append(self.pickAToonGui.find('**/tt_t_gui_pat_squareYellow'))
         self['image'] = self.buttonBgs[position]
-        self.setScale(1.01)
+        self.setScale(0.6)
         if self.mode is AvatarChoice.MODE_LOCKED:
             self['command'] = self.__handleTrialer
             self['text'] = TTLocalizer.AvatarChoiceSubscribersOnly

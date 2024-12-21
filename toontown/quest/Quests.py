@@ -759,17 +759,20 @@ class CogNewbieQuest(CogQuest, NewbieQuest):
 
 class CogTrackQuest(CogQuest):
     trackCodes = ['c',
-     'l',
-     'm',
-     's']
+                  'l',
+                  'm',
+                  's',
+                  'r']
     trackNamesS = [TTLocalizer.BossbotS,
-     TTLocalizer.LawbotS,
-     TTLocalizer.CashbotS,
-     TTLocalizer.SellbotS]
+                   TTLocalizer.LawbotS,
+                   TTLocalizer.CashbotS,
+                   TTLocalizer.SellbotS,
+                   TTLocalizer.ResourcebotS]
     trackNamesP = [TTLocalizer.BossbotP,
-     TTLocalizer.LawbotP,
-     TTLocalizer.CashbotP,
-     TTLocalizer.SellbotP]
+                   TTLocalizer.LawbotP,
+                   TTLocalizer.CashbotP,
+                   TTLocalizer.SellbotP,
+                   TTLocalizer.ResourcebotP]
 
     def __init__(self, id, quest):
         CogQuest.__init__(self, id, quest)
@@ -826,21 +829,20 @@ class CogTrackQuest(CogQuest):
 
 class CogVariousTracksQuest(CogQuest):
     trackCodes = ['c',
-     'l',
-     'm',
-     's']
-    trackNames = [TTLocalizer.Bossbot,
-     TTLocalizer.Lawbot,
-     TTLocalizer.Cashbot,
-     TTLocalizer.Sellbot]
+                  'l',
+                  'm',
+                  's',
+                  'r']
     trackNamesS = [TTLocalizer.BossbotS,
-     TTLocalizer.LawbotS,
-     TTLocalizer.CashbotS,
-     TTLocalizer.SellbotS]
+                   TTLocalizer.LawbotS,
+                   TTLocalizer.CashbotS,
+                   TTLocalizer.SellbotS,
+                   TTLocalizer.ResourcebotS]
     trackNamesP = [TTLocalizer.BossbotP,
-     TTLocalizer.LawbotP,
-     TTLocalizer.CashbotP,
-     TTLocalizer.SellbotP]
+                   TTLocalizer.LawbotP,
+                   TTLocalizer.CashbotP,
+                   TTLocalizer.SellbotP,
+                   TTLocalizer.ResourcebotP]
 
     def __init__(self, id, quest):
         CogQuest.__init__(self, id, quest)
@@ -1139,6 +1141,51 @@ class VPQuest(CogQuest):
     def doesVPCount(self, avId, cogDict, zoneId, avList):
         return self.isLocationMatch(zoneId)
 
+class IndustryTitanQuest(CogQuest):
+    def __init__(self, id, quest):
+        CogQuest.__init__(self, id, quest)
+
+    def getCogType(self):
+        return Any
+
+    def getCogNameString(self):
+        numCogs = self.getNumCogs()
+        if numCogs == 1:
+            return TTLocalizer.AIndustryTitan
+        else:
+            return TTLocalizer.IndustryTitans
+
+    def isQuestComplete(self, toon, requirements):
+        return 0
+
+    def doesCogCount(self, avId, cogDict, zoneId, avList):
+        return 1
+
+    def doesVPCount(self, avId, cogDict, zoneId, avList):
+        return self.isLocationMatch(zoneId)
+
+class CogDummyQuest(CogQuest):
+    def __init__(self, id, quest):
+        CogQuest.__init__(self, id, quest)
+
+    def getCogType(self):
+        return Any
+
+    def getCogNameString(self):
+        numCogs = self.getNumCogs()
+        if numCogs == 1:
+            return TTLocalizer.ACogDummy
+        else:
+            return TTLocalizer.CogDummies
+
+    def isQuestComplete(self, toon, requirements):
+        return 0
+
+    def doesCogCount(self, avId, cogDict, zoneId, avList):
+        return 1
+
+    def doesVPCount(self, avId, cogDict, zoneId, avList):
+        return self.isLocationMatch(zoneId)
 
 class VPNewbieQuest(VPQuest, NewbieQuest):
     def __init__(self, id, quest):
@@ -1297,13 +1344,15 @@ class RescueNewbieQuest(RescueQuest, NewbieQuest):
 
 class BuildingQuest(CogQuest):
     trackCodes = ['c',
-     'l',
-     'm',
-     's']
+                  'l',
+                  'm',
+                  's',
+                  'r']
     trackNames = [TTLocalizer.Bossbot,
-     TTLocalizer.Lawbot,
-     TTLocalizer.Cashbot,
-     TTLocalizer.Sellbot]
+                   TTLocalizer.Lawbot,
+                   TTLocalizer.Cashbot,
+                   TTLocalizer.Sellbot,
+                   TTLocalizer.Resourcebot]
 
     def __init__(self, id, quest):
         CogQuest.__init__(self, id, quest)
@@ -1399,11 +1448,13 @@ class BuildingFloorsQuest(CogQuest):
     trackCodes = ['c',
      'l',
      'm',
-     's']
+     's',
+     'r']
     trackNames = [TTLocalizer.Bossbot,
      TTLocalizer.Lawbot,
      TTLocalizer.Cashbot,
-     TTLocalizer.Sellbot]
+     TTLocalizer.Sellbot,
+     TTLocalizer.Resourcebot]
 
     def __init__(self, id, quest):
         CogQuest.__init__(self, id, quest)
@@ -2885,6 +2936,30 @@ def getQuest(id):
         return None
     return None
 
+def getQuestExp(id):
+    questEntry = QuestDict.get(id)
+    if questEntry:
+
+        questTier = questEntry[QuestDictTierIndex]
+        if questTier >= TT_TIER and questTier < DD_TIER:
+            return 80
+        elif questTier >= DD_TIER and questTier < DG_TIER:
+            return 200
+        elif questTier >= DG_TIER and questTier < MM_TIER:
+            return 300
+        elif questTier >= MM_TIER and questTier < BR_TIER:
+            return 500
+        elif questTier >= BR_TIER and questTier < DL_TIER:
+            return 800
+        elif questTier >= DL_TIER and questTier < ELDER_TIER:
+            return 1500
+        elif questTier == ELDER_TIER:
+            return 2500
+        else:
+            return 0
+    else:
+        return No
+
 
 def getQuestClass(id):
     questEntry = QuestDict.get(id)
@@ -4092,7 +4167,7 @@ def getRewardIdFromTrackId(trackId):
 
 
 RequiredRewardTrackDict = {
- TT_TIER: (100,
+ TT_TIER: (102,
              100,
              100,
              100,
@@ -4119,9 +4194,18 @@ RequiredRewardTrackDict = {
              100,
              100,
              100,
-             100),
- TT_TIER + 1: (100, 100)}
+             100,
+             100,
+             100,
+             100,
+             100,
+             100,
+             100
+           ),
+ TT_TIER + 1: (100, 100),
+ TEST_TIER: (100, 100)}
 OptionalRewardTrackDict = {TT_TIER: (),
+                           TEST_TIER: (),
                            TT_TIER + 1: (),}
 
 def isRewardOptional(tier, rewardId):
@@ -4192,10 +4276,10 @@ def findQuestsInTier(tier):
 
 def avatarHasAllRequiredRewards(av, tier):
     avQuests = findQuestsInTier(tier)
-    rewardHistory = av.getRewardHistory()[1]
+    rewardHistory = av.getQuestHistory()
 
     # if all the quest Ids in the tier have been completed, return 1
-    if len(rewardHistory) == len(avQuests):
+    if len(rewardHistory) >= len(avQuests):
         return 1
     return 0
 

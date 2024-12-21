@@ -15,6 +15,7 @@ from toontown.suit import DistributedLawbotBossSuitAI
 from toontown.coghq import DistributedLawbotCannonAI
 from toontown.coghq import DistributedLawbotChairAI
 from toontown.toonbase import ToontownBattleGlobals
+from toontown.quest import Quests
 
 from apworld.toontown import locations
 from ..archipelago.definitions.death_reason import DeathReason
@@ -732,6 +733,7 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI, FSM.FSM
                     toon.addResistanceMessage(ResistanceChat.encodeId(uniteType, uniteChoice))
                 toon.addPinkSlips(numOtherRewards)
                 toon.b_promote(self.deptIndex)
+                self.air.questManager.toonProgressedQuest(toon, Quests.IndustryTitanQuest, 1, requirements=[])
 
     def giveCogSummonReward(self, toon, prefDeptIndex, prefSummonType):
         cogLevel = int(self.toonLevels / self.maxToonLevels * SuitDNA.suitsPerDept)

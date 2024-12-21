@@ -1435,6 +1435,9 @@ class BattleCalculatorAI:
         
         self.__calculateToonAttacks()
 
+        self.__processBonuses(hp=0)
+        self.__processBonuses(hp=1)
+
         #find any toon attacks that use the squirt track, then find the target's ajacent suits, add them to the TOON_OTHERS_COL of the toon attack
         for toon in self.battle.activeToons:
             toonAttack = self.battle.toonAttacks[toon]
@@ -1457,8 +1460,7 @@ class BattleCalculatorAI:
 
 
 
-        self.__processBonuses(hp=0)
-        self.__processBonuses(hp=1)
+
 
         """
         for toon in self.battle.activeToons:

@@ -541,7 +541,6 @@ class DistributedBattleBaseAI(DistributedObjectAI.DistributedObjectAI, BattleBas
             if suit not in self.activeSuits:
                 self.addSuit(suit)
                 self.activeSuits.append(suit)
-                self.d_setMembers()
                 suit.prepareToJoinBattle()
             return 1
         else:
