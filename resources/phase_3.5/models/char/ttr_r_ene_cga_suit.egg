@@ -91,7 +91,7 @@
 }
 
 <Texture> shoe.jpg {
-  "./tex/shoe.jpg"
+  "../../maps/shoe.jpg"
   <Scalar> envtype { MODULATE }
   <Scalar> uv-name { UVMap }
   <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
@@ -100,7 +100,7 @@
 }
 
 <Texture> c_arm.jpg {
-  "./tex/c_arm.jpg"
+  "../../maps/c_arm.jpg"
   <Scalar> envtype { MODULATE }
   <Scalar> uv-name { UVMap }
   <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
@@ -109,7 +109,7 @@
 }
 
 <Texture> c_leg.jpg {
-  "./tex/c_leg.jpg"
+  "../../maps/c_leg.jpg"
   <Scalar> envtype { MODULATE }
   <Scalar> uv-name { UVMap }
   <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
@@ -118,7 +118,7 @@
 }
 
 <Texture> hand.jpg {
-  "./tex/hand.jpg"
+  "../../maps/hand.jpg"
   <Scalar> envtype { MODULATE }
   <Scalar> uv-name { UVMap }
   <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
@@ -127,7 +127,7 @@
 }
 
 <Texture> c_blazer.jpg {
-  "./tex/c_blazer.jpg"
+  "../../maps/c_blazer.jpg"
   <Scalar> envtype { MODULATE }
   <Scalar> uv-name { UVMap }
   <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
@@ -136,7 +136,7 @@
 }
 
 <Texture> c_sleeve.jpg {
-  "./tex/c_sleeve.jpg"
+  "../../maps/c_sleeve.jpg"
   <Scalar> envtype { MODULATE }
   <Scalar> uv-name { UVMap }
   <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
